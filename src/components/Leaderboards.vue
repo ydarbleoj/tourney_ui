@@ -4,7 +4,7 @@
       <v-card-title primary-title>
         <h5>Leaderboards</h5>
       </v-card-title >
-      <p class="hidden-lg-only">{{ current }}</p>
+      <p class="hidden-xs-only">{{ current }}</p>
       <v-container fluid>
         <v-layout>
           <v-flex xs12>

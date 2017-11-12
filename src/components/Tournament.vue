@@ -66,25 +66,24 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import TournamentCourses from '../components/TournamentCourses'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
+// import Course from '../components/Course'
 
 
 export default {
   name: 'Tournament',
   components: {
-    TournamentCourses,
     Leaderboards,
     Rounds
   },
   computed: {
-    ...mapState(['tournaments', 'currentTournament']),
+    ...mapState(['tournaments', 'currentTournament', 'currentRound']),
   },
 
   data () {
     return {
-      current: '',
+      current: { id: 9 },
       clipped: false,
       drawer: true,
       fixed: false,
@@ -96,10 +95,11 @@ export default {
   },
 
   beforeUpdate (current) {
+    console.log('hitting')
     this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT',this.current)
   },
 
-  mounted: function () {
+  created: function () {
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
   },
 

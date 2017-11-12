@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Login from '@/components/Login'
-import TournamentCourses from '@/components/TournamentCourses'
 import Tournament from '@/components/Tournament'
 import Leaderboards from '@/components/Leaderboards'
 import Rounds from '@/components/Rounds'
+import Course from '@/components/Course'
+import TeeTime from '@/components/TeeTime'
 
 Vue.use(Router)
 
@@ -20,13 +21,6 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/tournaments/:id/courses',
-      name: 'TournamentCourses',
-      component: TournamentCourses,
-      props: { default: true }
-
     },
     {
       path: '/tournaments',
@@ -44,6 +38,20 @@ export default new Router({
       name: 'Rounds',
       component: Rounds,
       props: { default: true }
-    }
+    },
+    {
+      path: '/tournaments/:id/course/:id',
+      name: 'Course',
+      component: Course,
+      props: { default: true }
+
+    },
+    {
+      path: '/tournaments/:id/tee_time/:id',
+      name: 'TeeTime',
+      component: TeeTime,
+      props: { default: true }
+
+    },
   ]
 })
