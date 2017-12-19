@@ -2,33 +2,33 @@
   <v-card class='white'>
     <v-container fluid grid-list-md>
       <v-layout row wrap>
-        <v-flex d-flex xs4 align-center class='light-blue lighten-4'>
-          <v-card tile flat class="light-blue lighten-4">
+        <v-flex d-flex xs4 align-center class="grey darken-3">
+          <v-card tile flat class="grey darken-3">
             <p class="hide">{{ current}}</p>
-            <v-icon>schedule</v-icon>
-            <h5>{{ current.group }}</h5>
-            <h5>{{ current.tee_time.split('T')[1] }}</h5>
+            <v-icon color='white'>schedule</v-icon>
+            <h5 class='white--text'>{{ current.group }}</h5>
+            <h5 class='white--text'>{{ current.tee_time.split('T')[1] }}</h5>
           </v-card>
         </v-flex>
-        <v-flex d-flex xs8>
-          <v-list dense>
+        <v-flex d-flex xs8 class='grey darken-2'>
+          <v-list dense class='grey darken-2'>
             <v-list-tile>
-              <v-list-tile-content>
+              <v-list-tile-content class="white--text">
                 {{ current.player_one }}
               </v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>
+              <v-list-tile-content class="white--text">
                 {{ current.player_two }}
               </v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>
+              <v-list-tile-content class="white--text">
                 {{ current.player_three }}
               </v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>
+              <v-list-tile-content class="white--text">
                 {{ current.player_four }}
               </v-list-tile-content>
             </v-list-tile>
@@ -67,5 +67,9 @@ export default {
 <style>
   p.hide {
     display: none;
+  }
+
+  .name-list {
+    color: #9ad3de;
   }
 </style>

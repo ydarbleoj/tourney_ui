@@ -33,7 +33,7 @@
           <v-list>
             <v-list-tile>
               <v-list-tile-title>
-                <router-link :to="'hello'">Home</router-link>
+                <router-link :to="'profile'">Profile</router-link>
               </v-list-tile-title>
             </v-list-tile>
             <v-list-tile>
@@ -48,7 +48,7 @@
     </v-card>
     <main>
       <v-content>
-        <v-container fluid grid-list-lg text-xs-center>
+        <v-container fluid text-xs-center class="pa-0">
           <v-layout row-wrap>
             <leaderboards :current="current" />
           </v-layout>

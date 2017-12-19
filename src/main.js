@@ -30,8 +30,28 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueAuth from '@websanova/vue-auth'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 axios.defaults.baseURL = 'http://localhost:3000'
+
+Vue.use(VueAxios, axios)
+Vue.router = router
+
+Vue.use(VueAuth, {
+    auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+    http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+    router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+    loginData: { url: 'user_token' },
+    rolesVar: 'role',
+    fetchData: { url: 'users', enabled: true },
+    parseUserData: function (data) {
+      return data;
+    },
+    refreshData: { url: '', method: 'GET', enabled: false, interval: 0 }
+})
 
 Vue.use(Vuetify, {
   components: {
@@ -42,6 +62,7 @@ Vue.use(Vuetify, {
     VBottomNav,
     VSelect,
     VCheckbox,
+    Vuelidate,
     VList,
     VCard,
     VMenu,
@@ -59,6 +80,7 @@ Vue.use(Vuetify, {
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+  // router,
 new Vue({
   el: '#app',
   router,

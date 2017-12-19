@@ -1,13 +1,14 @@
 <template>
-  <div class="hello">
+  <div class="hello text-xs-center">
     <h1>{{ msg }}</h1>
     <v-btn outline color="indigo" :to="'tournaments'">Tournaments</v-btn>
+    <v-btn outline color="orange" :to="'login'">LOGIN</v-btn>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'hello',
+  name: 'Home',
   data () {
     return {
       msg: 'Tourney'

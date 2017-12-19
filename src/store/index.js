@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import scorecards from './modules/scorecards'
+
 
 Vue.use(Vuex)
 
@@ -8,6 +10,7 @@ const store = new Vuex.Store({
   state: {
     courses: [],
     currentCourse: [],
+    courseStats: [],
     rounds: [],
     roundOne: {},
     roundTwo: {},
@@ -16,15 +19,53 @@ const store = new Vuex.Store({
     tournaments: [],
     currentTournament: [],
     stroke_leaderboard: [],
+    skins_leaderboards: [],
     putting_leaderboard: [],
     currentRound: '',
     teeTime: [],
     teeTimes: [],
+    user: {},
   },
   actions: {
+    LOAD_COURSE_STATS: function ({ commit, state }, { tournId, courseId }) {
+      let options = { course_id: courseId }
+      axios.get('/tournaments/' + tournId + '/stats/courses.json', { params: options }).then((response) => {
+        commit('SET_COURSE_STATS', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    LOAD_SKINS_PREVIEW: function ({ commit, state }, { id }) {
+      axios.get('/tournaments/' + id + '/leaderboards/skins/previews.json').then((response) => {
+        commit('SET_SKINS_LEADERBOARD', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    LOAD_SKINS_FULL: function ({ commit, state }, { id }) {
+      axios.get('/tournaments/' + id + '/leaderboards/skins/totals.json').then((response) => {
+        commit('SET_SKINS_LEADERBOARD', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    LOAD_PUTTING_PREVIEW: function ({ commit, state }, { id }) {
+      axios.get('/tournaments/' + id + '/leaderboards/putting_previews.json').then((response) => {
+        commit('SET_PUTTING_LEADERBOARD', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
     LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id }) {
       axios.get('/tournaments/' + id + '/putting_leaderboard.json').then((response) => {
         commit('SET_PUTTING_LEADERBOARD', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    LOAD_STROKE_PREVIEW: function ({ commit, state }, { id }) {
+      axios.get('/tournaments/' + id + '/leaderboards/stroke_previews.json').then((response) => {
+        commit('SET_STROKE_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
@@ -73,8 +114,18 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
+    UPDATE_PROFILE_EDIT: function ({ commit }, payload) {
+      console.log('edit pay', payload)
+      // axios.get('/users/')
+    },
   },
   mutations: {
+    SET_COURSE_STATS: (state, { list }) => {
+      state.courseStats = list
+    },
+    SET_SKINS_LEADERBOARD: (state, { list }) => {
+      state.skins_leaderboards = list
+    },
     SET_ROUNDS: (state, { list }) => {
       state.roundOne = list[0]
       state.roundTwo = list[1]
@@ -102,7 +153,7 @@ const store = new Vuex.Store({
     SET_USER_TEE_TIME: (state, { list }) => {
       state.teeTime = list['user']
       state.teeTimes = list['round']
-    }
+    },
   },
   getters: {
     openNewCourses: state => {
@@ -110,7 +161,7 @@ const store = new Vuex.Store({
     },
   },
   modules: {
-
+    scorecards
   }
 })
 

@@ -3,9 +3,9 @@
     <v-card flat color="transparent" class="grey--text">
       <v-card-title primary-title>
         <p class="hidden-xs-only">{{ current }}</p>
-        <h5>Round Info</h5>
+        <h3>Round Info</h3>
       </v-card-title >
-      <v-container fluid grid-list-lg class="transparent">
+      <v-container fluid grid-list-lg pt-0 class="transparent">
         <v-layout row wrap>
           <v-flex lg12>
             <course :current="currentRound" />
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Course from '../components/Course'
+import Course from '../components/Course/index'
 import TeeTime from '../components/TeeTime'
 import { mapState } from 'vuex'
 
