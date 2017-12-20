@@ -86,7 +86,7 @@ export default {
   afterMount: function() {
   },
 
-  beforeMount: function () {
+  created: function () {
     console.log('before', this.$route.params.tournId)
 
     this.$store.dispatch('LOAD_SCORECARD', { tournId: this.$route.params.tournId, id: this.$route.params.scorecardId })

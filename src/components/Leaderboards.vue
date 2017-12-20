@@ -4,18 +4,18 @@
       <v-card-title primary-title>
         <h3>Leaderboards</h3>
       </v-card-title >
-      <p class="hidden-xs-only">{{ current }}</p>
+      <!-- <p class="hidden-xs-only">{{ current }}</p> -->
       <v-container fluid pt-0>
         <v-layout>
           <v-flex xs12>
             <v-card class="elevation-20" ref="leaderboardCard">
-              <v-card-title :class="currentView" @click="toggleView(currentView)">
+              <v-card-title fixed :class="currentView" @click="toggleView(currentView)">
                 <h5>{{ currentView.split('-')[0].toUpperCase() }}</h5>
                 <v-spacer></v-spacer>
                 purse $360
               </v-card-title>
               <transition
-                name="slide-fade"
+                name="fade"
                 v-on:enter='enter'
               >
                 <component :is='currentView' :current='current'></component>

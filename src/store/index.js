@@ -87,8 +87,10 @@ const store = new Vuex.Store({
     },
     LOAD_TOURNAMENT_LIST: function ({ commit }) {
       axios.get('/tournaments.json').then((response) => {
+        console.log('one', response.data)
+        commit('CURRENT_TOURNAMENT', { list: response.data[0] })
         commit('SET_TOURNAMENT_LIST', { list: response.data })
-        commit('CURRENT_TOURNAMENT', { list: [response.data[0]] })
+        console.log('three', response.data)
         commit('SET_ROUNDS', { list: response.data[0].rounds })
         commit('CURRENT_ROUND', { list: [response.data[0].rounds[0]] })
       }, (err) => {
@@ -96,6 +98,7 @@ const store = new Vuex.Store({
       })
     },
     UPDATE_CURRENT_TOURNAMENT: function ({ commit }, payload) {
+      console.log('update curr', payload)
       commit('CURRENT_TOURNAMENT', { list: payload })
       commit('SET_ROUNDS', { list: payload.rounds })
       // commit('CURRENT_ROUND', { list: [payload.rounds[0]]})
@@ -159,6 +162,11 @@ const store = new Vuex.Store({
     openNewCourses: state => {
       return state.courses
     },
+    getTournament: state => {
+      return state.currentTournament
+    },
+
+
   },
   modules: {
     scorecards

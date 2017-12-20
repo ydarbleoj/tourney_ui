@@ -38,7 +38,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'index',
-  props: ['current', 'currentCourse'],
+  props: ['current'],
   components: {
     Stats
   },
@@ -55,7 +55,7 @@ export default {
 
   watch: {
     current: function () {
-    console.log('course', this.currentCourse[0])
+    console.log('course', this.currentCourse)
       this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.id })
     }
   },
