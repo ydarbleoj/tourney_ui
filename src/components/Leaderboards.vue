@@ -1,10 +1,9 @@
 <template>
   <v-flex xs12 sm12 lg6 id='leaderboard-container'>
-    <v-card flat color="transparent" class="grey--text">
+    <v-card flat color="transparent" class="grey--text" ref="leaderboardContainer">
       <v-card-title primary-title>
         <h3>Leaderboards</h3>
       </v-card-title >
-      <!-- <p class="hidden-xs-only">{{ current }}</p> -->
       <v-container fluid pt-0>
         <v-layout>
           <v-flex xs12>
@@ -26,16 +25,20 @@
       </v-container>
       <v-card-actions class="expand-footer">
         <v-spacer></v-spacer>
-        <v-btn flat color="light-blue lighten-1" :class="currentView" value="stroke" @click="currentView='stroke-preview'">
+        <v-btn :color="blue" flat class="grey--text no-back" value="stroke" @click="currentView='stroke-preview'">
           <span>Stroke</span>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn flat :class="currentView" value="putting" @click="currentView='putting-preview'">
+        <v-btn flat class="grey--text no-back" value="putting" @click="currentView='putting-preview'">
           <span>Putting</span>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn flat :class="currentView" value="skins" @click="currentView='skins-preview'">
+        <v-btn flat class="grey--text no-back" value="skins" @click="currentView='skins-preview'">
           <span>Skins</span>
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn flat class="grey--text no-back" value="team" @click="currentView='team-preview'">
+          <span>Team</span>
         </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
@@ -50,6 +53,8 @@ import PuttingPreview from '../components/Leaderboards/Putting/Preview'
 import PuttingLeaderboard from '../components/Leaderboards/Putting/Full'
 import SkinsPreview from '../components/Leaderboards/Skins/Preview'
 import SkinsLeaderboard from '../components/Leaderboards/Skins/Full'
+import TeamPreview from '../components/Leaderboards/Team/Preview'
+import TeamLeaderboard from '../components/Leaderboards/Team/List'
 
 import router from 'vue-router'
 import { mapState } from 'vuex'
@@ -63,13 +68,17 @@ export default {
     PuttingPreview,
     PuttingLeaderboard,
     SkinsPreview,
-    SkinsLeaderboard
+    SkinsLeaderboard,
+    TeamPreview,
+    TeamLeaderboard
   },
 
   data () {
     return {
       el: 'stroke',
       currentView: 'stroke-preview',
+      activeButton: 'active',
+      inactiveButton: 'inactive'
 
     }
   },
@@ -82,22 +91,36 @@ export default {
     toggleView: function (event) {
       if (event === 'stroke-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'stroke-leaderboard'
       } else if (event == 'stroke-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'stroke-preview'
       } else if (event == 'putting-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'putting-leaderboard'
       } else if (event == 'putting-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'putting-preview'
       } else if (event == 'skins-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'skins-leaderboard'
       } else if (event == 'skins-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'skins-preview'
+      } else if (event == 'team-preview') {
+        this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.currentView = 'team-leaderboard'
+      } else if (event == 'team-leaderboard') {
+        this.$refs.leaderboardCard.$el.classList.toggle('expand')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.currentView = 'team-preview'
       }
     },
     beforeEnter: function(el) {
@@ -111,39 +134,32 @@ export default {
     },
     expandParent: function() {
       this.$parent.$el.style.width = '100%';
+      this.$parent.$el.style.position = 'fixed';
     }
   }
 
 }
 </script>
 <style>
-.putting-preview {
+.no-back {
+  background-color: transparent;
+}
+.putting-preview, .putting-leaderboard {
   background-color: #ffa726;
-  color: #f1f1f1;
   font-size: 16px;
 }
-.putting-leaderboard {
-  background-color: #ffa726;
-  color: #f1f1f1;
-  font-size: 16px;
-}
-.stroke-preview {
+.stroke-preview, .stroke-leaderboard {
   background-color: #62bcfa;
   color: #f1f1f1;
   font-size: 16px;
 }
-.stroke-leaderboard {
-  background-color: #62bcfa;
-  color: #f1f1f1;
-  font-size: 16px;
-}
-.skins-preview {
+.skins-preview, .skins-leaderboard {
   background-color: #6534ff;
   color: #f1f1f1;
   font-size: 16px;
 }
-.skins-leaderboard {
-  background-color: #6534ff;
+.team-preview, .team-leaderboard {
+  background-color: #f44336;
   color: #f1f1f1;
   font-size: 16px;
 }
@@ -155,10 +171,9 @@ export default {
   z-index: 9999;
   width: 100%;
   height: 100%;
-  position: absolute;
 }
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all .8s ease;
 }
 .slide-fade-leave-active {
   transition: all .0s;

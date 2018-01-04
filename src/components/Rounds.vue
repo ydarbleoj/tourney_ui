@@ -11,9 +11,7 @@
             <course :current="currentRound" />
           </v-flex>
           <v-flex xs12>
-            TEE TIMES
             <tee-time :current="currentRound" />
-
           </v-flex>
         </v-layout>
       </v-container>

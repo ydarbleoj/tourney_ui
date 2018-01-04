@@ -21,7 +21,7 @@
         <v-icon>{{ !show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn flat color="white" @click="" :to="{name: 'Scorecard', params: {tournId: this.currentTournament.id, scorecardId: this.currentCourse[0]['scorecard_id'][0], currentCourse: currentCourse[0]['course'] }}">Scorecard</v-btn>
+      <v-btn flat color="white" @click="" :to="{name: 'Scorecard', params: {tournId: this.currentTournament.id, scorecardId: this.currentCourse[0]['scorecard_id'][0] }}">Scorecard</v-btn>
     </v-card-actions>
     <transition
      class='transistions-course'

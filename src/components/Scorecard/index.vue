@@ -7,20 +7,20 @@
             <v-btn flat light>
               <v-icon dark left>arrow_back</v-icon>
             </v-btn>
-            {{ this.courseScorecard.name }}
+            {{ this.scorecard.name }}
           </h5>
           <span class="grey--text">
-            {{ this.courseScorecard.tee }}
-            {{ this.courseScorecard.rating }} /
-            {{ this.courseScorecard.slope }}
+            {{ this.scorecard.tee }}
+            {{ this.scorecard.rating }} /
+            {{ this.scorecard.slope }}
           </span>
         </v-card>
       </v-flex>
       <v-flex xs6>
         <v-card flat>
-          <span class="grey--text text-center">par: {{ this.courseScorecard.par }}</span>
+          <span class="grey--text text-center">par: {{ this.scorecard.par }}</span>
           <v-spacer></v-spacer>
-          <span class="grey--text">yardage: {{ this.courseScorecard.yardage }}</span>
+          <span class="grey--text">yardage: {{ this.scorecard.yardage }}</span>
         </v-card>
       </v-flex>
     </v-layout>
@@ -77,7 +77,7 @@ export default {
 
   data () {
     return {
-      courseScorecard: this.$route.params['currentCourse'],
+      courseScorecard: this.scorecard,
       backToTourn: this.$route.params.tournId
       // items: this.playerScorecard['scores']
     }

@@ -20,6 +20,7 @@ import {
   VGrid,
   VTextField,
   VSelect,
+  VSubheader,
   VToolbar,
   VCheckbox,
   transitions
@@ -61,6 +62,7 @@ Vue.use(Vuetify, {
     VExpansionPanel,
     VBottomNav,
     VSelect,
+    VSubheader,
     VCheckbox,
     Vuelidate,
     VList,

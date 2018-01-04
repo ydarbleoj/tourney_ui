@@ -1,35 +1,20 @@
 <template>
   <v-card class='white'>
     <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex d-flex xs4 align-center class="grey darken-3">
+      <v-layout row wrap align-center class="grey darken-3">
+        <v-flex d-flex xs4 class="grey darken-3">
           <v-card tile flat class="grey darken-3">
             <p class="hide">{{ current}}</p>
-            <v-icon color='white'>schedule</v-icon>
-            <h5 class='white--text'>{{ current.group }}</h5>
-            <h5 class='white--text'>{{ current.tee_time.split('T')[1] }}</h5>
+            <h5 class='white--text mb-1'>{{ this.teeTime[0][0]}}</h5>
+            <v-icon color='blue accent-2'>schedule</v-icon>
+            <h5 class='white--text mt-1'>{{ this.teeTime[0][1] }}</h5>
           </v-card>
         </v-flex>
-        <v-flex d-flex xs8 class='grey darken-2'>
+        <v-flex d-flex xs8 class='grey darken-2 pa-0'>
           <v-list dense class='grey darken-2'>
-            <v-list-tile>
+            <v-list-tile v-for="user in teeTime[1]" :key="user">
               <v-list-tile-content class="white--text">
-                {{ current.player_one }}
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="white--text">
-                {{ current.player_two }}
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="white--text">
-                {{ current.player_three }}
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="white--text">
-                {{ current.player_four }}
+                {{ user.user }}
               </v-list-tile-content>
             </v-list-tile>
           </v-list>

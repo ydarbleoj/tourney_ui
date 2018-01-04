@@ -4,7 +4,7 @@
       <v-toolbar fixed color="white darken-1">
         <v-menu :nudge-width="200">
           <v-toolbar-title slot="activator">
-            <h4 class="mb-0"><span class='green--text'>{{ title }} {{this.currentTournament.year}} </span></h4>
+            <h4 class="mb-0"><span class='grey--text'>{{ title }} </span></h4>
           </v-toolbar-title>
         </v-menu>
         <v-flex xs3>
@@ -52,6 +52,9 @@
           <v-layout row-wrap>
             <rounds :current="currentTournament" />
           </v-layout>
+           <v-layout row-wrap>
+            <tourn-info :current="currentTournament" />
+          </v-layout>
         </v-container>
       </v-content>
     </main>
@@ -65,12 +68,14 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
+import TournInfo from '../components/TournInfo/index'
 
 export default {
   name: 'Tournament',
   components: {
     Leaderboards,
-    Rounds
+    Rounds,
+    TournInfo
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),
@@ -90,9 +95,11 @@ export default {
     }
   },
 
-  updated (current) {
-    console.log('up', this.current)
-    this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT',this.current)
+  watch: {
+    current: function () {
+      console.log('watch', this.current)
+      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT',this.current)
+    }
   },
 
   created: function () {

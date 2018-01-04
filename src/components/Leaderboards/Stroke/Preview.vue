@@ -74,7 +74,7 @@ export default {
     }
   },
 
-  created: function (current) {
+  created: function () {
     this.$store.dispatch('LOAD_STROKE_PREVIEW', { id: this.current.id })
   }
 }

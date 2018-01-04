@@ -23,8 +23,8 @@ export default {
       data: {
         auth: {
           id: '',
-          email: 'trace@mueller.name',
-          password: 'password'
+          email: 'brady.joel@gmail.com',
+          password: 'gonzaga2004'
         },
         fetchUser: true
       },

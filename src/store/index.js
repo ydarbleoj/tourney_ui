@@ -21,12 +21,27 @@ const store = new Vuex.Store({
     stroke_leaderboard: [],
     skins_leaderboards: [],
     putting_leaderboard: [],
+    teamLeaderboard: [],
     currentRound: '',
     teeTime: [],
     teeTimes: [],
     user: {},
   },
   actions: {
+    LOAD_TEAM_PREVIEW: function ({ commit, state }, { tournId }) {
+      axios.get('/tournaments/' + tournId + '/leaderboards/teams/previews.json').then((response) => {
+        commit('SET_TEAM_LEADERBOARD', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    LOAD_TEAM_LEADERBOARD: function ({ commit, state }, { tournId }) {
+      axios.get('/tournaments/' + tournId + '/leaderboards/teams/totals.json').then((response) => {
+        commit('SET_TEAM_LEADERBOARD', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
     LOAD_COURSE_STATS: function ({ commit, state }, { tournId, courseId }) {
       let options = { course_id: courseId }
       axios.get('/tournaments/' + tournId + '/stats/courses.json', { params: options }).then((response) => {
@@ -87,10 +102,8 @@ const store = new Vuex.Store({
     },
     LOAD_TOURNAMENT_LIST: function ({ commit }) {
       axios.get('/tournaments.json').then((response) => {
-        console.log('one', response.data)
         commit('CURRENT_TOURNAMENT', { list: response.data[0] })
         commit('SET_TOURNAMENT_LIST', { list: response.data })
-        console.log('three', response.data)
         commit('SET_ROUNDS', { list: response.data[0].rounds })
         commit('CURRENT_ROUND', { list: [response.data[0].rounds[0]] })
       }, (err) => {
@@ -98,10 +111,9 @@ const store = new Vuex.Store({
       })
     },
     UPDATE_CURRENT_TOURNAMENT: function ({ commit }, payload) {
-      console.log('update curr', payload)
+      console.log('update crr', payload)
       commit('CURRENT_TOURNAMENT', { list: payload })
       commit('SET_ROUNDS', { list: payload.rounds })
-      // commit('CURRENT_ROUND', { list: [payload.rounds[0]]})
     },
     UPDATE_CURRENT_ROUND: function ({ commit }, payload) {
       commit('CURRENT_ROUND', { list: payload})
@@ -111,7 +123,7 @@ const store = new Vuex.Store({
     },
     LOAD_USER_TEE_TIME: function ({ commit, state }, { tourn_id, roundNumber }) {
       let options = { round: roundNumber }
-      axios.get('/tournaments/' + tourn_id + '/round_tee_times.json', { params: options }).then((response) => {
+      axios.get('/tournaments/' + tourn_id + '/tee_times.json', { params: options }).then((response) => {
         commit('SET_USER_TEE_TIME', { list: response.data })
       }, (err) => {
         console.log(err)
@@ -154,8 +166,10 @@ const store = new Vuex.Store({
       state.currentTournament = list
     },
     SET_USER_TEE_TIME: (state, { list }) => {
-      state.teeTime = list['user']
-      state.teeTimes = list['round']
+      state.teeTime = list
+    },
+    SET_TEAM_LEADERBOARD: (state, { list }) => {
+      state.teamLeaderboard = list
     },
   },
   getters: {
@@ -169,7 +183,7 @@ const store = new Vuex.Store({
 
   },
   modules: {
-    scorecards
+    scorecards,
   }
 })
 
