@@ -56,7 +56,7 @@ export default {
           value: 'group'
         },
         {
-          text: 'Round Players',
+          text: 'Players',
           align: 'center',
           sortable: false,
           value: 'players'
@@ -78,18 +78,18 @@ export default {
   //   }
   // },
 
-  // created: function (current) {
-  //   console.log('team', this.teamLeaderboard)
-  //   this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id })
-  // }
+  created: function (current) {
+    console.log('team', this.rndTitle)
+  }
 
 
 }
 </script>
 <style>
 .team thead {
-  background-color: #f44336;
-}
+  background-color: #999;
+/*  background-color: #f44336;
+*/}
 table.table thead th {
   font-size: 12px;
 }

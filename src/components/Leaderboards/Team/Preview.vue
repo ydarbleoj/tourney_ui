@@ -3,7 +3,7 @@
     :headers="headers"
     v-bind:items="teamLeaderboard"
     hide-actions
-    class='team'
+    class='team-preview'
     item-key="round_number"
   >
     <template slot="items" slot-scope="props">
@@ -85,7 +85,7 @@ export default {
 }
 </script>
 <style>
-.team thead {
+.team-preview thead {
   background-color: #ef5350;
 }
 table.table thead th {

@@ -1,65 +1,56 @@
 <template>
-  <v-container class="pa-0" fluid>
-    <v-toolbar fixed flat dark color="primary" extended>
-      <div class='headline'>Score Hole {{ this.cardData.number}} Par {{this.cardData.par}}</div>
-      <v-toolbar-title class="white--text" slot="extension">Shots</v-toolbar-title>
-      <v-toolbar-title class="white--text" slot="extension">Putts</v-toolbar-title>
-      <v-spacer></v-spacer>
-
-    </v-toolbar>
-    <v-layout>
-      <div>hello</div>
-    </v-layout>
-    <v-layout row wrap white>
-      <v-flex xs6>
-        <v-card flat class="text-xs-center mt-4">
-          <div class="wrapper">
-              <!-- <scroll-list :heights="heightList"
-                           :remain="10"
-                           @toTop="onTop"
-                           @toBottom="onBottom"
-                           @scrolling="onScroll">
-                <div v-for="(item, index) in list"
-                     :key="item.index"
-                     :class="{item: 1}"
-                     :style="{height: '50px', 'line-height': '50px'}">
-                    {{item.index}} {{item.shots}}
-                </div>
-              </scroll-list> -->
-          </div>
-        </v-card>
-      </v-flex>
-      <v-flex xs6>
-        <!-- <v-card flat class="text-xs-center">
-          <virtual-list :size="40" :remain="8">
-            <item v-for="item of items" :key="item.id" />
-          </virtual-list>
-        </v-card> -->
-      </v-flex>
-    </v-layout>
-    <v-footer color="primary" fixed class="pa-0">
-      <v-btn dark icon :to="{name: 'Scorecard', params: {tournId: this.tournId, scorecardId: this.cardData.scorecard_id }}">
-        <v-icon>arrow_back</v-icon>
-      </v-btn>
-      <span class="white--text">Scorecard</span>
-    </v-footer>
-  </v-container>
+  <v-layout white>
+    <v-flex xs12>
+      <v-card flat grey class="user-score-card">
+        <v-card-media class="pa-0">
+          <v-container fluid fill-height pa-0>
+            <v-layout row class="record" wrap>
+              <v-flex xs6>
+                <h4 class="text-xs-center white--text pa-0 ma-0">Score</h4>
+              </v-flex>
+              <v-flex xs6>
+                <h4 class="text-xs-center white--text pa-0 ma-0">Putts</h4>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-media>
+        <v-card-text>
+          <v-container fluid fill-height class="pa-0">
+            <v-layout row wrap  style="font-size: 24px;">
+              <v-flex xs12>
+                <scroll-picker-group class="flex">
+                  <scroll-picker :options="shotList[this.cardData.par - 3]" @input="changeShots" v-model="shotBinding"></scroll-picker>
+                  <scroll-picker :options="[0, 1, 2, 3, 4, 5]" @input="changePutts" v-model="puttBinding"></scroll-picker>
+                </scroll-picker-group>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+        <v-card-actions class="text-xs-center record">
+          <v-btn flat color="white" @click="updateScore">
+            <h4>SAVE</h4>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-import scrollList from 'vue-scroll-list'
-import virtualList from 'vue-virtual-scroll-list'
-// import scoreList from './scoreList'
+import { ScrollPicker, ScrollPickerGroup } from 'vue-scroll-picker'
 
 export default {
   name: 'UserScore',
+  props: ['cardData', 'scorecardId'],
   components: {
-    scrollList, virtualList
+    ScrollPicker,
+    ScrollPickerGroup
   },
 
   computed: {
     ...mapState([
       'UserScore',
+      'currentTournament'
     ]),
     ...mapGetters([
       'score',
@@ -69,84 +60,139 @@ export default {
 
   data () {
     return {
-      cardData: this.$route.params['user_sc'],
+      // cardData: this.$route.params['user_sc'],
       tournId: this.$route.params.tournamentId,
       list: [],
       heightList: [],
       count: 0,
-      shot_list: [
-        ['', '', 'Did Not Play', 'In One', 'Birdie', 'Par', 'Bogey', 'Double', 'Triple', 'Quad', 'Ouch'],
-        ['', '', 'Did Not Play', 'In One', 'Eagle', 'Birdie', 'Par', 'Bogey', 'Double', 'Triple', 'Quad', 'Ouch'],
-        ['', '', 'Did Not Play', 'In One', 'Albetrose', 'Eagle', 'Birdie', 'Par', 'Bogey', 'Double', 'Triple', 'Quad', 'Ouch']
+      shotList: [
+        [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Birdie 2' }, {value: 3, name: 'Par 3'}, {value: 4, name: 'Bogey 4'}, {value: 5, name: 'Double 5'}, {value: 6, name: 'Triple 6'}, {value: 7, name: 'Quad 7'}, {value: 8, name: 'Other 8'}, {value: 9, name: 'Other 9'}, {value: 10, name: 'Other 10'}, {value: 11, name: 'Other 11'}, {value: 12, name: 'Ouch 12'}],
+        [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Eagle 2'}, {value: 3, name: 'Birdie 3'}, {value: 4, name:  'Par 4'}, {value: 5, name: 'Bogey 5'}, {value: 6, name: 'Double 6'}, {value: 7, name: 'Triple 7'}, {value: 8, name: 'Quad 8'}, {value: 9, name: 'Other 9'}, {value: 10, name: 'Other 10'}, {value: 11, name: 'Other 11'}, {value: 12, name: 'Other 12'}, {value: 13, name: 'Other 13'}, {value: 14, name: 'Other 14'}, {value: 15, name: 'Other 15'}],
+        [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Albetrose 2'}, {value: 3, name: 'Eagle 3'}, {value: 4, name: 'Birdie 4'}, {value: 5, name: 'Par 5'}, {value: 6, name: 'Bogey 6'}, {value: 7, name: 'Double 7'}, {value: 8, name: 'Triple 8'},{value: 9, name: 'Quad 9'}, {value: 10, name: 'Other 10'}, {value: 11, name: 'Other 11'}, {value: 12, name: 'Other 12'}, {value: 13, name: 'Other 13'}, {value: 14, name: 'Other 14'}, {value: 15, name: 'Other 15'}]
       ],
+      puttBinding: 2,
+      shotBinding: '',
+      shots: null,
+      putts: null,
     }
   },
 
-  beforeUpdate: function() {
-    console.log('before', this.cardData)
-  },
-
-  beforeMount: function () {
-    console.log('here', this.cardData.par)
-    // this.$store.dispatch('LOAD_SCORECARD', { tournId: this.$route.params.tournId, id: this.$route.params.scorecardId })
+  created: function () {
+    this.puttBinding = this.cardData.putts
+    this.putts = this.cardData.putts
+    this.filterShots()
   },
 
   methods: {
-    onTop() {
-      console.log('[demo]:page to top.');
-    },
-    onBottom() {
-      console.log('[demo]:page to bottom.');
-      !window.__stopLoadData && this.createData();
-    },
-    onScroll(event) {
-      window.__showScrollEvent && console.log(event);
-    },
-     onScroll1(event) {
-      window.__showScrollEvent && console.log(event);
-    },
-    createShots() {
-      let par = this.cardData.par;
-      let shotType = this.shot_list[par - 3]
-
-      this.putts = ['', 0, 1, 2, 3, 4, 5]
-
-      for (let i = 0; i < 18; i++) {
-        let s = shotType[i]
-        let shot = i
-        console.log('right', s)
-
-        if (s) {
-        } else {
-          s = 'SAD!'
+    filterShots() {
+      let elem = this.cardData.score
+      this.shots = elem
+      let that = this
+      let shot;
+      this.shotList[this.cardData.par - 3].filter(function(el){
+        if(el.value == elem) {
+          shot = that.shotBinding = el.value;
         }
-        if (i < 4) {
-          s = ''
-          shot = ''
-        } else {
-          shot = i - 4
-        }
-        this.list.push({
-          index: s,
-          shots: shot,
-        });
+
+      });
+      return shot
+    },
+    changeShots(value) {
+      this.shots = value
+    },
+    changePutts(value) {
+      this.putts = value
+    },
+    closeCard() {
+     this.$parent.$data.type = ''
+    },
+    updateScore() {
+      console.log('parent', this.$parent.$data)
+      this.closeCard()
+      let us_id = this.cardData.user_score_id
+      let options = { putts: this.putts, shots: this.shots }
+
+
+      if (us_id) {
+        this.$store.dispatch('SEND_USER_SCORE', { scorecardId: this.scorecardId, scoreId: this.cardData.user_score_id, options: options })
+      } else {
+
       }
-    }
-  },
-  created() {
 
+    }
   }
 
 }
 </script>
 <style>
-.wrapper {
-  height: 100%;
-  padding: 0;
-  background-color: pink;
-  border: 1px solid #eee;
-    -webkit-overflow-scrolling: touch;
+div.layout.record.row.wrap {
+  background-color: #6CADED;
 }
+div.card__actions.text-xs-center.record {
+  background-color: #6CADED;
+}
+div.user-score-card.card.card--flat {
+  /*background-color: rgba(153, 153, 153, 1)*/
+  /*: 100%;*/
+}
+div.card__text {
+  max-height: 500vh;
+}
+div.text-xs-left.user-score.card.card--flat {
+  height: 500px;
+  justify-content: center;
+}
+.vue-scroll-picker-item.-selected {
+  color: #007BFF;
+}
+div.vue-scroll-picker-item {
+    text-align: center;
+  height: 1.7em;
+  line-height: 1.7em;
+}
+.vue-scroll-picker-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+   /* .top,
+    .middle,
+    .bottom {
+        position: absolute;
+    }*/
+.vue-scroll-picker-layer div.top {
+    box-sizing: border-box;
+    border-bottom: 1px solid #c8c7cc;
+    background: linear-gradient(180deg,#fff 10%,rgba(255, 255, 255, .1));
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    cursor: pointer;
+}
+.vue-scroll-picker-layer div.middle {
+    top: 40%;
+    left: 0;
+    right: 0;
+    bottom: 40%;
+}
+.vue-scroll-picker-layer div.bottom {
+    border-top: 1px solid #c8c7cc;
+    background: linear-gradient(360deg,#fff 10%,rgba(255, 255, 255, .1));
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    cursor: pointer;
+}
+div.vue-scroll-picker {
+  position: relative;
+  /*height: auto;*/
+  background-color: white;
+}
+
 
 .item {
   border-bottom: 1px solid #eee;

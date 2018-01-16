@@ -26,7 +26,7 @@
       </v-container>
       <v-card-actions class="expand-footer">
         <v-spacer></v-spacer>
-        <v-btn flat color="light-blue lighten-1" :class="currentView" value="tourn-money" @click="currentView='money-preview'">
+        <v-btn flat :class="currentView" value="tourn-money" @click="currentView='money-preview'">
           <span>Money</span>
         </v-btn>
         <v-spacer></v-spacer>

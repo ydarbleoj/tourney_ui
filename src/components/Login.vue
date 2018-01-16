@@ -33,8 +33,6 @@ export default {
   },
   methods: {
     login () {
-      console.log(this.data.auth.email)
-      console.log(this.data.auth.password)
       var redirect = this.$auth.redirect()
 
       this.$auth.login({

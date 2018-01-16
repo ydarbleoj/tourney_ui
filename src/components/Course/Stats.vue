@@ -90,19 +90,19 @@
           <v-list two-lines class="pa-0" >
             <v-subheader>Pars</v-subheader>
             <v-subheader>Course Avg</v-subheader>
-            <v-list-tile-sub-title class='text-xs-left'>par 3</v-list-tile-sub-title>
+            <v-list-tile-title class='text-xs-left'>par 3</v-list-tile-title>
             <v-list-tile-content>
               <h3 class="text-xs-center record mb-0">
                 {{ courseStats.course.par3_avg }}
               </h3>
             </v-list-tile-content>
-            <v-list-tile-sub-title class='text-xs-left'>par 4</v-list-tile-sub-title>
+            <v-list-tile-title class='text-xs-left'>par 4</v-list-tile-title>
             <v-list-tile-content>
               <h3 class="text-xs-center record mb-0">
                 {{ courseStats.course.par4_avg }}
               </h3>
             </v-list-tile-content>
-            <v-list-tile-sub-title class='text-xs-left'>par 5</v-list-tile-sub-title>
+            <v-list-tile-title class='text-xs-left'>par 5</v-list-tile-title>
             <v-list-tile-content>
               <h3 class="text-xs-center record mb-0">
                 {{ courseStats.course.par5_avg }}
@@ -116,19 +116,19 @@
           <v-list two-lines class="pa-0" >
             <v-subheader></v-subheader>
             <v-subheader>Personal</v-subheader>
-            <v-list-tile-sub-title class='text-xs-left'>par 3</v-list-tile-sub-title>
+            <v-list-tile-title class='text-xs-left'>par 3</v-list-tile-title>
             <v-list-tile-content>
               <h3 class="text-xs-center pers-record mb-0">
                 {{ courseStats.user.par3_avg }}
               </h3>
             </v-list-tile-content>
-            <v-list-tile-sub-title class='text-xs-left'>par 4</v-list-tile-sub-title>
+            <v-list-tile-title class='text-xs-left'>par 4</v-list-tile-title>
             <v-list-tile-content>
               <h3 class="text-xs-center pers-record mb-0">
                 {{ courseStats.user.par4_avg }}
               </h3>
             </v-list-tile-content>
-            <v-list-tile-sub-title class='text-xs-left'>par 5</v-list-tile-sub-title>
+            <v-list-tile-title class='text-xs-left'>par 5</v-list-tile-title>
             <v-list-tile-content>
               <h3 class="text-xs-center pers-record mb-0">
                 {{ courseStats.user.par5_avg }}
@@ -156,12 +156,13 @@ export default {
 
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_COURSE_STATS', { tournId: this.currentTournament.id, courseId: this.currentCourse[0]['course']['id'] })
+      console.log('stats', this.courseStats)
+      this.$store.dispatch('LOAD_COURSE_STATS', { tournId: this.currentTournament.id, courseId: this.currentCourse.id })
     }
   },
 
   mounted: function (current) {
-    this.$store.dispatch('LOAD_COURSE_STATS', { tournId: this.currentTournament.id, courseId: this.currentCourse[0]['course']['id'] })
+    this.$store.dispatch('LOAD_COURSE_STATS', { tournId: this.currentTournament.id, courseId: this.currentCourse.id })
   }
 }
 </script>

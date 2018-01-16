@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm12 lg6 id='leaderboard-container'>
+  <v-flex xs12 id='leaderboard-container'>
     <v-card flat color="transparent" class="grey--text" ref="leaderboardContainer">
       <v-card-title primary-title>
         <h3>Leaderboards</h3>
@@ -9,9 +9,11 @@
           <v-flex xs12>
             <v-card class="elevation-20" ref="leaderboardCard">
               <v-card-title fixed :class="currentView" @click="toggleView(currentView)">
-                <h5>{{ currentView.split('-')[0].toUpperCase() }}</h5>
+                <h4>{{ currentView.split('-')[0].toUpperCase() }}
+                  <v-icon color='blue-grey darken-1'>launch</v-icon>
+                </h4>
                 <v-spacer></v-spacer>
-                purse $360
+                <p>Purse 360</p>
               </v-card-title>
               <transition
                 name="fade"
@@ -25,7 +27,7 @@
       </v-container>
       <v-card-actions class="expand-footer">
         <v-spacer></v-spacer>
-        <v-btn :color="blue" flat class="grey--text no-back" value="stroke" @click="currentView='stroke-preview'">
+        <v-btn flat class="grey--text no-back" value="stroke" @click="currentView='stroke-preview'">
           <span>Stroke</span>
         </v-btn>
         <v-spacer></v-spacer>

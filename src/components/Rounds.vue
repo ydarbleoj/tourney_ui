@@ -1,17 +1,17 @@
 <template>
   <v-flex xs12 sm12 lg6>
-    <v-card flat color="transparent" class="grey--text">
+    <v-card flat color="transparent" class="grey--text round-container" ref="roundCardContainer">
       <v-card-title primary-title>
-        <p class="hidden-xs-only">{{ current }}</p>
         <h3>Round Info</h3>
       </v-card-title >
-      <v-container fluid grid-list-lg pt-0 class="transparent">
+      <v-container fluid pt-0 class="transparent">
         <v-layout row wrap>
           <v-flex lg12>
             <course :current="currentRound" />
           </v-flex>
-          <v-flex xs12>
-            <tee-time :current="currentRound" />
+          <v-flex lg12>
+            <h4 class="text-xs-left mb-0 mt-1">Scorecard</h4>
+            <scorecard :current="currentRound" />
           </v-flex>
         </v-layout>
       </v-container>
@@ -36,7 +36,8 @@
 
 <script>
 import Course from '../components/Course/index'
-import TeeTime from '../components/TeeTime'
+import Scorecard from '../components/Scorecard/index'
+import TeeTime from '../components/Course/TeeTime'
 import { mapState } from 'vuex'
 
 export default {
@@ -44,7 +45,8 @@ export default {
   props: ['current'],
   components: {
     Course,
-    TeeTime
+    TeeTime,
+    Scorecard
   },
 
   data () {
@@ -68,18 +70,33 @@ export default {
       } else {
         this.$store.dispatch('UPDATE_CURRENT_ROUND', this.roundThree)
       }
+    },
+    expandRound: function () {
+     this.$refs.roundCardContainer.$el.classList.toggle('expand')
     }
   },
 
   watch: {
     current: function () {
+    console.log('curr this round', this.currentCourse)
       this.$store.dispatch('UPDATE_CURRENT_ROUND', this.current.rounds[0])
     }
   },
 
   mounted: function (current) {
+    this.$store.dispatch('UPDATE_CURRENT_ROUND', this.current.rounds[0])
   }
 }
 </script>
+<style>
+.expand {
+  top: 0;
+  left: 0;
+  padding: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
 
+</style>
 

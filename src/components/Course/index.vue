@@ -4,16 +4,25 @@
       :src="'/static/' + this.currentRound.course_id + 'course.jpg'"
       height='200px'
     >
-    <v-container fill-height fluid>
-      <v-layout fill-height>
-        <v-flex xs12 flexbox>
-          <span class="headline white--text">{{ this.currentCourse[0]['course']['name'] }}</span>
-          <div>
-            <div class="subheading white--text">Round {{ this.currentRound.round_number }} </div>
-          </div>
-        </v-flex>
-      </v-layout>
-    </v-container>
+      <v-container fill-height fluid pa-0 class='round-container'>
+        <v-layout>
+          <v-flex xs8 flexbox>
+            <div class="headline white--text mt-5">Round {{ this.currentRound.round_number }} </div>
+            <span class="headline white--text">{{ this.currentCourse['name'] }}</span>
+            <div class="white--text">
+              {{ this.currentCourse.tee }} -
+              {{ this.currentCourse.rating }} /
+              {{ this.currentCourse.slope }}
+            </div>
+            <div class="white--text">
+              par: {{ this.currentCourse.par }}
+            </div>
+          </v-flex>
+          <v-flex xs4 class="tee-time-container pa-0">
+            <tee-time :current="teeTime" />
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-card-media>
     <v-card-actions class='grey darken-3'>
       <v-btn flat color='white' @click.native="show = !show">
@@ -21,7 +30,6 @@
         <v-icon>{{ !show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn flat color="white" @click="" :to="{name: 'Scorecard', params: {tournId: this.currentTournament.id, scorecardId: this.currentCourse[0]['scorecard_id'][0] }}">Scorecard</v-btn>
     </v-card-actions>
     <transition
      class='transistions-course'
@@ -33,14 +41,16 @@
 </template>
 
 <script>
-import Stats from './Stats'
 import { mapState } from 'vuex'
+import Stats from './Stats'
+import TeeTime from './TeeTime'
 
 export default {
   name: 'index',
   props: ['current'],
   components: {
-    Stats
+    Stats,
+    TeeTime
   },
 
   data () {
@@ -50,22 +60,34 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentRound', 'currentTournament', 'currentCourse'])
+    ...mapState(['currentRound', 'currentTournament', 'currentCourse', 'teeTime'])
   },
 
   watch: {
     current: function () {
-    console.log('course', this.currentCourse)
+
       this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.id })
+
+      this.$store.dispatch('LOAD_USER_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
     }
   },
 
   created: function (current) {
+    console.log('course created', this.currentCourse)
     this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.id })
+
+    this.$store.dispatch('LOAD_USER_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
   }
 }
 </script>
 <style>
+div.flex.tee-time-container {
+  /*background-color: rgba(153, 153, 153, .4);*/
+  background-color: rgba(98, 188, 250, .4);
+}
+.card, .tee-times {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 .slide-fade-enter-active {
   transition: all .8s ease;
 }

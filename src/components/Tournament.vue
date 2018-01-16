@@ -18,7 +18,6 @@
           </v-select>
         </v-flex>
         <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
         <v-menu
           origin="center center"
           transition="scale-transition"
@@ -50,7 +49,7 @@
             <leaderboards :current="currentTournament" />
           </v-layout>
           <v-layout row-wrap>
-            <rounds :current="currentTournament" />
+            <rounds :current="currentTournament" @update="expandRound"/>
           </v-layout>
            <v-layout row-wrap>
             <tourn-info :current="currentTournament" />

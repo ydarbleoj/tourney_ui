@@ -4,8 +4,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import Preview from '../components/TeeTimes/Preview'
-import List from '../components/TeeTimes/List'
+import Preview from './TeeTimes/Preview'
+import List from './TeeTimes/List'
 
 export default {
   name: 'TeeTime',
