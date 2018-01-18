@@ -1,19 +1,26 @@
 <template>
-  <form>
-    <v-text-field
-      label="Email"
-      v-model="data.auth.email"
-      :counter="10"
-      required
-    ></v-text-field>
-    <v-text-field
-      label="Password"
-      v-model="data.auth.password"
-      required
-    ></v-text-field>
+  <v-container fill-height>
+    <v-layout row wrap align-center>
+      <v-flex xs12 class="text-xs-center">
+        <h3>Tourney</h3>
+        <form>
+          <v-text-field
+            label="Email"
+            v-model="data.auth.email"
+            :counter="10"
+            required
+          ></v-text-field>
+          <v-text-field
+            label="Password"
+            v-model="data.auth.password"
+            required
+          ></v-text-field>
 
-    <v-btn @click="login">submit</v-btn>
-  </form>
+          <v-btn outline color="amber darken-2" @click="login">submit</v-btn>
+        </form>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 <script>
 export default {
@@ -48,3 +55,8 @@ export default {
   }
 }
 </script>
+<style>
+.application--light .input-group:not(.input-group--error) label {
+  color: #ffa726;
+}
+</style>

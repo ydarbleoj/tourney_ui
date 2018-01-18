@@ -34,6 +34,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import Vuelidate from 'vuelidate'
+
 Vue.use(Vuelidate)
 
 axios.defaults.baseURL = 'http://localhost:3000'

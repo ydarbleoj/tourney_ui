@@ -25,24 +25,19 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-card-actions class="expand-footer">
-        <v-spacer></v-spacer>
-        <v-btn flat class="grey--text no-back" value="stroke" @click="currentView='stroke-preview'">
+      <v-card-actions class="expand-footer ma-0">
+        <v-btn flat class="grey--text no-back ma-0" value="stroke" @click="currentView='stroke-preview'">
           <span>Stroke</span>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn flat class="grey--text no-back" value="putting" @click="currentView='putting-preview'">
+        <v-btn flat class="grey--text no-back ma-0" value="putting" @click="currentView='putting-preview'">
           <span>Putting</span>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn flat class="grey--text no-back" value="skins" @click="currentView='skins-preview'">
+        <v-btn flat class="grey--text no-back ma-0" value="skins" @click="currentView='skins-preview'">
           <span>Skins</span>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn flat class="grey--text no-back" value="team" @click="currentView='team-preview'">
+        <v-btn flat class="grey--text no-back ma-0" value="team" @click="currentView='team-preview'">
           <span>Team</span>
         </v-btn>
-        <v-spacer></v-spacer>
       </v-card-actions>
     </v-card>
   </v-flex>

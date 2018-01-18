@@ -1,9 +1,9 @@
 <template>
   <v-flex xs12 sm12>
-    <v-list three-line>
+    <v-list three-line class="on_expand">
       <template v-for="userScore in scoreListGetter">
-        <v-card >
-          <v-list-tile v-bind:key="userScore.number" @click.native="toggleScore(userScore.number)">
+        <v-card class="score-display" ref="scoreDisplay">
+          <v-list-tile v-bind:key="userScore.number"  @click.native="toggleScore(userScore.number, $event)" >
             <v-list-tile-content >
               <h4 class="ma-0">{{ userScore.number}}</h4>
             </v-list-tile-content>
@@ -44,6 +44,7 @@
 import { mapState, mapGetters } from 'vuex'
 import UserScore from './UserScore'
 
+
 export default {
   name: 'ScoreList',
   props: ['cardId'],
@@ -68,15 +69,15 @@ export default {
   },
 
   methods: {
-    toggleScore: function (event) {
-      console.log('before', this.type)
-      if (event && this.type != event) {
-        this.type = event
-        console.log('event', event)
-        // this.currentView = 'show'
-      } else if (event == this.type) {
-        console.log('hi', this.type)
+    toggleScore: function (num, e) {
+      console.log('before', this.$refs.scoreDisplay[num - 1])
+
+      if (num && this.type != num) {
+        this.type = num
+        this.$refs.scoreDisplay[num - 1].$el.classList.toggle('center-div')
+      } else if (num == this.type) {
         this.type = ''
+        this.$refs.scoreDisplay[num - 1].$el.classList.toggle('center-div')
       }
     },
     removeType: function() {
@@ -108,4 +109,16 @@ export default {
   .three-putt {
     color: red;
   }
+  .on_expand {
+    padding-top: 130px;
+  }
+  .center-div {
+    position: fixed;
+    z-index: 1000;
+    top: 130px; left: 0; bottom: 0; right: 0;
+    transition: all 3s ease-out;
+  }
+
+  /*div.score-display.card.expanded {*/
+  /*}*/
 </style>

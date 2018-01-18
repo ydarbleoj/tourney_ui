@@ -1,10 +1,10 @@
 <template>
-  <v-card class="elevation-20 grey darken-3" ref="scorecardCard">
-    <v-card-title class="scorecard-card" ref="cardHeader">
+  <v-card class="elevation-20 grey darken-3 scorecard_container" ref="scorecardCard">
+    <v-card-title class="scorecard-card pa-0" ref="cardHeader">
       <v-container class="pa-0" fluid @click="toggleView(currentView)">
         <v-layout row wrap class="grey darken-3">
           <v-flex xs5>
-            <v-card class="text-xs-center grey darken-3" flat >
+            <v-card class="text-xs-center grey darken-3 mt-2" flat >
               <h4 class="mb-0 white--text">Score</h4>
               <v-container pa-0 fluid>
                 <v-layout row wrap>
@@ -26,7 +26,7 @@
           <v-flex xs2>
             <v-card flex class="text-xs-center grey darken-3" flat height="100%">
               <v-container class="pa-0" fluid fill-height>
-                <v-layout row wrap flex pt-2>
+                <v-layout row wrap flex>
                   <v-flex xs12>
                     <label class='scorecard-label'>OUT</label>
                     <div class="grey--text">
@@ -34,6 +34,7 @@
                       /
                       <span class="grey--text">{{ this.scorecard.out_gross }}</span>
                     </div>
+                    <label class="scorecard-label label-tight">{{ this.scorecard.out_putts }} / <span class="pers-record">{{ this.scorecard.out_3putts }} </span></label>
                   </v-flex>
                   <v-flex xs12>
                     <label class='scorecard-label'>IN</label>
@@ -42,13 +43,14 @@
                       /
                       <span class="grey--text">{{ this.scorecard.in_gross }}</span>
                     </div>
+                    <label class="scorecard-label label-tight">{{ this.scorecard.in_putts }} / <span class="pers-record">{{ this.scorecard.in_3putts }}</span></label>
                   </v-flex>
                 </v-layout>
               </v-container>
             </v-card>
           </v-flex>
           <v-flex xs5>
-            <v-card class="text-xs-center grey darken-3" flat>
+            <v-card class="text-xs-center grey darken-3 ma-2" flat>
               <h5 class="mb-0 pt-2 white--text">{{ this.scorecard.handicap }} Handicap</h5>
               <v-container class="pa-0 pl-3" fluid>
                 <v-layout row wrap>
@@ -117,13 +119,14 @@ export default {
   methods: {
     toggleView: function (event) {
       if (event == 'preview') {
-        console.log('this', this.$parent.$el)
         this.$parent.$el.classList.toggle('expand')
         this.$refs.scorecardCard.$el.classList.toggle('expand')
+        this.$refs.cardHeader.classList.toggle('fix_header')
         this.currentView = 'fullCard'
       } else if (event == 'fullCard') {
         this.$parent.$el.classList.toggle('expand')
         this.$refs.scorecardCard.$el.classList.toggle('expand')
+        this.$refs.cardHeader.classList.toggle('fix_header')
         this.currentView = 'preview'
 
       }
@@ -165,19 +168,24 @@ div.card.scorecard-card {
 label.scorecard-label {
   color: white;
   font-size: 10px;
+
 }
-div.card.expand {
+
+div.card.scorecard_container.expand {
   top: 0;
   left: 0;
   padding: 0;
   z-index: 2000;
   width: 100%;
   height: 100%;
-  /*display: block;*/
   position: fixed;
   overflow: auto;
 }
-div.card__title.scorecard-card.expand {
+div.card__title.scorecard-card.pa-0.fix_header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  box-shadow: 0 10px 13px -6px rgba(0,0,0,0.2), 0 20px 31px 3px rgba(0,0,0,0.14), 0 8px 38px 7px rgba(0,0,0,0.12) !important;
   /*align-items: center;
   display: flex;
   flex-wrap: wrap;

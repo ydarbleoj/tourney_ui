@@ -49,7 +49,7 @@
             <leaderboards :current="currentTournament" />
           </v-layout>
           <v-layout row-wrap>
-            <rounds :current="currentTournament" @update="expandRound"/>
+            <rounds :current="currentTournament" />
           </v-layout>
            <v-layout row-wrap>
             <tourn-info :current="currentTournament" />
