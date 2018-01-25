@@ -4,7 +4,7 @@
       <v-toolbar fixed color="white darken-1">
         <v-menu :nudge-width="200">
           <v-toolbar-title slot="activator">
-            <h4 class="mb-0"><span class='grey--text'>{{ title }} </span>{{ current.year }}</h4>
+            <h4 class="mb-0"><span class='grey--text'>{{ title }} </span></h4>
           </v-toolbar-title>
         </v-menu>
         <v-flex xs3>
@@ -81,13 +81,14 @@ export default {
   data () {
     return {
       current: this.currentTournament,
+      year: '',
       clipped: false,
       drawer: true,
       fixed: false,
       links: [
         'login', 'Courses', 'Home'
       ],
-      title: 'Bandon'
+      title: 'Bandon',
     }
   },
 
