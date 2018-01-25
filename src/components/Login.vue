@@ -30,8 +30,8 @@ export default {
       data: {
         auth: {
           id: '',
-          email: 'brady.joel@gmail.com',
-          password: 'gonzaga2004'
+          email: '',
+          password: ''
         },
         fetchUser: true
       },
