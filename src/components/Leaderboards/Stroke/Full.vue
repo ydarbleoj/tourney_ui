@@ -3,6 +3,7 @@
     :headers="headers"
     v-bind:items="stroke_leaderboard"
     hide-actions
+    hide-headers
     class='stroke'
     item-key="username"
   >
@@ -101,6 +102,9 @@ export default {
 }
 </script>
 <style>
+div.table__overflow.stroke {
+  padding-top: 105px;
+}
 .stroke thead {
   background-color: #62bcfa;
 }

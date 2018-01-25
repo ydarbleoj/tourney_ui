@@ -11,6 +11,7 @@ import Profile from '@/components/Profile/Profile'
 import ProfileEdit from '@/components/Profile/Edit'
 import Scorecard from '@/components/Scorecard/index'
 import UserScore from '@/components/Scorecard/UserScore'
+import Stats from '@/components/Stats/index'
 
 Vue.use(Router)
 
@@ -57,6 +58,12 @@ export default new Router({
       props: { default: true }
     },
     {
+      path: '/tournaments/:id/stats',
+      name: 'Stats',
+      component: Stats,
+      props: { default: true }
+    },
+    {
       path: '/tournaments/:id/course/:id',
       name: 'Course',
       component: Course,
@@ -64,7 +71,7 @@ export default new Router({
 
     },
     {
-      path: '/tournaments/:id/tee_time/:id',
+      path: '/tournaments/:tournId/tee_time/:id',
       name: 'TeeTime',
       component: TeeTime,
       props: { default: true }

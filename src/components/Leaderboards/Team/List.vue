@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row wrap class="team-list">
     <v-flex xs12>
       <v-card flat>
         <round-list :round="teamLeaderboard[0]" />
@@ -84,6 +84,11 @@ export default {
 }
 </script>
 <style>
+div.team-list {
+  padding-top: 80px;
+}
+/*div.table__overflow.team {
+}*/
 .team thead {
   background-color: #ef5350;
 }

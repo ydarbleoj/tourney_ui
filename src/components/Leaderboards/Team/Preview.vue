@@ -3,6 +3,7 @@
     :headers="headers"
     v-bind:items="teamLeaderboard"
     hide-actions
+    hide-headers
     class='team-preview'
     item-key="round_number"
   >

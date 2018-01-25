@@ -1,10 +1,10 @@
 <template>
   <v-data-table
     :headers="headers"
-    v-bind:items="stroke_leaderboard"
+    v-bind:items="moneyList"
     hide-actions
     hide-headers
-    class='stroke-preview'
+    class='money-preview'
     item-key="username"
   >
     <template slot="items" slot-scope="props">
@@ -12,46 +12,55 @@
         <td class="text-xs-center">{{ props.item.pos }}</td>
         <td class="text-xs-left">
           {{ props.item.username }}
-          <v-spacer></v-spacer>
-          <span class="grey--text">handicap {{ props.item.handicap }}</span>
         </td>
-        <td class="text-xs-center">{{ props.item.total_score }}</td>
-        <td class="text-xs-center">{{ props.item.net_total }}</td>
+        <td class="text-xs-right pr-3">$ {{ props.item.total }}</span></td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
       <v-layout row>
-        <v-flex xs-4>
+        <v-flex xs3>
           <v-card flat>
             <v-list two-line>
               <v-list-tile>
                 <v-list-tile-content>
-                  <v-list-tile-sub-title class="text-xs-center">ROUND 1</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">{{ props.item.rnd1_score }} </v-list-tile-title>
+                  <v-list-tile-sub-title class="text-xs-center">Stroke</v-list-tile-sub-title>
+                  <v-list-tile-title class="text-xs-center">$ <span class="money_props"> {{ props.item.stroke }}</span></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
           </v-card>
         </v-flex>
-        <v-flex xs-4>
+        <v-flex xs3>
           <v-card flat>
             <v-list two-line>
               <v-list-tile>
                 <v-list-tile-content>
-                  <v-list-tile-sub-title class="text-xs-center">ROUND 2</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">{{ props.item.rnd2_score }} </v-list-tile-title>
+                  <v-list-tile-sub-title class="text-xs-center">Putting</v-list-tile-sub-title>
+                  <v-list-tile-title class="text-xs-center">$ <span class="money_props"> {{ props.item.putting }}</span> </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
           </v-card>
         </v-flex>
-        <v-flex xs-4>
+        <v-flex xs3>
           <v-card flat>
             <v-list two-line>
               <v-list-tile>
                 <v-list-tile-content>
-                  <v-list-tile-sub-title class="text-xs-center">ROUND 3</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">{{ props.item.rnd3_score }} </v-list-tile-title>
+                  <v-list-tile-sub-title class="text-xs-center">Team</v-list-tile-sub-title>
+                  <v-list-tile-title class="text-xs-center">$ <span class="money_props"> {{ props.item.team }}</span> </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-flex>
+        <v-flex xs3>
+          <v-card flat>
+            <v-list two-line>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title class="text-xs-center">Skins</v-list-tile-sub-title>
+                  <v-list-tile-title class="text-xs-center">$ <span class="money_props">{{ props.item.skins }}</span> </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -66,11 +75,11 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'Preview',
+  name: 'MoneyPreview',
   props: ['current'],
 
   computed: mapState([
-    'stroke_leaderboard'
+    'moneyList'
   ]),
 
   data () {
@@ -106,18 +115,19 @@ export default {
 
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_STROKE_PREVIEW', { id: this.current.id })
+      this.$store.dispatch('LOAD_MONEY_PREVIEW', { tournId: this.current.id })
     }
   },
 
   created: function () {
-    this.$store.dispatch('LOAD_STROKE_PREVIEW', { id: this.current.id })
+    console.log('monelist', this.current)
+    this.$store.dispatch('LOAD_MONEY_PREVIEW', { tournId: this.current.id })
   }
 }
 </script>
 <style>
-.stroke thead {
-  background-color: #62bcfa;
+.money_props {
+  color: #4CAF50;
 }
 table.table thead th {
   font-size: 10px;

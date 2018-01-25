@@ -104,14 +104,12 @@ export default {
       this.putts = value
     },
     closeCard() {
-     this.$parent.$data.type = ''
+      this.$emit('event')
     },
     updateScore() {
-      console.log('parent', this.$parent.$data)
       this.closeCard()
       let us_id = this.cardData.user_score_id
       let options = { putts: this.putts, shots: this.shots }
-
 
       if (us_id) {
         this.$store.dispatch('SEND_USER_SCORE', { scorecardId: this.scorecardId, scoreId: this.cardData.user_score_id, options: options })

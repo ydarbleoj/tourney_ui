@@ -3,7 +3,8 @@
     :headers="headers"
     v-bind:items="putting_leaderboard"
     hide-actions
-    class='putting'
+    hide-headers
+    class='putting-preview'
     item-key="username"
   >
     <template slot="items" slot-scope="props">

@@ -3,6 +3,7 @@
     :headers="headers"
     v-bind:items="putting_leaderboard"
     hide-actions
+    hide-headers
     class='putting'
     item-key="username"
   >
@@ -99,6 +100,9 @@ export default {
 }
 </script>
 <style>
+div.table__overflow.putting {
+  padding-top: 110px;
+}
 .putting thead {
   background-color: #ffa726;
 }

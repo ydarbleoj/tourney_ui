@@ -9,7 +9,7 @@
               <h3 class="text-xs-center record mb-0">
               {{ courseStats.course.course_avg }}
               </h3>
-              <v-list-tile-sub-tile><span class="personal">putts </span> {{ courseStats.course.avg_putts}}</v-list-tile-sub-tile>
+              <label><span class="personal">putts </span> {{ courseStats.course.avg_putts}}</label>
             </v-list-tile-content>
 
           </v-list>
@@ -23,7 +23,7 @@
               <h3 class="mb-0 pers-record">
               {{ courseStats.user.course_avg }}
               </h3>
-              <v-list-tile-sub-tile><span class="personal">putts </span> {{ courseStats.user.avg_putts}}</v-list-tile-sub-tile>
+              <label><span class="personal">putts </span> {{ courseStats.user.avg_putts}}</label>
             </v-list-tile-content>
           </v-list>
         </v-card>
@@ -162,6 +162,7 @@ export default {
   },
 
   mounted: function (current) {
+    console.log('')
     this.$store.dispatch('LOAD_COURSE_STATS', { tournId: this.currentTournament.id, courseId: this.currentCourse.id })
   }
 }

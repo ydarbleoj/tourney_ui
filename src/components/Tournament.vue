@@ -4,7 +4,7 @@
       <v-toolbar fixed color="white darken-1">
         <v-menu :nudge-width="200">
           <v-toolbar-title slot="activator">
-            <h4 class="mb-0"><span class='grey--text'>{{ title }} </span></h4>
+            <h4 class="mb-0"><span class='grey--text'>{{ title }} </span>{{ current.year }}</h4>
           </v-toolbar-title>
         </v-menu>
         <v-flex xs3>
@@ -52,14 +52,11 @@
             <rounds :current="currentTournament" />
           </v-layout>
            <v-layout row-wrap>
-            <tourn-info :current="currentTournament" />
+            <stats :current="currentTournament" />
           </v-layout>
         </v-container>
       </v-content>
     </main>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -67,14 +64,14 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
-import TournInfo from '../components/TournInfo/index'
+import Stats from '../components/Stats/index'
 
 export default {
   name: 'Tournament',
   components: {
     Leaderboards,
     Rounds,
-    TournInfo
+    Stats
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),

@@ -43,7 +43,21 @@ Vue.use(VueAxios, axios)
 Vue.router = router
 
 Vue.use(VueAuth, {
-    auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+    auth: {
+      request: function (req, token) {
+        this.options.http._setHeaders.call(this, req, {Authorization: 'Bearer ' + token});
+      },
+      response: function (res) {
+        var headers = this.options.http._getHeaders.call(this, res),
+            token = headers.Authorization || res.data.jwt;
+
+        if (token) {
+          token = token.split(/Bearer\:?\s?/i);
+
+          return token[token.length > 1 ? 1 : 0].trim();
+        }
+      }
+    },
     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
     loginData: { url: 'user_token' },

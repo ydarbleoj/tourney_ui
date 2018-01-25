@@ -186,17 +186,6 @@ div.card__title.scorecard-card.pa-0.fix_header {
   z-index: 100;
   width: 100%;
   box-shadow: 0 10px 13px -6px rgba(0,0,0,0.2), 0 20px 31px 3px rgba(0,0,0,0.14), 0 8px 38px 7px rgba(0,0,0,0.12) !important;
-  /*align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  position: fixed;
-  /*width: 100%;*/
-  /*z-index: 2;*/
-  /*top: 0;
-  left: 0;
-  z-index: 100;
-  position: fixed;*/
 }
 
 .slide-fade-enter-active {

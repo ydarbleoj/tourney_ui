@@ -3,6 +3,7 @@
     :headers="headers"
     v-bind:items="skins_leaderboards"
     hide-actions
+    hide-headers
     class='skins'
     item-key="username"
   >
@@ -174,6 +175,9 @@ export default {
 }
 </script>
 <style>
+div.table__overflow.skins {
+  padding-top: 110px;
+}
 .skins thead {
   background-color: #6534ff;
 }

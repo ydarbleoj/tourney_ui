@@ -3,7 +3,7 @@
     <v-list three-line class="on_expand">
       <template v-for="userScore in scoreListGetter">
         <v-card class="score-display" ref="scoreDisplay">
-          <v-list-tile v-bind:key="userScore.number"  @click.native="toggleScore(userScore.number, $event)" >
+          <v-list-tile v-bind:key="userScore.number"  @click.native="toggleScore(userScore.number)" >
             <v-list-tile-content >
               <h4 class="ma-0">{{ userScore.number}}</h4>
             </v-list-tile-content>
@@ -29,8 +29,8 @@
           name="fade"
           v-on:enter="enter"
           >
-            <v-card-text class="pa-0" v-if="type == userScore.number">
-              <user-score :cardData="userScore" :scorecardId="cardId.id" />
+            <v-card-text class="pa-0" v-if="type == userScore.number" >
+              <user-score :cardData="userScore" :scorecardId="cardId.id" @event="removeType" />
             </v-card-text>
           </transition>
         </v-card>
@@ -65,16 +65,18 @@ export default {
       threePutt: 'three-putt',
       currentView: '',
       type: '',
+      thisComponent: ''
     }
   },
 
   methods: {
-    toggleScore: function (num, e) {
-      console.log('before', this.$refs.scoreDisplay[num - 1])
+    toggleScore: function (num) {
+      this.thisComponent = this.$refs.scoreDisplay[num - 1]
 
-      if (num && this.type != num) {
+      if (num && this.type == '') {
         this.type = num
         this.$refs.scoreDisplay[num - 1].$el.classList.toggle('center-div')
+      console.log('before', [num, this.type] )
       } else if (num == this.type) {
         this.type = ''
         this.$refs.scoreDisplay[num - 1].$el.classList.toggle('center-div')
@@ -82,6 +84,7 @@ export default {
     },
     removeType: function() {
       this.type = ''
+      this.thisComponent.$el.classList.toggle('center-div')
     },
     beforeEnter: function(el) {
       el.style.opacity = 0
@@ -93,12 +96,11 @@ export default {
       el.style.opacity = 1
     },
   },
-  afterMount: function () {
-    console.log('userScores', )
-  },
   created: function () {
     console.log('here', this.cardId)
     this.$store.dispatch('LOAD_USER_SCORES', { scorecardId: this.cardId.id })
+  },
+  events: {
   }
 }
 </script>
@@ -119,6 +121,4 @@ export default {
     transition: all 3s ease-out;
   }
 
-  /*div.score-display.card.expanded {*/
-  /*}*/
 </style>

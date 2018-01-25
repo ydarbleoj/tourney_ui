@@ -8,13 +8,9 @@
         <v-layout>
           <v-flex xs12>
             <v-card class="elevation-20" ref="leaderboardCard">
-              <v-card-title fixed :class="currentView" @click="toggleView(currentView)">
-                <h4>{{ currentView.split('-')[0].toUpperCase() }}
-                  <v-icon color='blue-grey darken-1'>launch</v-icon>
-                </h4>
-                <v-spacer></v-spacer>
-                <p>Purse 360</p>
-              </v-card-title>
+
+              <component :is="currentView + 'Header'" :current="current" @event="toggleView"/>
+
               <transition
                 name="fade"
                 v-on:enter='enter'
@@ -45,14 +41,21 @@
 
 <script>
 import StrokePreview from '../components/Leaderboards/Stroke/Preview'
+import StrokePreviewHeader from '../components/Leaderboards/Stroke/PreviewHeader'
 import StrokeLeaderboard from '../components/Leaderboards/Stroke/Full'
+import StrokeLeaderboardHeader from '../components/Leaderboards/Stroke/FullHeader'
 import PuttingPreview from '../components/Leaderboards/Putting/Preview'
+import PuttingPreviewHeader from '../components/Leaderboards/Putting/PreviewHeader'
 import PuttingLeaderboard from '../components/Leaderboards/Putting/Full'
+import PuttingLeaderboardHeader from '../components/Leaderboards/Putting/FullHeader'
 import SkinsPreview from '../components/Leaderboards/Skins/Preview'
+import SkinsPreviewHeader from '../components/Leaderboards/Skins/PreviewHeader'
 import SkinsLeaderboard from '../components/Leaderboards/Skins/Full'
+import SkinsLeaderboardHeader from '../components/Leaderboards/Skins/FullHeader'
 import TeamPreview from '../components/Leaderboards/Team/Preview'
+import TeamPreviewHeader from '../components/Leaderboards/Team/PreviewHeader'
 import TeamLeaderboard from '../components/Leaderboards/Team/List'
-
+import TeamLeaderboardHeader from '../components/Leaderboards/Team/FullHeader'
 import router from 'vue-router'
 import { mapState } from 'vuex'
 
@@ -62,20 +65,30 @@ export default {
   components: {
     StrokePreview,
     StrokeLeaderboard,
+    StrokeLeaderboardHeader,
+    StrokePreviewHeader,
     PuttingPreview,
+    PuttingPreviewHeader,
     PuttingLeaderboard,
+    PuttingLeaderboardHeader,
     SkinsPreview,
+    SkinsPreviewHeader,
     SkinsLeaderboard,
+    SkinsLeaderboardHeader,
     TeamPreview,
-    TeamLeaderboard
+    TeamPreviewHeader,
+    TeamLeaderboard,
+    TeamLeaderboardHeader
   },
 
   data () {
     return {
       el: 'stroke',
       currentView: 'stroke-preview',
+      currentHeader: 'stroke-preview-header',
       activeButton: 'active',
-      inactiveButton: 'inactive'
+      inactiveButton: 'inactive',
+      purse: 480
 
     }
   },
@@ -90,18 +103,22 @@ export default {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'stroke-leaderboard'
+        this.currentHeader = 'stroke-full-header'
       } else if (event == 'stroke-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'stroke-preview'
+        this.currentHeader = 'stroke-preview-header'
       } else if (event == 'putting-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'putting-leaderboard'
+         this.currentHeader = 'putting-full-header'
       } else if (event == 'putting-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand')
         this.currentView = 'putting-preview'
+        this.currentHeader = 'putting-preview-header'
       } else if (event == 'skins-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand')
@@ -138,22 +155,11 @@ export default {
 }
 </script>
 <style>
+small.purse-color {
+  color: #666;
+}
 .no-back {
   background-color: transparent;
-}
-.putting-preview, .putting-leaderboard {
-  background-color: #ffa726;
-  font-size: 16px;
-}
-.stroke-preview, .stroke-leaderboard {
-  background-color: #62bcfa;
-  color: #f1f1f1;
-  font-size: 16px;
-}
-.skins-preview, .skins-leaderboard {
-  background-color: #6534ff;
-  color: #f1f1f1;
-  font-size: 16px;
 }
 .team-preview, .team-leaderboard {
   background-color: #f44336;

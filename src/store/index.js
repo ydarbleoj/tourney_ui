@@ -26,6 +26,7 @@ const store = new Vuex.Store({
     teeTime: [],
     teeTimes: [],
     user: {},
+    moneyList: [],
   },
   actions: {
     LOAD_TEAM_PREVIEW: function ({ commit, state }, { tournId }) {
@@ -110,6 +111,20 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
+    LOAD_MONEY_LIST: function ({ commit, state }, { tournId }) {
+      axios.get('/tournaments/' + tournId + '/info/money_list/totals.json').then((response) => {
+        commit('SET_MONEY_LIST', { list: response.data })
+      }, (err) => {
+        console.log('money list error', err)
+      })
+    },
+    LOAD_MONEY_PREVIEW: function ({ commit, state }, { tournId }) {
+      axios.get('/tournaments/' + tournId + '/info/money_list/previews.json').then((response) => {
+        commit('SET_MONEY_LIST', { list: response.data })
+      }, (err) => {
+        console.log('money list error', err)
+      })
+    },
     UPDATE_CURRENT_TOURNAMENT: function ({ commit }, payload) {
       console.log('update crr', payload)
       commit('CURRENT_TOURNAMENT', { list: payload })
@@ -170,6 +185,9 @@ const store = new Vuex.Store({
     },
     SET_TEAM_LEADERBOARD: (state, { list }) => {
       state.teamLeaderboard = list
+    },
+    SET_MONEY_LIST: (state, { list }) => {
+      state.moneyList = list
     },
   },
   getters: {

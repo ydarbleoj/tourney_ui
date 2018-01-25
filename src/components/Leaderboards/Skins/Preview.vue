@@ -3,7 +3,8 @@
     :headers="headers"
     v-bind:items="skins_leaderboards"
     hide-actions
-    class='skins'
+    hide-headers
+    class='skins-preview'
     item-key="username"
   >
     <template slot="items" slot-scope="props">
