@@ -2,21 +2,17 @@
   <v-app>
     <v-card color="grey lighten-4" flat height="56px">
       <v-toolbar fixed color="white darken-1">
-        <v-menu :nudge-width="200">
+        <v-menu :nudge-width="50">
           <v-toolbar-title slot="activator">
-            <h4 class="mb-0"><span class='grey--text'>{{ title }} </span></h4>
+            <span class='grey--text'>{{ title }} {{ year }} </span>
+            <v-icon light>arrow_drop_down</v-icon>
           </v-toolbar-title>
+          <v-list>
+            <v-list-tile v-for="item in items" :key="item" @click="updateMenu(item)">
+              <v-list-tile-title v-text="item"></v-list-tile-title>
+            </v-list-tile>
+          </v-list>
         </v-menu>
-        <v-flex xs3>
-          <v-select
-            v-bind:items="tournaments"
-            v-model="current"
-            label=''
-            item-text="year"
-            class="text-center green--text"
-          >
-          </v-select>
-        </v-flex>
         <v-spacer></v-spacer>
         <v-menu
           origin="center center"
@@ -84,7 +80,7 @@ export default {
       year: '',
       clipped: false,
       drawer: true,
-      fixed: false,
+      items: ['2017', '2016', 'Overall'],
       links: [
         'login', 'Courses', 'Home'
       ],
@@ -92,10 +88,16 @@ export default {
     }
   },
 
+  methods: {
+    updateMenu: function(event) {
+      this.current = this.tournaments.filter(tourn => tourn.year == event)[0]
+      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', this.current)
+    }
+  },
+
   watch: {
     current: function () {
-      console.log('watch', this.current)
-      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT',this.current)
+      this.year = this.current.year
     }
   },
 
@@ -104,16 +106,12 @@ export default {
   },
 
   mounted: function() {
+    this.year = this.currentTournament.year
     console.log('after', this.currentTournament)
   }
 }
 
 </script>
 <style>
-.input-group__selections__comma {
-  color: green;
-}
-/*.input-group__input {
-  display: none;
-}
-*/</style>
+
+</style>
