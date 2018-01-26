@@ -42,13 +42,13 @@
       <v-content>
         <v-container fluid text-xs-center class="pa-0">
           <v-layout row-wrap>
-            <leaderboards :current="currentTournament" />
+            <leaderboards v-model="isVisible" :current="currentTournament" v-observe-visibility="visibilityChanged" />
           </v-layout>
           <v-layout row-wrap>
-            <rounds :current="currentTournament" />
+            <rounds :current="currentTournament" v-observe-visibility="visibilityChanged" />
           </v-layout>
            <v-layout row-wrap>
-            <stats :current="currentTournament" />
+            <stats :current="currentTournament" v-observe-visibility="visibilityChanged" />
           </v-layout>
         </v-container>
       </v-content>
@@ -67,7 +67,7 @@ export default {
   components: {
     Leaderboards,
     Rounds,
-    Stats
+    Stats,
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),
@@ -77,7 +77,8 @@ export default {
   data () {
     return {
       current: this.currentTournament,
-      year: '',
+      year: '2017',
+      isVisible: false,
       clipped: false,
       drawer: true,
       items: ['2017', '2016', 'Overall'],
@@ -92,6 +93,10 @@ export default {
     updateMenu: function(event) {
       this.current = this.tournaments.filter(tourn => tourn.year == event)[0]
       this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', this.current)
+    },
+    visibilityChanged (isVisible, entry) {
+      this.isVisible = isVisible
+      console.log(entry)
     }
   },
 
@@ -102,6 +107,7 @@ export default {
   },
 
   created: function () {
+    this.year = '2017'
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
   },
 
