@@ -21,13 +21,11 @@ export default {
 
   watch: {
     current: function () {
-      console.log('curr rounf', this.current)
-      this.$store.dispatch('LOAD_USER_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
+
     }
   },
 
   created: function (current) {
-    this.$store.dispatch('LOAD_USER_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
   }
 }
 </script>

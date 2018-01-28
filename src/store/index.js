@@ -172,16 +172,14 @@ const store = new Vuex.Store({
       state.stroke_leaderboard = list
     },
     SET_COURSE: (state, { list }) => {
-      state.currentCourse = list
+      state.currentCourse = list[0]['course']
+      state.teeTime = list[0]['tee_times']
     },
     SET_TOURNAMENT_LIST: (state, { list }) => {
       state.tournaments = list
     },
     CURRENT_TOURNAMENT: (state, { list }) => {
       state.currentTournament = list
-    },
-    SET_USER_TEE_TIME: (state, { list }) => {
-      state.teeTime = list
     },
     SET_TEAM_LEADERBOARD: (state, { list }) => {
       state.teamLeaderboard = list
