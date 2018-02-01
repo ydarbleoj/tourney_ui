@@ -30,12 +30,22 @@
         <v-icon>{{ !show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
+       <v-btn flat v-if="this.$auth.user().admin == true" color='white' @click.native="showTime = !showTime">
+        <span>TEE TIMES</span>
+        <v-icon>{{ !showTime ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+      </v-btn>
     </v-card-actions>
     <transition
      class='transistions-course'
      name='slide-fade'
     >
       <stats :current='currentCourse' v-show="show" />
+    </transition>
+     <transition
+     class='transistions-course'
+     name='slide-fade'
+    >
+      <admin :current='currentRound' v-show="showTime" />
     </transition>
   </v-card>
 </template>
@@ -44,18 +54,21 @@
 import { mapState } from 'vuex'
 import Stats from './Stats'
 import TeeTime from './TeeTime'
+import Admin from './TeeTimes/Admin'
 
 export default {
   name: 'index',
   props: ['current'],
   components: {
     Stats,
-    TeeTime
+    TeeTime,
+    Admin
   },
 
   data () {
     return {
-      show: false
+      show: false,
+      showTime: false,
     }
   },
 

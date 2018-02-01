@@ -41,7 +41,6 @@ export default {
   methods: {
     login () {
       var redirect = this.$auth.redirect()
-
       this.$auth.login({
         data: { auth: { email: this.data.auth.email, password: this.data.auth.password } },
         redirect: '/profile',

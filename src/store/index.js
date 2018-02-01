@@ -25,6 +25,7 @@ const store = new Vuex.Store({
     currentRound: '',
     teeTime: [],
     teeTimes: [],
+    adminTeeTimes: [],
     user: {},
     moneyList: [],
   },
@@ -136,10 +137,10 @@ const store = new Vuex.Store({
     UPDATE_ROUNDS: function ({ commit }, payload) {
       commit('SET_ROUNDS', { list: payload.rounds })
     },
-    LOAD_USER_TEE_TIME: function ({ commit, state }, { tourn_id, roundNumber }) {
+    LOAD_ADMIN_TEE_TIME: function ({ commit, state }, { tourn_id, roundNumber }) {
       let options = { round: roundNumber }
       axios.get('/tournaments/' + tourn_id + '/tee_times.json', { params: options }).then((response) => {
-        commit('SET_USER_TEE_TIME', { list: response.data })
+        commit('SET_ADMIN_TEE_TIME', { list: response.data })
       }, (err) => {
         console.log(err)
       })
@@ -178,6 +179,9 @@ const store = new Vuex.Store({
     SET_TOURNAMENT_LIST: (state, { list }) => {
       state.tournaments = list
     },
+    SET_ADMIN_TEE_TIME: (state, { list }) => {
+      state.adminTeeTimes = list
+    },
     CURRENT_TOURNAMENT: (state, { list }) => {
       state.currentTournament = list
     },
@@ -195,6 +199,9 @@ const store = new Vuex.Store({
     getTournament: state => {
       return state.currentTournament
     },
+    adminTeeTimeGetter: state => {
+      return state.adminTeeTimes
+    }
 
 
   },

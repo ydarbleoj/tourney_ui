@@ -30,6 +30,10 @@
           <v-btn flat color="white" @click="updateScore">
             <h4>SAVE</h4>
           </v-btn>
+          <v-spacer></v-spacer>
+           <v-btn v-if="type === 'CLOSE'" color="white" @click="closeCard">
+            <h4>Close</h4>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -60,7 +64,7 @@ export default {
 
   data () {
     return {
-      // cardData: this.$route.params['user_sc'],
+      type: 'SAVE',
       tournId: this.$route.params.tournamentId,
       list: [],
       heightList: [],
@@ -105,18 +109,18 @@ export default {
     },
     closeCard() {
       this.$emit('event')
+      this.type == 'SAVE'
     },
     updateScore() {
-      this.closeCard()
       let us_id = this.cardData.user_score_id
       let options = { putts: this.putts, shots: this.shots }
 
       if (us_id) {
         this.$store.dispatch('SEND_USER_SCORE', { scorecardId: this.scorecardId, scoreId: this.cardData.user_score_id, options: options })
+        this.type = 'CLOSE'
       } else {
 
       }
-
     }
   }
 

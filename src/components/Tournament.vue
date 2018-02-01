@@ -1,7 +1,10 @@
 <template>
   <v-app>
     <v-card color="grey lighten-4" flat height="56px">
-      <v-toolbar fixed color="white darken-1">
+      <v-toolbar
+        fixed
+        color="white darken-1"
+      >
         <v-menu :nudge-width="50">
           <v-toolbar-title slot="activator">
             <span class='grey--text'>{{ title }} {{ year }} </span>
@@ -40,7 +43,7 @@
     </v-card>
     <main>
       <v-content>
-        <v-container fluid text-xs-center class="pa-0">
+        <v-container fluid text-xs-center class="pa-0" >
           <v-layout row-wrap>
             <leaderboards v-model="isVisible" :current="currentTournament" v-observe-visibility="visibilityChanged" />
           </v-layout>
@@ -112,7 +115,7 @@ export default {
   },
 
   mounted: function() {
-    this.year = this.currentTournament.year
+    // this.year = this.currentTournament.year
     console.log('after', this.currentTournament)
   }
 }

@@ -17,7 +17,7 @@
       </v-container>
       <v-card-actions class="trans">
         <v-spacer></v-spacer>
-        <v-btn flat color="light-blue lighten-1" :class="" value="rnd1" @click="updateRound(1)">
+        <v-btn flat value="rnd1" @click="updateRound(1)">
           <span>Rnd 1</span>
         </v-btn>
         <v-spacer></v-spacer>

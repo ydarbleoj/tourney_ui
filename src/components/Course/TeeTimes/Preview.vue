@@ -10,7 +10,7 @@
         </v-flex>
         <v-flex d-flex xs12 class='transparent pa-0'>
           <v-list dense class='transparent pa-0'>
-            <v-list-tile v-for="user in teeTime[1]" :key="user" class="tee-time-player">
+            <v-list-tile v-for="user in teeTime[1]" :key="user.user" class="tee-time-player">
               <v-list-tile-content class="white--text">
                 {{ user.user }}
               </v-list-tile-content>
