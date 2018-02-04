@@ -19,7 +19,7 @@
             </div>
           </v-flex>
           <v-flex xs4 class="tee-time-container pa-0">
-            <tee-time :current="teeTime" />
+            <tee-time :current="teeTime" v-if="teeTime.length > 0" />
           </v-flex>
         </v-layout>
       </v-container>
@@ -30,7 +30,7 @@
         <v-icon>{{ !show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-       <v-btn flat v-if="this.$auth.user().admin == true" color='white' @click.native="showTime = !showTime">
+       <v-btn flat v-if="this.$auth.user().admin == true" color='white' @click="toggleTeeTimes">
         <span>TEE TIMES</span>
         <v-icon>{{ !showTime ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
       </v-btn>
@@ -74,6 +74,18 @@ export default {
 
   computed: {
     ...mapState(['currentRound', 'currentTournament', 'currentCourse', 'teeTime'])
+  },
+
+  methods: {
+    toggleTeeTimes: function() {
+      console.log('clicked', this.showTime === false)
+      if (this.showTime === false) {
+        this.$store.dispatch('LOAD_ADMIN_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
+        this.showTime = true
+      } else if (this.showTime === true){
+        this.showTime = false
+      }
+    }
   },
 
   watch: {

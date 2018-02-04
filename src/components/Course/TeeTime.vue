@@ -25,8 +25,6 @@ export default {
     }
   },
 
-  created: function (current) {
-  }
 }
 </script>
 <style>

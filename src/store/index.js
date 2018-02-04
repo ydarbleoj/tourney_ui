@@ -25,6 +25,8 @@ const store = new Vuex.Store({
     currentRound: '',
     teeTime: [],
     teeTimes: [],
+    awaitingTees: [],
+    adminMessage: '',
     adminTeeTimes: [],
     user: {},
     moneyList: [],
@@ -145,6 +147,24 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
+    CREATE_TEE_TIMES: function ({ commit, state }, { tournId, roundNumber, teeTimes }) {
+      let options = { round: roundNumber, times: teeTimes }
+      axios.post('/tournaments/' + tournId + '/tee_times.json', { params: options }).then((response) => {
+        commit('SET_ADMIN_MESSAGE', { list: response.data })
+      }, (err) => {
+        commit('SET_ADMIN_MESSAGE', { list: response.data })
+        console.log(err)
+      })
+    },
+    UPDATE_ADMIN_TEE_TIME: function({ commit, state }, { tournId, roundNumber, teeTimes, id }) {
+      let options = { round: roundNumber, times: teeTimes }
+      axios.put('/tournaments/' + tournId + '/tee_times/' + id + '.json', { params: options }).then((response) => {
+        commit('SET_ADMIN_MESSAGE', { list: response.data })
+      }, (err) => {
+        console.log('admin error', err)
+        commit('SET_ADMIN_MESSAGE', { list: response.data })
+      })
+    },
     UPDATE_PROFILE_EDIT: function ({ commit }, payload) {
       console.log('edit pay', payload)
       // axios.get('/users/')
@@ -180,7 +200,11 @@ const store = new Vuex.Store({
       state.tournaments = list
     },
     SET_ADMIN_TEE_TIME: (state, { list }) => {
-      state.adminTeeTimes = list
+      state.adminTeeTimes = list[0]['times']
+      state.awaitingTees = list[0]['awaiting']
+    },
+    SET_ADMIN_MESSAGE: (state, { list }) => {
+      state.adminMessage = list
     },
     CURRENT_TOURNAMENT: (state, { list }) => {
       state.currentTournament = list
@@ -201,6 +225,9 @@ const store = new Vuex.Store({
     },
     adminTeeTimeGetter: state => {
       return state.adminTeeTimes
+    },
+    adminMessageGetter: state => {
+      return state,adminMessage
     }
 
 

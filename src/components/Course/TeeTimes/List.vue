@@ -1,16 +1,15 @@
 <template>
-  <v-card tile>
-    <v-card-title class="yellow lighten-3" @click="">
-      <p class="">{{ current}}</p>
-    </v-card-title>
-    {{ current }}
-     <!--  <h5>{{ current.group }}</h5>
-      <v-spacer></v-spacer>
-      <h5>{{ current.tee_time.split('T')[1] }}</h5> -->
-       <!--  <p>{{ current.player_one }}</p>
-         <p>{{ current.player_two }}</p>
-         <p>{{ current.player_three }}</p>
-         <p>{{ current.player_four }}</p> -->
+  <v-card flat tile>
+    <v-list>
+      <v-list-tile v-for="(item, index) in tees" v-bind:key="item.user" @click="removeElement(item.user, index)">
+        <v-list-tile-content>
+          <v-list-tile-title v-text="item.user">{{item}}</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action>
+
+        </v-list-tile-action>
+      </v-list-tile>
+    </v-list>
   </v-card>
 </template>
 
@@ -19,13 +18,10 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'List',
-  props: ['current'],
+  props: ['tees'],
   components: {
   },
 
-  computed: {
-    ...mapState(['teeTime', 'currentRound', 'currentTournament', 'currentCourse'])
-  },
 
   // watch: {
   //   current: function () {
