@@ -50,7 +50,7 @@ Vue.router = router
 Vue.use(VueAuth, {
     auth: {
       request: function (req, token) {
-        console.log('req', reg)
+        console.log('req', req)
         this.options.http._setHeaders.call(this, req, {Authorization: 'Bearer ' + token});
         console.log('options', this.options)
       },
