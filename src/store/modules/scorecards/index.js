@@ -1,4 +1,6 @@
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
+
 
 const state = {
   playerScorecard: [],
@@ -80,6 +82,6 @@ export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 }
 
