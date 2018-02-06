@@ -50,11 +50,17 @@ Vue.router = router
 Vue.use(VueAuth, {
     auth: {
       request: function (req, token) {
+        console.log('req', reg)
         this.options.http._setHeaders.call(this, req, {Authorization: 'Bearer ' + token});
+        console.log('options', this.options)
       },
       response: function (res) {
+        console.log('res', res)
         var headers = this.options.http._getHeaders.call(this, res),
             token = headers.Authorization || res.data.jwt;
+
+            console.log('headers', headers)
+            console.log('token', token)
 
         if (token) {
           token = token.split(/Bearer\:?\s?/i);
