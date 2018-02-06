@@ -22,7 +22,7 @@
               <v-list-tile-sub-title class="text-xs-center" color="blue darken-1">{{ userScore.putts}}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-content>
-              {{ userScore.handicap }}
+              <v-list-tile-sub-title class="text-xs-center handicap-color"><span>{{ userScore.handicap }}</span> hcap</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
           <transition
@@ -111,9 +111,14 @@ export default {
   .three-putt {
     color: red;
   }
+  div.list__tile__sub-title.text-xs-center.handicap-color span {
+    color: #6CADED;
+  }
   .on_expand {
     padding-top: 130px;
-  }
+/*    position: absolute;
+    overflow: scroll;
+*/  }
   .center-div {
     position: fixed;
     z-index: 1000;

@@ -72,7 +72,7 @@
         </v-layout>
       </v-container>
     </v-card-title>
-    <v-card-text class="pa-0">
+    <v-card-text class="pa-0" ref="scorecardList">
 
       <v-layout row wrap white v-if="currentView == 'fullCard'">
         <transition
@@ -117,18 +117,30 @@ export default {
   },
 
   methods: {
+    expandParent: function(event) {
+      event.scorecardCard.$el.style.width = '100%';
+      event.scorecardCard.$el.style.position = 'fixed';
+      event.scorecardCard.$el.style.left = '0';
+      event.scorecardCard.$el.style.top = '0';
+      event.scorecardCard.$el.style.height = '100%';
+      event.scorecardCard.$el.style.overflow = 'scroll';
+      event.scorecardCard.$el.style.zIndex = '8888';
+      event.scorecardCard.$el.style.transitionDelay = '0.5s';
+    },
+    closeParent: function(event) {
+      event.scorecardCard.$el.style.cssText = null;
+    },
     toggleView: function (event) {
       if (event == 'preview') {
-        this.$parent.$el.classList.toggle('expand')
         this.$refs.scorecardCard.$el.classList.toggle('expand')
         this.$refs.cardHeader.classList.toggle('fix_header')
         this.currentView = 'fullCard'
+        this.expandParent(this.$refs)
       } else if (event == 'fullCard') {
-        this.$parent.$el.classList.toggle('expand')
         this.$refs.scorecardCard.$el.classList.toggle('expand')
         this.$refs.cardHeader.classList.toggle('fix_header')
         this.currentView = 'preview'
-
+        this.closeParent(this.$refs)
       }
     },
     beforeEnter: function(el) {
@@ -175,11 +187,9 @@ div.card.scorecard_container.expand {
   top: 0;
   left: 0;
   padding: 0;
-  z-index: 2000;
+  z-index: 8888;
   width: 100%;
   height: 100%;
-  position: fixed;
-  overflow: auto;
 }
 div.card__title.scorecard-card.pa-0.fix_header {
   position: fixed;

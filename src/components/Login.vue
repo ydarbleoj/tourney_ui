@@ -7,12 +7,12 @@
           <v-text-field
             label="Email"
             v-model="data.auth.email"
-            :counter="10"
             required
           ></v-text-field>
           <v-text-field
             label="Password"
             v-model="data.auth.password"
+            placeholder='8 Characters Minumum'
             required
           ></v-text-field>
 

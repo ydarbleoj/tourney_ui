@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 id='leaderboard-container'>
+  <v-flex xs12 id='leaderboard-container' ref="leaderboard">
     <v-card flat color="transparent" class="grey--text" ref="leaderboardContainer">
       <v-card-title primary-title>
         <h3>Leaderboards</h3>
@@ -98,43 +98,66 @@ export default {
   },
 
   methods: {
+    expandParent: function(event) {
+      event.leaderboard.style.width = '100%';
+      event.leaderboard.style.position = 'fixed';
+      event.leaderboard.style.left = '0';
+      event.leaderboard.style.top = '0';
+      event.leaderboard.style.height = '100%';
+      event.leaderboard.style.overflow = 'hidden';
+      event.leaderboard.style.zIndex = '8888';
+      event.leaderboard.style.transitionDelay = '0.5s';
+      event.leaderboardContainer.height = '100%';
+    },
+    closeParent: function (event) {
+      event.leaderboard.style.cssText = null;
+      event.leaderboardContainer.cssText = null;
+    },
     toggleView: function (event) {
       if (event === 'stroke-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'stroke-leaderboard'
         this.currentHeader = 'stroke-full-header'
+        this.expandParent(this.$refs)
       } else if (event == 'stroke-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'stroke-preview'
         this.currentHeader = 'stroke-preview-header'
+        this.closeParent(this.$refs)
       } else if (event == 'putting-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'putting-leaderboard'
-         this.currentHeader = 'putting-full-header'
+        this.currentHeader = 'putting-full-header'
+        this.expandParent(this.$refs)
       } else if (event == 'putting-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'putting-preview'
         this.currentHeader = 'putting-preview-header'
+        this.closeParent(this.$refs)
       } else if (event == 'skins-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'skins-leaderboard'
+        this.expandParent(this.$refs)
       } else if (event == 'skins-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'skins-preview'
+        this.closeParent(this.$refs)
       } else if (event == 'team-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'team-leaderboard'
+        this.expandParent(this.$refs)
       } else if (event == 'team-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand')
+        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
+        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
         this.currentView = 'team-preview'
+        this.closeParent(this.$refs)
       }
     },
     beforeEnter: function(el) {
@@ -146,10 +169,6 @@ export default {
     afterEnter: function(el) {
       el.style.opacity = 1
     },
-    expandParent: function() {
-      this.$parent.$el.style.width = '100%';
-      this.$parent.$el.style.position = 'fixed';
-    }
   }
 
 }
@@ -166,14 +185,24 @@ small.purse-color {
   color: #f1f1f1;
   font-size: 16px;
 }
-.expand {
+.expand-container {
   top: 0;
   left: 0;
-  bottom: 0;
   padding: 0;
   z-index: 9999;
   width: 100%;
   height: 100%;
+  overflow:  scroll;
+}
+.expand-leaderboard {
+  top: 0;
+  left: 0;
+  padding: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  overflow:  scroll;
+  position: absolute;
 }
 .slide-fade-enter-active {
   transition: all .8s ease;

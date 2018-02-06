@@ -72,7 +72,6 @@ export default {
 
   methods: {
     expandParent: function(event) {
-      console.log('here', event.moneyList)
       event.moneyList.style.width = '100%';
       event.moneyList.style.position = 'fixed';
       event.moneyList.style.left = '0';
@@ -81,20 +80,21 @@ export default {
       event.moneyList.style.overflow = 'hidden';
       event.moneyList.style.zIndex = '8888';
       event.moneyList.style.transitionDelay = '0.5s';
+      event.moneyListContainer.height = '100%';
     },
     closeParent: function(event) {
       event.moneyList.style.cssText = null;
     },
     toggleView: function (event) {
       if (event === 'money-preview') {
-        this.$refs.moneyListCard.$el.classList.toggle('expand')
-        this.$refs.moneyListContainer.$el.classList.toggle('expand')
+        this.$refs.moneyListCard.$el.classList.toggle('expand-stats')
+        this.$refs.moneyListContainer.$el.classList.toggle('expand-container')
         this.currentView = 'money-list'
         this.currentHeader = 'money-list-header'
         this.expandParent(this.$refs)
       } else if (event == 'money-list') {
-        this.$refs.moneyListCard.$el.classList.toggle('expand')
-        this.$refs.moneyListContainer.$el.classList.toggle('expand')
+        this.$refs.moneyListCard.$el.classList.toggle('expand-stats')
+        this.$refs.moneyListContainer.$el.classList.toggle('expand-container')
         this.currentView = 'money-preview'
         this.currentHeader = 'money-preview-header'
         this.closeParent(this.$refs)
@@ -114,7 +114,15 @@ export default {
 }
 </script>
 <style>
-.expand {
+.expand-container {
+  top: 0;
+  left: 0;
+  padding: 0;
+  z-index: 9999;
+  width: 100%;
+  overflow:  scroll;
+}
+.expand-stats {
   top: 0;
   left: 0;
   padding: 0;

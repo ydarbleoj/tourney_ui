@@ -13,19 +13,19 @@
         <v-flex xs1>
           <label>Pos</label>
         </v-flex>
-        <v-flex xs2 class="text-xs-left">
+        <v-flex xs3 class="text-xs-left">
           <label class="pl-1">Player</label>
         </v-flex>
-        <v-flex class="text-xs-right pl-2">
+        <v-flex class="text-xs-center">
           <label>Stroke</label>
         </v-flex>
-        <v-flex class="text-xs-right">
+        <v-flex class="text-xs-center">
           <label>Putting</label>
         </v-flex>
         <v-flex class="text-xs-center">
           <label>Team</label>
         </v-flex>
-        <v-flex class="text-xs-left">
+        <v-flex class="text-xs-center">
           <label>Skins</label>
         </v-flex>
         <v-flex class="text-xs-center">

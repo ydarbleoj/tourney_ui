@@ -82,22 +82,23 @@ export default {
   },
 
   created: function () {
-    this.puttBinding = this.cardData.putts
-    this.putts = this.cardData.putts
+    this.puttBinding = this.cardData.putts == null ? 2 : this.cardData.putts
+    this.putts = this.puttBinding
     this.filterShots()
   },
 
   methods: {
     filterShots() {
-      let elem = this.cardData.score
-      this.shots = elem
-      let that = this
+      let elem = this.cardData.score == null ? this.cardData.par : this.cardData.score;
       let shot;
+      let that = this;
+
+      this.shots = elem
+
       this.shotList[this.cardData.par - 3].filter(function(el){
         if(el.value == elem) {
           shot = that.shotBinding = el.value;
         }
-
       });
       return shot
     },
@@ -105,6 +106,7 @@ export default {
       this.shots = value
     },
     changePutts(value) {
+      console.log('putts value', value)
       this.putts = value
     },
     closeCard() {
@@ -114,12 +116,15 @@ export default {
     updateScore() {
       let us_id = this.cardData.user_score_id
       let options = { putts: this.putts, shots: this.shots }
-
+      console.log('options', options)
       if (us_id) {
         this.$store.dispatch('SEND_USER_SCORE', { scorecardId: this.scorecardId, scoreId: this.cardData.user_score_id, options: options })
         this.type = 'CLOSE'
       } else {
-
+        let user_score = { handicap: this.scorecard.handicap, par: this.cardData.par, number: this.cardData.number, putts: this.putts, shots: this.shots }
+        console.log('user score', user_score)
+        this.$store.dispatch('CREATE_USER_SCORE', { scorecardId: this.scorecardId, options: user_score })
+        this.type = 'CLOSE'
       }
     }
   }

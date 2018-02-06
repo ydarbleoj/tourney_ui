@@ -29,6 +29,15 @@ const actions = {
       console.log('set score', err)
     })
   },
+  CREATE_USER_SCORE: function ({ commit, state }, { scorecardId, options }) {
+    axios.post('/scorecards/' + scorecardId + '/user_scores.json', { user_score: options })
+    .then((response) => {
+      commit('SET_SCORECARD', { list: response.data[0]['sc'] })
+      commit('SET_SCORE_LIST', { list: response.data[0]['us'] })
+    }, (err) => {
+      console.log('send score error', err)
+    })
+  },
   SEND_USER_SCORE: function ({ commit, state }, { scorecardId, scoreId, options, tournId }) {
     axios.put('/scorecards/' + scorecardId + '/user_scores/' + scoreId + '.json', { params: options })
     .then((response) => {
