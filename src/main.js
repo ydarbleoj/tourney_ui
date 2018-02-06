@@ -41,7 +41,7 @@ Vue.use(VueObserveVisibility)
 Vue.use(Vuelidate)
 
 // axios.defaults.baseURL = 'http://localhost:3000'
-axios.defaults.baseURL = 'http://www.tourney-app.com'
+// axios.defaults.baseURL = 'http://www.tourney-app.com'
 
 
 Vue.use(VueAxios, axios)
