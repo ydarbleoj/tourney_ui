@@ -41,7 +41,7 @@ Vue.use(VueObserveVisibility)
 Vue.use(Vuelidate)
 
 // axios.defaults.baseURL = 'http://localhost:3000'
-axios.defaults.baseURL = 'tourney-app.com'
+axios.defaults.baseURL = 'http://www.tourney-app.com'
 
 
 Vue.use(VueAxios, axios)
@@ -53,11 +53,9 @@ Vue.use(VueAuth, {
         this.options.http._setHeaders.call(this, req, {Authorization: 'Bearer ' + token});
       },
       response: function (res) {
-        console.log('here', res)
         var headers = this.options.http._getHeaders.call(this, res),
             token = headers.Authorization || res.data.jwt;
 
-        console.log('token', token)
         if (token) {
           token = token.split(/Bearer\:?\s?/i);
 
