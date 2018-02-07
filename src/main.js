@@ -68,7 +68,7 @@ Vue.use(VueAuth, {
     parseUserData: function (data) {
       return data;
     },
-    refreshData: { url: '', method: 'GET', enabled: false, interval: 0 }
+    refreshData: { url: 'users', method: 'GET', enabled: false, interval: 0 }
 })
 
 Vue.use(Vuetify, {

@@ -44,7 +44,8 @@ export default new Router({
     {
       path: '/tournaments',
       name: 'Tournament',
-      component: Tournament
+      component: Tournament,
+      meta: { auth: true }
     },
     {
       path: '/tournaments/:id/leaderboards',

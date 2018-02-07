@@ -5,9 +5,6 @@
         <v-card-media src="/static/sand.jpg" height="300px">
           <v-layout column class="media">
             <v-card-title>
-              <v-btn dark icon>
-                <v-icon>chevron_left</v-icon>
-              </v-btn>
               <v-spacer></v-spacer>
               <!-- <v-btn dark icon class="mr-3"> -->
                 <router-link :to="'/profile/edit/' + this.$auth.user().id"><v-icon color="white">edit</v-icon></router-link>
@@ -74,16 +71,6 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Bandon</v-list-tile-title>
-              <v-list-tile-sub-title></v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        <v-divider inset></v-divider>
-          <v-list-tile @click="">
-            <v-list-tile-action>
-              <v-icon color="light-blue">golf_course</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Scorecards</v-list-tile-title>
               <v-list-tile-sub-title></v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>

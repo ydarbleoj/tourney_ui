@@ -72,18 +72,22 @@ export default {
 
   methods: {
     expandParent: function(event) {
-      event.moneyList.style.width = '100%';
+      console.log('event', event.moneyListContainer.$el)
       event.moneyList.style.position = 'fixed';
+      event.moneyList.style.backgroundColor = '#f1f1f1';
+      event.moneyList.style.width = '100%';
       event.moneyList.style.left = '0';
       event.moneyList.style.top = '0';
       event.moneyList.style.height = '100%';
       event.moneyList.style.overflow = 'hidden';
       event.moneyList.style.zIndex = '8888';
       event.moneyList.style.transitionDelay = '0.5s';
-      event.moneyListContainer.height = '100%';
+      event.moneyListContainer.$el.style.height = '100%';
+      event.moneyListContainer.$el.style.zIndex = '7777'
     },
     closeParent: function(event) {
       event.moneyList.style.cssText = null;
+      event.moneyListContainer.$el.style.cssText = null;
     },
     toggleView: function (event) {
       if (event === 'money-preview') {
