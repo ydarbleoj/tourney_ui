@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 id='leaderboard-container' ref="leaderboard">
+  <v-flex xs12 sm12 lg10 id='leaderboard-container' ref="leaderboard">
     <v-card flat color="transparent" class="grey--text" ref="leaderboardContainer">
       <v-card-title primary-title>
         <h3>Leaderboards</h3>
@@ -21,7 +21,8 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-card-actions class="expand-footer ma-0">
+      <v-card-actions class="">
+        <v-spacer></v-spacer>
         <v-btn flat class="grey--text no-back ma-0" value="stroke" @click="currentView='stroke-preview'">
           <span>Stroke</span>
         </v-btn>
@@ -34,6 +35,7 @@
         <v-btn flat class="grey--text no-back ma-0" value="team" @click="currentView='team-preview'">
           <span>Team</span>
         </v-btn>
+        <v-spacer></v-spacer>
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -99,19 +101,21 @@ export default {
 
   methods: {
     expandParent: function(event) {
-      event.leaderboard.style.width = '100%';
+      console.log('heioght', event.leaderboardContainer.$el.style.zIndex)
       event.leaderboard.style.position = 'fixed';
+      event.leaderboard.style.backgroundColor = '#f1f1f1';
+      event.leaderboard.style.width = '100%';
       event.leaderboard.style.left = '0';
       event.leaderboard.style.top = '0';
       event.leaderboard.style.height = '100%';
       event.leaderboard.style.overflow = 'hidden';
       event.leaderboard.style.zIndex = '8888';
-      event.leaderboard.style.transitionDelay = '0.5s';
-      event.leaderboardContainer.height = '100%';
+      event.leaderboardContainer.$el.style.height = '100%';
+      event.leaderboardContainer.$el.style.zIndex = '7777';
     },
     closeParent: function (event) {
+      event.leaderboardContainer.$el.style.cssText = null;
       event.leaderboard.style.cssText = null;
-      event.leaderboardContainer.cssText = null;
     },
     toggleView: function (event) {
       if (event === 'stroke-preview') {

@@ -31,11 +31,6 @@
                 <router-link :to="'profile'">Profile</router-link>
               </v-list-tile-title>
             </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-title>
-                <router-link :to="'login'">Login</router-link>
-              </v-list-tile-title>
-            </v-list-tile>
           </v-list>
         </v-menu>
 
@@ -45,13 +40,13 @@
       <v-content>
         <v-container fluid text-xs-center class="pa-0" >
           <v-layout row-wrap>
-            <leaderboards v-model="isVisible" :current="currentTournament" v-observe-visibility="visibilityChanged" />
+            <leaderboards :current="currentTournament" />
           </v-layout>
           <v-layout row-wrap>
-            <rounds :current="currentTournament" v-observe-visibility="visibilityChanged" />
+            <rounds :current="currentTournament"  />
           </v-layout>
            <v-layout row-wrap>
-            <stats :current="currentTournament" v-observe-visibility="visibilityChanged" />
+            <stats :current="currentTournament"  />
           </v-layout>
         </v-container>
       </v-content>
@@ -81,13 +76,9 @@ export default {
     return {
       current: this.currentTournament,
       year: '2017',
-      isVisible: false,
       clipped: false,
       drawer: true,
-      items: ['2017', '2016', 'Overall'],
-      links: [
-        'login', 'Courses', 'Home'
-      ],
+      items: ['2017', '2016', '2015'],
       title: 'Bandon',
     }
   },

@@ -3,12 +3,21 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import scorecards from './modules/scorecards'
 import createPersistedState from 'vuex-persistedstate'
+// import * as Cookies from 'js-cookie'
 
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [ createPersistedState()
+    // createPersistedState({
+    //   storage: {
+    //     getItem: key => Cookies.get(key),
+    //     setItem: (key, value) => Cookies.set(key, value, { expires: 5, secure: true }),
+    //     removeItem: key => Cookies.remove(key)
+    //   }
+    // })
+  ],
   state: {
     courses: [],
     currentCourse: [],

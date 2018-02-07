@@ -31,7 +31,8 @@ export default {
         auth: {
           id: '',
           email: '',
-          password: ''
+          password: '',
+          rememberMe: true,
         },
         fetchUser: true
       },
@@ -45,6 +46,7 @@ export default {
         data: { auth: { email: this.data.auth.email, password: this.data.auth.password } },
         redirect: '/profile',
         fetchUser: true,
+        rememberMe: this.data.auth.rememberMe,
       }).then(res => {
         console.log('login', res)
       }, (res) => {
