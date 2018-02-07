@@ -5,7 +5,7 @@
         <h5>SKINS LEADERBOARD</h5>
       </v-flex>
       <v-flex xs3 class="text-xs-center pt-2">
-        <small class="purse-color">purse $ {{ current.num_players * 30 }}</small>
+        <small class="">purse $ {{ current.num_players * 30 }}</small>
       </v-flex>
     </v-layout>
     <v-container class="pa-0" fluid>

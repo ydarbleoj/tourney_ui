@@ -9,14 +9,11 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  plugins: [ createPersistedState()
-    // createPersistedState({
-    //   storage: {
-    //     getItem: key => Cookies.get(key),
-    //     setItem: (key, value) => Cookies.set(key, value, { expires: 5, secure: true }),
-    //     removeItem: key => Cookies.remove(key)
-    //   }
-    // })
+  plugins: [
+    createPersistedState({
+      paths: ['currentTournament', 'tournaments']
+    })
+
   ],
   state: {
     courses: [],
