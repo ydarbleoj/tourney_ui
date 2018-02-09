@@ -8,7 +8,6 @@
     item-key="username"
   >
     <template slot="items" slot-scope="props">
-      <p class="hidden-xs-only">{{ current }}</p>
       <tr @click="props.expanded = !props.expanded">
         <td class="text-xs-center">{{ props.item.pos }}</td>
         <td class="text-xs-center">{{ props.item.username }}</td>

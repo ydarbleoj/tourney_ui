@@ -40,6 +40,9 @@
       <v-content>
         <v-container fluid text-xs-center class="pa-0" >
           <v-layout row-wrap>
+            <handicap :current="currentTournament" v-if="currentTournament.handicap == false" />
+          </v-layout>
+          <v-layout row-wrap>
             <leaderboards :current="currentTournament" />
           </v-layout>
           <v-layout row-wrap>
@@ -59,6 +62,7 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
 import Stats from '../components/Stats/index'
+import Handicap from '../components/Leaderboards/Handicap'
 
 export default {
   name: 'Tournament',
@@ -66,6 +70,7 @@ export default {
     Leaderboards,
     Rounds,
     Stats,
+    Handicap
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),
@@ -75,10 +80,10 @@ export default {
   data () {
     return {
       current: this.currentTournament,
-      year: '2017',
+      year: '2018',
       clipped: false,
       drawer: true,
-      items: ['2017', '2016', '2015'],
+      items: ['2018', '2017', '2016', '2015'],
       title: 'Bandon',
     }
   },
@@ -101,7 +106,7 @@ export default {
   },
 
   created: function () {
-    this.year = '2017'
+    this.year = '2018'
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
   },
 

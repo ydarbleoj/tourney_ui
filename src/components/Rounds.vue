@@ -10,10 +10,10 @@
             <course :current="currentRound" />
           </v-flex>
         </v-layout>
-        <v-layout row>
+        <v-layout row >
           <v-flex lg12>
             <h4 class="text-xs-left mb-0 mt-1">Scorecard</h4>
-            <scorecard :current="currentRound" />
+            <scorecard :current="currentRound" v-if="currentRound.scorecard_id != null"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -81,7 +81,7 @@ export default {
 
   watch: {
     current: function () {
-    console.log('curr this round', this.currentCourse)
+    console.log('curr this round', this.currentRound.scorecard_id)
       this.$store.dispatch('UPDATE_CURRENT_ROUND', this.current.rounds[0])
     }
   },

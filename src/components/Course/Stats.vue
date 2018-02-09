@@ -48,9 +48,9 @@
           <v-list two-lines class="pa-0" >
             <v-subheader>Personal </v-subheader>
             <v-list-tile-content>
-              <h3 class="mb-0 pers-record">
-              {{ courseStats.user.lowest_round }} <span class="personal">2016</span>
-              </h3>
+              <h5 class="mb-0 pers-record">
+              {{ courseStats.user.lowest_round }} <span class="personal"></span>
+              </h5>
             </v-list-tile-content>
           </v-list>
         </v-card>

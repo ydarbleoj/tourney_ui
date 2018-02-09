@@ -37,8 +37,8 @@ import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
 
-// axios.defaults.baseURL = 'http://localhost:3000'
-axios.defaults.baseURL = 'http://www.tourney-app.com'
+axios.defaults.baseURL = 'http://localhost:3000'
+// axios.defaults.baseURL = 'http://www.tourney-app.com'
 
 
 Vue.use(VueAxios, axios)
@@ -68,7 +68,7 @@ Vue.use(VueAuth, {
     parseUserData: function (data) {
       return data;
     },
-    refreshData: { url: 'users', method: 'GET', enabled: false, interval: 0 }
+    refreshData: { url: 'users/refresh', method: 'GET', enabled: false, interval: 0 }
 })
 
 Vue.use(Vuetify, {

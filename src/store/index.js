@@ -35,11 +35,20 @@ const store = new Vuex.Store({
     teeTimes: [],
     awaitingTees: [],
     adminMessage: '',
+    handicapMessage: '',
     adminTeeTimes: [],
     user: {},
     moneyList: [],
   },
   actions: {
+    UPDATE_HANDICAP: function ({ commit, state }, { tournId, leaderboardId, handicap }) {
+      let options = { handicap: handicap }
+      axios.put('/tournaments/' + tournId + '/leaderboards/' + leaderboardId + '.json', { params: options }).then((response) => {
+        commit('SET_HANDICAP', { list: response.data })
+      }, (err) => {
+        commit('SET_HANDICAP', { list: response.data })
+      })
+    },
     LOAD_TEAM_PREVIEW: function ({ commit, state }, { tournId }) {
       axios.get('/tournaments/' + tournId + '/leaderboards/teams/previews.json').then((response) => {
         commit('SET_TEAM_LEADERBOARD', { list: response.data })
@@ -179,6 +188,9 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    SET_HANDICAP: (state, { list }) => {
+      state.handicapMessage = list
+    },
     SET_COURSE_STATS: (state, { list }) => {
       state.courseStats = list
     },
