@@ -36,9 +36,7 @@ import VueAuth from '@websanova/vue-auth'
 import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
-
-// axios.defaults.baseURL = 'http://localhost:3000'
-axios.defaults.baseURL = 'http://www.tourney-app.com'
+axios.defaults.baseURL = process.env.ROOT_API
 
 
 Vue.use(VueAxios, axios)
