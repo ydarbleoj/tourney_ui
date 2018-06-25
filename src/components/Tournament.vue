@@ -106,6 +106,7 @@ export default {
   },
 
   created: function () {
+    console.log('created')
     this.year = '2018'
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
   },

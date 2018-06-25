@@ -11,7 +11,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ['currentTournament', 'tournaments']
+      paths: ['currentTournament', 'tournaments', 'user']
     })
 
   ],
