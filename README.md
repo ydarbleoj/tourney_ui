@@ -1,6 +1,6 @@
-# tourn_ui
+# Tourney App (client side)
 
-> A Vue.js project
+> Vanity project that doubles as a test site for new tools, Vue.js specifically.
 
 ## Build Setup
 
@@ -27,4 +27,4 @@ npm run e2e
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
