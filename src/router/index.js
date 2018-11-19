@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Tournament from '@/components/Tournament'
+import TournamentDashboard from '@/components/Tournament/Dashboard'
 import Leaderboards from '@/components/Leaderboards'
 import Rounds from '@/components/Rounds'
 import Course from '@/components/Course/index'
@@ -42,56 +43,56 @@ export default new Router({
       meta: { auth: true },
     },
     {
-      path: '/tournaments',
+      path: '/tournaments_dashboard',
+      name: 'Dashboard',
+      component: TournamentDashboard,
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament',
       name: 'Tournament',
       component: Tournament,
-      meta: { auth: true }
-    },
-    {
-      path: '/tournaments/:id/leaderboards',
-      name: 'Leaderboards',
-      component: Leaderboards,
       props: { default: true }
     },
-    {
-      path: '/tournaments/:id/rounds',
-      name: 'Rounds',
-      component: Rounds,
-      props: { default: true }
-    },
-    {
-      path: '/tournaments/:id/stats',
-      name: 'Stats',
-      component: Stats,
-      props: { default: true }
-    },
-    {
-      path: '/tournaments/:id/course/:id',
-      name: 'Course',
-      component: Course,
-      props: { default: true }
+    // {
+    //   path: '/tournaments/:id/rounds',
+    //   name: 'Rounds',
+    //   component: Rounds,
+    //   props: { default: true }
+    // },
+    // {
+    //   path: '/tournaments/:id/stats',
+    //   name: 'Stats',
+    //   component: Stats,
+    //   props: { default: true }
+    // },
+    // {
+    //   path: '/tournaments/:id/course/:id',
+    //   name: 'Course',
+    //   component: Course,
+    //   props: { default: true }
 
-    },
-    {
-      path: '/tournaments/:tournId/tee_time/:id',
-      name: 'TeeTime',
-      component: TeeTime,
-      props: { default: true }
+    // },
+    // {
+    //   path: '/tournaments/:tournId/tee_time/:id',
+    //   name: 'TeeTime',
+    //   component: TeeTime,
+    //   props: { default: true }
 
-    },
-    {
-      path: '/tournaments/:tournId/scorecard/:scorecardId',
-      name: 'Scorecard',
-      component: Scorecard,
-      props: { default: true },
-      meta: { auth: true }
-    },
-    {
-      path: '/scorecard/:scorecardId/user_scores/:scoreId',
-      name: 'UserScore',
-      component: UserScore,
-      props: { default: true },
-      meta: { auth: true }
-    },
+    // },
+    // {
+    //   path: '/tournaments/:tournId/scorecard/:scorecardId',
+    //   name: 'Scorecard',
+    //   component: Scorecard,
+    //   props: { default: true },
+    //   meta: { auth: true }
+    // },
+    // {
+    //   path: '/scorecard/:scorecardId/user_scores/:scoreId',
+    //   name: 'UserScore',
+    //   component: UserScore,
+    //   props: { default: true },
+    //   meta: { auth: true }
+    // },
   ]
 })

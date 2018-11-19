@@ -1,21 +1,20 @@
 <template>
   <v-data-table
     :headers="headers"
-    v-bind:items="skins_leaderboards"
+    :items="skins_leaderboard"
     hide-actions
-    hide-headers
-    class='skins'
+    class='skins rounded-card'
     item-key="username"
   >
-    <template slot="items" slot-scope="props">
-      <tr @click="props.expanded = !props.expanded">
-        <td class="text-xs-center">{{ props.item.pos }}</td>
-        <td class="text-xs-center">{{ props.item.username }}</td>
-        <td class="text-xs-center">${{ props.item.money[0].money_total}}</td>
-        <td class="text-xs-center">{{ props.item.rnd1 }}</td>
-        <td class="text-xs-center">{{ props.item.rnd2 }}</td>
-        <td class="text-xs-center">{{ props.item.rnd3 }}</td>
-        <td class="text-xs-center">{{ props.item.total }}</td>
+    <template slot="items" slot-scope="props" >
+      <tr @click="props.expanded = !props.expanded" v-if"isPreview ? displayRow(props) : '">
+        <td class="text-xs-center">{{ props.item.attributes.position }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.username }}</td>
+        <td class="text-xs-center">${{ props.item.attributes.money[0].money_total}}</td>
+        <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd1 }}</td>
+        <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd2 }}</td>
+        <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd3 }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.total }}</td>
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
@@ -26,7 +25,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title class="text-xs-center">ROUND 1</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">$ {{ props.item.money[0].round_one }} </v-list-tile-title>
+                  <v-list-tile-title class="text-xs-center">$ {{ props.item.attributes.money[0].round_one }} </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -38,7 +37,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title class="text-xs-center">Hole / Score</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">{{ props.item.rnd1holes }} </v-list-tile-title>
+                  <v-list-tile-title class="text-xs-center">{{ props.item.attributes.rnd1holes }} </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -52,7 +51,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title class="text-xs-center">ROUND 2</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">$ {{ props.item.money[0].round_two }} </v-list-tile-title>
+                  <v-list-tile-title class="text-xs-center">$ {{ props.item.attributes.money[0].round_two }} </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -64,7 +63,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                     <v-list-tile-sub-title class="text-xs-center">Hole / Score</v-list-tile-sub-title>
-                    <v-list-tile-title class="text-xs-center">{{ props.item.rnd2holes }} </v-list-tile-title>
+                    <v-list-tile-title class="text-xs-center">{{ props.item.attributes.rnd2holes }} </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -78,7 +77,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title class="text-xs-center">ROUND 3</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">$ {{ props.item.money[0].round_three }} </v-list-tile-title>
+                  <v-list-tile-title class="text-xs-center">$ {{ props.item.attributes.money[0].round_three }} </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -90,7 +89,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title class="text-xs-center">Hole / Score</v-list-tile-sub-title>
-                  <v-list-tile-title class="text-xs-center">{{ props.item.rnd3holes }} </v-list-tile-title>
+                  <v-list-tile-title class="text-xs-center">{{ props.item.attributes.rnd3holes }} </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
@@ -105,14 +104,12 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'SkinsFull',
+  name: 'Table',
   props: ['current'],
-  computed: mapState([
-    'skins_leaderboards'
-  ]),
 
   data () {
     return {
+      isPreview: true,
       headers: [
         {
           text: 'Pos',
@@ -160,22 +157,24 @@ export default {
     }
   },
 
-  watch: {
-    current: function () {
-      this.$store.dispatch('LOAD_SKINS_FULL', { id: this.current.id })
+  computed: mapState(['skins_leaderboards']),
+
+  methods: {
+    displayRow: function (props) {
+      let klass = props.item.attributes.position < 6 || props.item.attributes.username == this.$auth.user().username ? 'hide-row' : ''
+      return klass
     }
   },
 
   created: function (current) {
-    this.$store.dispatch('LOAD_SKINS_FULL', { id: this.current.id })
   }
 
 
 }
 </script>
 <style>
-div.table__overflow.skins {
-  padding-top: 110px;
+.hide-row {
+  display: none;
 }
 .skins thead {
   background-color: #6534ff;

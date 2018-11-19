@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import scorecards from './modules/scorecards'
+import leaderboards from './modules/leaderboards'
 import createPersistedState from 'vuex-persistedstate'
 // import * as Cookies from 'js-cookie'
 
@@ -9,6 +10,7 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  strict: true,
   plugins: [
     createPersistedState({
       paths: ['currentTournament', 'tournaments', 'user']
@@ -26,15 +28,13 @@ const store = new Vuex.Store({
     currentRound: [],
     tournaments: [],
     currentTournament: [],
-    stroke_leaderboard: [],
-    skins_leaderboards: [],
+    skins_leaderboard: [],
     putting_leaderboard: [],
     teamLeaderboard: [],
     currentRound: '',
     teeTime: [],
     teeTimes: [],
     awaitingTees: [],
-    adminMessage: '',
     handicapMessage: '',
     adminTeeTimes: [],
     user: {},
@@ -71,43 +71,25 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
-    LOAD_SKINS_PREVIEW: function ({ commit, state }, { id }) {
-      axios.get('/tournaments/' + id + '/leaderboards/skins/previews.json').then((response) => {
+    LOAD_SKINS: function ({ commit, state }, { id }) {
+      let options = { tournament_id: id }
+      return axios.get('/api/v2/leaderboards/skins.json', { params: options }).then((response) => {
         commit('SET_SKINS_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
-      })
-    },
-    LOAD_SKINS_FULL: function ({ commit, state }, { id }) {
-      axios.get('/tournaments/' + id + '/leaderboards/skins/totals.json').then((response) => {
-        commit('SET_SKINS_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
-      })
-    },
-    LOAD_PUTTING_PREVIEW: function ({ commit, state }, { id }) {
-      axios.get('/tournaments/' + id + '/leaderboards/putting_previews.json').then((response) => {
-        commit('SET_PUTTING_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
     LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id }) {
-      axios.get('/tournaments/' + id + '/putting_leaderboard.json').then((response) => {
+      let options = { tournament_id: id }
+      return axios.get('/api/v2/leaderboards/putts.json', { params: options}).then((response) => {
         commit('SET_PUTTING_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
-    LOAD_STROKE_PREVIEW: function ({ commit, state }, { id }) {
-      axios.get('/tournaments/' + id + '/leaderboards/stroke_previews.json').then((response) => {
-        commit('SET_STROKE_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
-      })
-    },
     LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id }) {
-      axios.get('/tournaments/' + id + '/stroke_leaderboard.json').then((response) => {
+      let options = { tournament_id: id }
+      return axios.get('/api/v2/leaderboards/strokes.json', { params: options }).then((response) => {
         commit('SET_STROKE_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
@@ -122,11 +104,11 @@ const store = new Vuex.Store({
       })
     },
     LOAD_TOURNAMENT_LIST: function ({ commit }) {
-      axios.get('/tournaments.json').then((response) => {
-        commit('CURRENT_TOURNAMENT', { list: response.data[0] })
+      axios.get('/api/v2/tournaments.json').then((response) => {
+        commit('CURRENT_TOURNAMENT', { list: response.data })
         commit('SET_TOURNAMENT_LIST', { list: response.data })
-        commit('SET_ROUNDS', { list: response.data[0].rounds })
-        commit('CURRENT_ROUND', { list: [response.data[0].rounds[0]] })
+        // commit('SET_ROUNDS', { list: response.data[0].rounds })
+        // commit('CURRENT_ROUND', { list: [response.data[0].rounds[0]] })
       }, (err) => {
         console.log(err)
       })
@@ -147,8 +129,7 @@ const store = new Vuex.Store({
     },
     UPDATE_CURRENT_TOURNAMENT: function ({ commit }, payload) {
       console.log('update crr', payload)
-      commit('CURRENT_TOURNAMENT', { list: payload })
-      commit('SET_ROUNDS', { list: payload.rounds })
+      commit('RESET_CURRENT_TOURNAMENT', { list: payload })
     },
     UPDATE_CURRENT_ROUND: function ({ commit }, payload) {
       commit('CURRENT_ROUND', { list: payload})
@@ -195,7 +176,7 @@ const store = new Vuex.Store({
       state.courseStats = list
     },
     SET_SKINS_LEADERBOARD: (state, { list }) => {
-      state.skins_leaderboards = list
+      state.skins_leaderboard = list.data
     },
     SET_ROUNDS: (state, { list }) => {
       state.roundOne = list[0]
@@ -206,18 +187,18 @@ const store = new Vuex.Store({
     CURRENT_ROUND: (state, { list }) => {
       state.currentRound = list
     },
-    SET_PUTTING_LEADERBOARD: (state, { list }) => {
-      state.putting_leaderboard = list
-    },
     SET_STROKE_LEADERBOARD: (state, { list }) => {
-      state.stroke_leaderboard = list
+      state.stroke_leaderboard = list.data
+    },
+    SET_PUTTING_LEADERBOARD: (state, { list }) => {
+      state.putting_leaderboard = list.data
     },
     SET_COURSE: (state, { list }) => {
       state.currentCourse = list[0]['course']
       state.teeTime = list[0]['tee_times']
     },
     SET_TOURNAMENT_LIST: (state, { list }) => {
-      state.tournaments = list
+      state.tournaments = list.data
     },
     SET_ADMIN_TEE_TIME: (state, { list }) => {
       state.adminTeeTimes = list[0]['times']
@@ -227,6 +208,9 @@ const store = new Vuex.Store({
       state.adminMessage = list
     },
     CURRENT_TOURNAMENT: (state, { list }) => {
+      state.currentTournament = list.data[0]
+    },
+    RESET_CURRENT_TOURNAMENT: (state, { list }) => {
       state.currentTournament = list
     },
     SET_TEAM_LEADERBOARD: (state, { list }) => {
@@ -240,14 +224,20 @@ const store = new Vuex.Store({
     openNewCourses: state => {
       return state.courses
     },
+    getStrokeLeaderboard: state => {
+      return state.stroke_leaderboard
+    },
     getTournament: state => {
       return state.currentTournament
+    },
+    getTournaments: state => {
+      return state.tournaments
     },
     adminTeeTimeGetter: state => {
       return state.adminTeeTimes
     },
     adminMessageGetter: state => {
-      return state,adminMessage
+      return state.adminMessage
     }
 
 

@@ -4,60 +4,33 @@
       <v-card-title primary-title>
         <h3>Leaderboards</h3>
       </v-card-title >
-      <v-container fluid pt-0>
+      <v-container fluid pt-4>
         <v-layout>
           <v-flex xs12>
-            <v-card class="elevation-20" ref="leaderboardCard">
-
-              <component :is="currentView + 'Header'" :current="current" @event="toggleView"/>
-
-              <transition
-                name="fade"
-                v-on:enter='enter'
-              >
-                <component :is='currentView' :current='current'></component>
-              </transition>
-            </v-card>
+            <component :is='currentView' :current='current'></component>
           </v-flex>
         </v-layout>
       </v-container>
-      <v-card-actions class="">
-        <v-spacer></v-spacer>
-        <v-btn flat class="grey--text no-back ma-0" value="stroke" @click="currentView='stroke-preview'">
-          <span>Stroke</span>
-        </v-btn>
-        <v-btn flat class="grey--text no-back ma-0" value="putting" @click="currentView='putting-preview'">
-          <span>Putting</span>
-        </v-btn>
-        <v-btn flat class="grey--text no-back ma-0" value="skins" @click="currentView='skins-preview'">
-          <span>Skins</span>
-        </v-btn>
-        <v-btn flat class="grey--text no-back ma-0" value="team" @click="currentView='team-preview'">
-          <span>Team</span>
-        </v-btn>
-        <v-spacer></v-spacer>
-      </v-card-actions>
     </v-card>
   </v-flex>
 </template>
 
 <script>
-import StrokePreview from '../components/Leaderboards/Stroke/Preview'
-import StrokePreviewHeader from '../components/Leaderboards/Stroke/PreviewHeader'
-import StrokeLeaderboard from '../components/Leaderboards/Stroke/Full'
-import StrokeLeaderboardHeader from '../components/Leaderboards/Stroke/FullHeader'
-import PuttingPreview from '../components/Leaderboards/Putting/Preview'
-import PuttingPreviewHeader from '../components/Leaderboards/Putting/PreviewHeader'
-import PuttingLeaderboard from '../components/Leaderboards/Putting/Full'
-import PuttingLeaderboardHeader from '../components/Leaderboards/Putting/FullHeader'
-import SkinsPreview from '../components/Leaderboards/Skins/Preview'
-import SkinsPreviewHeader from '../components/Leaderboards/Skins/PreviewHeader'
-import SkinsLeaderboard from '../components/Leaderboards/Skins/Full'
-import SkinsLeaderboardHeader from '../components/Leaderboards/Skins/FullHeader'
-import TeamPreview from '../components/Leaderboards/Team/Preview'
-import TeamPreviewHeader from '../components/Leaderboards/Team/PreviewHeader'
-import TeamLeaderboard from '../components/Leaderboards/Team/List'
-import TeamLeaderboardHeader from '../components/Leaderboards/Team/FullHeader'
+import Stroke from '../components/Leaderboards/Stroke/index'
+import Putting from '../components/Leaderboards/Putting/index'
+
+// import PuttingPreview from '../components/Leaderboards/Putting/Preview'
+// import PuttingPreviewHeader from '../components/Leaderboards/Putting/PreviewHeader'
+// import PuttingLeaderboard from '../components/Leaderboards/Putting/Full'
+// import PuttingLeaderboardHeader from '../components/Leaderboards/Putting/FullHeader'
+// import SkinsPreview from '../components/Leaderboards/Skins/Preview'
+// import SkinsPreviewHeader from '../components/Leaderboards/Skins/PreviewHeader'
+// import SkinsLeaderboard from '../components/Leaderboards/Skins/Full'
+// import SkinsLeaderboardHeader from '../components/Leaderboards/Skins/FullHeader'
+// import TeamPreview from '../components/Leaderboards/Team/Preview'
+// import TeamPreviewHeader from '../components/Leaderboards/Team/PreviewHeader'
+// import TeamLeaderboard from '../components/Leaderboards/Team/List'
+// import TeamLeaderboardHeader from '../components/Leaderboards/Team/FullHeader'
 import router from 'vue-router'
 import { mapState } from 'vuex'
 
@@ -65,29 +38,14 @@ export default {
   name: 'Leaderboards',
   props: ['current'],
   components: {
-    StrokePreview,
-    StrokeLeaderboard,
-    StrokeLeaderboardHeader,
-    StrokePreviewHeader,
-    PuttingPreview,
-    PuttingPreviewHeader,
-    PuttingLeaderboard,
-    PuttingLeaderboardHeader,
-    SkinsPreview,
-    SkinsPreviewHeader,
-    SkinsLeaderboard,
-    SkinsLeaderboardHeader,
-    TeamPreview,
-    TeamPreviewHeader,
-    TeamLeaderboard,
-    TeamLeaderboardHeader
+    Stroke,
+    Putting
   },
 
   data () {
     return {
       el: 'stroke',
-      currentView: 'stroke-preview',
-      currentHeader: 'stroke-preview-header',
+      currentView: 'putting',
       activeButton: 'active',
       inactiveButton: 'inactive',
       purse: 480
@@ -96,7 +54,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTournament'])
+    ...mapState(['currentTournament', 'stroke_leaderboard']),
   },
 
   methods: {
@@ -121,26 +79,18 @@ export default {
       if (event === 'stroke-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'stroke-leaderboard'
-        this.currentHeader = 'stroke-full-header'
         this.expandParent(this.$refs)
       } else if (event == 'stroke-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'stroke-preview'
-        this.currentHeader = 'stroke-preview-header'
         this.closeParent(this.$refs)
       } else if (event == 'putting-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'putting-leaderboard'
-        this.currentHeader = 'putting-full-header'
         this.expandParent(this.$refs)
       } else if (event == 'putting-leaderboard') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
         this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'putting-preview'
-        this.currentHeader = 'putting-preview-header'
         this.closeParent(this.$refs)
       } else if (event == 'skins-preview') {
         this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
@@ -173,11 +123,17 @@ export default {
     afterEnter: function(el) {
       el.style.opacity = 1
     },
-  }
+  },
 
 }
 </script>
 <style>
+.rounded-card {
+  border-radius: 9px;
+}
+#leaderboard-container {
+  background-color: white;
+}
 small.purse-color {
   color: #666;
 }

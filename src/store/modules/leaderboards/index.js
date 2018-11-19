@@ -1,26 +1,24 @@
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 
 const state = {
-  teamLeaderboard: []
+  stroke_leaderboard: []
 }
 
 const actions = {
-  LOAD_TEAM_PREVIEW: function ({ commit, state }, { tournId }) {
-    console.log('team preview call', tournId)
-    axios.get('/tournaments/' + tournId + '/leaderboards/team_previews.json').then((response) => {
-      commit('SET_TEAM_PREVIEW', { list: response.data })
-    }, (err) => {
-      console.log(err)
+  LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id }) {
+    let options = { tournament_id: id }
+    axios.get('/api/v2/leaderboards/strokes.json', { params: options }).then((res) => {
+      commit('SET_STROKE_LEADERBOARD', { list: res.data })
+    }, (err) =>{
+      console.log('error stroke leaderboard', err)
     })
-  },
-  LOAD_TEAM_LEADERBOARD: function ({ commit, state }, { tournId }) {
-    axios.get('')
-  },
+  }
 }
 
 const mutations = {
-  SET_TEAM_PREVIEW: (state, { list }) => {
-    state.teamLeaderboard = list
+  SET_STROKE_LEADERBOARD: (state, { list }) => {
+    state.stroke_leaderboard = list.data
   },
 
 }
@@ -28,6 +26,7 @@ const mutations = {
 const getters = {
 
 }
+
 
 export default {
   state,
