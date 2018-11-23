@@ -4,8 +4,8 @@
     <main>
       <v-content>
         <v-container color="white" fluid text-xs-center class="pa-0" >
-          <v-layout row-wrap>
-            <handicap :current="currentTournament" v-if="currentTournament.handicap == false" />
+          <v-layout row-wrap v-if="currentTournament.handicap == false">
+            <handicap :current="currentTournament" />
           </v-layout>
           <v-layout row-wrap>
             <leaderboards :current="currentTournament" />

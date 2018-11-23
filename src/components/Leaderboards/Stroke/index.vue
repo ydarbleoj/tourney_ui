@@ -1,6 +1,6 @@
 <template>
   <v-card class="rounded-card elevation-24">
-    <v-card-title class="stroke">
+    <v-card-title class="stroke" @click="preview">
       <h4 class="text-align-left mb-0 ml-2" >Stroke</h4>
     </v-card-title>
     <v-card-text class="stroke">
@@ -37,7 +37,9 @@ export default {
   },
 
   methods: {
-
+    preview: function () {
+      console.log('hit')
+    }
   },
   watch: {
     current: function () {

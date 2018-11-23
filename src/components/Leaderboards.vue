@@ -1,16 +1,24 @@
 <template>
   <v-flex xs12 sm12 lg10 id='leaderboard-container' ref="leaderboard">
     <v-card flat color="transparent" class="grey--text" ref="leaderboardContainer">
-      <v-card-title primary-title>
+      <v-card-title primary-title class="pb-0">
         <h3>Leaderboards</h3>
       </v-card-title >
-      <v-container fluid pt-4>
-        <v-layout>
-          <v-flex xs12>
-            <component :is='currentView' :current='current'></component>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <vue-glide class="slide-wrapper" style="width: 900px;">
+        <vue-glide-slide
+          v-for="i in comps"
+          :key="i"
+          ref="slide"
+          class="preview__size"
+          style="margin-right: 1%; margin-left: 1%; height: 550px;"
+        >
+          <v-layout justify-center>
+            <v-flex xs12>
+              <component :is="i" :current='current' style="width: 100%;" />
+            </v-flex>
+          </v-layout>
+        </vue-glide-slide>
+      </vue-glide>
     </v-card>
   </v-flex>
 </template>
@@ -18,19 +26,9 @@
 <script>
 import Stroke from '../components/Leaderboards/Stroke/index'
 import Putting from '../components/Leaderboards/Putting/index'
+import VueGlide from 'vue-glide-js/src/components/Glide.vue'
+import VueGlideSlide from 'vue-glide-js/src/components/GlideSlide.vue'
 
-// import PuttingPreview from '../components/Leaderboards/Putting/Preview'
-// import PuttingPreviewHeader from '../components/Leaderboards/Putting/PreviewHeader'
-// import PuttingLeaderboard from '../components/Leaderboards/Putting/Full'
-// import PuttingLeaderboardHeader from '../components/Leaderboards/Putting/FullHeader'
-// import SkinsPreview from '../components/Leaderboards/Skins/Preview'
-// import SkinsPreviewHeader from '../components/Leaderboards/Skins/PreviewHeader'
-// import SkinsLeaderboard from '../components/Leaderboards/Skins/Full'
-// import SkinsLeaderboardHeader from '../components/Leaderboards/Skins/FullHeader'
-// import TeamPreview from '../components/Leaderboards/Team/Preview'
-// import TeamPreviewHeader from '../components/Leaderboards/Team/PreviewHeader'
-// import TeamLeaderboard from '../components/Leaderboards/Team/List'
-// import TeamLeaderboardHeader from '../components/Leaderboards/Team/FullHeader'
 import router from 'vue-router'
 import { mapState } from 'vuex'
 
@@ -38,17 +36,21 @@ export default {
   name: 'Leaderboards',
   props: ['current'],
   components: {
+    [VueGlide.name]: VueGlide,
+    [VueGlideSlide.name]: VueGlideSlide,
     Stroke,
-    Putting
+    Putting,
   },
 
   data () {
     return {
       el: 'stroke',
-      currentView: 'putting',
+      isPreview: true,
+      currentView: 'stroke',
       activeButton: 'active',
       inactiveButton: 'inactive',
-      purse: 480
+      purse: 480,
+      comps: ['stroke', 'putting', 'stroke']
 
     }
   },
@@ -128,6 +130,18 @@ export default {
 }
 </script>
 <style>
+.glide__track {
+  margin: 0;
+}
+.slide-wrapper {
+  height: inherit;
+}
+ul.glide__slides {
+  padding: 20px 0;
+}
+.preview__size {
+  width: 305px;
+}
 .rounded-card {
   border-radius: 9px;
 }

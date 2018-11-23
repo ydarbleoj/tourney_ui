@@ -5,9 +5,10 @@
     hide-actions
     class='stroke rounded-card stroke-preview'
     item-key="user_id"
+    @click="preview"
   >
     <template slot="items" slot-scope="props">
-      <tr @click="isPreview = !isPreview" v-if="isPreview ? displayRow(props) : ''">
+      <tr v-if="isPreview ? displayRow(props) : ''">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">
           {{ props.item.attributes.username }}
@@ -95,6 +96,9 @@ export default {
     displayRow: function (props) {
       let klass = props.item.attributes.position < 6 || props.item.attributes.username == this.$auth.user().username ? 'hide-row' : ''
       return klass
+    },
+    preview: function () {
+      console.log('his')
     }
   },
 

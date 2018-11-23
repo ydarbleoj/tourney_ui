@@ -11,9 +11,9 @@
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">{{ props.item.attributes.username }}</td>
         <td class="text-xs-center">{{ props.item.attributes.total_3_putts }}</td>
-        <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd1_putts }}</td>
+       <!--  <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd1_putts }}</td>
         <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd2_putts }}</td>
-        <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd3_putts }}</td>
+        <td v-if="isPreview ? hide-row : ''" class="text-xs-center">{{ props.item.attributes.rnd3_putts }}</td> -->
         <td class="text-xs-center">{{ props.item.attributes.total_putts }}</td>
       </tr>
     </template>
