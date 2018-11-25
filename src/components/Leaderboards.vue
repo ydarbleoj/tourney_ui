@@ -4,19 +4,16 @@
       <v-card-title primary-title class="pb-0">
         <h3>Leaderboards</h3>
       </v-card-title >
-      <vue-glide class="slide-wrapper" style="width: 900px;">
+      <vue-glide class="slide-wrapper" v-bind:style="">
         <vue-glide-slide
           v-for="i in comps"
           :key="i"
           ref="slide"
           class="preview__size"
-          style="margin-right: 1%; margin-left: 1%; height: 550px;"
+          style="margin-right: 1%; margin-left: 1%; width: 80%; height: 550px;"
+
         >
-          <v-layout justify-center>
-            <v-flex xs12>
-              <component :is="i" :current='current' style="width: 100%;" />
-            </v-flex>
-          </v-layout>
+          <component :is="i" :current='current' style="width: 100%;" />
         </vue-glide-slide>
       </vue-glide>
     </v-card>
@@ -42,24 +39,33 @@ export default {
     Putting,
   },
 
-  data () {
-    return {
-      el: 'stroke',
-      isPreview: true,
-      currentView: 'stroke',
-      activeButton: 'active',
-      inactiveButton: 'inactive',
-      purse: 480,
-      comps: ['stroke', 'putting', 'stroke']
-
-    }
-  },
+  data: () => ({
+    el: 'stroke',
+    isPreview: true,
+    slideWidth: {
+      width: '1000px',
+    },
+    currentView: 'stroke',
+    activeButton: 'active',
+    inactiveButton: 'inactive',
+    purse: 480,
+    comps: ['stroke', 'putting', 'stroke']
+  }),
 
   computed: {
     ...mapState(['currentTournament', 'stroke_leaderboard']),
   },
 
+  mounted: function () {
+    this.cardWidth()
+  },
+
   methods: {
+    cardWidth: () => {
+
+      let cardWidth = window.innerWidth
+      console.log('resize', window.innerWidth)
+    },
     expandParent: function(event) {
       console.log('heioght', event.leaderboardContainer.$el.style.zIndex)
       event.leaderboard.style.position = 'fixed';
