@@ -1,15 +1,13 @@
 <template>
-  <v-card class="rounded-card elevation-24">
-    <v-card-title class="putting">
-      <h4 class="text-align-left mb-0 ml-2" >Putting</h4>
+  <v-card class="rounded-card card--shadow">
+    <v-card-title class="putting--title pb-0 pt-1 pl-2">
+      <h2 class="text-align-left font-weight-medium" >Putting</h2>
     </v-card-title>
-    <v-card-text class="putting">
-      <div class="loading" v-if="loading">
-        Loading...
-      </div>
-      <div class="loaded" v-else>
-        <putting-table />
-      </div>
+    <div class="loading" v-if="loading">
+      Loading...
+    </div>
+    <v-card-text v-else class="pa-0">
+      <putting-table />
     </v-card-text>
   </v-card>
 </template>
@@ -53,19 +51,12 @@ export default {
 }
 </script>
 <style>
-.rounded-card {
-  border-radius: 9px;
+.card--shadow {
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
 }
-.putting {
-  background-color: #ffa726;
-  padding: 0;
-  font-size: 16px;
-  color: #666;
-}
-table.table thead th {
-  font-size: 12px;
-}
-table.table thead td:not(:nth-child(1)), table.table tbody td:not(:nth-child(1)), table.table thead th:not(:nth-child(1)), table.table tbody th:not(:nth-child(1)), table.table thead td:first-child, table.table tbody td:first-child, table.table thead th:first-child, table.table tbody th:first-child {
-  padding: 0 10px;
+.putting--title {
+  background-color: #C49799;
+  color: white;
 }
 </style>

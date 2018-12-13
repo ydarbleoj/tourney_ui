@@ -63,9 +63,10 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
-    LOAD_COURSE_STATS: function ({ commit, state }, { tournId, courseId }) {
-      let options = { course_id: courseId }
-      axios.get('/tournaments/' + tournId + '/stats/courses.json', { params: options }).then((response) => {
+    LOAD_COURSE_STATS: function ({ commit, state }, {tournId, roundId }) {
+      let options = { tournament_id: tournId, tournament_round_id: roundId }
+      console.log('options', options)
+      return axios.get('/api/v2/rounds/courses.json', { params: options }).then((response) => {
         commit('SET_COURSE_STATS', { list: response.data })
       }, (err) => {
         console.log(err)
@@ -93,6 +94,14 @@ const store = new Vuex.Store({
         commit('SET_STROKE_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
+      })
+    },
+    LOAD_ROUNDS: function ({ commit, state }, { id }) {
+      let options = { tournament_id: id }
+      return axios.get('/api/v2/rounds/lists.json', { params: options }).then((response) => {
+        commit('SET_ROUNDS', { list: response.data })
+      }, (err) => {
+        console.log('error in rounds', err)
       })
     },
     LOAD_COURSE: function ({ commit, state }, { tourn_id, id, roundNumber }) {
@@ -179,10 +188,10 @@ const store = new Vuex.Store({
       state.skins_leaderboard = list.data
     },
     SET_ROUNDS: (state, { list }) => {
-      state.roundOne = list[0]
-      state.roundTwo = list[1]
-      state.roundThree = list[2]
-      state.rounds = list
+      state.roundOne = list.data[0]
+      state.roundTwo = list.data[1]
+      state.roundThree = list.data[2]
+      state.rounds = list.data
     },
     CURRENT_ROUND: (state, { list }) => {
       state.currentRound = list
@@ -232,6 +241,10 @@ const store = new Vuex.Store({
     },
     getTournaments: state => {
       return state.tournaments
+    },
+    userScorecardIds: state => userId => {
+      console.log('user scorecards id', userId)
+      return state.stroke_leaderboard
     },
     adminTeeTimeGetter: state => {
       return state.adminTeeTimes

@@ -10,8 +10,10 @@ const state = {
 }
 
 const actions = {
-  LOAD_SCORECARD: function ({ commit, state }, { tournId, id }) {
-    axios.get('/tournaments/' + tournId + '/scorecards/' + id + '.json').then((response) => {
+  LOAD_SCORECARD: function ({ commit, state }, { tournId, tournRoundId }) {
+    let options = { tournament_id: tournId, tournament_round_id: tournRoundId }
+    return axios.get('/api/v2/rounds/scorecards.json', { params: options}).then((response) => {
+      console.log('scorecards', response.data)
       commit('SET_SCORECARD', { list: response.data })
     }, (err) => {
       console.log(err)
@@ -53,7 +55,7 @@ const actions = {
 
 const mutations = {
   SET_SCORECARD: (state, { list }) => {
-    state.playerScorecard = list
+    state.playerScorecard = list.data['attributes']
   },
   SET_SCORE_LIST: (state, { list }) => {
     state.scoreList = list

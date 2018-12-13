@@ -1,6 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-
+require('vue-swipe/dist/vue-swipe.css');
 import Vue from 'vue'
 
 import {
@@ -23,10 +23,11 @@ import {
   VSubheader,
   VToolbar,
   VCheckbox,
-  transitions
+  transitions,
+  VTabs,
+  VImg,
 } from 'vuetify'
 import './stylus/main.styl'
-
 import App from './App'
 import router from './router'
 import store from './store'
@@ -34,9 +35,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import Vuelidate from 'vuelidate'
-import VueGlide from 'vue-glide-js'
 
-Vue.use(VueGlide)
 Vue.use(Vuelidate)
 axios.defaults.baseURL = process.env.ROOT_API
 
@@ -91,8 +90,10 @@ Vue.use(Vuetify, {
     VGrid,
     VTextField,
     VToolbar,
-    transitions
-  }
+    transitions,
+    VTabs,
+    VImg,
+  },
 })
 
 Vue.config.productionTip = false

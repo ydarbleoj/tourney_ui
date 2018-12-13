@@ -1,22 +1,22 @@
 <template>
-  <v-card class="elevation-20 grey darken-3 scorecard_container" ref="scorecardCard">
+  <v-card v-if="isLoaded" class="lb-scorecard scorecard_container round-borders" ref="scorecardCard">
     <v-card-title class="scorecard-card pa-0" ref="cardHeader">
-      <v-container class="pa-0" fluid @click="toggleView(currentView)">
-        <v-layout row wrap class="grey darken-3">
+      <v-container class="pa-0" @click="toggleView(currentView)">
+        <v-layout row wrap align-center justify-center class="grey darken-3 round-borders">
           <v-flex xs5>
-            <v-card class="text-xs-center grey darken-3 mt-2" flat >
-              <h4 class="mb-0 white--text">Score</h4>
-              <v-container pa-0 fluid>
+            <v-card class="text-xs-center grey darken-3" flat >
+              <h3 class="mb-0 white--text font-weight-regular">Score</h3>
+              <v-container pa-0>
                 <v-layout row wrap>
                   <v-flex xs5>
-                    <div><h2 class="record ma-0">{{ this.scorecard.total_net}}</h2></div>
+                    <div><h1 class="record font-weight-regular ma-0">{{ this.courseScorecard.total_net}}</h1></div>
                     <label class="scorecard-label">NET</label>
                   </v-flex>
                   <v-flex xs1>
-                    <div><h2 class="grey--text">/</h2></div>
+                    <div><h1 class="grey--text">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
-                    <div><h2 class="grey--text ma-0" >{{ this.scorecard.total_score }}</h2></div>
+                    <div><h1 class="grey--text ma-0 font-weight-regular" >{{ this.courseScorecard.total_score }}</h1></div>
                     <label class='scorecard-label'>GROSS</label>
                   </v-flex>
                 </v-layout>
@@ -25,45 +25,45 @@
           </v-flex>
           <v-flex xs2>
             <v-card flex class="text-xs-center grey darken-3" flat height="100%">
-              <v-container class="pa-0" fluid fill-height>
+              <v-container class="pa-0">
                 <v-layout row wrap flex>
                   <v-flex xs12>
                     <label class='scorecard-label'>OUT</label>
                     <div class="grey--text">
-                      <span class="record">{{ this.scorecard.out_net }}</span>
+                      <span class="record">{{ this.courseScorecard.out_net }}</span>
                       /
-                      <span class="grey--text">{{ this.scorecard.out_gross }}</span>
+                      <span class="grey--text">{{ this.courseScorecard.out_gross }}</span>
                     </div>
-                    <label class="scorecard-label label-tight">{{ this.scorecard.out_putts }} / <span class="pers-record">{{ this.scorecard.out_3putts }} </span></label>
+                    <label class="scorecard-label label-tight">{{ this.courseScorecard.out_putts }} / <span class="pers-record">{{ this.courseScorecard.out_3putts }} </span></label>
                   </v-flex>
                   <v-flex xs12>
                     <label class='scorecard-label'>IN</label>
                     <div class="grey--text">
-                      <span class="record">{{ this.scorecard.in_net }}</span>
+                      <span class="record">{{ this.courseScorecard.in_net }}</span>
                       /
-                      <span class="grey--text">{{ this.scorecard.in_gross }}</span>
+                      <span class="grey--text">{{ this.courseScorecard.in_gross }}</span>
                     </div>
-                    <label class="scorecard-label label-tight">{{ this.scorecard.in_putts }} / <span class="pers-record">{{ this.scorecard.in_3putts }}</span></label>
+                    <label class="scorecard-label label-tight">{{ this.courseScorecard.in_putts }} / <span class="pers-record">{{ this.courseScorecard.in_3putts }}</span></label>
                   </v-flex>
                 </v-layout>
               </v-container>
             </v-card>
           </v-flex>
           <v-flex xs5>
-            <v-card class="text-xs-center grey darken-3 ma-2" flat>
-              <h5 class="mb-0 pt-2 white--text">{{ this.scorecard.handicap }} Handicap</h5>
-              <v-container class="pa-0 pl-3" fluid>
+            <v-card class="text-xs-center grey darken-3" flat>
+              <h5 class="mb-0 pt-2 white--text">{{ this.courseScorecard.handicap }} Handicap</h5>
+              <v-container class="pa-0 pl-3">
                 <v-layout row wrap>
                   <v-flex xs5>
-                    <div><h4 class="record ma-0">{{ this.scorecard.total_putts }}</h4></div>
+                    <div><h1 class="record ma-0 font-weight-regular">{{ this.courseScorecard.total_putts }}</h1></div>
                     <label class="scorecard-label">PUTTS</label>
                   </v-flex>
                   <v-flex xs1>
-                    <div><h4 class="grey--text">/</h4></div>
+                    <div><h1 class="grey--text font-weight-regular">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
-                    <div><h4 class="pers-record ma-0" > {{ this.scorecard.total_3putts }}</h4></div>
-                    <label class='scorecard-label'>3 PUTTS</label>
+                    <div><h1 class="pers-record ma-0 font-weight-regular" > {{ this.courseScorecard.total_3putts }}</h1></div>
+                    <label class='scorecard-label font-weight-regular'>3 PUTTS</label>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -92,7 +92,7 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Scorecard',
-  props: ['current', 'cardId'],
+  props: ['current', 'roundId'],
   components: {
     ScoreList
   },
@@ -111,7 +111,8 @@ export default {
 
   data () {
     return {
-      courseScorecard: this.scorecard,
+      isLoaded: false,
+      courseScorecard: {},
       currentView: 'preview',
     }
   },
@@ -161,15 +162,19 @@ export default {
   },
 
   created: function () {
-    console.log('here', this.scorecard)
-    this.$store.dispatch('LOAD_SCORECARD', { tournId: this.currentTournament.id, id: this.currentRound.scorecard_id})
+    this.$store.dispatch('LOAD_SCORECARD', { tournId: this.currentTournament.id, tournRoundId: this.roundId['id'] })
+      .then(response => {
+        this.isLoaded = true
+        this.courseScorecard = Object.assign(this.scorecard)
+      })
   }
 }
 </script>
 <style>
-div.card.scorecard-card {
-  background-color: rgba(98, 188, 250, 1);
-  position: fixed;
+.round-borders {
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .record {
   color: #6CADED;

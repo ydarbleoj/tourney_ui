@@ -1,21 +1,23 @@
 <template>
-  <v-card class="elevation-20">
-    <v-card-media
-      :src="'/static/' + this.currentRound.course_id + 'course.jpg'"
+  <v-card class="course-card" @click="isPreview = !isPreview; previewToggle();">
+    <v-img
+      :src="'/static/' + this.course['attributes']['new_course_id'] + 'course.jpg'"
       height='200px'
+      class="course-header"
+      ref="courseHeader"
     >
-      <v-container fill-height fluid pa-0 class='round-container'>
+      <v-container fill-height pa-0 class=''>
         <v-layout>
           <v-flex xs8 flexbox>
-            <div class="headline white--text mt-5">Round {{ this.currentRound.round_number }} </div>
-            <span class="headline white--text">{{ this.currentCourse['name'] }}</span>
+            <div class="headline white--text mt-5">Round {{ this.course['attributes']['round_number'] }} </div>
+            <span class="headline white--text">{{ this.course['attributes']['name'] }}</span>
             <div class="white--text">
-              {{ this.currentCourse.tee }} -
-              {{ this.currentCourse.rating }} /
-              {{ this.currentCourse.slope }}
+              {{ this.course['attributes']['tee'] }} -
+              {{ this.course['attributes']['rating'] }} /
+              {{ this.course['attributes']['slope'] }}
             </div>
             <div class="white--text">
-              par: {{ this.currentCourse.par }}
+              par: {{ this.course['attributes']['par'] }}
             </div>
           </v-flex>
           <v-flex xs4 class="tee-time-container pa-0">
@@ -23,30 +25,10 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </v-card-media>
-    <v-card-actions class='grey darken-3'>
-      <v-btn flat color='white' @click.native="show = !show">
-        <span>STATS</span>
-        <v-icon>{{ !show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
-      </v-btn>
-      <v-spacer></v-spacer>
-       <v-btn flat v-if="this.$auth.user().admin == true" color='white' @click="toggleTeeTimes">
-        <span>TEE TIMES</span>
-        <v-icon>{{ !showTime ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
-    <transition
-     class='transistions-course'
-     name='slide-fade'
-    >
-      <stats :current='currentCourse' v-show="show" />
-    </transition>
-     <transition
-     class='transistions-course'
-     name='slide-fade'
-    >
-      <admin :current='currentRound' v-show="showTime" />
-    </transition>
+    </v-img>
+    <v-card-text v-if="!isPreview" class="grey lighten-5" style="margin-top: 200px;padding:0;height:100%;" transition="slide-x-transition" >
+      <stats :roundId="rndId" />
+    </v-card-text>
   </v-card>
 </template>
 
@@ -58,7 +40,7 @@ import Admin from './TeeTimes/Admin'
 
 export default {
   name: 'index',
-  props: ['current'],
+  props: ['course'],
   components: {
     Stats,
     TeeTime,
@@ -67,8 +49,10 @@ export default {
 
   data () {
     return {
+      isPreview: true,
       show: false,
       showTime: false,
+      rndId: this.course.id
     }
   },
 
@@ -77,32 +61,67 @@ export default {
   },
 
   methods: {
-    toggleTeeTimes: function() {
-      console.log('clicked', this.showTime === false)
-      if (this.showTime === false) {
-        this.$store.dispatch('LOAD_ADMIN_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
-        this.showTime = true
-      } else if (this.showTime === true){
-        this.showTime = false
-      }
-    }
+    previewToggle () {
+      this.$emit('event')
+      console.log('refs', this.$refs.courseHeader)
+      this.$parent.$el.style.margin = this.isPreview ? '0 auto' : '0';
+      this.$parent.$el.style.paddingTop = this.isPreview ? '20px' : '0';
+      this.$parent.$el.style.width = this.isPreview ? '90%' : '100%';
+      this.$el.classList.toggle('open')
+      // this.$refs.courseHeader.$el.style.position = this.isPreview ? 'relative' : 'fixed'
+      // this.$refs.courseHeader.$el.style.zIndex = this.isPreview ? '' : 'fixed'
+    },
+    // toggleTeeTimes: function() {
+    //   console.log('clicked', this.showTime === false)
+    //   if (this.showTime === false) {
+    //     this.$store.dispatch('LOAD_ADMIN_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
+    //     this.showTime = true
+    //   } else if (this.showTime === true){
+    //     this.showTime = false
+    //   }
+    // }
   },
 
   watch: {
-    current: function () {
-
+    course: function () {
       this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
     }
   },
 
   created: function (current) {
-    console.log('course created', this.currentCourse)
-    this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
+    // console.log('course created', this.currentCourse)
+    // this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
 
   }
 }
 </script>
 <style>
+.course-card {
+  position: relative;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1;
+}
+.course-card.open {
+  width: 100%;
+  position: absolute;
+  border-radius: 0;
+  top: 0;
+  left: 0;
+  z-index: 1000 !important;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+
+}
+.course-header {
+  z-index: 1;
+  position: relative;
+}
+.course-card.open .course-header {
+  z-index: 1000;
+  position: fixed;
+  width: inherit;
+}
 div.flex.tee-time-container {
   /*background-color: rgba(153, 153, 153, .4);*/
   background-color: rgba(98, 188, 250, .4);

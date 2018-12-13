@@ -2,7 +2,7 @@
  <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
-        <v-card-media src="/static/sand.jpg" height="300px">
+        <v-img src="/static/sand.jpg" height="300px">
           <v-layout column class="media">
             <v-card-title>
               <v-spacer></v-spacer>
@@ -36,7 +36,7 @@
               <div class="display-1 pl-5 pt-5">{{ this.$auth.user().username }}</div>
             </v-card-title>
           </v-layout>
-        </v-card-media>
+        </v-img>
         <v-list two-line>
           <v-list-tile @click="">
             <v-list-tile-action>

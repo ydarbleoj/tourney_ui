@@ -1,19 +1,14 @@
 <template>
-  <v-app>
     <!-- <tournament-menu :tourns="tournaments" /> -->
-    <main>
-      <v-content>
-        <v-container color="white" fluid text-xs-center class="pa-0" >
-          <v-layout row-wrap v-if="currentTournament.handicap == false">
-            <handicap :current="currentTournament" />
-          </v-layout>
-          <v-layout row-wrap>
-            <leaderboards :current="currentTournament" />
-          </v-layout>
-        </v-container>
-      </v-content>
+    <main style="height:100%;" class="tournament-wrapper">
+      <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
+        <v-layout row-wrap v-if="currentTournament.handicap == false">
+          <handicap :current="currentTournament" />
+        </v-layout>
+        <leaderboards :current="currentTournament" />
+        <rounds :current="currentTournament"  />
+      </v-container>
     </main>
-  </v-app>
 </template>
 
 <script>
@@ -57,5 +52,7 @@ export default {
 
 </script>
 <style>
-
+.tournament-wrapper {
+  background-color: white;
+}
 </style>

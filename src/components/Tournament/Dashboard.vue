@@ -4,11 +4,11 @@
       <v-container height="100%" color="white" text-xs-center>
         <h4>Your Tournaments</h4>
         <v-card class="rounded-card elevation-24" @click="" :to="'tournament'">
-          <v-card-media
+          <v-img
             :src="'/static/2course.jpg'"
             height='300px'
           >
-          </v-card-media>
+          </v-img>
           <v-card-text >
             <h4>Bandon</h4>
           </v-card-text>

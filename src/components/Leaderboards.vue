@@ -1,31 +1,29 @@
 <template>
-  <v-flex xs12 sm12 lg10 id='leaderboard-container' ref="leaderboard">
-    <v-card flat color="transparent" class="grey--text" ref="leaderboardContainer">
-      <v-card-title primary-title class="pb-0">
-        <h3>Leaderboards</h3>
-      </v-card-title >
-      <vue-glide class="slide-wrapper" v-bind:style="">
-        <vue-glide-slide
-          v-for="i in comps"
-          :key="i"
-          ref="slide"
-          class="preview__size"
-          style="margin-right: 1%; margin-left: 1%; width: 80%; height: 550px;"
-
+  <v-container id='leaderboard-container' class="pa-0" ref="leaderboardCard">
+    <v-layout row wrap>
+      <v-flex xs12 sm12 lg10 ref="leaderboard" style="margin-bottom: 7%;">
+        <h2 class="text-xs-left font-weight-regular" style="margin-left: 5%; margin-top: 5%;" v-if="isPreview">Leaderboards</h2>
+        <swipe class="my-swipe"
+          :auto="0" :show-indicators="false"
+          style="padding: 0px 0;"
         >
-          <component :is="i" :current='current' style="width: 100%;" />
-        </vue-glide-slide>
-      </vue-glide>
-    </v-card>
-  </v-flex>
+          <swipe-item
+            v-for="i in comps"
+            :key="i"
+            style="width: 90%;margin: 0 auto"
+          >
+            <component :is="i" :current='current' @event="previewToggle(this)" />
+          </swipe-item>
+        </swipe>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 import Stroke from '../components/Leaderboards/Stroke/index'
 import Putting from '../components/Leaderboards/Putting/index'
-import VueGlide from 'vue-glide-js/src/components/Glide.vue'
-import VueGlideSlide from 'vue-glide-js/src/components/GlideSlide.vue'
-
+import { Swipe, SwipeItem } from 'vue-swipe'
 import router from 'vue-router'
 import { mapState } from 'vuex'
 
@@ -33,23 +31,23 @@ export default {
   name: 'Leaderboards',
   props: ['current'],
   components: {
-    [VueGlide.name]: VueGlide,
-    [VueGlideSlide.name]: VueGlideSlide,
     Stroke,
     Putting,
+    Swipe,
+    SwipeItem,
   },
 
   data: () => ({
     el: 'stroke',
+    model: 'tab-stroke',
+    swipeDirection: 'None',
     isPreview: true,
-    slideWidth: {
-      width: '1000px',
-    },
     currentView: 'stroke',
     activeButton: 'active',
     inactiveButton: 'inactive',
     purse: 480,
-    comps: ['stroke', 'putting', 'stroke']
+    comps: ['stroke', 'putting'],
+    // divHeight: this.$el.getBoundingClientRect().height
   }),
 
   computed: {
@@ -57,70 +55,26 @@ export default {
   },
 
   mounted: function () {
-    this.cardWidth()
+    console.log('win height', screen.height)
+    let height = this.$refs.leaderboardCard.clientHeight
+    console.log('height here', height)
   },
-
   methods: {
-    cardWidth: () => {
-
-      let cardWidth = window.innerWidth
-      console.log('resize', window.innerWidth)
+    swipe (direction) {
+      this.swipeDirection = direction
     },
-    expandParent: function(event) {
-      console.log('heioght', event.leaderboardContainer.$el.style.zIndex)
-      event.leaderboard.style.position = 'fixed';
-      event.leaderboard.style.backgroundColor = '#f1f1f1';
-      event.leaderboard.style.width = '100%';
-      event.leaderboard.style.left = '0';
-      event.leaderboard.style.top = '0';
-      event.leaderboard.style.height = '100%';
-      event.leaderboard.style.overflow = 'hidden';
-      event.leaderboard.style.zIndex = '8888';
-      event.leaderboardContainer.$el.style.height = '100%';
-      event.leaderboardContainer.$el.style.zIndex = '7777';
+    previewToggle (event) {
+      let height = this.checkHeight();
+      let position = this.$el.getBoundingClientRect().height;
+      console.log('piosss', position)
+      console.log('hgt', height)
+      this.isPreview = !this.isPreview
+      this.$el.classList.toggle('open')
+      this.$el.style.height = this.isPreview ? position : '100%'
     },
-    closeParent: function (event) {
-      event.leaderboardContainer.$el.style.cssText = null;
-      event.leaderboard.style.cssText = null;
-    },
-    toggleView: function (event) {
-      if (event === 'stroke-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.expandParent(this.$refs)
-      } else if (event == 'stroke-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.closeParent(this.$refs)
-      } else if (event == 'putting-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.expandParent(this.$refs)
-      } else if (event == 'putting-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.closeParent(this.$refs)
-      } else if (event == 'skins-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'skins-leaderboard'
-        this.expandParent(this.$refs)
-      } else if (event == 'skins-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'skins-preview'
-        this.closeParent(this.$refs)
-      } else if (event == 'team-preview') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'team-leaderboard'
-        this.expandParent(this.$refs)
-      } else if (event == 'team-leaderboard') {
-        this.$refs.leaderboardCard.$el.classList.toggle('expand-leaderboard')
-        this.$refs.leaderboardContainer.$el.classList.toggle('expand-container')
-        this.currentView = 'team-preview'
-        this.closeParent(this.$refs)
-      }
+    checkHeight () {
+      let cardheight = this.$el.getBoundingClientRect().height;
+      return cardheight;
     },
     beforeEnter: function(el) {
       el.style.opacity = 0
@@ -135,24 +89,46 @@ export default {
 
 }
 </script>
-<style>
-.glide__track {
+<style >
+#leaderboard-container.open {
+  z-index: 1000 !important;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+.mint-swipe-item .is-active .open {
+  margin: 0;
+  padding: 0;
+}
+.mint-swipe-items-wrap>div {
+  padding-top: 20px;
+  position: relative;
+}
+.mint-swipe .my-swipe {
+  padding-top: 20px;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+}
+.mint-swipe .my-swipe .open {
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
   margin: 0;
 }
-.slide-wrapper {
-  height: inherit;
-}
-ul.glide__slides {
-  padding: 20px 0;
-}
-.preview__size {
-  width: 305px;
+.title-color {
+  color: #4ABDAC;
 }
 .rounded-card {
-  border-radius: 9px;
+  border-radius: 20px;
 }
 #leaderboard-container {
+  z-index: 1;
   background-color: white;
+  position: relative;
 }
 small.purse-color {
   color: #666;
@@ -164,25 +140,6 @@ small.purse-color {
   background-color: #f44336;
   color: #f1f1f1;
   font-size: 16px;
-}
-.expand-container {
-  top: 0;
-  left: 0;
-  padding: 0;
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
-  overflow:  scroll;
-}
-.expand-leaderboard {
-  top: 0;
-  left: 0;
-  padding: 0;
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
-  overflow:  scroll;
-  position: absolute;
 }
 .slide-fade-enter-active {
   transition: all .8s ease;
