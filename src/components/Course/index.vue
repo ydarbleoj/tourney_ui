@@ -91,7 +91,7 @@ export default {
   created: function (current) {
     // console.log('course created', this.currentCourse)
     // this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
-
+    console.log('tcourse', this.course)
   }
 }
 </script>

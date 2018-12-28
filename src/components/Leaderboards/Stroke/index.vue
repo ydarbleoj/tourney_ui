@@ -1,8 +1,12 @@
 <template>
-  <v-card class="lb-card" @click="isPreview = !isPreview; previewToggle();">
-    <v-card-title class="stroke--title pb-0 pt-1 pl-2">
-      <h2 class="text-align-left font-weight-medium" >Stroke</h2>
-      <h2 class="ml-2 font-weight-medium" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
+  <v-card class="lb-card" @click="isPreview ? previewToggle() : null">
+    <v-card-title class="stroke--title pa-0 pt-2 pl-2">
+      <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
+      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
+      <v-spacer></v-spacer>
+      <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
+        <v-icon color="white">clear</v-icon>
+      </span>
     </v-card-title>
 
     <v-card-text v-if="!loading" class="pa-0">
@@ -26,34 +30,56 @@ export default {
     return {
       isPreview: true,
       loading: true,
+      closed: true,
     }
   },
 
   computed: {
     ...mapState(['stroke_leaderboard']),
-    ...mapGetters(['getStrokeLeaderboard', 'userScorecardIds'])
   },
 
   methods: {
+    closeLeaderboard () {
+      this.isPreview = true
+    },
     previewToggle () {
-      this.$emit('event')
+      if (this.isPreview && this.closed) {
+        this.getFullField()
+      } else if (this.isPreview && !this.closed) {
+        this.closed = !this.closed
+      } else {
+        return null
+      }
+
+    },
+    toggleParent () {
       this.$parent.$el.style.margin = this.isPreview ? '0 auto' : '0';
-      this.$parent.$el.style.paddingTop = this.isPreview ? '20px' : '0';
       this.$parent.$el.style.width = this.isPreview ? '90%' : '100%';
-      this.$el.classList.toggle('open')
+    },
+    getFullField () {
+      this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: false })
+        .then(response => {
+          this.closed = false
+          this.isPreview = false
+        })
     },
   },
   watch: {
-    current: function () {
-      this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id })
+    current () {
+      this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
         .then(response => {
           this.loading = false
         })
     },
+    isPreview () {
+      this.toggleParent()
+      this.$el.classList.toggle('open')
+      this.$emit('event')
+    }
   },
 
   created: function () {
-    this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id })
+    this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
         this.loading = false
       })
@@ -72,7 +98,8 @@ export default {
   left: 0;
   z-index: 1000 !important;
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
-
+  height: 100vh;
+  overflow: scroll;
 }
 
 .stroke--title {

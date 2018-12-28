@@ -1,20 +1,26 @@
 <template>
-  <v-container id='leaderboard-container' class="pa-0" ref="leaderboardCard">
-    <v-layout row wrap>
-      <v-flex xs12 sm12 lg10 ref="leaderboard" style="margin-bottom: 7%;">
-        <h2 class="text-xs-left font-weight-regular" style="margin-left: 5%; margin-top: 5%;" v-if="isPreview">Leaderboards</h2>
-        <swipe class="my-swipe"
-          :auto="0" :show-indicators="false"
-          style="padding: 0px 0;"
+  <v-container id='leaderboard-container' class="pa-0 pb-3" ref="leaderboardCard">
+    <v-layout row>
+      <v-flex xs12 ref="leaderboard" >
+        <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;" v-if="isPreview">Leaderboards</h2>
+        <v-tabs
+          v-model="model"
+          color="transparent"
+          centered
+          height="0px"
+           v-touch="{
+            left: () => swipe('Left'),
+            right: () => swipe('Right'),
+          }"
         >
-          <swipe-item
+          <v-tab-item
             v-for="i in comps"
             :key="i"
-            style="width: 90%;margin: 0 auto"
+            style="width: 90vw;margin: 0 auto;"
           >
             <component :is="i" :current='current' @event="previewToggle(this)" />
-          </swipe-item>
-        </swipe>
+          </v-tab-item>
+        </v-tabs>
       </v-flex>
     </v-layout>
   </v-container>
@@ -22,8 +28,8 @@
 
 <script>
 import Stroke from '../components/Leaderboards/Stroke/index'
+import Skins from '../components/Leaderboards/Skins/index'
 import Putting from '../components/Leaderboards/Putting/index'
-import { Swipe, SwipeItem } from 'vue-swipe'
 import router from 'vue-router'
 import { mapState } from 'vuex'
 
@@ -33,12 +39,12 @@ export default {
   components: {
     Stroke,
     Putting,
-    Swipe,
-    SwipeItem,
+    Skins
   },
 
   data: () => ({
     el: 'stroke',
+    swipeDirection: 'None',
     model: 'tab-stroke',
     swipeDirection: 'None',
     isPreview: true,
@@ -46,8 +52,7 @@ export default {
     activeButton: 'active',
     inactiveButton: 'inactive',
     purse: 480,
-    comps: ['stroke', 'putting'],
-    // divHeight: this.$el.getBoundingClientRect().height
+    comps: ['skins', 'stroke'],
   }),
 
   computed: {
@@ -55,26 +60,15 @@ export default {
   },
 
   mounted: function () {
-    console.log('win height', screen.height)
-    let height = this.$refs.leaderboardCard.clientHeight
-    console.log('height here', height)
   },
   methods: {
-    swipe (direction) {
-      this.swipeDirection = direction
-    },
     previewToggle (event) {
-      let height = this.checkHeight();
-      let position = this.$el.getBoundingClientRect().height;
-      console.log('piosss', position)
-      console.log('hgt', height)
       this.isPreview = !this.isPreview
       this.$el.classList.toggle('open')
-      this.$el.style.height = this.isPreview ? position : '100%'
     },
-    checkHeight () {
-      let cardheight = this.$el.getBoundingClientRect().height;
-      return cardheight;
+    swipe (direction) {
+      console.log('swiping', direction)
+      this.swipeDirection = direction
     },
     beforeEnter: function(el) {
       el.style.opacity = 0
@@ -90,34 +84,18 @@ export default {
 }
 </script>
 <style >
+.hide {
+  display: none;
+}
 #leaderboard-container.open {
   z-index: 1000 !important;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: auto;
-}
-.mint-swipe-item .is-active .open {
-  margin: 0;
-  padding: 0;
-}
-.mint-swipe-items-wrap>div {
-  padding-top: 20px;
-  position: relative;
-}
-.mint-swipe .my-swipe {
-  padding-top: 20px;
-  color: #fff;
-  font-size: 30px;
-  text-align: center;
-}
-.mint-swipe .my-swipe .open {
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-  margin: 0;
+  overflow:hidden;
 }
 .title-color {
   color: #4ABDAC;

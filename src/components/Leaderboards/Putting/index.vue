@@ -1,13 +1,16 @@
 <template>
-  <v-card class="rounded-card card--shadow">
+  <v-card class="putting-lb-card" @click="isPreview ? previewToggle() : null ">
     <v-card-title class="putting--title pb-0 pt-1 pl-2">
       <h2 class="text-align-left font-weight-medium" >Putting</h2>
+      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
+      <v-spacer></v-spacer>
+      <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
+        <v-icon color="white">clear</v-icon>
+      </span>
     </v-card-title>
-    <div class="loading" v-if="loading">
-      Loading...
     </div>
-    <v-card-text v-else class="pa-0">
-      <putting-table />
+    <v-card-text v-if="!loading" class="pa-0">
+      <putting-table :preview="isPreview" />
     </v-card-text>
   </v-card>
 </template>
@@ -25,23 +28,54 @@ export default {
 
   data () {
     return {
-      loading: true
+      loading: true,
+      closed: true,
+      isPreview: true,
     }
   },
 
   computed: mapState(['putting_leaderboard']),
-
+  methods: {
+    closeLeaderboard () {
+      this.isPreview = true
+    },
+    previewToggle () {
+      if (this.isPreview && this.closed) {
+        this.getFullField()
+      } else if (this.isPreview && !this.closed) {
+        this.closed = !this.closed
+      } else {
+        return null
+      }
+    },
+    toggleParent () {
+      this.$parent.$el.style.margin = this.isPreview ? '0 auto' : '0';
+      this.$parent.$el.style.width = this.isPreview ? '90%' : '100%';
+    },
+    getFullField () {
+      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: false })
+        .then(response => {
+          this.closed = false
+          this.isPreview = false
+        })
+    },
+  },
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id })
+      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
         .then(response => {
           this.loading = false
         })
+    },
+    isPreview () {
+      this.toggleParent()
+      this.$el.classList.toggle('open')
+      this.$emit('event')
     }
   },
 
   created: function (current) {
-    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id })
+    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
         this.loading = false
       })
@@ -51,12 +85,23 @@ export default {
 }
 </script>
 <style>
-.card--shadow {
+.putting-lb-card {
   border-radius: 20px;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
 }
+.putting-lb-card.open {
+  border-radius: 0;
+  top: 0;
+  left: 0;
+  z-index: 1000 !important;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  height: 100vh;
+  overflow: scroll;
+}
+
 .putting--title {
-  background-color: #C49799;
-  color: white;
+  color: #f1f1f1;
+  background-color: #FE8202;
 }
 </style>

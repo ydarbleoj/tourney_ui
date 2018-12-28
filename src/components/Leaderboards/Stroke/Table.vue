@@ -4,10 +4,10 @@
     :items="stroke_leaderboard"
     hide-actions
     class='stroke-table fixed-header board-table'
-    item-key="user_id"
+    item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr v-bind:class="displayRow(props)">
+      <tr @click="preview ? null : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">
           {{ props.item.attributes.username }}
@@ -23,6 +23,72 @@
     </template>
 
     <template slot="expand" slot-scope="props">
+      <v-layout row wrap class="font-weight-regular pt-3 pb-3 pr-2" align-center>
+        <v-flex xs4>
+          <v-card flat >
+            <v-layout row align-center>
+              <v-flex xs6>
+                <h4 class="font-weight-regular">RND1</h4>
+              </v-flex>
+              <v-flex xs6>
+                <v-card flat>
+                  <v-layout column align-center>
+                    <v-flex xs12>
+                      <h1 class="stroke-stats">{{ props.item.attributes.rnd1_gnr }} <span>%</span></h1>
+                    </v-flex>
+                    <v-flex xs12>
+                      <h5 class="grey--text font-weight-regular">greens in reg</h5>
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </v-flex>
+        <v-flex xs4>
+          <v-card flat >
+            <v-layout row align-center>
+              <v-flex xs6>
+                <h4 class="font-weight-regular">RND2</h4>
+              </v-flex>
+              <v-flex xs6>
+                <v-card flat>
+                  <v-layout column align-center>
+                    <v-flex xs12>
+                      <h1 class="stroke-stats">{{ props.item.attributes.rnd2_gnr }} <span>%</span></h1>
+                    </v-flex>
+                    <v-flex xs12>
+                      <h5 class="grey--text font-weight-regular">greens in reg</h5>
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs4>
+          <v-card flat >
+            <v-layout row align-center>
+              <v-flex xs6>
+                <h4 class="font-weight-regular">RND3</h4>
+              </v-flex>
+              <v-flex xs6>
+                <v-card flat>
+                  <v-layout column align-center>
+                    <v-flex xs12>
+                      <h1 class="stroke-stats">{{ props.item.attributes.rnd3_gnr }} <span>%</span></h1>
+                    </v-flex>
+                    <v-flex xs12>
+                      <h5 class="grey--text font-weight-regular">greens in reg</h5>
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </template>
   </v-data-table>
 
@@ -64,21 +130,21 @@ export default {
           align: 'center',
           sortable: false,
           value: 'rnd1_score',
-          class: 'rounds hidden_row'
+          class: 'stroke-row hidden_row'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd2_score',
-          class: "rounds hidden_row"
+          class: "stroke-row hidden_row"
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
           value: 'rnd3_score',
-          class: 'rounds hidden_row'
+          class: 'stroke-row hidden_row'
         },
         {
           text: 'Score',
@@ -104,19 +170,21 @@ export default {
 
   watch: {
     preview () {
-      let headers = document.getElementsByClassName('rounds');
-      [0, 1, 2].map(num => { headers[num].classList.toggle('hidden_row'); });
+      let array = [0, 1, 2];
+      let hdrs = document.getElementsByClassName('stroke-row');
+      array.map(num => hdrs[num].classList.toggle('hidden_row'));
     }
   },
 
-  mounted: function () {
-
+  created () {
   }
 
 }
 </script>
 <style>
-
+.stroke-stats {
+  color: #FE8202;
+}
 .board-table {
   overflow:hidden;
   border-radius: 0 0 20px 20px;

@@ -1,15 +1,15 @@
 <template>
-  <v-card class="rounded-card elevation-24">
-    <v-card-title class="skins">
-      <h4 class="text-align-left mb-0 ml-2" >Skins</h4>
+  <v-card class="skins-lb-card" @click="isPreview ? previewToggle() : null ">
+    <v-card-title class="skins--title pa-0 pt-2 pl-2">
+      <h2 class="text-align-left font-weight-medium" >Skins</h2>
+      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
+      <v-spacer></v-spacer>
+      <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
+        <v-icon color="white">clear</v-icon>
+      </span>
     </v-card-title>
-    <v-card-text class="skins">
-      <div class="loading" v-if="loading">
-        Loading...
-      </div>
-      <div class="loaded" v-else>
-        <skins-table />
-      </div>
+    <v-card-text v-if="!loading" class="pa-0">
+      <skins-table :preview="isPreview" />
     </v-card-text>
   </v-card>
 </template>
@@ -23,43 +23,87 @@ export default {
   name: 'index',
   props: ['current'],
   components: {
-    StrokeTable
+    SkinsTable
   },
   data () {
     return {
+      isPreview: true,
       loading: true,
+      closed: true
     }
   },
 
   computed: {
     ...mapState(['skins_leaderboard']),
   },
+  methods: {
+    closeLeaderboard () {
+      this.isPreview = true
+    },
+    previewToggle () {
+      if (this.isPreview && this.closed) {
+        this.getFullField()
+      } else if (this.isPreview && !this.closed) {
+        this.closed = !this.closed
+      } else {
+        return null
+      }
 
-  watch: {
-    current: function () {
-      this.$store.dispatch('LOAD_SKINS', { id: this.current.id })
+    },
+    toggleParent () {
+      this.$parent.$el.style.margin = this.isPreview ? '0 auto' : '0';
+      this.$parent.$el.style.width = this.isPreview ? '90%' : '100%';
+    },
+    getFullField () {
+      this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: false })
         .then(response => {
-          this.loading = false
+          this.closed = false
+          this.isPreview = false
         })
     },
   },
 
+  watch: {
+    current: function () {
+      this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: true })
+        .then(response => {
+          this.loading = false
+        })
+    },
+    isPreview () {
+      this.toggleParent()
+      this.$el.classList.toggle('open')
+      this.$emit('event')
+    }
+  },
+
   created: function () {
-    this.$store.dispatch('LOAD_STROKE', { id: this.current.id })
+    this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: true })
       .then(response => {
+        console.log('skins', this.skins_leaderboard)
         this.loading = false
       })
   },
 }
 </script>
 <style>
-.rounded-card {
-  border-radius: 9px;
+.skins-lb-card {
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
 }
-.skins {
-  background-color: #62bcfa;
-  padding: 0;
-  font-size: 16px;
-  color: #666;
+.skins-lb-card.open {
+  border-radius: 0;
+  top: 0;
+  left: 0;
+  z-index: 1000 !important;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  height: 100vh;
+  overflow: scroll;
+}
+
+.skins--title {
+  color: #f1f1f1;
+  background-color: #ABCE57;
 }
 </style>

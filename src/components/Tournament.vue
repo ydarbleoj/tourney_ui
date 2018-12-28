@@ -53,6 +53,7 @@ export default {
 </script>
 <style>
 .tournament-wrapper {
+  overflow:hidden;
   background-color: white;
 }
 </style>

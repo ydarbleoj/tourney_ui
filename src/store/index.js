@@ -72,24 +72,24 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
-    LOAD_SKINS: function ({ commit, state }, { id }) {
-      let options = { tournament_id: id }
+    LOAD_SKINS: function ({ commit, state }, { id, preview }) {
+      let options = { tournament_id: id, preview: preview  }
       return axios.get('/api/v2/leaderboards/skins.json', { params: options }).then((response) => {
         commit('SET_SKINS_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
-    LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id }) {
-      let options = { tournament_id: id }
+    LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id, preview }) {
+      let options = { tournament_id: id, preview: preview }
       return axios.get('/api/v2/leaderboards/putts.json', { params: options}).then((response) => {
         commit('SET_PUTTING_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
-    LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id }) {
-      let options = { tournament_id: id }
+    LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id, preview }) {
+      let options = { tournament_id: id, preview: preview }
       return axios.get('/api/v2/leaderboards/strokes.json', { params: options }).then((response) => {
         commit('SET_STROKE_LEADERBOARD', { list: response.data })
       }, (err) => {
@@ -185,9 +185,10 @@ const store = new Vuex.Store({
       state.courseStats = list
     },
     SET_SKINS_LEADERBOARD: (state, { list }) => {
-      state.skins_leaderboard = list.data
+      Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {
+      console.log('round set', list.data)
       state.roundOne = list.data[0]
       state.roundTwo = list.data[1]
       state.roundThree = list.data[2]
@@ -197,10 +198,10 @@ const store = new Vuex.Store({
       state.currentRound = list
     },
     SET_STROKE_LEADERBOARD: (state, { list }) => {
-      state.stroke_leaderboard = list.data
+      Vue.set(state, 'stroke_leaderboard', list.data)
     },
     SET_PUTTING_LEADERBOARD: (state, { list }) => {
-      state.putting_leaderboard = list.data
+      Vue.set(state, 'putting_leaderboard', list.data)
     },
     SET_COURSE: (state, { list }) => {
       state.currentCourse = list[0]['course']
@@ -234,6 +235,7 @@ const store = new Vuex.Store({
       return state.courses
     },
     getStrokeLeaderboard: state => {
+      console.log('get', state.stroke_leaderboard)
       return state.stroke_leaderboard
     },
     getTournament: state => {

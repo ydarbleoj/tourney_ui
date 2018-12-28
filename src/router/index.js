@@ -52,7 +52,8 @@ export default new Router({
       path: '/tournament',
       name: 'Tournament',
       component: Tournament,
-      props: { default: true }
+      props: { default: true },
+      meta: { auth: true }
     },
     // {
     //   path: '/tournaments/:id/rounds',
