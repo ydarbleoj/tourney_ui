@@ -1,8 +1,8 @@
 <template>
-  <v-card color="grey lighten-1" flat height="56px">
+  <v-card flat height="56px">
     <v-list>
       <v-list-tile v-for="item in tournaments" :key="item" @click="updateMenu(item)">
-        <v-list-tile-title>{{ item.attributes.name }} {{ item.attributes.year }}</v-list-tile-title>
+        <v-list-tile-title>Bandon {{ item.attributes.year }}</v-list-tile-title>
       </v-list-tile>
     </v-list>
     <v-spacer></v-spacer>
@@ -25,7 +25,7 @@ export default {
 
   data () {
     return {
-      current: this.currentTournament,
+
       items: [],
     }
   },
@@ -33,6 +33,7 @@ export default {
   methods: {
     updateMenu: function(event) {
       let nn = this.tournaments.filter(tourn => tourn.attributes.year == event.attributes.year)[0]
+      console.log('nn', nn)
       this.current = nn.attributes
       this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', this.current)
     },

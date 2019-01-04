@@ -34,10 +34,6 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(['stroke_leaderboard']),
-  },
-
   methods: {
     closeLeaderboard () {
       this.isPreview = true
@@ -79,6 +75,7 @@ export default {
   },
 
   created: function () {
+    console.log('stroke', this.current)
     this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
         this.loading = false

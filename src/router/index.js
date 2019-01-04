@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Tournament from '@/components/Tournament'
+import TournamentAdmin from '@/components/Tournament/Admin/index'
 import TournamentDashboard from '@/components/Tournament/Dashboard'
 import Leaderboards from '@/components/Leaderboards'
 import Rounds from '@/components/Rounds'
@@ -16,18 +17,20 @@ import Stats from '@/components/Stats/index'
 
 Vue.use(Router)
 
+
 export default new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      // meta: { auth: false, redirect: '/profile' },
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
     },
     {
       path: '/profile',
@@ -54,6 +57,13 @@ export default new Router({
       component: Tournament,
       props: { default: true },
       meta: { auth: true }
+    },
+    {
+      path: '/admin',
+      name: 'TournamentAdmin',
+      component: TournamentAdmin,
+      props: { default: true },
+      meta: { auth: { role: 'admin', redirect: { name: 'admin'}, } }
     },
     // {
     //   path: '/tournaments/:id/rounds',

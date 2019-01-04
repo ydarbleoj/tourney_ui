@@ -29,6 +29,7 @@
 <script>
 import Stroke from '../components/Leaderboards/Stroke/index'
 import Skins from '../components/Leaderboards/Skins/index'
+import Team from '../components/Leaderboards/Team/index'
 import Putting from '../components/Leaderboards/Putting/index'
 import router from 'vue-router'
 import { mapState } from 'vuex'
@@ -39,27 +40,30 @@ export default {
   components: {
     Stroke,
     Putting,
-    Skins
+    Skins,
+    Team
   },
 
-  data: () => ({
-    el: 'stroke',
-    swipeDirection: 'None',
-    model: 'tab-stroke',
-    swipeDirection: 'None',
-    isPreview: true,
-    currentView: 'stroke',
-    activeButton: 'active',
-    inactiveButton: 'inactive',
-    purse: 480,
-    comps: ['skins', 'stroke'],
-  }),
+  data (){
+    return {
+      el: 'stroke',
+      model: 'tab-stroke',
+      swipeDirection: 'None',
+      isPreview: true,
+      currentView: 'stroke',
+      activeButton: 'active',
+      inactiveButton: 'inactive',
+      purse: 480,
+      comps: ['stroke', 'putting'],
+    }
+  },
 
   computed: {
-    ...mapState(['currentTournament', 'stroke_leaderboard']),
+    ...mapState(['currentTournament']),
   },
 
   mounted: function () {
+    console.log('leadeboard', this.current)
   },
   methods: {
     previewToggle (event) {

@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="stroke_leaderboard"
+    :items="strokeLeaderboard"
     hide-actions
     class='stroke-table fixed-header board-table'
     item-key="id"
@@ -101,7 +101,7 @@ export default {
   name: 'Table',
   props: ['preview'],
   computed: {
-    ...mapState(['stroke_leaderboard']),
+    ...mapState(['strokeLeaderboard']),
   },
 
   data () {

@@ -64,7 +64,7 @@ Vue.use(VueAuth, {
     rolesVar: 'role',
     fetchData: { url: 'users', enabled: true },
     parseUserData: function (data) {
-      return data;
+      return data.data.attributes;
     },
     refreshData: { url: 'users/refresh', method: 'GET', enabled: false, interval: 0 }
 })

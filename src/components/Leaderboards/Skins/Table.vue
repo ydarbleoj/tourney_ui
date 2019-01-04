@@ -9,11 +9,14 @@
     <template slot="items" slot-scope="props" >
       <tr @click="preview ? null : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.username }}</td>
+        <td class="text-xs-left">{{ props.item.attributes.username }}
+          <v-spacer></v-spacer>
+          <span class="grey--text">handicap {{ props.item.attributes.handicap }}</span>
+        </td>
         <td class="text-xs-center">${{ props.item.attributes.skins_money.total }}</td>
-        <td v-if="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_1')['total'] }}</td>
-        <td v-if="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_2')['total'] }}</td>
-        <td v-if="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_3')['total'] }}</td>
+        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_1')['total'] }}</td>
+        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_2')['total'] }}</td>
+        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_3')['total'] }}</td>
         <td class="text-xs-center">{{ props.item.attributes.total_skins }}</td>
       </tr>
     </template>
@@ -214,7 +217,6 @@ export default {
       let array = [0, 1, 2]
       let headers = document.getElementsByClassName('skins-row');
       array.map(num => headers[num].classList.toggle('hidden_row'))
-      console.log('suns', this.skins_leaderboard)
     }
   },
 

@@ -33,7 +33,7 @@
             </v-card-title>
             <v-spacer></v-spacer>
             <v-card-title class="white--text pl-1 pt-5">
-              <div class="display-1 pl-5 pt-5">{{ this.$auth.user().username }}</div>
+              <div class="display-1 pl-5 pt-5">{{ user.username }}</div>
             </v-card-title>
           </v-layout>
         </v-img>
@@ -42,7 +42,7 @@
             <v-list-tile-action>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ this.$auth.user().handicap }}</v-list-tile-title>
+              <v-list-tile-title>{{ user.handicap }}</v-list-tile-title>
               <v-list-tile-sub-title>Handicap</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -51,17 +51,17 @@
               <v-icon color="orange">location_on</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ this.$auth.user().home }}</v-list-tile-title>
+              <v-list-tile-title>{{ user.home }}</v-list-tile-title>
               <v-list-tile-sub-title>Home</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         <v-divider inset></v-divider>
-          <v-list-tile @click="" :to="'tournaments_dashboard'">
+          <v-list-tile @click="" :to="'tournament'">
             <v-list-tile-action>
               <v-icon color="blue">dashboard</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>Tournaments</v-list-tile-title>
+              <v-list-tile-title>Bandon</v-list-tile-title>
               <v-list-tile-sub-title></v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -80,7 +80,8 @@ export default {
 
   data () {
     return {
-      userId: this.$auth.user().id
+      userId: this.$auth.user().id,
+      user: {}
     }
   },
 
@@ -112,7 +113,7 @@ export default {
 
 
   created: function () {
-    // console.log('userid', this.data.userId)
+    this.user = Object.assign(this.$auth.user())
   }
 }
 </script>

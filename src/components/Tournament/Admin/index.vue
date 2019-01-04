@@ -16,9 +16,9 @@
                     <v-icon class="mr-2">person_outline</v-icon><router-link :to="'/profile'">Profile</router-link>
                   </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile v-if="$auth.check('admin')">
+                <v-list-tile>
                   <v-list-tile-title>
-                    <v-icon class="mr-2">apps</v-icon><router-link :to="'/admin'">Admin</router-link>
+                    <v-icon class="mr-2">golf_course</v-icon><router-link :to="'/tournament'">Bandon</router-link>
                   </v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile>
@@ -29,27 +29,14 @@
               </v-list>
             </v-menu>
           </v-flex>
-          <v-flex xs6>
-            <v-menu offset-y>
-              <v-btn color="primary lighten-2" dark flat slot="activator">
-                <h3 class="black--text font-weight-regular mr-1">Bandon</h3>
-                <h3 class="black--text font-weight-medium">{{ this.currentTournament.year }}</h3>
-              </v-btn>
-              <v-list>
-                <v-list-tile v-for="item in items" :key="item['id']" @click="updateTournament(item)">
-                  <v-list-tile-title class="text-xs-right">{{ item.attributes.year }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
-
+          <v-flex xs6 class="pt-1">
+            <h3 class="mt-2">{{ currentTournament.year }} Admin</h3>
           </v-flex>
         </v-layout>
         <!-- <v-layout row-wrap v-if="currentTournament.handicap == false">
           <handicap :current="currentTournament" />
         </v-layout> -->
         <v-layout row wrap >
-          <leaderboards :current="currentTournament" v-if="!loading" />
-          <rounds :current="currentTournament" v-if="!loading" />
 
         </v-layout>
       </v-container>
@@ -58,22 +45,13 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-import Leaderboards from '../components/Leaderboards'
-import Rounds from '../components/Rounds'
-import Stats from '../components/Stats/index'
-import Handicap from '../components/Leaderboards/Handicap'
 
 export default {
-  name: 'Tournament',
+  name: 'TournamentAdmin',
   components: {
-    Leaderboards,
-    Rounds,
-    Stats,
-    Handicap,
   },
   computed: {
-    ...mapState(['tournaments', 'currentTournament', 'currentRound']),
-    ...mapGetters(['getTournament', 'getTournaments'])
+    ...mapState(['currentTournament']),
   },
 
   data () {
@@ -87,13 +65,13 @@ export default {
   },
   methods: {
     updateTournament (item) {
-      this.loading = true
-      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', item)
-        .then(response => {
-          let current = this.currentTournament
-          this.items = this.tournaments.filter(el => el.attributes.year != current.year)
-          this.loading = false
-        })
+      // this.loading = true
+      // this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', item)
+      //   .then(response => {
+      //     let current = this.currentTournament
+      //     this.items = this.tournaments.filter(el => el.attributes.year != current.year)
+      //     this.loading = false
+      //   })
     },
     logout () {
       this.$auth.logout({
@@ -105,11 +83,8 @@ export default {
   },
 
   created: function () {
-    console.log('here is the auth', this.$auth.user())
-    this.$store.dispatch('LOAD_TOURNAMENT_LIST')
+    this.$store.dispatch('LOAD_ADMIN_PLAYERS', { tournId: this.currentTournament.id })
       .then(response => {
-        let current = this.currentTournament
-        this.items = this.tournaments.filter(el => el.attributes.year != current.year)
         this.loading = false
       })
   },

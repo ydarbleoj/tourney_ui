@@ -3,21 +3,27 @@
     <v-layout row wrap>
       <v-flex xs12 sm12 lg12>
         <h2 class="text-xs-left font-weight-regular pl-0" style="margin-left: 5%;" v-if="isPreview">Round Info</h2>
-        <swipe class="my-swipe"
-          :auto="0" :show-indicators="false"
-          style="padding: 0px 0;"
-          :continuous="true"
+        <v-tabs
+          v-model="model"
+          color="transparent"
+          centered
+          height="0px"
+           v-touch="{
+            left: () => swipe('Left'),
+            right: () => swipe('Right'),
+          }"
         >
-          <swipe-item
-            v-for="i in roundComps[0]"
+          <v-tab-item
+            v-for="i in roundComps"
             :key="i['id']"
-            style="width: 90%;margin: 0 auto;"
+            style="width: 90vw;margin: 0 auto;"
+            touchless
           >
             <course :course="i"  @event="courseToggle(this)" />
             <v-spacer class="mt-4 round-spacer"></v-spacer>
             <scorecard :current="current" :roundId="i" />
-          </swipe-item>
-        </swipe>
+          </v-tab-item>
+        </v-tabs>
       </v-flex>
     </v-layout>
   </v-container>
@@ -27,7 +33,6 @@
 import Course from '../components/Course/index'
 import Scorecard from '../components/Scorecard/index'
 import TeeTime from '../components/Course/TeeTime'
-import { Swipe, SwipeItem } from 'vue-swipe'
 import { mapState } from 'vuex'
 
 export default {
@@ -37,14 +42,14 @@ export default {
     Course,
     TeeTime,
     Scorecard,
-    Swipe,
-    SwipeItem,
   },
 
   data () {
     return {
       loading: true,
       isPreview: true,
+      swipeDirection: 'None',
+      model: 'tab-stroke',
       roundComps: [],
       windowSize: {
         x: 0,
@@ -73,6 +78,10 @@ export default {
     onResize () {
       this.windowSize = { x: this.$el.innerWidth, y: this.$el.innerHeight }
     },
+     swipe (direction) {
+      console.log('swiping', direction)
+      this.swipeDirection = direction
+    },
     courseToggle (event) {
       let card = this.$refs.roundCardContainer
       this.isPreview = !this.isPreview
@@ -84,7 +93,6 @@ export default {
       let isPrev = this.isPreview
       card.style.zIndex = isPrev ? 1 : 9999;
       card.style.position = isPrev ? 'relative' : 'fixed';
-      card.style.backgroundColor = isPrev ? 'pink' : 'white';
       card.style.top = isPrev ? this.cardPos.top : 0;
       card.style.padding = isPrev ? '16px 0' : '0';
       card.style.margin = isPrev ? '4px 0' : '0';
@@ -106,16 +114,21 @@ export default {
   },
 
   watch: {
-    // current: function () {
-    //   this.$store.dispatch('UPDATE_CURRENT_ROUND', this.current.rounds[0])
-    // }
+    current: function () {
+      this.roundComps = []
+      this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
+        .then(response => {
+          this.loading = false
+          this.roundComps = this.rounds
+        })
+    }
   },
 
   created: function (current) {
     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
       .then(response => {
         this.loading = false
-        this.roundComps.push(this.rounds)
+        this.roundComps = this.rounds
       })
   },
 

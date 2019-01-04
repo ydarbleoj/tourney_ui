@@ -12,7 +12,13 @@ export default {
     return {
       msg: 'Tourney'
     }
+  },
+
+  created () {
+    console.log('this user', this.$auth.user())
   }
+
+
 }
 </script>
 

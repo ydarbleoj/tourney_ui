@@ -53,6 +53,9 @@ export default {
         console.log('error', res)
       })
     }
+  },
+  created () {
+    console.log('login', this.$auth.user())
   }
 }
 </script>
