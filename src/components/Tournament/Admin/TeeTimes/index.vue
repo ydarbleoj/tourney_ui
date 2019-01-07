@@ -1,13 +1,16 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-container v-if="loading">
+    loading...
+  </v-container>
+  <v-container fluid class="pa-0" v-else>
     <v-layout row>
       <v-flex xs6 class="ma-0">
         <v-card flat tile>
           <v-list two-line>
             <template v-for="groups in adminTeeTimeGetter">
-              <label>{{ groups[0].group }}</label>
+              <label>{{ groups.attributes.group }}</label>
               <v-divider></v-divider>
-              <group :teeGroup="groups[0]" :parentData="awaitingTees" @event="addToAwaiting"/>
+              <group :teeGroup="groups" :parentData="awaitingTees" @event="addToAwaiting"/>
               <v-divider></v-divider>
             </template>
           </v-list>
@@ -18,16 +21,18 @@
           <label>Awaiting</label>
           <v-divider></v-divider>
           <v-list class="grey lighten-2">
-            <v-list-group v-for="(user, index) in awaitingTees" :value="user" v-bind:key="user.user">
-              <v-list-tile slot="item" @click="">
+            <v-list-group
+              v-for="(item, index) in awaitingTees"
+              :value="false"
+              :key="item.id"
+              no-action
+            >
+              <v-list-tile slot="activator">
                 <v-list-tile-content>
-                  <v-list-tile-title>{{ user.user }}</v-list-tile-title>
+                  <v-list-tile-title style="font-size: 12px;">{{ item.attributes.first_name }} {{ item.attributes.last_name }}</v-list-tile-title>
                 </v-list-tile-content>
-                <v-list-tile-action>
-                  <v-icon>keyboard_arrow_down</v-icon>
-                </v-list-tile-action>
               </v-list-tile>
-              <v-list-tile v-for="subitem in groupChoices" v-bind:key="subitem" @click="addTeeTime(subitem, user, index)">
+              <v-list-tile v-for="subitem in groupChoices" v-bind:key="subitem" @click="addTeeTime(subitem, item, index)">
                 <v-list-tile-content>
                   <v-list-tile-title>{{ subitem }}</v-list-tile-title>
                 </v-list-tile-content>
@@ -45,7 +50,7 @@ import { mapState, mapGetters } from 'vuex'
 import Group from './Group'
 
 export default {
-  name: 'Admin',
+  name: 'index',
   props: ['current', 'teeGroup'],
   components: {
     Group
@@ -54,9 +59,11 @@ export default {
       // awaitingTees: [],
   data () {
     return {
+      loading: true,
       teeTimes: [],
       groupChoices: ["Group A", "Group B", "Group C", "Group D"],
-
+      roundNumber: 1,
+      roundId: null,
     }
   },
 
@@ -78,10 +85,30 @@ export default {
       console.log('tee ti', this.adminTeeTimeGetter[i][0].users)
       this.adminTeeTimeGetter[i][0].users.push(user)
     },
+    roundFilter (rounds, num) {
+      let r = rounds.filter(el => el.roundNumber === num)
+      this.roundId = r[0].roundId
+    },
+    loadTeeTimes () {
+      this.$store.dispatch('LOAD_ADMIN_TEE_TIME', { tournId: this.currentTournament.id, roundId: this.roundId })
+        .then(response => {
+          this.loading = false
+        })
+    }
   },
 
-  mounted: function (current) {
-    console.log('tee time', this.currentTournament.id)
+  watch: {
+    roundNumber () {
+      let rounds = this.currentTournament.round_info
+      this.roundFilter(rounds, this.roundNumber)
+      this.loadTeeTimes()
+    }
+  },
+
+  created: function (current) {
+    let rounds = this.currentTournament.round_info
+    this.roundFilter(rounds, 1)
+    this.loadTeeTimes()
   }
 }
 </script>

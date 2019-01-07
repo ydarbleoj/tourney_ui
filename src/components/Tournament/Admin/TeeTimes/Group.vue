@@ -3,9 +3,9 @@
     <v-flex xs12>
       <v-card flat tile>
         <v-list>
-          <v-list-tile v-for="(item, index) in teeGroup.users" v-bind:key="item.user" @click="removeElement(item, index)">
+          <v-list-tile v-for="(item, index) in teeGroup.attributes.players" v-bind:key="item.user_id" @click="removeElement(item, index)">
             <v-list-tile-content style="height: 30px">
-              <v-list-tile-title v-text="item.user">{{item.user_id}}</v-list-tile-title>
+              <v-list-tile-title>{{ item.first_name }} {{ item.last_name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>

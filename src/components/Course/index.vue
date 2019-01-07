@@ -37,16 +37,12 @@
 <script>
 import { mapState } from 'vuex'
 import Stats from './Stats/index'
-import TeeTime from './TeeTime'
-import Admin from './TeeTimes/Admin'
 
 export default {
   name: 'index',
   props: ['course'],
   components: {
     Stats,
-    TeeTime,
-    Admin
   },
 
   data () {
@@ -59,7 +55,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentRound', 'currentTournament', 'currentCourse', 'teeTime'])
+    ...mapState(['currentRound', 'currentTournament', 'currentCourse'])
   },
 
   methods: {

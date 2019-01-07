@@ -32,7 +32,6 @@
 <script>
 import Course from '../components/Course/index'
 import Scorecard from '../components/Scorecard/index'
-import TeeTime from '../components/Course/TeeTime'
 import { mapState } from 'vuex'
 
 export default {
@@ -40,7 +39,6 @@ export default {
   props: ['current'],
   components: {
     Course,
-    TeeTime,
     Scorecard,
   },
 
@@ -60,7 +58,7 @@ export default {
 
   computed: {
     ...mapState(['currentTournament', 'rounds', 'currentRound', 'roundOne',
-      'roundTwo', 'roundThree', 'teeTime']),
+      'roundTwo', 'roundThree']),
   },
 
   methods: {

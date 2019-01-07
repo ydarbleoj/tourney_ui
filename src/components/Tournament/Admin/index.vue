@@ -72,14 +72,16 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import PlayerList from '../Admin/PlayerList'
+import TeeTimes from '../Admin/TeeTimes/index'
 
 export default {
   name: 'TournamentAdmin',
   components: {
-    PlayerList
+    PlayerList,
+    TeeTimes,
   },
   computed: {
-    ...mapState(['currentTournament']),
+    ...mapState(['currentTournament',]),
   },
 
   data () {

@@ -155,9 +155,9 @@ const store = new Vuex.Store({
     UPDATE_ROUNDS: function ({ commit }, payload) {
       commit('SET_ROUNDS', { list: payload.rounds })
     },
-    LOAD_ADMIN_TEE_TIME: function ({ commit, state }, { tourn_id, roundNumber }) {
-      let options = { round: roundNumber }
-      axios.get('/tournaments/' + tourn_id + '/tee_times.json', { params: options }).then((response) => {
+    LOAD_ADMIN_TEE_TIME: function ({ commit, state }, { tournId, roundId }) {
+      let options = { tournament_id: tournId, tournament_round_id: roundId }
+      return axios.get('/api/v2/tournaments/admin/tee_times.json', { params: options }).then((response) => {
         commit('SET_ADMIN_TEE_TIME', { list: response.data })
       }, (err) => {
         console.log(err)
@@ -227,8 +227,8 @@ const store = new Vuex.Store({
       state.tournaments = list.data
     },
     SET_ADMIN_TEE_TIME: (state, { list }) => {
-      state.adminTeeTimes = list[0]['times']
-      state.awaitingTees = list[0]['awaiting']
+      state.adminTeeTimes = JSON.parse(list.times).data
+      Vue.set(state, 'awaitingTees', JSON.parse(list.awaiting).data)
     },
     SET_ADMIN_MESSAGE: (state, { list }) => {
       state.adminMessage = list
