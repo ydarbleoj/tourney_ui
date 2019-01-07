@@ -105,7 +105,6 @@ export default {
   },
 
   created: function () {
-    console.log('here is the auth', this.$auth.user())
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
       .then(response => {
         let current = this.currentTournament

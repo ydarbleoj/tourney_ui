@@ -14,7 +14,7 @@
       <team-table :preview="isPreview"/>
     </v-card-text>
     <v-bottom-nav
-    v-if="!isPreview"
+      v-if="!isPreview"
       absolute
       :active.sync="roundNumber"
       :value="true"

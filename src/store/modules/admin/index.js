@@ -8,8 +8,8 @@ const state = {
 const actions = {
   LOAD_ADMIN_PLAYERS: function ({ commit, state }, { tournId }) {
     let options = { tournament_id: tournId }
-    return axios.get('/api/v2/tournament/admin', { params: options }).then((response) => {
-      commit('SET_ADMIN_PLAYERS', response.data)
+    return axios.get('/api/v2/tournaments/users', { params: options }).then((response) => {
+      commit('SET_ADMIN_PLAYERS', { list: response.data })
     })
   }
 }
@@ -24,7 +24,10 @@ const getters = {
 
 }
 
+const namespaced = true;
+
 export default {
+  namespaced,
   state,
   actions,
   mutations,

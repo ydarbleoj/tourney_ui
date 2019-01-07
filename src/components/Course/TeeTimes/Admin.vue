@@ -80,13 +80,6 @@ export default {
     },
   },
 
-  // watch: {
-  //   current: function () {
-  //     // console.log('getter', this.adminTeeTimeGetter)
-  //     // this.$store.dispatch('LOAD_ADMIN_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
-  //   }
-  // },
-
   mounted: function (current) {
     console.log('tee time', this.currentTournament.id)
   }

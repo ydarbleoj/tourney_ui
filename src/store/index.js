@@ -19,6 +19,7 @@ const store = new Vuex.Store({
 
   ],
   state: {
+    tournamentPlayers: [],
     courses: [],
     currentCourse: [],
     courseStats: [],
@@ -44,6 +45,18 @@ const store = new Vuex.Store({
     moneyList: [],
   },
   actions: {
+    LOAD_ADMIN_PLAYERS: function ({ commit, state }, { tournId }) {
+      let options = { tournament_id: tournId }
+      return axios.get('/api/v2/tournaments/admin/leaderboards.json', { params: options }).then((response) => {
+        commit('SET_ADMIN_PLAYERS', { list: response.data })
+      })
+    },
+    UPDATE_PLAYER_ADMIN: function ({ commit, state }, { tournId, opts, lbId }) {
+      opts['tournament_id'] = tournId
+      axios.put('/api/v2/tournaments/admin/leaderboards/' + lbId + '.json',  opts).then((response) => {
+        commit('SET_UPDATED_PLAYERS', { list: response.data })
+      })
+    },
     UPDATE_HANDICAP: function ({ commit, state }, { tournId, leaderboardId, handicap }) {
       let options = { handicap: handicap }
       axios.put('/tournaments/' + tournId + '/leaderboards/' + leaderboardId + '.json', { params: options }).then((response) => {
@@ -174,6 +187,13 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    SET_ADMIN_PLAYERS: (state, { list }) => {
+      state.tournamentPlayers = list.data
+    },
+    SET_UPDATED_PLAYERS: (state, { list }) => {
+      console.log('update players', list)
+      Vue.set(state, 'tournamentPlayers', list.data)
+    },
     SET_HANDICAP: (state, { list }) => {
       state.handicapMessage = list
     },
@@ -256,7 +276,7 @@ const store = new Vuex.Store({
   },
   modules: {
     scorecards,
-    admin
+    // admin
   }
 })
 
