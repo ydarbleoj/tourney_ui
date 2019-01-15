@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 
 
@@ -7,6 +8,11 @@ const state = {
   scoreList: [],
   courseScorecard: {},
   userScore: {},
+  userScorecards: [],
+  rnd1scorecard: [],
+  rnd2scorecard: [],
+  rnd3scorecard: [],
+
 }
 
 const actions = {
@@ -33,27 +39,47 @@ const actions = {
       console.log('set score', err)
     })
   },
-  CREATE_USER_SCORE: function ({ commit, state }, { scorecardId, options }) {
-    axios.post('/scorecards/' + scorecardId + '/user_scores.json', { user_score: options })
-    .then((response) => {
-      commit('SET_SCORECARD', { list: response.data[0]['sc'] })
-      commit('SET_SCORE_LIST', { list: response.data[0]['us'] })
+  ADMIN_CREATE_USER_SCORE: function ({ commit, state }, { scorecardId, scores }) {
+    let options = { scorecard_id: scorecardId, user_score: scores}
+    return axios.post('/api/v2/user_scores.json', options)
+      .then((response) => {
+        if (response.status == 200) {
+          commit('UPDATE_ADMIN_SCORECARD', { list: response.data })
+        }
+      }, (err) => {
+        console.log('send score error', err)
+    })
+  },
+  ADMIN_UPDATE_USER_SCORE: function ({ commit, state }, { scorecardId, scoreId, scores }) {
+    let options = { scorecard_id: scorecardId, user_score_id: scoreId, user_score: scores }
+    return axios.put('/api/v2/user_scores/' + scoreId + '.json', options).then((response) => {
+      if (response.status === 200) {
+        commit('UPDATE_ADMIN_SCORECARD', { list: response.data })
+      }
     }, (err) => {
       console.log('send score error', err)
     })
   },
-  SEND_USER_SCORE: function ({ commit, state }, { scorecardId, scoreId, options, tournId }) {
-    axios.put('/scorecards/' + scorecardId + '/user_scores/' + scoreId + '.json', { params: options })
-    .then((response) => {
-      commit('SET_SCORECARD', { list: response.data[0]['sc'] })
-      commit('SET_SCORE_LIST', { list: response.data[0]['us'] })
-    }, (err) => {
-      console.log('send score error', err)
-    })
+  USER_SCORECARD_LIST: function ({ commit, state }, { tournId, lbId }) {
+    let options = { tournament_id: tournId, leaderboard_id: lbId }
+    return axios.get('/api/v2/tournaments/admin/user_scorecards.json', { params: options }).then((response) => {
+        commit('SET_USER_SCORECARDS', { list: response.data })
+      })
   },
 }
 
 const mutations = {
+  SET_USER_SCORECARDS: (state, { list }) => {
+    Vue.set(state, 'userScorecards', list.included)
+  },
+  UPDATE_ADMIN_SCORECARD: (state, { list }) => {
+    state.userScorecards = state.userScorecards.map(scorecard => {
+      if (scorecard.id === list.data.id) {
+        return Object.assign({}, scorecard, list.data)
+      }
+      return scorecard
+    })
+  },
   SET_SCORECARD: (state, { list }) => {
     state.playerScorecard = list.data['attributes']
   },
@@ -69,6 +95,9 @@ const mutations = {
 }
 
 const getters = {
+  roundScorecard: (state) => (num) => {
+    return
+  },
   scoreListGetter: state => {
     return state.scoreList
   },
@@ -81,9 +110,10 @@ const getters = {
 }
 
 export default {
+  namespaced: true,
   state,
   actions,
   mutations,
-  getters,
+  mutations,
 }
 

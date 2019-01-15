@@ -91,7 +91,8 @@ export default {
       drawer: true,
       items: [],
       loading: true,
-      userAdmin: false
+      userAdmin: false,
+      player: '',
     }
   },
   methods: {
@@ -101,14 +102,12 @@ export default {
         data: {},
         redirect: '/login'
       })
+    },
+    changeView (v) {
+      this.view = v
     }
   },
 
-  watch: {
-    view () {
-      console.log('here', this.view)
-    }
-  },
 
 
 }

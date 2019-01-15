@@ -2,7 +2,7 @@
   <v-layout white>
     <v-flex xs12>
       <v-card flat grey class="user-score-card">
-        <v-card-media class="pa-0">
+        <v-img class="pa-0">
           <v-container fluid fill-height pa-0>
             <v-layout row class="record" wrap>
               <v-flex xs6>
@@ -13,7 +13,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-        </v-card-media>
+        </v-img>
         <v-card-text>
           <v-container fluid fill-height class="pa-0">
             <v-layout row wrap  style="font-size: 24px;">
@@ -26,10 +26,14 @@
             </v-layout>
           </v-container>
         </v-card-text>
-        <v-card-actions class="text-xs-center"
-          style="backgroundColor:#6CADED"
-        >
-          <v-btn flat round class="admin--profile_button" @click="updateScore">
+        <v-card-actions class="text-xs-center" style="background-color:#6CADED">
+          <v-btn
+            flat
+            round
+            v-bind:loading="btnLoading"
+            class="admin--add_button"
+            @click="updateScore"
+          >
             <h4>SAVE</h4>
           </v-btn>
           <v-spacer></v-spacer>
@@ -58,16 +62,12 @@ export default {
       'UserScore',
       'currentTournament'
     ]),
-    ...mapGetters([
-      'score',
-      'scorecard'
-    ])
   },
 
   data () {
     return {
+      btnLoading: false,
       type: 'SAVE',
-      tournId: this.$route.params.tournamentId,
       list: [],
       heightList: [],
       count: 0,
@@ -115,24 +115,38 @@ export default {
       this.type == 'SAVE'
     },
     updateScore() {
+      this.btnLoading = true
       let us_id = this.cardData.user_score_id
-      let options = { putts: this.putts, shots: this.shots }
-      console.log('options', options)
+      let options = { putts: this.putts, score: this.shots }
+
       if (us_id) {
-        this.$store.dispatch('SEND_USER_SCORE', { scorecardId: this.scorecardId, scoreId: this.cardData.user_score_id, options: options })
-        this.type = 'CLOSE'
+        this.$store.dispatch('scorecards/ADMIN_UPDATE_USER_SCORE', { scorecardId: this.scorecardId, scoreId: us_id, scores: options })
+          .then(response => {
+            this.btnLoading = false
+            this.type = 'CLOSE'
+          })
       } else {
-        let user_score = { handicap: this.scorecard.handicap, par: this.cardData.par, number: this.cardData.number, putts: this.putts, shots: this.shots }
-        console.log('user score', user_score)
-        this.$store.dispatch('CREATE_USER_SCORE', { scorecardId: this.scorecardId, options: user_score })
-        this.type = 'CLOSE'
+        let user_score = { handicap: this.cardData.handicap, par: this.cardData.par, number: this.cardData.number, putts: this.putts, score: this.shots, hole_id: this.cardData.hole_id }
+        this.$store.dispatch('scorecards/ADMIN_CREATE_USER_SCORE', { scorecardId: this.scorecardId, scores: user_score })
+          .then(response => {
+            console.log('hittteee')
+            this.btnLoading = false
+            this.type = 'CLOSE'
+        })
+
       }
     }
   }
 
 }
 </script>
-<style scoped>
+<style>
+.admin--add_button {
+  background-color: white;
+  color: #6CADED;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
+}
 div.layout.record.row.wrap {
   background-color: #6CADED;
 }

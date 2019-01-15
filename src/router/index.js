@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Tournament from '@/components/Tournament'
 import TournamentAdmin from '@/components/Tournament/Admin/index'
+import PlayerScorecards from '@/components/Tournament/Admin/PlayerScorecards'
+import TournamentCreate from '@/components/Tournament/Create/index'
 import TournamentDashboard from '@/components/Tournament/Dashboard'
 import Leaderboards from '@/components/Leaderboards'
 import Rounds from '@/components/Rounds'
@@ -58,12 +60,26 @@ export default new Router({
       meta: { auth: true }
     },
     {
-      path: '/admin',
+      path: '/tournament/create',
+      name: 'TournamentCreate',
+      component: TournamentCreate,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/admin',
       name: 'TournamentAdmin',
       component: TournamentAdmin,
       props: { default: true },
-      meta: { auth: { role: 'admin', redirect: { name: 'admin'}, } }
+      meta: { auth: { role: 'admin', redirect: { name: 'admin'}, }}
     },
+    {
+      path:'/tournament/admin/player-scorecards',
+      name: 'PlayerScorecards',
+      component: PlayerScorecards,
+      props: { default: true },
+      meta: { auth: { role: 'admin', redirect: { name: 'admin' }, }}
+    }
     // {
     //   path: '/tournaments/:id/rounds',
     //   name: 'Rounds',

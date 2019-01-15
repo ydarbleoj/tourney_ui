@@ -18,7 +18,7 @@
                 </v-list-tile>
                 <v-list-tile v-if="$auth.check('admin')">
                   <v-list-tile-title>
-                    <v-icon class="mr-2">apps</v-icon><router-link :to="'/admin'">Admin</router-link>
+                    <v-icon class="mr-2">apps</v-icon><router-link :to="'/tournament/admin'">Admin</router-link>
                   </v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile>

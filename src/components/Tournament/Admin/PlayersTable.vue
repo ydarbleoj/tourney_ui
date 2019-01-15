@@ -7,109 +7,20 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr @click="props.expanded = !props.expanded">
+      <tr @click="expandRow(props, $event)" v-bind:ref="'row' + props.item.id">
         <td class="text-xs-center">{{ props.index + 1}}</td>
         <td class="text-xs-left pl-2">
-          {{ props.item.attributes.first_name }} {{ props.item.attributes.last_name }}
+          <h4 class="font-weight-regular" v-if="props.item.attributes.first_name">{{ props.item.attributes.first_name }} {{ props.item.attributes.last_name }}</h4>
+          <h4 class="font-weight-regular" v-else>{{ props.item.attributes.email }}</h4>
+          <v-spacer></v-spacer>
+          <span class="grey--text" v-if="props.item.attributes.pending">pending</span>
         </td>
-        <td class="text-xs-center">{{ props.item.attributes.handicap }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.role }}</td>
+        <td class="text-xs-center"><v-icon color="#F8C977">edit</v-icon></td>
       </tr>
     </template>
 
     <template slot="expand" slot-scope="props">
-      <v-card flat>
-        <v-card-title class="pb-0 text-xs-center">
-          <h3 class="font-weight-medium">Profile Edit</h3>
-        </v-card-title>
-        <v-card-text class="pt-0 pb-0">
-          <v-layout row wrap class="font-weight-regular pb-2">
-            <v-flex xs12>
-              <v-form
-                v-model="playerForm"
-              >
-                <v-container class="pa-0">
-                  <v-layout align-center row fill-height wrap>
-                    <v-flex xs10 class="pb-0">
-                      <div class="text-xs-left pa-0">
-                        <h3 class="font-weight-regular">Handicap</h3>
-                      </div>
-                    </v-flex>
-                    <v-flex xs2 class="pa-0">
-                      <v-text-field
-                        class="players-attrs"
-                        color="#E69DA7"
-                        solo
-                        flat
-                        v-bind:value="handicap(props)"
-                        @input="handicap(parseInt($event))"
-                      >
-                      </v-text-field>
-                    </v-flex>
-                  </v-layout>
-                  <v-divider></v-divider>
-                  <v-layout align-center row fill-height wrap>
-                    <v-flex xs8 class="pb-0">
-                      <div class="text-xs-left pa-0">
-                        <h3 class="font-weight-regular">Role</h3>
-                      </div>
-                    </v-flex>
-                    <v-flex xs4 class="pa-0">
-                      <v-select
-                        v-model="editRole"
-                        :items="roles"
-                        color="#E69DA7"
-                        solo
-                        flat
-                      ></v-select>
-                    </v-flex>
-                  </v-layout>
-                  <v-divider></v-divider>
-                  <v-layout align-center justify-center row fill-height wrap>
-                    <v-flex xs10 class="pb-0">
-                      <div class="text-xs-left pa-0">
-                        <h3 class="font-weight-regular">Did Not Finish</h3>
-                      </div>
-                    </v-flex>
-                    <v-flex xs2 class="pa-0">
-                      <v-switch
-                        class="dnf-switch"
-                        color="#E69DA7"
-                        v-model="DNF"
-                      ></v-switch>
-                    </v-flex>
-                  </v-layout>
-                  <v-divider></v-divider>
-                </v-container>
-              </v-form>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
-        <v-card-actions class="pa-3">
-          <div class="text-xs-right" style="width:100%;">
-            <v-btn flat round class="admin--profile_button" @click="setParams(props.item)">Update</v-btn>
-          </div>
-        </v-card-actions>
-      </v-card>
-       <v-divider></v-divider>
-      <v-card flat class="pb-3">
-        <v-card-title class="pb-0 text-xs-center">
-          <h3 class="font-weight-medium">Edit Scorecards</h3>
-          <v-spacer></v-spacer>
-          <span><v-icon color="#E69DA7" style="font-size:35px;">arrow_forward</v-icon></span>
-        </v-card-title>
-      </v-card>
-      <v-divider></v-divider>
-      <v-card flat class="pb-3">
-        <v-card-title class="pb-0 text-xs-center">
-          <h3 class="font-weight-medium">Delete Player</h3>
-          <v-spacer></v-spacer>
-          <div class="text-xs-right">
-            <v-btn flat round class="admin--delete_button" @click="updatePlayer(props.item)">Delete</v-btn>
-          </div>
-        </v-card-title>
-      </v-card>
-      <v-divider></v-divider>
+      <component :is="view" :user="setUser(props)" @toggleView="newView" />
     </template>
   </v-data-table>
 
@@ -117,18 +28,18 @@
 
 <script>
 import { mapState } from 'vuex'
+import PlayerEdit from '../Admin/PlayerEdit'
+import PlayerScorecards from '../Admin/PlayerScorecards'
 
 export default {
   name: 'PlayersTable',
-
+  components: {
+    PlayerEdit,
+    PlayerScorecards
+  },
   data () {
     return {
-      editHandicap: '',
-      editRole: '',
-      DNF: false,
-      playerForm: true,
-      roles: ['admin', 'member'],
-      updated: false,
+      view: 'player-edit',
       headers: [
         {
           text: '#',
@@ -147,13 +58,7 @@ export default {
 
         },
         {
-          text: 'Handicap',
-          align: 'center',
-          sortable: false,
-          value: 'handicap'
-        },
-        {
-          text: 'Role',
+          text: '',
           align: 'center',
           sortable: false,
           value: 'role'
@@ -166,41 +71,32 @@ export default {
     ...mapState(['tournamentPlayers', 'currentTournament']),
   },
   methods: {
-    setParams (item) {
-      let role = item.attributes.role
-      let hcap = item.attributes.handicap
-      let opts = {}
-
-      if (this.editRole !== '' && this.editRole !== role) {
-        opts['role'] = this.editRole
-      }
-
-      if (this.editHandicap !== '' && this.editHandicap !== hcap) {
-        opts['handicap'] = this.editHandicap
-      }
-
-      if (Object.entries(opts).length !== 0) {
-        this.updatePlayer(opts, item['id'])
-      }
+    newView (v) {
+      console.log('here', this.props)
+      console.log('this', v)
+      this.view = v.view
+      this.setUser(v.user)
     },
-    updatePlayer (opts, lbId) {
-      this.$store.dispatch('UPDATE_PLAYER_ADMIN', { tournId: this.currentTournament.id, opts: opts, lbId: lbId }).then(response => {
-        this.updated = true
-      })
+    setUser (props) {
+      return props
     },
-    handicap (props) {
-      if (Number.isInteger(props)) {
-        this.editHandicap = props
-        return props
-      } else if (typeof props.item !== 'undefined') {
-        let currentHandicap = props.item.attributes.handicap
-        return currentHandicap
-      }
-    },
+    expandRow (props, event) {
+      // let el = this.$refs['row' + props.item.id]
+      // el.style.top = '0';
+      // el.style.left = '0';
+      // console.log('props', props)
+      // console.log('event', this.$refs['row' + props.item.id])
+      props.expanded = !props.expanded
+    }
   },
 
   watch: {
   },
+
+  created () {
+    console.log('tour', this.tournamentPlayers)
+    console.log('invite', this.invited)
+  }
 
 }
 </script>

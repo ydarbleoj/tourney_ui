@@ -1,26 +1,26 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-card-title flat class="pa-0 pt-2 pl-2">
       <h2 class="text-xs-center font-weight-medium" >Players</h2>
       <v-spacer></v-spacer>
-      <v-btn fab flat small class="admin--add_button">
-        <v-icon>add</v-icon>
-      </v-btn>
     </v-card-title>
 
     <v-card-text v-if="!loading" class="pa-0">
-      <players-table />
+      <players-table @toggleView="playerCard"/>
+      <add-player />
     </v-card-text>
   </v-card>
 </template>
 <script>
 import { mapState } from 'vuex'
 import PlayersTable from '../Admin/PlayersTable'
+import AddPlayer from '../Admin/AddPlayer'
 
 export default {
   name: 'PlayersList',
   components: {
-    PlayersTable
+    PlayersTable,
+    AddPlayer
   },
   computed: {
     ...mapState(['currentTournament', 'tournamentPlayers'])
@@ -32,9 +32,16 @@ export default {
     }
   },
 
+  methods: {
+    playerCard (v) {
+      this.$emit('toggleView', v)
+    }
+  },
+
   created () {
     this.$store.dispatch('LOAD_ADMIN_PLAYERS', { tournId: this.currentTournament.id })
       .then(response => {
+        console.log('')
         this.loading = false
       })
   }

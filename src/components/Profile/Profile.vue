@@ -65,6 +65,16 @@
               <v-list-tile-sub-title></v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
+          <v-divider inset></v-divider>
+          <v-list-tile v-if="user.role === 'admin'":to="'tournament/create'">
+            <v-list-tile-action>
+              <v-icon color="blue">dashboard</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Add Tournament</v-list-tile-title>
+              <v-list-tile-sub-title></v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
         </v-list>
       </v-card>
     </v-flex>

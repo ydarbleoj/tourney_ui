@@ -19,6 +19,9 @@ const store = new Vuex.Store({
 
   ],
   state: {
+    inviteList: [],
+    invited: [],
+    courseMenuList: [],
     tournamentPlayers: [],
     courses: [],
     currentCourse: [],
@@ -45,16 +48,55 @@ const store = new Vuex.Store({
     moneyList: [],
   },
   actions: {
+    CREATE_TOURNAMENT: function ({ commit, state }, { payload }) {
+      return axios.post('/api/v2/tournaments.json', { tournament: payload }).then((response) => {
+        commit('ROUND_CREATE', { list: response.data })
+        if (response.data.success) {
+          return true
+        } else {
+          return false
+        }
+      })
+    },
     LOAD_ADMIN_PLAYERS: function ({ commit, state }, { tournId }) {
       let options = { tournament_id: tournId }
-      return axios.get('/api/v2/tournaments/admin/leaderboards.json', { params: options }).then((response) => {
+      return axios.get('/api/v2/tournaments/admin/users.json', { params: options }).then((response) => {
+        console.log('rep', response)
         commit('SET_ADMIN_PLAYERS', { list: response.data })
+      })
+    },
+    CREATE_TOURNAMENT_ROUNDS: function ({ commit, state }, { tournId, payload }) {
+      let options = { tournament_id: tournId, round: payload}
+      return axios.post('/api/v2/tournaments/rounds.json', options).then((response) => {
+        if (response.data.success) {
+          commit('CURRENT_TOURNAMENT', { list: response.data })
+          return true
+        } else {
+          return false
+        }
+
       })
     },
     UPDATE_PLAYER_ADMIN: function ({ commit, state }, { tournId, opts, lbId }) {
       opts['tournament_id'] = tournId
-      axios.put('/api/v2/tournaments/admin/leaderboards/' + lbId + '.json',  opts).then((response) => {
-        commit('SET_UPDATED_PLAYERS', { list: response.data })
+      return axios.put('/api/v2/tournaments/admin/users/' + lbId + '.json',  opts).then((response) => {
+        if (response.data.success) {
+          return true
+        } else {
+          return false
+        }
+      })
+    },
+    INVITE_USERS: function ({ commit, state }, { tournId, invitees }) {
+      let options = { tournament_id: tournId, invitation: invitees }
+      console.log('options', options)
+      return axios.post('/api/v2/tournaments/admin/invitations.json', options).then((response) => {
+        if (response.data.success) {
+          commit('SET_ADMIN_PLAYERS', { list: response.data })
+          return true
+        } else {
+          return false
+        }
       })
     },
     UPDATE_HANDICAP: function ({ commit, state }, { tournId, leaderboardId, handicap }) {
@@ -187,12 +229,21 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
-    SET_ADMIN_PLAYERS: (state, { list }) => {
-      state.tournamentPlayers = list.data
+    ROUND_CREATE: (state, { list }) => {
+      Vue.set(state, 'userInviteList', JSON.parse(list.user_list).data)
+      Vue.set(state, 'courseMenuList', JSON.parse(list.course_list).data)
+      Vue.set(state, 'currentTournament', JSON.parse(list.tournament).data)
     },
-    SET_UPDATED_PLAYERS: (state, { list }) => {
-      console.log('update players', list)
-      Vue.set(state, 'tournamentPlayers', list.data)
+    SET_ADMIN_PLAYERS: (state, { list }) => {
+      let inv = JSON.parse(list.invited).data
+      let users = JSON.parse(list.users).data
+      let arr = []
+
+      arr.push(inv, users)
+      arr = arr.flat()
+      Vue.set(state, 'invited', JSON.parse(list.invited).data)
+      Vue.set(state, 'inviteList', list.invitees)
+      Vue.set(state, 'tournamentPlayers', arr)
     },
     SET_HANDICAP: (state, { list }) => {
       state.handicapMessage = list
@@ -234,8 +285,9 @@ const store = new Vuex.Store({
       state.adminMessage = list
     },
     CURRENT_TOURNAMENT: (state, { list }) => {
-      Vue.set(state, 'currentTournament', list.data[0].attributes)
-      Vue.set(state, 'teamRounds', list.data[0].attributes.round_info)
+      console.log('hiti', JSON.parse(list.tournament))
+      Vue.set(state, 'currentTournament', JSON.parse(list.tournament).data.attributes)
+      Vue.set(state, 'teamRounds', JSON.parse(list.tournament).data.attributes.round_info)
     },
     RESET_CURRENT_TOURNAMENT: (state, { list }) => {
       console.log('reset', list)

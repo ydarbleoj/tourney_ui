@@ -82,7 +82,6 @@ export default {
     addTeeTime: function(event, user, index) {
       this.awaitingTees.splice(index, 1);
       let i = this.groupChoices.findIndex(group => group === event);
-      console.log('tee ti', this.adminTeeTimeGetter[i][0].users)
       this.adminTeeTimeGetter[i][0].users.push(user)
     },
     roundFilter (rounds, num) {
