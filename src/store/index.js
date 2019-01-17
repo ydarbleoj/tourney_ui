@@ -40,7 +40,6 @@ const store = new Vuex.Store({
     teamRounds: [],
     currentRound: '',
     teeTime: [],
-    teeTimes: [],
     awaitingTees: [],
     handicapMessage: '',
     adminTeeTimes: [],
@@ -200,15 +199,20 @@ const store = new Vuex.Store({
     LOAD_ADMIN_TEE_TIME: function ({ commit, state }, { tournId, roundId }) {
       let options = { tournament_id: tournId, tournament_round_id: roundId }
       return axios.get('/api/v2/tournaments/admin/tee_times.json', { params: options }).then((response) => {
-        commit('SET_ADMIN_TEE_TIME', { list: response.data })
+        console.log('tee_times', response)
+        if (response.status === 200) {
+          commit('SET_ADMIN_TEE_TIME', { list: response.data })
+        }
       }, (err) => {
         console.log(err)
       })
     },
-    CREATE_TEE_TIMES: function ({ commit, state }, { tournId, roundNumber, teeTimes }) {
-      let options = { round: roundNumber, times: teeTimes }
-      axios.post('/tournaments/' + tournId + '/tee_times.json', { params: options }).then((response) => {
-        commit('SET_ADMIN_MESSAGE', { list: response.data })
+    CREATE_TEE_TIMES: function ({ commit, state }, { tournId, teeTimes }) {
+      let options = { tournament_id: tournId, tee_time: teeTimes }
+      return axios.post('/api/v2/tournaments/admin/tee_times.json', options).then((response) => {
+        if (response.data.status === 200) {
+          commit('SET_ADMIN_MESSAGE', { list: response.data })
+        }
       }, (err) => {
         commit('SET_ADMIN_MESSAGE', { list: response.data })
         console.log(err)
@@ -255,7 +259,6 @@ const store = new Vuex.Store({
       Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {
-      console.log('round set', list.data)
       state.roundOne = list.data[0]
       state.roundTwo = list.data[1]
       state.roundThree = list.data[2]
@@ -280,6 +283,21 @@ const store = new Vuex.Store({
     SET_ADMIN_TEE_TIME: (state, { list }) => {
       state.adminTeeTimes = JSON.parse(list.times).data
       Vue.set(state, 'awaitingTees', JSON.parse(list.awaiting).data)
+    },
+    ADD_USER_TEE_TIME: (state, { user, index, group }) => {
+      console.log('user', state.adminTeeTimes[group])
+      state.awaitingTees.splice(index, 1)
+      state.adminTeeTimes[group].attributes.players.push(user)
+    },
+    ADD_USER_AWAITING: (state, { user, key, group }) => {
+      state.adminTeeTimes = state.adminTeeTimes.map(tees => {
+        if (tees.attributes.group === group) {
+          tees.attributes.players.splice(key, 1)
+        }
+        return tees
+      })
+      console.log('user', user)
+      state.awaitingTees.push(user)
     },
     SET_ADMIN_MESSAGE: (state, { list }) => {
       state.adminMessage = list

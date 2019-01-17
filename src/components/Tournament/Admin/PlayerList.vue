@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
-    <v-card-title flat class="pa-0 pt-2 pl-2">
-      <h2 class="text-xs-center font-weight-medium" >Players</h2>
+    <v-card-title flat class="pa-0 pt-2 pl-3">
+      <h2 class="text-xs-center font-weight-medium" style="color:#74C9D7;">Players</h2>
       <v-spacer></v-spacer>
     </v-card-title>
 

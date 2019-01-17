@@ -5,7 +5,8 @@
         <v-list>
           <v-list-tile v-for="(item, index) in teeGroup.attributes.players" v-bind:key="item.user_id" @click="removeElement(item, index)">
             <v-list-tile-content style="height: 30px">
-              <v-list-tile-title>{{ item.first_name }} {{ item.last_name }}</v-list-tile-title>
+              <v-list-tile-title v-if="item.first_name">{{ item.first_name }} {{ item.last_name }}</v-list-tile-title>
+              <v-list-tile-title v-else>{{ item.attributes.first_name }} {{ item.attributes.last_name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -22,7 +23,7 @@
   </v-layout>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Group',
@@ -36,40 +37,22 @@ export default {
       'currentTournament',
       'currentRound'
     ]),
-    ...mapGetters([
-      'adminMessageGetter'
-    ])
   },
 
 
   methods: {
     removeElement(user, key) {
-      this.teeGroup.users.splice(key, 1);
-      this.$emit('event', user)
+      let g = this.teeGroup.attributes.group
+      this.$emit('event', { user: user, key: key, group: g })
     },
     updateTeeTime(event){
-      console.log('group', this.teeGroup.users[0])
-
-      if (this.teeGroup.users[0].tee_time_id == null) {
-        this.$store.dispatch('CREATE_TEE_TIMES', {
-          tournId: this.currentTournament.id,
-          roundNumber: this.currentRound.round_number,
-          teeTimes: this.teeGroup,
-        })
-      } else {
-        this.$store.dispatch('UPDATE_ADMIN_TEE_TIME', {
-          tournId: this.currentTournament.id,
-          roundNumber: this.currentRound.round_number,
-          teeTimes: this.teeGroup,
-          id: this.teeGroup.users[0].tee_time_id
-        })
-
-      }
+      this.$store.dispatch('CREATE_TEE_TIMES', { tournId: this.currentTournament.id, teeTimes: this.teeGroup.attributes })
     }
   },
-
-  created: function (current) {
-    // this.$store.dispatch('LOAD_USER_TEE_TIME', { tourn_id: this.currentTournament.id, roundNumber: this.current.round_number })
+  created: function () {
+    console.log('thisl group', this.teeGroup)
   }
 }
+
+
 </script>

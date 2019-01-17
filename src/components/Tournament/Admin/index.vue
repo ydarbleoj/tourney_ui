@@ -1,7 +1,6 @@
 <template>
     <main style="height:100%;" class="tournament-wrapper">
-      <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
-        <v-toolbar color="white" flat fixed style="padding:0;">
+        <v-toolbar color="white"  flat fixed style="padding:0;height:8vh;">
 
           <v-layout row wrap>
             <v-flex xs3 class="text-xs-left">
@@ -36,36 +35,38 @@
             </v-flex>
           </v-layout>
         </v-toolbar>
-        <v-layout row wrap>
-          <v-flex xs12 style="margin-bottom:10vh;margin-top:9vh;">
-            <component :is="view" />
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap >
-          <v-flex xs12>
-            <v-bottom-nav
-              fixed
-              value="true"
-              :active.sync="view"
-              shift
-              color="white"
-            >
-              <v-btn flat color="#74C9D7" dark value="player-list">
-                <span>Players</span>
-                <v-icon>people_outline</v-icon>
-              </v-btn>
-              <v-btn flat color="#74C9D7" dark value="tee-times">
-                <span>Tee Times</span>
-                <v-icon>access_time</v-icon>
-              </v-btn>
-              <v-btn flat color="#74C9D7" dark value="edit">
-                <span>Edit</span>
-                <v-icon>edit</v-icon>
-              </v-btn>
-            </v-bottom-nav>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <v-card
+        color="white"
+        fluid
+        text-xs-center
+        class="pa-0"
+        style="height:100%;margin-top:8vh;margin-bottom:8vh;">
+        <v-card-text>
+          <component :is="view" />
+
+        </v-card-text>
+      </v-card>
+      <v-bottom-nav
+        fixed
+        value="true"
+        :active.sync="view"
+        shift
+        color="white"
+        style="height:8vh;"
+      >
+        <v-btn flat color="#74C9D7" dark value="player-list">
+          <span>Players</span>
+          <v-icon>people_outline</v-icon>
+        </v-btn>
+        <v-btn flat color="#FF9D72" dark value="tee-times">
+          <span>Tee Times</span>
+          <v-icon>access_time</v-icon>
+        </v-btn>
+        <v-btn flat color="#74C9D7" dark value="edit">
+          <span>Edit</span>
+          <v-icon>edit</v-icon>
+        </v-btn>
+      </v-bottom-nav>
     </main>
 </template>
 
