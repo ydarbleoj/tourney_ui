@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
     <v-layout row wrap>
       <v-flex xs12>
 
@@ -93,7 +93,7 @@
             <div class="text-xs-right">
               <v-btn flat round
                 class="admin--delete_button"
-                @click="updatePlayer(user.item)"
+                @click="removePlayer(user.item)"
                 v-bind:loading="btnDelete"
               >
                 Delete
@@ -137,7 +137,9 @@ export default {
     setParams (item) {
       let role = item.attributes.role
       let hcap = item.attributes.handicap
+      let dnf  = item.attributes.dnf
       let opts = {}
+      console.log('hi', this.DNF)
 
       if (this.editRole !== '' && this.editRole !== role) {
         opts['role'] = this.editRole
@@ -146,6 +148,11 @@ export default {
       if (this.editHandicap !== '' && this.editHandicap !== hcap) {
         opts['handicap'] = this.editHandicap
       }
+
+      if (this.DNF !== '' && this.DNF !== dnf) {
+        opts['dnf'] = this.DNF
+      }
+
       if (Object.entries(opts).length !== 0) {
         this.updatePlayer(opts, item['id'])
       }
@@ -164,6 +171,14 @@ export default {
           this.btnLoading = false
       })
     },
+    removePlayer (item) {
+      this.btnDelete = true
+      let call = item.type == 'invitation' ? 'DELETE_INVITATION' : 'DELETE_PLAYER'
+      this.$store.dispatch(call, { tournId: this.currentTournament.id, id: item.id})
+        .then(response => {
+          this.btnDelete = false
+        })
+    },
     scorecardsView () {
       this.$emit('toggleView', { view: 'player-scorecards', user: this.user })
     },
@@ -178,11 +193,11 @@ export default {
     },
     rolez (props) {
       this.editRole = props.item.attributes.role
-    }
+    },
   },
 
   created () {
-    console.log('hi', this.user)
+    this.DNF = this.user.item.attributes.dnf
   }
 
 }

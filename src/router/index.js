@@ -7,6 +7,7 @@ import TournamentAdmin from '@/components/Tournament/Admin/index'
 import PlayerScorecards from '@/components/Tournament/Admin/PlayerScorecards'
 import TournamentCreate from '@/components/Tournament/Create/index'
 import TournamentDashboard from '@/components/Tournament/Dashboard'
+import AcceptInvite from '@/components/Tournament/AcceptInvite'
 import Leaderboards from '@/components/Leaderboards'
 import Rounds from '@/components/Rounds'
 import Course from '@/components/Course/index'
@@ -18,20 +19,38 @@ import Stats from '@/components/Stats/index'
 
 Vue.use(Router)
 
+const checkForUser = (to, from, next) => {
+  if (!localStorage.default_auth_token) {
+    next()
+  } else {
+    next('/profile')
+  }
+}
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Home',
       component: Home,
-      // meta: { auth: false, redirect: '/profile' },
+      beforeEnter: (to, from, next) => {
+        checkForUser(to, from, next)
+      }
     },
     {
       path: '/login',
       name: 'Login',
       component: Login,
+      beforeEnter: (to, from, next) => {
+        checkForUser(to, from, next)
+      }
+    },
+    {
+      path: '/tournament/accept-invitation/:token',
+      name: 'AcceptInvite',
+      component: AcceptInvite,
+      meta: { auth: true },
     },
     {
       path: '/profile',
@@ -80,45 +99,21 @@ export default new Router({
       props: { default: true },
       meta: { auth: { role: 'admin', redirect: { name: 'admin' }, }}
     }
-    // {
-    //   path: '/tournaments/:id/rounds',
-    //   name: 'Rounds',
-    //   component: Rounds,
-    //   props: { default: true }
-    // },
-    // {
-    //   path: '/tournaments/:id/stats',
-    //   name: 'Stats',
-    //   component: Stats,
-    //   props: { default: true }
-    // },
-    // {
-    //   path: '/tournaments/:id/course/:id',
-    //   name: 'Course',
-    //   component: Course,
-    //   props: { default: true }
-
-    // },
-    // {
-    //   path: '/tournaments/:tournId/tee_time/:id',
-    //   name: 'TeeTime',
-    //   component: TeeTime,
-    //   props: { default: true }
-
-    // },
-    // {
-    //   path: '/tournaments/:tournId/scorecard/:scorecardId',
-    //   name: 'Scorecard',
-    //   component: Scorecard,
-    //   props: { default: true },
-    //   meta: { auth: true }
-    // },
-    // {
-    //   path: '/scorecard/:scorecardId/user_scores/:scoreId',
-    //   name: 'UserScore',
-    //   component: UserScore,
-    //   props: { default: true },
-    //   meta: { auth: true }
-    // },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.name === 'AcceptInvite')) {
+    if (!localStorage.default_auth_token) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+export default router;

@@ -114,6 +114,6 @@ export default {
   state,
   actions,
   mutations,
-  mutations,
+  getters,
 }
 

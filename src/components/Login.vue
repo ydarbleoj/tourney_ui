@@ -41,10 +41,10 @@ export default {
   },
   methods: {
     login () {
-      var redirect = this.$auth.redirect()
+      let redirect = this.setRedirect()
       this.$auth.login({
         data: { auth: { email: this.data.auth.email, password: this.data.auth.password } },
-        redirect: '/profile',
+        redirect: redirect,
         fetchUser: true,
         rememberMe: this.data.auth.rememberMe,
       }).then(res => {
@@ -52,11 +52,12 @@ export default {
       }, (res) => {
         console.log('error', res)
       })
+    },
+    setRedirect () {
+      return 'redirect' in this.$route.query ? this.$route.query.redirect : '/profile'
     }
   },
-  created () {
-    console.log('login', this.$auth.user())
-  }
+
 }
 </script>
 <style>

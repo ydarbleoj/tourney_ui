@@ -10,6 +10,7 @@
             item-value="user_email"
             multiple
             chips
+            top
             item-text="username"
           ></v-select>
         </v-flex>
