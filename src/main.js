@@ -42,6 +42,7 @@ import VueAuth from '@websanova/vue-auth'
 import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
+console.log('jsakldfj', process.env)
 axios.defaults.baseURL = process.env.ROOT_API
 
 Vue.use(VueAxios, axios)
