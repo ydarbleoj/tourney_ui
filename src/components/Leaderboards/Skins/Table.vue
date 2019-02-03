@@ -47,6 +47,7 @@
                           style="display:inline-block;margin:0 5px;"
 
                         >
+
                           {{ item }}
                         </li>
                       </ul>

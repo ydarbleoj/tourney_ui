@@ -123,6 +123,7 @@ const mutations = {
     })
   },
   SET_SCORECARD: (state, { list }) => {
+    console.log('list', list)
     state.playerScorecard = list.data['attributes']
   },
   SET_SCORE_LIST: (state, { list }) => {

@@ -1,22 +1,24 @@
 <template>
-  <v-container fill-height>
-    <v-layout row wrap align-center>
-      <v-flex xs12 class="text-xs-center">
-        <h3>Tourney</h3>
+  <v-container fill-height style="background-color:#fff;">
+    <v-layout align-center justify-center row fill-height color="white">
+      <v-flex xs12 class="text-xs-center" color="white">
+        <h1 style="color:#74C9D7" class="font-weight-regular mb-5">Login</h1>
         <form>
           <v-text-field
+            color="#F8C977"
             label="Email"
             v-model="data.auth.email"
             required
           ></v-text-field>
           <v-text-field
+            color="#F8C977"
             label="Password"
             v-model="data.auth.password"
             placeholder='8 Characters Minumum'
             required
           ></v-text-field>
 
-          <v-btn outline color="amber darken-2" @click="login">submit</v-btn>
+          <v-btn flat round class="admin--edit_button font-weight-regular" color="white" @click="login">submit</v-btn>
         </form>
       </v-flex>
     </v-layout>
@@ -41,6 +43,7 @@ export default {
   },
   methods: {
     login () {
+
       let redirect = this.setRedirect()
       this.$auth.login({
         data: { auth: { email: this.data.auth.email, password: this.data.auth.password } },
@@ -61,6 +64,17 @@ export default {
 }
 </script>
 <style>
+.admin--edit_button {
+  background-color: #F8C977;
+  color: #f1f1f1;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
+}
+.admin--edit_button:active {
+  top: 1px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
+}
 .application--light .input-group:not(.input-group--error) label {
   color: #ffa726;
 }
