@@ -18,7 +18,9 @@
             :key="i"
             style="width: 90vw;margin: 0 auto;"
           >
-            <component :is="i" :current='current' @event="previewToggle(this)" />
+            <transition name="slide-fade" duration="{ enter: 500, leave: 800 }">
+              <component :is="i" :current='current' @event="previewToggle(this)" />
+            </transition>
           </v-tab-item>
         </v-tabs>
       </v-flex>
@@ -53,8 +55,7 @@ export default {
       currentView: 'stroke',
       activeButton: 'active',
       inactiveButton: 'inactive',
-      purse: 480,
-      comps: ['stroke', 'putting'],
+      comps: ['stroke', 'putting', 'skins'],
     }
   },
 
@@ -88,6 +89,9 @@ export default {
 }
 </script>
 <style >
+.v-tabs__items {
+  overflow: visible;
+}
 .hide {
   display: none;
 }
@@ -124,16 +128,13 @@ small.purse-color {
   font-size: 16px;
 }
 .slide-fade-enter-active {
-  transition: all .8s ease;
+  transition: all .3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .0s;
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
   opacity: 0;
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translate(200px);
-  opacity: 0;
-}
-
 </style>

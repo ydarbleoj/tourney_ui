@@ -5,23 +5,30 @@
         <v-card class="score-display" ref="scoreDisplay">
           <v-list-tile v-bind:key="userScore.number"  @click.native="toggleScore(userScore.number)" >
             <v-list-tile-content >
-              <h4 class="ma-0 font-weight-regular">{{ userScore.number}}</h4>
+              <h3 class="ma-0 font-weight-regular">{{ userScore.number}} </h3>
             </v-list-tile-content>
             <v-list-tile-content>
               <v-list-tile-title class="text-xs-center">
-               <h5 class="text-xs-center ma-0">Par {{ userScore.par }}</h5>
+               Par {{ userScore.par }}
               </v-list-tile-title>
               <v-list-tile-sub-title class="text-xs-center">
-                <span class="record"> {{ userScore.net }}</span>
-                    /
+                <span class="record"
+
+                >
+                  {{ userScore.net }}
+                </span>
+                  <span style="font-size:24px;" v-if="userScore.net">/</span>
                 <span class="grey--text">{{ userScore.score }}</span>
              </v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-content>
               <v-list-tile-title class="text-xs-center">Putts</v-list-tile-title>
-              <v-list-tile-sub-title class="text-xs-center" color="blue darken-1">{{ userScore.putts}}</v-list-tile-sub-title>
+              <v-list-tile-sub-title class="text-xs-center" color="blue darken-1"
+                 v-bind:style="{color: puttColor(userScore.putts)}"
+              >{{ userScore.putts}}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-content>
+               <v-list-tile-sub-title class="text-xs-center pa-0" v-if="getStroke" style="color:#F8C977;font-size:24px;height:24px;"><span>{{ strokes(userScore.handicap) }}</span></v-list-tile-sub-title>
               <v-list-tile-sub-title class="text-xs-center handicap-color"><span>{{ userScore.handicap }}</span> hcap</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -61,12 +68,27 @@ export default {
       threePutt: 'three-putt',
       currentView: '',
       type: '',
-      thisComponent: ''
+      holeNumber: 1,
+      thisComponent: '',
+      getStroke: false,
     }
   },
 
   methods: {
+    strokes: function (holeHcap) {
+      let hcap =  this.userscores.attributes.handicap
+
+      if (hcap < 19 && hcap >= holeHcap) return '*';
+      if (hcap > 19) {
+        let newHcap = hcap - 18
+        return newHcap >= holeHcap ? '* *' : '*'
+      }
+    },
+    puttColor: function (putts) {
+      return putts > 2 ? '' : '#6CADED'
+    },
     toggleScore: function (num) {
+      this.holeNumber = num
       this.thisComponent = this.$refs.scoreDisplay[num - 1]
 
       if (num && this.type == '') {
@@ -77,9 +99,12 @@ export default {
         this.$refs.scoreDisplay[num - 1].$el.classList.toggle('center-div')
       }
     },
-    removeType: function() {
+    removeType: function(num) {
+      let numVar = num === 0 ? this.holeNumber - 1 : this.holeNumber + 1
       this.type = ''
       this.thisComponent.$el.classList.toggle('center-div')
+      if (this.holeNumber === 18) return;
+      this.toggleScore(numVar)
     },
     beforeEnter: function(el) {
       el.style.opacity = 0
@@ -99,24 +124,36 @@ export default {
 }
 </script>
 <style>
-  .two-putt {
-    color: blue;
+ .two-putt {
+    color: #6CADED;
   }
   .three-putt {
-    color: red;
+    color: #F7A072;
   }
   div.list__tile__sub-title.text-xs-center.handicap-color span {
     color: #6CADED;
   }
   .on_expand {
+    padding-top: 130px;
 /*    position: absolute;
     overflow: scroll;
 */  }
   .center-div {
     position: fixed;
     z-index: 1000;
-    top: 112px; left: 0; bottom: 0; right: 0;
+    top: 126px; left: 0; bottom: 0; right: 0;
     transition: all 3s ease-out;
   }
-
+.slide-fade-enter-active {
+  transition: all 8s ease;
+}
+.slide-fade-leave-active {
+  transition: all .0s;
+  opacity: 0;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translate(200px);
+  opacity: 0;
+}
 </style>

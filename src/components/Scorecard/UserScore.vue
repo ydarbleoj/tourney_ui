@@ -1,20 +1,22 @@
 <template>
   <v-layout white>
     <v-flex xs12>
-      <v-card flat grey class="user-score-card">
-        <v-card-media class="pa-0">
-          <v-container fluid fill-height pa-0>
-            <v-layout row class="record" wrap>
+      <v-divider></v-divider>
+      <v-card flat grey class="user-score-card" v-if="!finishRound">
+        <v-card flat class="pa-0">
+          <v-container fluid fill-height class="pa-0">
+            <v-layout row align-center justify-center class="record" style="height:10vh;" wrap >
               <v-flex xs6>
-                <h4 class="text-xs-center white--text pa-0 ma-0">Score</h4>
+                <h3 class="text-xs-center pa-0 ma-0">Score</h3>
               </v-flex>
               <v-flex xs6>
-                <h4 class="text-xs-center white--text pa-0 ma-0">Putts</h4>
+                <h3 class="text-xs-center pa-0 ma-0">Putts</h3>
               </v-flex>
             </v-layout>
           </v-container>
-        </v-card-media>
-        <v-card-text>
+        </v-card>
+        <v-divider></v-divider>
+        <v-card-text class="pt-0 pb-0">
           <v-container fluid fill-height class="pa-0">
             <v-layout row wrap  style="font-size: 24px;">
               <v-flex xs12>
@@ -26,17 +28,42 @@
             </v-layout>
           </v-container>
         </v-card-text>
+        <v-divider></v-divider>
         <v-card-actions class="text-xs-center"
-          style="backgroundColor:#6CADED"
+          style="color:#F8C977;height:10vh;"
         >
-          <v-btn flat round class="admin--profile_button" @click="updateScore">
-            <h4>SAVE</h4>
-          </v-btn>
+          <v-layout row wrap align-center justify-center style="width:100vw;">
+            <v-flex xs4>
+              <div class="text-xs-right pr-3" v-if="cardData.number != 1">
+                <span><v-icon  v-if="type === 'UPDATE' || cardData.number > 1" color="#F8C977" style="font-size:35px;" @click="closeCard(0)" >arrow_backward</v-icon></span>
+              </div>
+            </v-flex>
+            <v-flex xs4>
+              <v-btn flat round class="score--save_button" @click="updateScore" v-bind:loading="btnLoading">
+                <h4>{{updateMessage }}</h4>
+              </v-btn>
+            </v-flex>
+            <v-flex xs4>
+              <div class="text-xs-right ">
+                <span>
+                  <v-icon  v-if="type === 'UPDATE'" color="#F8C977" style="font-size:35px;" @click="closeCard(1)" >arrow_forward</v-icon>
+                </span>
+              </div>
+            </v-flex>
+          </v-layout>
           <v-spacer></v-spacer>
-           <v-btn v-if="type === 'CLOSE'" color="white" @click="closeCard">
-            <h4>Close</h4>
-          </v-btn>
         </v-card-actions>
+      </v-card>
+      <v-card flat v-else class="pt-5" style="">
+        <v-layout row wrap align-center justify-center>
+          <v-flex xs12>
+
+            <v-btn flat round class="score--save_button" style="background-color:#ED6C6C;" @click="finishCard()" v-bind:loading="btnLoading">
+              <h4>{{ completeMessage }}</h4>
+            </v-btn>
+          </v-flex>
+
+        </v-layout>
       </v-card>
     </v-flex>
   </v-layout>
@@ -54,14 +81,9 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      'UserScore',
-      'currentTournament'
-    ]),
-    ...mapGetters([
-      'score',
-      'scorecard'
-    ])
+    ...mapState({
+      currentTournament: state => state.currentTournament,
+    }),
   },
 
   data () {
@@ -69,6 +91,10 @@ export default {
       type: 'SAVE',
       tournId: this.$route.params.tournamentId,
       list: [],
+      finishRound: false,
+      completeMessage: 'Finished',
+      btnLoading: false,
+      updateMessage: 'Save',
       heightList: [],
       count: 0,
       shotList: [
@@ -84,13 +110,21 @@ export default {
   },
 
   created: function () {
+    console.log('carddata', this.cardData)
     this.puttBinding = this.cardData.putts == null ? 2 : this.cardData.putts
     this.putts = this.puttBinding
+    this.setType()
     this.filterShots()
   },
 
   methods: {
-    filterShots() {
+    setType () {
+      if (this.cardData.user_score_id) {
+        this.type = 'UPDATE'
+        this.updateMessage = 'UPDATE'
+      }
+    },
+    filterShots () {
       let elem = this.cardData.score == null ? this.cardData.par : this.cardData.score;
       let shot;
       let that = this;
@@ -110,31 +144,71 @@ export default {
     changePutts(value) {
       this.putts = value
     },
-    closeCard() {
-      this.$emit('event')
+    closeCard(num) {
+      if (this.cardData.number === 18) {
+        this.completeScorecard();
+        return
+      }
+      this.$emit('event', num)
       this.type == 'SAVE'
     },
+    completeScorecard () {
+      this.finishRound = !this.finishRound
+    },
+    finishCard () {
+      this.btnLoading = true
+      this.$store.dispatch('scorecards/FINISH_SCORECARD', { tournId: this.currentTournament.id, scorecardId: this.scorecardId, opts: true })
+        .then(response => {
+          this.btnLoading = false
+          if (response) {
+            this.updateMessage = 'Success'
+          } else {
+            this.updateMessage = 'Failed'
+          }
+          setTimeout(() =>  this.$emit('event', 1), 3000)
+        })
+    },
     updateScore() {
+      this.btnLoading = true
       let us_id = this.cardData.user_score_id
-      let options = { putts: this.putts, shots: this.shots }
-      console.log('options', options)
+      const options = { putts: this.putts, score: this.shots }
       if (us_id) {
-        this.$store.dispatch('SEND_USER_SCORE', { scorecardId: this.scorecardId, scoreId: this.cardData.user_score_id, options: options })
-        this.type = 'CLOSE'
+        this.$store.dispatch('scorecards/UPDATE_USER_SCORE', { scorecardId: this.scorecardId, scoreId: us_id, scores: options }).then(response => {
+          console.log('update hrere', response)
+            if (response) {
+              this.updateMessage = 'Success'
+              this.type = 'UPDATE'
+            } else {
+              this.updateMessage = 'Failed'
+              this.type = 'SAVE'
+            }
+            setTimeout(() => this.updateMessage = 'Update', 3000)
+            this.btnLoading = false
+        })
       } else {
-        let user_score = { handicap: this.scorecard.handicap, par: this.cardData.par, number: this.cardData.number, putts: this.putts, shots: this.shots }
-        console.log('user score', user_score)
-        this.$store.dispatch('CREATE_USER_SCORE', { scorecardId: this.scorecardId, options: user_score })
-        this.type = 'CLOSE'
+        let user_score = { handicap: this.cardData.handicap, par: this.cardData.par, number: this.cardData.number, putts: this.putts, score: this.shots, hole_id: this.cardData.hole_id }
+        this.$store.dispatch('scorecards/CREATE_USER_SCORE', { scorecardId: this.scorecardId, scores: user_score })
+          .then(response => {
+            this.btnLoading = false
+            if (response) {
+              this.updateMessage = 'Success'
+              this.type = 'UPDATE'
+            } else {
+              this.updateMessage = 'Failed'
+              this.type = 'SAVE'
+            }
+            setTimeout(() => this.updateMessage = 'Update', 3000)
+
+        })
       }
     }
   }
-
 }
 </script>
-<style scoped>
+<style>
+
 div.layout.record.row.wrap {
-  background-color: #6CADED;
+  color: #6CADED;
 }
 div.card__actions.text-xs-center.record {
   background-color: #6CADED;
@@ -151,7 +225,7 @@ div.text-xs-left.user-score.card.card--flat {
   justify-content: center;
 }
 .vue-scroll-picker-item.-selected {
-  color: #007BFF;
+  color: #F8C977;
 }
 div.vue-scroll-picker-item {
     text-align: center;
@@ -165,11 +239,11 @@ div.vue-scroll-picker-item {
   top: 0;
   bottom: 0;
 }
-   /* .top,
-    .middle,
-    .bottom {
-        position: absolute;
-    }*/
+.score--save_button {
+  background-color: #6CADED;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
+}
 .vue-scroll-picker-layer div.top {
     box-sizing: border-box;
     border-bottom: 1px solid #c8c7cc;
@@ -184,6 +258,7 @@ div.vue-scroll-picker-item {
     top: 40%;
     left: 0;
     right: 0;
+    color: pink;
     bottom: 40%;
 }
 .vue-scroll-picker-layer div.bottom {

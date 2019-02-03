@@ -7,7 +7,7 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props" >
-      <tr @click="preview ? null : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
+      <tr @click="preview ? !props.expanded : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">{{ props.item.attributes.username }}
           <v-spacer></v-spacer>
@@ -199,7 +199,7 @@ export default {
     displayRow (props) {
       let klass;
       if (this.preview) {
-        klass = props.item.attributes.position < 6 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
+        klass = props.index < 3 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
       } else {
         klass = ''
       }
@@ -209,6 +209,9 @@ export default {
       let nn = cards.filter(el => el[rnd])
       return nn[0][rnd]
 
+    },
+    checkIfPreview (props) {
+      this.preview ? null : props.expanded = !props.expanded
     }
   },
 

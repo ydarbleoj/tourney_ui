@@ -4,7 +4,7 @@
       :class="{ openCard : !preview }"
     >
       <v-container class="pa-0" @click="toggleView(currentView)">
-        <v-layout row wrap align-center justify-center class="grey darken-3" >
+        <v-layout row wrap align-center justify-center class="grey darken-3 " >
           <v-flex xs5>
             <v-card class="text-xs-center grey darken-3" flat >
               <h4 class="mb-0 white--text font-weight-regular"> {{ card.attributes.course_name }} </h4>
@@ -178,9 +178,12 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .record {
+  color: #F8C977;
+  color: #74C9D7;
   color: #6CADED;
 }
 .pers-record {
+  color: #F7A072;
   color: #ED6C6C;
 }
 label.scorecard-label {
@@ -212,7 +215,6 @@ div.card.scorecard_container.expand {
   position: fixed;
   z-index: 9999;
   width: 100vw;
-  box-shadow: 0 10px 13px -6px rgba(0,0,0,0.2), 0 20px 31px 3px rgba(0,0,0,0.14), 0 8px 38px 7px rgba(0,0,0,0.12) !important;
 }
 
 .slide-fade-enter-active {

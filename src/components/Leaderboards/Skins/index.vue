@@ -8,6 +8,9 @@
         <v-icon color="white">clear</v-icon>
       </span>
     </v-card-title>
+     <div class="skins--title text-xs-left pl-2 pt-0 pb-3">
+      <h4 class="font-weight-regular" style="color:black;">Purse $<span>{{ purse }}</span></h4>
+    </div>
     <v-card-text v-if="!loading" class="pa-0">
       <skins-table :preview="isPreview" />
     </v-card-text>
@@ -29,7 +32,8 @@ export default {
     return {
       isPreview: true,
       loading: true,
-      closed: true
+      closed: true,
+      purse: 0,
     }
   },
 
@@ -80,7 +84,7 @@ export default {
   created: function () {
     this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: true })
       .then(response => {
-        console.log('skins', this.skins_leaderboard)
+        this.purse = this.current.num_players * 30
         this.loading = false
       })
   },
@@ -97,7 +101,8 @@ export default {
   top: 0;
   left: 0;
   z-index: 1000 !important;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+   width: 100vw;
+  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
   height: 100vh;
   overflow: scroll;
 }

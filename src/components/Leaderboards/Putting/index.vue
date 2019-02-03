@@ -8,6 +8,8 @@
         <v-icon color="white">clear</v-icon>
       </span>
     </v-card-title>
+    <div class="putting--title text-xs-left pl-2 pt-0 pb-3">
+      <h4 class="font-weight-regular" style="color:black;">Purse $<span>{{ purse }}</span></h4>
     </div>
     <v-card-text v-if="!loading" class="pa-0">
       <putting-table :preview="isPreview" />
@@ -28,6 +30,7 @@ export default {
 
   data () {
     return {
+      purse: 0,
       loading: true,
       closed: true,
       isPreview: true,
@@ -86,16 +89,16 @@ export default {
 </script>
 <style>
 .putting-lb-card {
+  width: 100%;
   border-radius: 20px;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
 }
 .putting-lb-card.open {
+  width: 100vw;
   border-radius: 0;
   top: 0;
   left: 0;
   z-index: 1000 !important;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
   height: 100vh;
   overflow: scroll;
 }
@@ -104,4 +107,5 @@ export default {
   color: #f1f1f1;
   background-color: #FE8202;
 }
+
 </style>

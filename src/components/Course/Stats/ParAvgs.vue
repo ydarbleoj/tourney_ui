@@ -1,35 +1,30 @@
 <template>
-  <v-card v-if="loading" class="white elevation-1" color="white">
+  <v-card flat v-if="loading" class="white " color="white">
     loading...
   </v-card>
-  <v-card flat v-else="!loading" style="margin:auto;background-color:#6AA5DA;">
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+  <v-card flat v-else="!loading" style="margin:auto">
+    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
-          <v-card class="scoring--stats">
+          <v-card flat>
             <v-layout>
-              <v-flex xs6>
+              <v-flex xs>
                 <v-layout row wrap>
                   <v-flex xs12 class="">
-                    <h3 class="text-xs-left ml-2 mt-1 mb-2 font-weight-regular ">Par Avgs</h3>
+                    <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">Par {{ this.pars }} Avgs</h4>
                   </v-flex>
-                  <v-flex xs12 class="pl-5">
-                    <h4 class="grey--text text-xs-left font-weight-regular">Personal</h4>
-                    <h2 class="blue--text text-xs-left font-weight-medium">{{ this.personalBest }}</h2>
+                  <v-flex xs4 class="">
+                    <h2 class="personal-score text-xs-center font-weight-regular">{{ this.personalBest }}</h2>
+                    <h4 class="text-xs-center font-weight-regular">Personal</h4>
                   </v-flex>
-                  <v-flex xs12 class="pl-5">
-                    <h4 class="grey--text text-xs-left font-weight-regular">This Years Field</h4>
-                    <h2 class="blue--text text-xs-left font-weight-medium">{{ this.yearsField }}</h2>
+                  <v-flex xs4 class="">
+                    <h2 class="field-score text-xs-center font-weight-regular">{{ this.yearsField }}</h2>
+                    <h4 class="text-xs-center font-weight-regular">This Years Field</h4>
                   </v-flex>
-                  <v-flex xs12 class="pl-5">
-                    <h4 class="grey--text text-xs-left font-weight-regular">Overall</h4>
-                    <h2 class="blue--text text-xs-left font-weight-medium">{{ this.courseOverall }}</h2>
+                  <v-flex xs4 class="">
+                    <h2 class="overall-score text-xs-center font-weight-regular">{{ this.courseOverall }}</h2>
+                    <h4 class="text-xs-center font-weight-regular">Overall</h4>
                   </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex xs6>
-                <v-layout row wrap align-center justify-center fill-height>
-
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -46,6 +41,7 @@ import Bars from 'vuebars'
 
 export default {
   name: 'ParAvgs',
+  props: ['pars'],
   components: {
     Bars
   },
@@ -63,7 +59,10 @@ export default {
   },
 
   computed: {
-    ...mapState(['courseStats'])
+     ...mapState({
+      courseStats: state => state.course.courseStats,
+      userCourseStats: state => state.course.userCourseStats
+    })
   },
 
   methods: {
@@ -74,9 +73,9 @@ export default {
     loadFields () {
       let overall = this.overallData
       let course  = this.courseData
-      this.yearsField = overall['par3_avg']
-      this.courseOverall = course['par3_avg']
-      this.personalBest = this.yearsField
+      this.yearsField = overall['par' + this.pars + '_avg']
+      this.courseOverall = course['par' + this.pars + '_avg']
+      this.personalBest = this.userCourseStats['par' + this.pars + '_avg']
     },
   },
 
@@ -86,6 +85,7 @@ export default {
     this.courseData = Object.assign(this.filterType(data, 'course_agg'))
     this.loading = false
     this.loadFields()
+    console.log('pars', this.pars + '_avg')
   }
 }
 </script>

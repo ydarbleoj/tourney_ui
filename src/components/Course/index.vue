@@ -20,15 +20,17 @@
               par: {{ this.course['attributes']['par'] }}
             </div>
           </v-flex>
-          <v-flex class="pa-0">
-            <span v-if="!preview" class="text-xs-right" @click="closeCourse()">
-              <v-icon color="white">clear</v-icon>
-            </span>
+          <v-flex class="pa-0 mt-3 mr-3">
+            <div class="text-xs-right">
+              <span v-if="!preview" class="text-xs-right" @click="closeCourse()">
+                <v-icon color="white">clear</v-icon>
+              </span>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
     </v-img>
-    <v-card-text style="padding:0;height:100%;" transition="slide-x-transition" v-if="!preview">
+    <v-card-text style="background-color:white;" transition="slide-x-transition" v-if="!preview">
       <stats :roundId="rndId" />
     </v-card-text>
   </v-card>
@@ -55,7 +57,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentRound', 'currentTournament', 'currentCourse'])
+    ...mapState([])
   },
 
   methods: {
@@ -70,7 +72,7 @@ export default {
 
   watch: {
     course: function () {
-      this.$store.dispatch('LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
+      this.$store.dispatch('course/LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
     },
     preview () {
       this.isPreview = !this.isPreview

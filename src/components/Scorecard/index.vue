@@ -1,22 +1,25 @@
 <template>
-  <v-card v-if="isLoaded" class="lb-scorecard scorecard_container round-borders" ref="scorecardCard">
-    <v-card-title class="scorecard-card pa-0" ref="cardHeader">
-      <v-container class="pa-0" @click="toggleView(currentView)">
-        <v-layout row wrap align-center justify-center class="grey darken-3 round-borders">
+  <v-card v-if="isLoaded" flat class="lb-scorecard scorecard_container" ref="scorecardCard">
+    <v-card-title
+      class="scorecard-card pa-0"
+      :class="{ openCard : !preview }"
+    >
+      <v-container class="pa-0"  @click="toggleView(currentView); $vuetify.goTo(target, options)">
+        <v-layout row wrap align-center justify-center class="grey darken-3 round-borders" ref="cardHeader" >
           <v-flex xs5>
             <v-card class="text-xs-center grey darken-3" flat >
-              <h3 class="mb-0 white--text font-weight-regular">Score</h3>
+              <h3 class="mb-0 white--text font-weight-regular">{{ playerScorecard.course_name }}</h3>
               <v-container pa-0>
                 <v-layout row wrap>
                   <v-flex xs5>
-                    <div><h1 class="record font-weight-regular ma-0">{{ this.courseScorecard.total_net}}</h1></div>
+                    <div><h1 class="record font-weight-regular ma-0">{{ playerScorecard.total_net}}</h1></div>
                     <label class="scorecard-label">NET</label>
                   </v-flex>
                   <v-flex xs1>
                     <div><h1 class="grey--text">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
-                    <div><h1 class="grey--text ma-0 font-weight-regular" >{{ this.courseScorecard.total_score }}</h1></div>
+                    <div><h1 class="grey--text ma-0 font-weight-regular" >{{ playerScorecard.total_score }}</h1></div>
                     <label class='scorecard-label'>GROSS</label>
                   </v-flex>
                 </v-layout>
@@ -30,20 +33,20 @@
                   <v-flex xs12>
                     <label class='scorecard-label'>OUT</label>
                     <div class="grey--text">
-                      <span class="record">{{ this.courseScorecard.out_net }}</span>
+                      <span class="record">{{ playerScorecard.out_net }}</span>
                       /
-                      <span class="grey--text">{{ this.courseScorecard.out_gross }}</span>
+                      <span class="grey--text">{{ playerScorecard.out_gross }}</span>
                     </div>
-                    <label class="scorecard-label label-tight">{{ this.courseScorecard.out_putts }} / <span class="pers-record">{{ this.courseScorecard.out_3putts }} </span></label>
+                    <label class="scorecard-label label-tight">{{ playerScorecard.out_putts }} / <span class="pers-record">{{ playerScorecard.out_3putts }} </span></label>
                   </v-flex>
                   <v-flex xs12>
                     <label class='scorecard-label'>IN</label>
                     <div class="grey--text">
-                      <span class="record">{{ this.courseScorecard.in_net }}</span>
+                      <span class="record">{{ playerScorecard.in_net }}</span>
                       /
-                      <span class="grey--text">{{ this.courseScorecard.in_gross }}</span>
+                      <span class="grey--text">{{ playerScorecard.in_gross }}</span>
                     </div>
-                    <label class="scorecard-label label-tight">{{ this.courseScorecard.in_putts }} / <span class="pers-record">{{ this.courseScorecard.in_3putts }}</span></label>
+                    <label class="scorecard-label label-tight">{{ playerScorecard.in_putts }} / <span class="pers-record">{{ playerScorecard.in_3putts }}</span></label>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -51,18 +54,18 @@
           </v-flex>
           <v-flex xs5>
             <v-card class="text-xs-center grey darken-3" flat>
-              <h5 class="mb-0 pt-2 white--text">{{ this.courseScorecard.handicap }} Handicap</h5>
+              <h5 class="mb-0 pt-2 white--text">{{ playerScorecard.handicap }} Handicap</h5>
               <v-container class="pa-0 pl-3">
                 <v-layout row wrap>
                   <v-flex xs5>
-                    <div><h1 class="record ma-0 font-weight-regular">{{ this.courseScorecard.total_putts }}</h1></div>
+                    <div><h1 class="record ma-0 font-weight-regular">{{ playerScorecard.total_putts }}</h1></div>
                     <label class="scorecard-label">PUTTS</label>
                   </v-flex>
                   <v-flex xs1>
                     <div><h1 class="grey--text font-weight-regular">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
-                    <div><h1 class="pers-record ma-0 font-weight-regular" > {{ this.courseScorecard.total_3putts }}</h1></div>
+                    <div><h1 class="pers-record ma-0 font-weight-regular" > {{ playerScorecard.total_3putts }}</h1></div>
                     <label class='scorecard-label font-weight-regular'>3 PUTTS</label>
                   </v-flex>
                 </v-layout>
@@ -72,14 +75,14 @@
         </v-layout>
       </v-container>
     </v-card-title>
-    <v-card-text class="pa-0" ref="scorecardList">
+    <v-card-text class="pa-0" ref="scorecardList" :style="{ marginTop: userScoreMargin + 'px' }">
 
       <v-layout row wrap white v-if="currentView == 'fullCard'">
         <transition
           name="fade"
           v-on:enter="enter"
         >
-          <score-list :cardId="scorecard" />
+          <score-list :card="playerScorecard" />
         </transition>
       </v-layout>
 
@@ -97,30 +100,40 @@ export default {
     ScoreList
   },
   computed: {
-    ...mapState([
-      'playerScorecard',
-      'currentCourse',
-      'currentTournament',
-      'currentRound'
-    ]),
-    ...mapGetters([
-      'scorecard'
-    ]),
+    ...mapState({
+      playerScorecard: state => state.scorecards.playerScorecard,
+      currentCourse: state => state.currentCourse,
+      currentTournament: state => state.currentTournament,
+      currentRound: state => state.currentRound,
+    }),
+    target () {
+      const value = '#scorecard-scroll'
+      console.log('target')
+      if (!isNaN(value)) return Number(value)
+      else return value
+    },
   },
 
 
   data () {
     return {
       isLoaded: false,
-      courseScorecard: {},
+      preview: true,
+      cardHeight: '',
+      userScoreMargin: '',
       currentView: 'preview',
+      cardPos: 0,
+      duration: 600,
+      offset: 0,
+      easing: 'easeInOutCubic',
     }
   },
 
   methods: {
     expandParent: function(event) {
+      this.listMargin(event)
       event.scorecardCard.$el.style.width = '100%';
-      event.scorecardCard.$el.style.position = 'fixed';
+      event.scorecardCard.$el.style.position = 'absolute';
       event.scorecardCard.$el.style.left = '0';
       event.scorecardCard.$el.style.top = '0';
       event.scorecardCard.$el.style.height = '100%';
@@ -131,41 +144,70 @@ export default {
     closeParent: function(event) {
       event.scorecardCard.$el.style.cssText = null;
     },
+    origPosition () {
+      let card = this.$refs.scorecardCard.$el
+      let position = {
+        top: card.getBoundingClientRect().top,
+        left: card.getBoundingClientRect().left,
+        bottom: card.getBoundingClientRect().bottom,
+        scbottom: screen.bottom,
+      }
+      return this.cardPos = position.top;
+    },
+    options () {
+      return {
+        duration: this.duration,
+        offset: this.offset,
+        easing: this.easing
+      }
+    },
     toggleView: function (event) {
       if (event == 'preview') {
-        this.$refs.scorecardCard.$el.classList.toggle('expand')
-        this.$refs.cardHeader.classList.toggle('fix_header')
+        this.$refs.cardHeader.classList.toggle('round-borders')
+        this.preview =!this.preview
+        this.$emit('open')
         this.currentView = 'fullCard'
         this.expandParent(this.$refs)
       } else if (event == 'fullCard') {
-        this.$refs.scorecardCard.$el.classList.toggle('expand')
-        this.$refs.cardHeader.classList.toggle('fix_header')
+        this.$refs.cardHeader.classList.toggle('round-borders')
+        this.preview = !this.preview
+        this.$emit('open')
         this.currentView = 'preview'
         this.closeParent(this.$refs)
       }
+    },
+    listMargin (card) {
+      let h = card.scorecardCard.$el.clientHeight
+      this.cardHeight = h
+      this.userScoreMargin = this.preview ? '0' : this.cardHeight
     },
     beforeEnter: function(el) {
       el.style.opacity = 0
     },
     enter: function(el) {
-      el.style.opacity = 1
+      el.style.opacity = 0
     },
     afterEnter: function(el) {
-      el.style.opacity = 1
+      el.style.opacity = 0
     },
   },
 
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_SCORECARD', { tournId: this.currentTournament.id, id: this.currentRound.scorecard_id})
+      this.$store.dispatch('scorecards/LOAD_SCORECARD', { tournId: this.currentTournament.id, id: this.currentRound.scorecard_id})
+        .then((response) => {
+          this.isLoaded = true
+        })
     }
   },
 
+  mounted: function() {
+  },
+
   created: function () {
-    this.$store.dispatch('LOAD_SCORECARD', { tournId: this.currentTournament.id, tournRoundId: this.roundId['id'] })
+    this.$store.dispatch('scorecards/LOAD_SCORECARD', { tournId: this.currentTournament.id, tournRoundId: this.roundId['id'] })
       .then(response => {
         this.isLoaded = true
-        this.courseScorecard = Object.assign(this.scorecard)
       })
   }
 }
@@ -177,9 +219,13 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .record {
+  color: #F8C977;
+  color: #74C9D7;
   color: #6CADED;
+  color: #F8C977;
 }
 .pers-record {
+  color: #F7A072;
   color: #ED6C6C;
 }
 label.scorecard-label {
@@ -187,20 +233,23 @@ label.scorecard-label {
   font-size: 10px;
 
 }
-
-div.card.scorecard_container.expand {
-  top: 0;
-  left: 0;
-  padding: 0;
-  z-index: 8888;
-  width: 100%;
-  height: 100%;
+div.card.scorecard_container {
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: all 600ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 600ms cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  position: relative;
 }
-div.card__title.scorecard-card.pa-0.fix_header {
+.v-card__title.scorecard-card.openCard {
+  margin: 0;
   position: fixed;
-  z-index: 100;
-  width: 100%;
-  box-shadow: 0 10px 13px -6px rgba(0,0,0,0.2), 0 20px 31px 3px rgba(0,0,0,0.14), 0 8px 38px 7px rgba(0,0,0,0.12) !important;
+  z-index: 9999;
+  width: 100vw;
+  transition: all 600ms cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+.scorecard-card {
+  padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .slide-fade-enter-active {

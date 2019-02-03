@@ -7,6 +7,7 @@
           v-model="model"
           color="transparent"
           centered
+          v-if="isLoaded"
           height="0px"
            v-touch="{
             left: () => swipe('Left'),
@@ -17,11 +18,12 @@
             v-for="i in roundComps"
             :key="i['id']"
             style="width: 90vw;margin: 0 auto;"
-            touchless
           >
             <course :course="i"  @event="courseToggle(this)" />
             <v-spacer class="mt-4 round-spacer"></v-spacer>
-            <scorecard :current="current" :roundId="i" />
+            <div id="scorecard-scroll">
+                <scorecard :current="current" :roundId="i" @open="isOpen" v-if="currentRound === i['attributes']['round_number']" />
+            </div>
           </v-tab-item>
         </v-tabs>
       </v-flex>
@@ -32,7 +34,7 @@
 <script>
 import Course from '../components/Course/index'
 import Scorecard from '../components/Scorecard/index'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Rounds',
@@ -44,21 +46,23 @@ export default {
 
   data () {
     return {
-      loading: true,
+      isLoaded: false,
       isPreview: true,
       swipeDirection: 'None',
+      rndNum: 1,
       model: 'tab-stroke',
       roundComps: [],
       windowSize: {
         x: 0,
         y: 0
-      }
+      },
     }
   },
 
   computed: {
     ...mapState(['currentTournament', 'rounds', 'currentRound', 'roundOne',
       'roundTwo', 'roundThree']),
+    ...mapMutations(['SET_CURRENT_ROUND'])
   },
 
   methods: {
@@ -69,16 +73,23 @@ export default {
         bottom: card.getBoundingClientRect().bottom,
         scbottom: screen.bottom,
       }
-      console.log('onres', this.windowSize)
       this.cardPos = Object.assign(position);
-      console.log('this . capos', this.cardPos)
     },
     onResize () {
       this.windowSize = { x: this.$el.innerWidth, y: this.$el.innerHeight }
     },
-     swipe (direction) {
-      console.log('swiping', direction)
+    isOpen () {
+      this.courseToggle(this)
+    },
+    swipe (direction) {
+      let rnd = this.currentRound
+      if (direction != 'Left' && rnd == 1) return
+      let num = direction == 'Left' ? rnd + 1 : rnd - 1
       this.swipeDirection = direction
+      this.updateRound(num)
+    },
+    updateRound (num) {
+      this.$store.commit('SET_CURRENT_ROUND',{ list: num })
     },
     courseToggle (event) {
       let card = this.$refs.roundCardContainer
@@ -91,24 +102,20 @@ export default {
       let isPrev = this.isPreview
       card.style.zIndex = isPrev ? 1 : 9999;
       card.style.position = isPrev ? 'relative' : 'fixed';
-      card.style.top = isPrev ? this.cardPos.top : 0;
+      card.style.minHeight = isPrev ? '' : '100vh';
+      card.style.top = isPrev ? '' : 0;
       card.style.padding = isPrev ? '16px 0' : '0';
       card.style.margin = isPrev ? '4px 0' : '0';
-      card.style.left = isPrev ? this.cardPos.left : 0;
+      card.style.left = isPrev ? '' : 0;
       document.getElementsByClassName('round-spacer')[0].classList.toggle('hide')
     },
-    updateRound: function (rnd) {
-      if (rnd === 1) {
-        this.$store.dispatch('UPDATE_CURRENT_ROUND', this.roundOne)
-      } else if (rnd === 2){
-        this.$store.dispatch('UPDATE_CURRENT_ROUND', this.roundTwo)
-      } else {
-        this.$store.dispatch('UPDATE_CURRENT_ROUND', this.roundThree)
+    options () {
+      return {
+        duration: this.duration,
+        offset: this.offset,
+        easing: this.easing
       }
     },
-    expandRound: function () {
-     this.$refs.roundCardContainer.$el.classList.toggle('expand')
-    }
   },
 
   watch: {
@@ -125,7 +132,7 @@ export default {
   created: function (current) {
     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
       .then(response => {
-        this.loading = false
+        this.isLoaded = true
         this.roundComps = this.rounds
       })
   },
@@ -152,6 +159,14 @@ export default {
   right: 0;
   padding: 0;
   margin: 0;
+  overflow: scroll;
+}
+.open {
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1000;
   overflow: scroll;
 }
 .mint-swipe-item .is-active .open {
@@ -183,6 +198,17 @@ export default {
   z-index: 9999;
   width: 100%;
   height: 100%;
+}
+.slide-enter-active, .slide-leave-active {
+  transition: all .8s ease-out;
+}
+
+.slide-enter, .slide-leave-to {
+  transition: all .8s ease-out;
+}
+
+.slide-enter-to, .slide-leave {
+  transition: all .8s ease-out;
 }
 
 </style>

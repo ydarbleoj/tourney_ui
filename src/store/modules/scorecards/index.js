@@ -9,9 +9,7 @@ const state = {
   courseScorecard: {},
   userScore: {},
   userScorecards: [],
-  rnd1scorecard: [],
-  rnd2scorecard: [],
-  rnd3scorecard: [],
+  currentScorecard: {},
 
 }
 
@@ -19,7 +17,6 @@ const actions = {
   LOAD_SCORECARD: function ({ commit, state }, { tournId, tournRoundId }) {
     let options = { tournament_id: tournId, tournament_round_id: tournRoundId }
     return axios.get('/api/v2/rounds/scorecards.json', { params: options}).then((response) => {
-      console.log('scorecards', response.data)
       commit('SET_SCORECARD', { list: response.data })
     }, (err) => {
       console.log(err)
@@ -39,12 +36,60 @@ const actions = {
       console.log('set score', err)
     })
   },
+  CREATE_USER_SCORE: function ({ commit, state }, { scorecardId, scores }) {
+    let options = { scorecard_id: scorecardId, user_score: scores}
+    return axios.post('/api/v2/user_scores.json', options)
+      .then((response) => {
+        if (response.status == 200) {
+          commit('SET_SCORECARD', { list: response.data })
+          return true
+        } else {
+          return false
+        }
+      }, (err) => {
+        console.log('send score error', err)
+    })
+  },
+  UPDATE_USER_SCORE: function ({ commit, state }, { scorecardId, scoreId, scores }) {
+    let options = { scorecard_id: scorecardId, user_score_id: scoreId, user_score: scores }
+    return axios.put('/api/v2/user_scores/' + scoreId + '.json', options).then((response) => {
+      if (response.status === 200) {
+        commit('SET_SCORECARD', { list: response.data })
+        return true
+      } else {
+        return false
+      }
+    }, (err) => {
+      console.log('send score error', err)
+      return false
+    })
+  },
+  FINISH_SCORECARD: function({ commit, state }, { tournId, scorecardId, opts }) {
+    let options = { tournament_id: tournId, scorecard: { finished: opts } }
+    return axios.put('/api/v2/rounds/scorecards/' + scorecardId + '.json', options)
+      .then((response) => {
+        if (response.status === 200) {
+          return true
+        } else {
+          return false
+        }
+      })
+  },
+  USER_SCORECARD_LIST: function ({ commit, state }, { tournId, lbId }) {
+    let options = { tournament_id: tournId, leaderboard_id: lbId }
+    return axios.get('/api/v2/tournaments/admin/user_scorecards.json', { params: options }).then((response) => {
+        commit('SET_USER_SCORECARDS', { list: response.data })
+      })
+  },
   ADMIN_CREATE_USER_SCORE: function ({ commit, state }, { scorecardId, scores }) {
     let options = { scorecard_id: scorecardId, user_score: scores}
     return axios.post('/api/v2/user_scores.json', options)
       .then((response) => {
         if (response.status == 200) {
           commit('UPDATE_ADMIN_SCORECARD', { list: response.data })
+          return true
+        } else {
+          return false
         }
       }, (err) => {
         console.log('send score error', err)
@@ -55,16 +100,13 @@ const actions = {
     return axios.put('/api/v2/user_scores/' + scoreId + '.json', options).then((response) => {
       if (response.status === 200) {
         commit('UPDATE_ADMIN_SCORECARD', { list: response.data })
+        return true
+      } else {
+        return false
       }
     }, (err) => {
       console.log('send score error', err)
     })
-  },
-  USER_SCORECARD_LIST: function ({ commit, state }, { tournId, lbId }) {
-    let options = { tournament_id: tournId, leaderboard_id: lbId }
-    return axios.get('/api/v2/tournaments/admin/user_scorecards.json', { params: options }).then((response) => {
-        commit('SET_USER_SCORECARDS', { list: response.data })
-      })
   },
 }
 
@@ -96,10 +138,6 @@ const mutations = {
 
 const getters = {
   roundScorecard: (state) => (num) => {
-    return
-  },
-  scoreListGetter: state => {
-    return state.scoreList
   },
   scorecard: state => {
     return state.playerScorecard

@@ -2,13 +2,15 @@
   <v-card class="lb-card" @click="isPreview ? previewToggle() : null">
     <v-card-title class="stroke--title pa-0 pt-2 pl-2">
       <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
-      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
+      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview">Leaderboard</h2>
       <v-spacer></v-spacer>
       <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
         <v-icon color="white">clear</v-icon>
       </span>
     </v-card-title>
-
+    <div class="stroke--title text-xs-left pb-3 pl-2 pt-0">
+      <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
+    </div>
     <v-card-text v-if="!loading" class="pa-0">
       <stroke-table :preview="isPreview"/>
     </v-card-text>
@@ -28,6 +30,7 @@ export default {
   },
   data () {
     return {
+      purse: 0,
       isPreview: true,
       loading: true,
       closed: true,
@@ -75,9 +78,9 @@ export default {
   },
 
   created: function () {
-    console.log('stroke', this.current)
     this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
+        this.purse = this.current.num_players * 30
         this.loading = false
       })
   },
@@ -85,18 +88,20 @@ export default {
 </script>
 <style>
 .lb-card {
+  width: 100%;
   border-radius: 20px;
+  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
 }
 .lb-card.open {
   border-radius: 0;
   top: 0;
   left: 0;
   z-index: 1000 !important;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
   height: 100vh;
   overflow: scroll;
+  width: 100vw;
+  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .stroke--title {

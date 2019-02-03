@@ -153,7 +153,7 @@ export default {
     displayRow: function (props) {
       let klass;
       if (this.preview) {
-        klass = props.item.attributes.position < 6 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
+        klass = props.index < 3 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
       } else {
         klass = ''
       }

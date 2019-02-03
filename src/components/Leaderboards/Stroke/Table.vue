@@ -3,7 +3,7 @@
     :headers="headers"
     :items="strokeLeaderboard"
     hide-actions
-    class='stroke-table fixed-header board-table'
+    class='stroke-table board-table'
     item-key="id"
   >
     <template slot="items" slot-scope="props">
@@ -152,7 +152,7 @@ export default {
           sortable: false,
           value: 'net_total'
         }
-      ]
+      ],
     }
   },
 
@@ -160,7 +160,7 @@ export default {
     displayRow: function (props) {
       let klass;
       if (this.preview) {
-        klass = props.item.attributes.position < 6 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
+        klass = props.index < 3 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
       } else {
         klass = ''
       }
@@ -188,7 +188,7 @@ export default {
 .board-table {
   overflow:hidden;
   border-radius: 0 0 20px 20px;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .hidden_row {
   display: none;
