@@ -11,6 +11,7 @@
             required
           ></v-text-field>
           <v-text-field
+            class="mt-3"
             color="#F8C977"
             label="Password"
             v-model="data.auth.password"
@@ -18,7 +19,7 @@
             required
           ></v-text-field>
 
-          <v-btn flat round class="admin--edit_button font-weight-regular" color="white" @click="login">submit</v-btn>
+          <v-btn flat round class="admin--edit_button font-weight-regular mt-3" color="white" @click="login">submit</v-btn>
         </form>
       </v-flex>
     </v-layout>
