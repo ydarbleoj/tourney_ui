@@ -19,7 +19,7 @@
             required
           ></v-text-field>
 
-          <v-btn flat round class="admin--edit_button font-weight-regular mt-3" color="white" @click="login">submit</v-btn>
+          <v-btn flat round class="admin--edit_button font-weight-regular mt-5" color="white" @click="login">submit</v-btn>
         </form>
       </v-flex>
     </v-layout>
