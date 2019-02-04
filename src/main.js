@@ -69,7 +69,7 @@ Vue.use(VueAuth, {
     rolesVar: 'role',
     fetchData: { url: 'users', enabled: true },
     parseUserData: function (data) {
-      console.log('jsakldfj', process.env)
+      console.log('jsakldfj', data)
       return data.data.attributes;
     },
     refreshData: { url: 'users/refresh', method: 'GET', enabled: false, interval: 0 }
