@@ -27,13 +27,13 @@ const checkForUser = (to, from, next) => {
   }
 }
 
+    // {
+    //   path: '/*',
+    //   redirect: { name: 'route-name' }
+    // },
 const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/*',
-      redirect: { name: 'route-name' }
-    },
     {
       path: '/',
       name: 'Home',

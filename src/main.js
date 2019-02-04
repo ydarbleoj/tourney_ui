@@ -69,7 +69,7 @@ Vue.use(VueAuth, {
     rolesVar: 'role',
     fetchData: { url: 'users', enabled: true },
     parseUserData: function (data) {
-      console.log('jsakldfj', data)
+      console.log('user parser', data)
       // return data.data.attributes;
       return data;
     },
