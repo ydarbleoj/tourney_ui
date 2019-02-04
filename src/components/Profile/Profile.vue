@@ -128,8 +128,8 @@ export default {
     }
   },
 
-
   created: function () {
+    console.log('created profile')
     this.$store.dispatch('profile/LOAD_PROFILE_DATA').then((response) => {
       console.log('hith', response)
       if (response) {
