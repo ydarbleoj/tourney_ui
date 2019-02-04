@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     login () {
-
       let redirect = this.setRedirect()
       this.$auth.login({
         data: { auth: { email: this.data.auth.email, password: this.data.auth.password } },

@@ -42,7 +42,6 @@ import VueAuth from '@websanova/vue-auth'
 import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
-console.log('jsakldfj', process.env)
 axios.defaults.baseURL = process.env.ROOT_API
 
 Vue.use(VueAxios, axios)
@@ -70,6 +69,7 @@ Vue.use(VueAuth, {
     rolesVar: 'role',
     fetchData: { url: 'users', enabled: true },
     parseUserData: function (data) {
+      console.log('jsakldfj', process.env)
       return data.data.attributes;
     },
     refreshData: { url: 'users/refresh', method: 'GET', enabled: false, interval: 0 }
