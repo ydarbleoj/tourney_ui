@@ -20,7 +20,6 @@ import Stats from '@/components/Stats/index'
 Vue.use(Router)
 
 const checkForUser = (to, from, next) => {
-  console.log('checkfor user', localStorage)
   if (!localStorage.default_auth_token) {
     next()
   } else {
@@ -108,7 +107,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('testing refresh')
   if (to.matched.some(record => record.name === 'AcceptInvite')) {
     if (!localStorage.default_auth_token) {
       next({
