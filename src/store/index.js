@@ -8,7 +8,7 @@ import leaderboards from './modules/leaderboards'
 import admin from './modules/admin'
 import profile from './modules/profile'
 import createPersistedState from 'vuex-persistedstate'
-// import * as Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie'
 
 
 Vue.use(Vuex)
@@ -17,7 +17,7 @@ const store = new Vuex.Store({
   strict: true,
   plugins: [
     createPersistedState({
-      paths: ['login','tournament', 'tournament.admin', 'profile']
+      paths: ['login','tournament', 'profile']
     })
 
   ],

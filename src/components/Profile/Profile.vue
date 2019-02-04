@@ -18,21 +18,21 @@
       <v-layout row wrap fill-height align-center style="" class="text-xs-center pt-4 pb-4" v-if="isLoaded">
         <v-flex xs4>
           <h1 class="font-weight-regular" style="color:#74C9D7">
-            {{ profileData.attributes.hcap_diff }}
+            {{ hcap_diff }}
           </h1>
           <h5 class="font-weight-regular">Handicap</h5>
           <h5 class="font-weight-regular">Differential</h5>
         </v-flex>
         <v-flex xs4>
           <h1 class="font-weight-regular" style="color:#F8C977">
-            {{ profileData.attributes.net_avg }}
+            {{ net_avg }}
           </h1>
           <h5 class="font-weight-regular">Net</h5>
           <h5 class="font-weight-regular">Average</h5>
         </v-flex>
         <v-flex xs4>
            <h1 class="font-weight-regular" style="color:#F7A072">
-            {{ profileData.attributes.gross_avg }}
+            {{ gross_avg }}
           </h1>
           <h5 class="font-weight-regular">Gross</h5>
           <h5 class="font-weight-regular">Average</h5>
@@ -46,9 +46,9 @@
          <v-flex xs12>
           <v-layout row wrap>
             <v-flex xs12 class="text-xs-center">
-              <h1 class="font-weight-regular pt-2" style="color:#F7A072;font-size:35px;">{{ profileData.attributes.lowest_round.total_net }}</h1>
-              <h4 class="font-weight-regular">{{ profileData.attributes.lowest_round.course_name }}
-                {{ profileData.attributes.lowest_round.year }}
+              <h1 class="font-weight-regular pt-2" style="color:#F7A072;font-size:35px;">{{ total_net }}</h1>
+              <h4 class="font-weight-regular">{{ course_name }}
+                {{ year }}
               </h4>
             </v-flex>
           </v-layout>
@@ -84,6 +84,12 @@ export default {
     return {
       userId: this.$auth.user().id,
       isLoaded: false,
+      hcap_diff: null,
+      net_avg: null,
+      gross_avg: null,
+      total_net: null,
+      course_name: null,
+      year: null,
     }
   },
 
@@ -110,13 +116,25 @@ export default {
         data: {},
         redirect: '/login'
       })
+    },
+    loadProfileData () {
+      this.hcap_diff = this.profileData.attributes.hcap_diff
+      this.net_avg = this.profileData.attributes.net_avg
+      this.gross_avg = this.profileData.attributes.gross_avg
+      this.total_net = this.profileData.attributes.lowest_round.total_net
+      this.course_name = this.profileData.attributes.lowest_round.course_name
+      this.year = this.profileData.attributes.lowest_round.year
+
     }
   },
 
 
   created: function () {
-    this.user = Object.assign(this.$auth.user())
     this.$store.dispatch('profile/LOAD_PROFILE_DATA').then((response) => {
+      console.log('hith', response)
+      if (response) {
+        this.loadProfileData()
+      }
       this.isLoaded = true
     })
   }

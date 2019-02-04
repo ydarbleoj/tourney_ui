@@ -9,7 +9,12 @@ const state = {
 const actions = {
   LOAD_PROFILE_DATA: function ({ commit, state}) {
     return axios.get('/api/v2/users/profiles').then(response => {
-      commit('SET_PROFILE_DATA', { list: response.data })
+      if (response.status === 200) {
+        commit('SET_PROFILE_DATA', { list: response.data })
+        return true
+      } else {
+        return false
+      }
     }, (err) => {
       console.log('profile data')
     })
