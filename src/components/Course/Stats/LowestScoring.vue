@@ -74,6 +74,7 @@ export default {
   methods: {
     filterType (data, type) {
       let d = data.filter(el => el['type'] === type);
+      if (d === undefined || !d.length) return {};
       return d[0]['attributes']
     },
     loadFields () {

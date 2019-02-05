@@ -5,7 +5,7 @@
       <v-card flat grey class="user-score-card" v-if="!finishRound">
         <v-card flat class="pa-0">
           <v-container fluid fill-height class="pa-0">
-            <v-layout row align-center justify-center class="record" style="height:10vh;" wrap >
+            <v-layout row align-center justify-center class="record" style="height:8vh;" wrap >
               <v-flex xs6>
                 <h3 class="text-xs-center pa-0 ma-0">Score</h3>
               </v-flex>
@@ -228,7 +228,7 @@ div.text-xs-left.user-score.card.card--flat {
   color: #F8C977;
 }
 div.vue-scroll-picker-item {
-    text-align: center;
+  text-align: center;
   height: 1.7em;
   line-height: 1.7em;
 }
