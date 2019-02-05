@@ -23,6 +23,7 @@
                       <v-flex xs2 class="pa-0">
                         <v-text-field
                           class="players-attrs"
+                          style="padding:0;"
                           color="#E69DA7"
                           solo
                           flat
@@ -208,5 +209,9 @@ export default {
   color: #FBFCFD;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
+}
+.v-input .players-attrs .v-input__control .v-input__slot v-text-field__slot input {
+  padding: 0;
+
 }
 </style>
