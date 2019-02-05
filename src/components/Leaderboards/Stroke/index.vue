@@ -11,7 +11,7 @@
     <div class="stroke--title text-xs-left pb-3 pl-2 pt-0">
       <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
     </div>
-    <v-card-text v-if="!loading" class="pa-0">
+    <v-card-text v-if="!loading" class="pa-0 mb-5">
       <stroke-table :preview="isPreview"/>
     </v-card-text>
   </v-card>

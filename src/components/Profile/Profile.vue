@@ -10,12 +10,12 @@
         <v-flex xs6>
           <v-card-title class="pa-0">
             <h2 class="font-weight-regular align-center">{{ $auth.user().username }}</h2>
-            <p class="align-center ma-0">{{ $auth.user().home }}</p>
           </v-card-title>
+          <p class="align-center ma-0">{{ $auth.user().home }}</p>
         </v-flex>
       </v-layout>
       <v-divider></v-divider>
-      <v-layout row wrap fill-height align-center style="" class="text-xs-center pt-4 pb-4" v-if="isLoaded">
+      <v-layout row wrap fill-height align-center style="" class="text-xs-center pt-4 pb-4">
         <v-flex xs4>
           <h1 class="font-weight-regular" style="color:#74C9D7">
             {{ hcap_diff }}
@@ -39,7 +39,7 @@
         </v-flex>
       </v-layout>
       <v-divider></v-divider>
-      <v-layout row wrap class="text-xs-center pt-4 pb-4" v-if="isLoaded">
+      <v-layout row wrap class="text-xs-center pt-4 pb-4">
         <v-flex xs12 >
           <h4 class="font-weight-regular">Lowest Round</h4>
         </v-flex>
@@ -88,8 +88,8 @@ export default {
       net_avg: 0,
       gross_avg: 0,
       total_net: 0,
-      course_name: null,
-      year: null,
+      course_name: '',
+      year: '',
     }
   },
 

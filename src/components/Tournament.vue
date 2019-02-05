@@ -13,7 +13,7 @@
               <v-list>
                 <v-list-tile>
                   <v-list-tile-title>
-                    <v-icon class="mr-2">person_outline</v-icon><router-link :to="'/profile'">Profile</router-link>
+                    <v-icon class="mr-2">person_outline</v-icon><router-link style="color:black;text-decoration:none;" :to="'/profile'">Profile</router-link>
                   </v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile v-if="$auth.check('admin')">

@@ -11,7 +11,7 @@
     <div class="putting--title text-xs-left pl-2 pt-0 pb-3">
       <h4 class="font-weight-regular" style="color:black;">Purse $<span>{{ purse }}</span></h4>
     </div>
-    <v-card-text v-if="!loading" class="pa-0">
+    <v-card-text v-if="!loading" class="pa-0 mb-5">
       <putting-table :preview="isPreview" />
     </v-card-text>
   </v-card>
