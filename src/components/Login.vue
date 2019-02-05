@@ -3,6 +3,7 @@
     <v-layout align-center justify-center row fill-height color="white">
       <v-flex xs12 class="text-xs-center" color="white">
         <h1 style="color:#74C9D7" class="font-weight-regular mb-5">Login</h1>
+        <p style="color:red;" >{{ errorMessage }}</p>
         <form>
           <v-text-field
             color="#F8C977"
@@ -19,7 +20,7 @@
             required
           ></v-text-field>
 
-          <v-btn flat round class="admin--edit_button font-weight-regular mt-5" color="white" @click="login">submit</v-btn>
+          <v-btn flat round class="admin--edit_button font-weight-regular mt-5" color="white" @click="login">{{ btnMessage }}</v-btn>
         </form>
       </v-flex>
     </v-layout>
@@ -30,6 +31,8 @@ export default {
   name: 'Login',
   data () {
     return {
+      errorMessage: '',
+      btnMessage: 'Submit',
       data: {
         auth: {
           id: '',
@@ -53,8 +56,16 @@ export default {
       }).then(res => {
         console.log('login', res)
       }, (res) => {
+        this.btnMessage = 'Failed'
+        this.errorMessage = 'Sorry, please try again.'
+        this.data.auth.password = ''
         console.log('error', res)
+        setTimeout(() => this.resetBtns(), 3000)
       })
+    },
+    resetBtns () {
+      this.btnMessage = 'Submit'
+      this.errorMessage = ''
     },
     setRedirect () {
       return 'redirect' in this.$route.query ? this.$route.query.redirect : '/profile'

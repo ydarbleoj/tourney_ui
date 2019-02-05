@@ -194,7 +194,7 @@ export default {
   display: none;
 }
 .stroke-table table.theme--light thead {
-  background-color: #30c9e8;
+  background-color: #6CADED;
 }
 .stroke-table table.theme--light thead tr th {
   color: #f1f1f1;

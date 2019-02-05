@@ -84,10 +84,10 @@ export default {
     return {
       userId: this.$auth.user().id,
       isLoaded: false,
-      hcap_diff: null,
-      net_avg: null,
-      gross_avg: null,
-      total_net: null,
+      hcap_diff: 0,
+      net_avg: 0,
+      gross_avg: 0,
+      total_net: 0,
       course_name: null,
       year: null,
     }
@@ -129,7 +129,7 @@ export default {
   },
 
   created: function () {
-    console.log('created profile')
+    console.log('created profile', this.$auth.user())
     this.$store.dispatch('profile/LOAD_PROFILE_DATA').then((response) => {
       console.log('hith', response)
       if (response) {

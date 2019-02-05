@@ -18,11 +18,6 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: ['tournament', 'login', 'profile'],
-      // storage: {
-      //   getItem: key => Cookies.get(key),
-      //   setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
-      //   removeItem: key => Cookies.remove(key)
-      // }
     })
 
   ],

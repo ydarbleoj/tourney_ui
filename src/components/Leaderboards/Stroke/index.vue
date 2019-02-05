@@ -106,6 +106,6 @@ export default {
 
 .stroke--title {
   color: #f1f1f1;
-  background-color: #30c9e8;
+  background-color: #6CADED;
 }
 </style>
