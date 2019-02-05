@@ -23,7 +23,7 @@
                       <v-flex xs2 class="pa-0">
                         <v-text-field
                           class="players-attrs"
-                          style="padding:0;"
+                          style="padding:0;height: 50px;"
                           color="#E69DA7"
                           solo
                           flat
