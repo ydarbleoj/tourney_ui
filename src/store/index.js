@@ -247,6 +247,7 @@ const store = new Vuex.Store({
       state.handicapMessage = list
     },
     SET_SKINS_LEADERBOARD: (state, { list }) => {
+      console.log('skins leader', list)
       Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {

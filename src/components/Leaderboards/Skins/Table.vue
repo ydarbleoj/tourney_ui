@@ -13,7 +13,7 @@
           <v-spacer></v-spacer>
           <span class="grey--text">handicap {{ props.item.attributes.handicap }}</span>
         </td>
-        <td class="text-xs-center">${{ props.item.attributes.skins_money.total }}</td>
+        <td class="text-xs-center">${{ props.item.attributes.skins_money.length ? props.item.attributes.skins_money.total : null }}</td>
         <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_1')['total'] }}</td>
         <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_2')['total'] }}</td>
         <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_3')['total'] }}</td>
@@ -208,6 +208,7 @@ export default {
     },
     cardFilter (cards, rnd) {
       let nn = cards.filter(el => el[rnd])
+      if (nn === undefined || !nn.length) return {};
       return nn[0][rnd]
 
     },
@@ -225,6 +226,7 @@ export default {
   },
 
   created: function (current) {
+    console.log('skins leaderboards', this.skins_leaderboard)
   }
 
 

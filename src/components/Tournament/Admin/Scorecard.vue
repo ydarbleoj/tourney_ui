@@ -74,7 +74,7 @@
         </v-layout>
       </v-container>
     </v-card-title>
-    <v-card-text class="pa-0" :style="{ marginTop: userScoreMargin + 'px' }" ref="scorecardList">
+    <v-card-text class="pa-0 mb-5" :style="{ marginTop: userScoreMargin + 'px' }" ref="scorecardList">
 
       <v-layout row wrap white v-if="currentView == 'fullCard'">
         <transition
