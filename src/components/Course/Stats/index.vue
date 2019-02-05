@@ -63,7 +63,10 @@ export default {
 
   methods: {
     filterType (data, type) {
+      console.log('data', data)
       let d = data.filter(el => el['type'] === type);
+      console.log('d', d)
+      if (d === 'undefined') return {};
       return d[0]['attributes']
     }
   },
