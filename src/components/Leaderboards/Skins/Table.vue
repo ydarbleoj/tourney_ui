@@ -13,7 +13,7 @@
           <v-spacer></v-spacer>
           <span class="grey--text">handicap {{ props.item.attributes.handicap }}</span>
         </td>
-        <td class="text-xs-center">${{ props.item.attributes.skins_money.length ? props.item.attributes.skins_money.total : null }}</td>
+        <td class="text-xs-center">${{ props.item.attributes.skins_money ? props.item.attributes.skins_money.total : null }}</td>
         <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_1')['total'] }}</td>
         <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_2')['total'] }}</td>
         <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_3')['total'] }}</td>
