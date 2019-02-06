@@ -149,46 +149,50 @@ export default {
           text: 'Pos',
           align: 'center',
           sortable: false,
-          value: 'pos'
+          value: 'pos',
+          class: 'white--text '
         },
         {
           text: 'Players',
           align: 'left',
           sortable: false,
-          value: 'username'
+          value: 'username',
+          class: 'white--text '
         },
         {
           text: 'Money',
           align: 'center',
           sortable: false,
-          value: ''
+          value: '',
+          class: 'white--text'
         },
         {
           text: 'R1',
           align: 'center',
           sortable: false,
-          class: 'skins-row hidden_row',
+          class: 'skins-row white--text hidden_row',
           value: 'rnd1'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
-          class: 'skins-row hidden_row',
+          class: 'skins-row white--text hidden_row',
           value: 'rnd2'
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
-          class: 'skins-row hidden_row',
+          class: 'skins-row white--text hidden_row',
           value: 'rnd3'
         },
         {
           text: 'Total',
           align: 'center',
           sortable: false,
-          value: 'total'
+          value: 'total',
+          class: 'white--text '
         },
       ]
     }
@@ -239,8 +243,7 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .skins-table table.theme--light thead {
-  background-color: #17B890;
-  background-color: #ABCE57;
+  background-color: #6ce577;
 }
 .skins-table table.theme--light thead tr th {
   color: #f1f1f1;

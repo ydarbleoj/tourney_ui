@@ -108,7 +108,7 @@ export default {
 
 .putting--title {
   color: #f1f1f1;
-  background-color: #FE8202;
+  background-color: #f7ae31;
 }
 
 </style>

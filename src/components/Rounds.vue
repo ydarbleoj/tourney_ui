@@ -22,7 +22,7 @@
             <course :course="i"  @event="courseToggle(this)" />
             <v-spacer class="mt-4 round-spacer"></v-spacer>
             <div id="scorecard-scroll">
-                <scorecard :current="current" :roundId="i" @open="isOpen" v-if="currentRound === i['attributes']['round_number']" />
+              <scorecard :current="current" :roundId="i" @open="isOpen" v-if="currentRound === i['attributes']['round_number']" />
             </div>
           </v-tab-item>
         </v-tabs>

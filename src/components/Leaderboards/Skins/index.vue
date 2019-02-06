@@ -1,8 +1,8 @@
 <template>
   <v-card class="skins-lb-card" @click="isPreview ? previewToggle() : null ">
     <v-card-title class="skins--title pa-0 pt-2 pl-2">
-      <h2 class="text-align-left font-weight-medium" >Skins</h2>
-      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
+      <h2 class="text-align-left font-weight-medium white--text" >Skins</h2>
+      <h2 class="ml-2 font-weight-medium text-xs-left white--text" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
       <v-spacer></v-spacer>
       <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
         <v-icon color="white">clear</v-icon>
@@ -101,7 +101,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 1000 !important;
-   width: 100vw;
+  width: 100vw;
   transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
   height: 100vh;
   overflow: scroll;
@@ -109,6 +109,6 @@ export default {
 
 .skins--title {
   color: #f1f1f1;
-  background-color: #ABCE57;
+  background-color: #6ce577;
 }
 </style>

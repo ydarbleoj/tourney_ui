@@ -8,7 +8,7 @@
     >
       <v-container fill-height pa-0 class=''>
         <v-layout>
-          <v-flex xs8 flexbox>
+          <v-flex xs7 flexbox>
             <div class="headline white--text mt-5">Round {{ this.course['attributes']['round_number'] }} </div>
             <span class="headline white--text">{{ this.course['attributes']['name'] }}</span>
             <div class="white--text">
@@ -20,11 +20,19 @@
               par: {{ this.course['attributes']['par'] }}
             </div>
           </v-flex>
-          <v-flex class="pa-0 mt-3 mr-3">
+          <v-flex class="pa-0 mt-3">
             <div class="text-xs-right">
-              <span v-if="!preview" class="text-xs-right" @click="closeCourse()">
+              <span v-if="!preview" class="text-xs-right mr-3" @click="closeCourse()">
                 <v-icon color="white">clear</v-icon>
               </span>
+            </div>
+            <div style='height:100%;'>
+              <v-layout v-if="preview" align-end row style="width:100%;height:inherit;">
+                <v-flex xs12 class="text-xs-center white--text">
+                  <v-icon color="white" >access_time</v-icon>
+                  <h3 class="font-weight-medium">{{ roundGroup }}  -  {{ roundTime }}</h3>
+                </v-flex>
+              </v-layout>
             </div>
           </v-flex>
         </v-layout>
@@ -53,11 +61,13 @@ export default {
       preview: true,
       show: false,
       rndId: this.course.id,
+      roundTime: '',
+      roundGroup: ''
     }
   },
 
   computed: {
-    ...mapState([])
+    ...mapState(['userTeeTimes'])
   },
 
   methods: {
@@ -67,6 +77,12 @@ export default {
     closeCourse () {
       this.preview = !this.preview
     },
+    filterTeeTime (rndNum, list) {
+      let n = list.filter(el => el.attributes.round_number === rndNum)
+      if (n === undefined || !n.length) return '';
+      console.log('nnn', n)
+      return n[0].attributes
+    }
 
   },
 
@@ -79,6 +95,14 @@ export default {
       this.$el.classList.toggle('open')
     }
   },
+
+  created: function () {
+    let rndNum = this.course['attributes']['round_number']
+    let times = this.userTeeTimes
+    let t = this.filterTeeTime(rndNum, times)
+    this.roundTime = t.tee_time
+    this.roundGroup = 'Group ' + t.group
+  }
 
 }
 </script>

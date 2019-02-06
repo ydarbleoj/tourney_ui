@@ -41,6 +41,7 @@ const store = new Vuex.Store({
     teamRounds: [],
     currentRound: null,
     teeTime: [],
+    userTeeTimes: [],
     awaitingTees: [],
     handicapMessage: '',
     adminTeeTimes: [],
@@ -160,14 +161,16 @@ const store = new Vuex.Store({
     LOAD_ROUNDS: function ({ commit, state }, { id }) {
       let options = { tournament_id: id }
       return axios.get('/api/v2/rounds/lists.json', { params: options }).then((response) => {
-        commit('SET_ROUNDS', { list: response.data })
+        if (response.status === 200) {
+          commit('SET_ROUNDS', { list: response.data.rounds })
+          commit('SET_USER_TEE_TIMES', { list: response.data.user_times } )
+        }
       }, (err) => {
         console.log('error in rounds', err)
       })
     },
     LOAD_TOURNAMENT_LIST: function ({ commit }) {
      return axios.get('/api/v2/tournaments.json').then((response) => {
-        console.log('tournament', response.data)
         commit('CURRENT_TOURNAMENT', { list: response.data })
         commit('SET_TOURNAMENT_LIST', { list: response.data })
       }, (err) => {
@@ -253,27 +256,25 @@ const store = new Vuex.Store({
       state.invited.splice(index, 1)
     },
     REMOVE_PLAYER: (state, { id }) => {
-      console.log('hitt', id)
       const index = state.tournamentPlayers.findIndex(block => block.id === id )
-      console.log('index', index)
-      console.log('stat', state.tournamentPlayers.length)
       state.tournamentPlayers.splice(index, 1)
-      console.log('stat2', state.tournamentPlayers.length)
-
     },
     SET_HANDICAP: (state, { list }) => {
       state.handicapMessage = list
     },
     SET_SKINS_LEADERBOARD: (state, { list }) => {
-      console.log('skins leader', list)
       Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {
+
       state.currentRound = 1
-      state.roundOne = list.data[0]
-      state.roundTwo = list.data[1]
-      state.roundThree = list.data[2]
-      state.rounds = list.data
+      // state.roundOne = list.data[0]
+      // state.roundTwo = list.data[1]
+      // state.roundThree = list.data[2]
+      Vue.set(state, 'rounds', JSON.parse(list).data)
+    },
+    SET_USER_TEE_TIMES: (state, { list }) => {
+      state.userTeeTimes = JSON.parse(list).data
     },
     SET_CURRENT_ROUND: (state, { list }) => {
       console.log('set curret', list)
