@@ -55,7 +55,7 @@ export default {
       currentView: 'stroke',
       activeButton: 'active',
       inactiveButton: 'inactive',
-      comps: ['stroke', 'putting', 'skins'],
+      comps: ['stroke', 'putting', 'skins', 'team'],
     }
   },
 
