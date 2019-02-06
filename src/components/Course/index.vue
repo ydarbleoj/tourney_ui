@@ -101,6 +101,7 @@ export default {
     let times = this.userTeeTimes
     let t = this.filterTeeTime(rndNum, times)
     console.log('hitting here', t)
+    if (t === undefined || !t.length) return false;
     this.roundTime = t.tee_time
     this.roundGroup = 'Group ' + t.group
   }
