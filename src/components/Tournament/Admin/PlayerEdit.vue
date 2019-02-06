@@ -175,7 +175,7 @@ export default {
     removePlayer (item) {
       this.btnDelete = true
       let call = item.type == 'invitation' ? 'DELETE_INVITATION' : 'DELETE_PLAYER'
-      this.$store.dispatch(call, { tournId: this.currentTournament.id, id: item.id})
+      this.$store.dispatch(call, { tournId: this.currentTournament.id, id: item.id })
         .then(response => {
           this.btnDelete = false
         })

@@ -101,9 +101,17 @@ const store = new Vuex.Store({
     DELETE_INVITATION: function ({ commit, state }, { tournId, id }) {
       let options = { tournament_id: tournId }
       return axios.delete('/api/v2/tournaments/admin/invitations/' + id + '.json', { params: options}).then((response) => {
-        console.log('deete', response)
         if (response.data.success == true) {
           commit('REMOVE_INVITATION', { id: response.data.id })
+        }
+        return response.success
+      })
+    },
+    DELETE_PLAYER: function ({ commit, state }, { tournId, id }) {
+      let options = { tournament_id: tournId }
+      return axios.delete('/api/v2/tournaments/admin/users/' + id + '.json', { params: options}).then((response) => {
+        if (response.status == 200) {
+          commit('REMOVE_PLAYER', { id: response.data.id })
         }
         return response.success
       })
@@ -242,6 +250,15 @@ const store = new Vuex.Store({
       const index2 = state.tournamentPlayers.findIndex(block => block.id === id)
       state.tournamentPlayers.splice(index2, 1)
       state.invited.splice(index, 1)
+    },
+    REMOVE_PLAYER: (state, { id }) => {
+      console.log('hitt', id)
+      const index = state.tournamentPlayers.findIndex(block => block.id === id )
+      console.log('index', index)
+      console.log('stat', state.tournamentPlayers.length)
+      state.tournamentPlayers.splice(index, 1)
+      console.log('stat2', state.tournamentPlayers.length)
+
     },
     SET_HANDICAP: (state, { list }) => {
       state.handicapMessage = list
