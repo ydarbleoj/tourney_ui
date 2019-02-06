@@ -37,7 +37,7 @@ export default {
     }
   },
 
-  computed: mapState(['putting_leaderboard']),
+  computed: mapState(['putting_leaderboard', 'puttingPurse']),
   methods: {
     closeLeaderboard () {
       this.isPreview = true
@@ -58,6 +58,7 @@ export default {
     getFullField () {
       this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: false })
         .then(response => {
+          this.purse = this.puttingPurse
           this.closed = false
           this.isPreview = false
         })
@@ -67,6 +68,7 @@ export default {
     current: function () {
       this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
         .then(response => {
+          this.purse = this.puttingPurse
           this.loading = false
         })
     },
@@ -80,6 +82,7 @@ export default {
   created: function (current) {
     this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
+        this.purse = this.puttingPurse
         this.loading = false
       })
   }

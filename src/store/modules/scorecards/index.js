@@ -123,8 +123,7 @@ const mutations = {
     })
   },
   SET_SCORECARD: (state, { list }) => {
-    console.log('list', list)
-    state.playerScorecard = list.data['attributes']
+    state.playerScorecard = list.data === null ? {} : list.data['attributes']
   },
   SET_SCORE_LIST: (state, { list }) => {
     state.scoreList = list

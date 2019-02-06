@@ -36,6 +36,7 @@ const store = new Vuex.Store({
     strokeLeaderboard: [],
     skins_leaderboard: [],
     putting_leaderboard: [],
+    puttingPurse: 0,
     teamLeaderboard: [],
     teamRounds: [],
     currentRound: null,
@@ -282,6 +283,10 @@ const store = new Vuex.Store({
       Vue.set(state, 'strokeLeaderboard', list.data)
     },
     SET_PUTTING_LEADERBOARD: (state, { list }) => {
+      const reducer = (acc, currentValue) => acc + currentValue;
+      const threePutts = list.data.map(el => el.attributes.total_3_putts)
+      const total = threePutts.reduce(reducer)
+      Vue.set(state, 'puttingPurse', total)
       Vue.set(state, 'putting_leaderboard', list.data)
     },
     SET_TOURNAMENT_LIST: (state, { list }) => {

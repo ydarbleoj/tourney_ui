@@ -122,6 +122,7 @@ export default {
 </script>
 <style>
 .team-lb-card {
+  width: 100%;
   border-radius: 20px;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
