@@ -100,6 +100,7 @@ export default {
     let rndNum = this.course['attributes']['round_number']
     let times = this.userTeeTimes
     let t = this.filterTeeTime(rndNum, times)
+    console.log('hitting here', t)
     this.roundTime = t.tee_time
     this.roundGroup = 'Group ' + t.group
   }
