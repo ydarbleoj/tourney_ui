@@ -11,6 +11,8 @@ import AcceptInvite from '@/components/Tournament/AcceptInvite'
 import Leaderboards from '@/components/Leaderboards'
 import Rounds from '@/components/Rounds'
 import Course from '@/components/Course/index'
+import ResetPassword from '@/components/ResetPassword'
+import ForgotPassword from '@/components/ForgotPassword'
 import Profile from '@/components/Profile/Profile'
 import ProfileEdit from '@/components/Profile/Edit'
 import Scorecard from '@/components/Scorecard/index'
@@ -47,16 +49,27 @@ const router = new Router({
       }
     },
     {
+      path: '/forgot_password',
+      name: 'ForgotPassword',
+      component: ForgotPassword
+    },
+    {
+      path: '/reset_password/:token',
+      name: 'ResetPassword',
+      component: ResetPassword,
+      meta: { auth: false }
+    },
+    {
       path: '/tournament/accept-invitation/:token',
       name: 'AcceptInvite',
       component: AcceptInvite,
-      meta: { auth: true },
+      meta: { auth: true }
     },
     {
       path: '/profile',
       name: 'Profile',
       component: Profile,
-      meta: { auth: true },
+      meta: { auth: true }
     },
     {
       path: '/profile/edit/:id',

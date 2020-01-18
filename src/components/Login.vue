@@ -20,6 +20,10 @@
             required
           ></v-text-field>
 
+          <div class="text-xs-right">
+            <router-link to="/forgot_password">Forgot Password</router-link>
+          </div>
+
           <v-btn flat round class="admin--edit_button font-weight-regular mt-5" color="white" @click="login">{{ btnMessage }}</v-btn>
         </form>
       </v-flex>
@@ -27,8 +31,14 @@
   </v-container>
 </template>
 <script>
+
+import ForgotPassword from '../components/ForgotPassword'
+
 export default {
   name: 'Login',
+  components: {
+    ForgotPassword
+  },
   data () {
     return {
       errorMessage: '',
@@ -52,14 +62,13 @@ export default {
         data: { auth: { email: this.data.auth.email.toLowerCase(), password: this.data.auth.password } },
         redirect: redirect,
         fetchUser: true,
-        rememberMe: this.data.auth.rememberMe,
+        rememberMe: true,
       }).then(res => {
         console.log('login', res)
       }, (res) => {
         this.btnMessage = 'Failed'
         this.errorMessage = 'Sorry, please try again.'
         this.data.auth.password = ''
-        console.log('error', res)
         setTimeout(() => this.resetBtns(), 3000)
       })
     },
