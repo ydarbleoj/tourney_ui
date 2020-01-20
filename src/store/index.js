@@ -277,7 +277,6 @@ const store = new Vuex.Store({
       state.userTeeTimes = JSON.parse(list).data
     },
     SET_CURRENT_ROUND: (state, { list }) => {
-      console.log('set curret', list)
       Vue.set(state, 'currentRound', list)
     },
     SET_STROKE_LEADERBOARD: (state, { list }) => {

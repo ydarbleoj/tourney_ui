@@ -80,7 +80,7 @@ export default {
     filterTeeTime (rndNum, list) {
       let n = list.filter(el => el.attributes.round_number === rndNum)
       if (n === undefined || !n.length) return '';
-      console.log('nnn', n)
+
       return n[0].attributes
     }
 
@@ -100,8 +100,9 @@ export default {
     let rndNum = this.course['attributes']['round_number']
     let times = this.userTeeTimes
     let t = this.filterTeeTime(rndNum, times)
-    console.log('hitting here', t)
-    if (t === undefined || !t.length) return false;
+
+    if (t === undefined) return false;
+
     this.roundTime = t.tee_time
     this.roundGroup = 'Group ' + t.group
   }
