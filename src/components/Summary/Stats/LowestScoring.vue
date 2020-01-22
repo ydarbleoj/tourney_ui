@@ -3,7 +3,7 @@
     loading...
   </v-card>
   <v-card flat v-else="!loading" style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
           <v-card flat class="white">
@@ -11,23 +11,31 @@
               <v-flex xs6>
                 <v-layout row wrap>
                   <v-flex xs12 class="mb-2">
-                    <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Hcap Differential</h4>
+                    <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">Best Round</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h1 class="personal-score font-weight-regular">{{ this.personalBest }}</h1>
-                    <h4 class=" mb-3 font-weight-regular">Personal</h4>
+                    <h1 class="personal-score font-weight-regular" style="font-size: 40px;">{{ this.personalBest ? this.personalBest.total_net : null }}
+                      <span style="color: #666;font-size:12px;">{{ this.personalBest ? this.personalBest.year : null }}</span>
+                    </h1>
+                    <h4 class="font-weight-regular mb-3">Personal</h4>
                   </v-flex>
                 </v-layout>
               </v-flex>
               <v-flex xs6>
                 <v-layout row wrap align-center justify-center fill-height>
                   <v-flex xs12>
-                    <h2 class="field-score ma-0 font-weight-regular" >{{ this.yearsField }}</h2>
-                    <h4 class=" font-weight-regular">This Year's Field</h4>
+
+                    <h4 class="field-score font-weight-regular">{{ this.yearsField ? this.yearsField.username : null}}</h4>
+                     <h2 class="field-score font-weight-regular">{{ this.yearsField ? this.yearsField.total_net : null }}
+                    </h2>
+                    <h4 class="font-weight-regular">This Year's Field</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h2 class="overall-score font-weight-regular ma-0">{{ this.courseOverall }}</h2>
-                    <h4 class=" font-weight-regular">Overall </h4>
+                    <h4 class="overall-score font-weight-regular">{{ this.courseOverall ? this.courseOverall.username : null }}</h4>
+                    <h2 class="overall-score font-weight-regular">{{ this.courseOverall ? this.courseOverall.total_net : null }}
+                      <span style="color: #666;font-size:12px;">{{ this.courseOverall ? this.courseOverall.year : null }}</span>
+                    </h2>
+                    <h4 class="font-weight-regular">Overall </h4>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -43,7 +51,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'HcapDiff',
+  name: 'LowestScoring',
   data () {
     return {
       isNet: true,
@@ -58,7 +66,7 @@ export default {
   },
 
   computed: {
-     ...mapState({
+    ...mapState({
       courseStats: state => state.course.courseStats,
       userCourseStats: state => state.course.userCourseStats
     })
@@ -71,11 +79,11 @@ export default {
       return d[0]['attributes']
     },
     loadFields () {
-      let round = this.roundData
-      let course  = this.courseData
-      this.yearsField = round['hcap_diff']
-      this.courseOverall = course['hcap_diff']
-      this.personalBest = this.userCourseStats.hcap_diff
+      let overall = this.courseData
+      let course  = this.roundData
+      this.yearsField = course['lowest_round']
+      this.courseOverall = overall['lowest_round']
+      this.personalBest = this.userCourseStats.lowest_round
     },
   },
 
@@ -90,11 +98,12 @@ export default {
 </script>
 <style>
 .scoring--stats {
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
 }
 
 score-label.record {
-  color: #F8C977;
+  color: #6CADED;
 }
 .pers-record {
   color: #ED6C6C;
@@ -111,4 +120,3 @@ score-label.record {
     color: #9ad3de;
   }
 </style>
-

@@ -1,33 +1,29 @@
 <template>
-  <v-card flat v-if="loading" class="white" color="white">
+  <v-card flat v-if="loading" class="white " color="white">
     loading...
   </v-card>
   <v-card flat v-else="!loading" style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
-          <v-card flat class="white">
+          <v-card flat>
             <v-layout>
-              <v-flex xs6>
+              <v-flex xs>
                 <v-layout row wrap>
-                  <v-flex xs12 class="mb-2">
-                    <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Hcap Differential</h4>
+                  <v-flex xs12 class="">
+                    <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">Par {{ this.pars }} Avgs</h4>
                   </v-flex>
-                  <v-flex xs12>
-                    <h1 class="personal-score font-weight-regular">{{ this.personalBest }}</h1>
-                    <h4 class=" mb-3 font-weight-regular">Personal</h4>
+                  <v-flex xs4 class="">
+                    <h2 class="personal-score text-xs-center font-weight-regular">{{ this.personalBest }}</h2>
+                    <h4 class="text-xs-center font-weight-regular">Personal</h4>
                   </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex xs6>
-                <v-layout row wrap align-center justify-center fill-height>
-                  <v-flex xs12>
-                    <h2 class="field-score ma-0 font-weight-regular" >{{ this.yearsField }}</h2>
-                    <h4 class=" font-weight-regular">This Year's Field</h4>
+                  <v-flex xs4 class="">
+                    <h2 class="field-score text-xs-center font-weight-regular">{{ this.yearsField }}</h2>
+                    <h4 class="text-xs-center font-weight-regular">This Years Field</h4>
                   </v-flex>
-                  <v-flex xs12>
-                    <h2 class="overall-score font-weight-regular ma-0">{{ this.courseOverall }}</h2>
-                    <h4 class=" font-weight-regular">Overall </h4>
+                  <v-flex xs4 class="">
+                    <h2 class="overall-score text-xs-center font-weight-regular">{{ this.courseOverall }}</h2>
+                    <h4 class="text-xs-center font-weight-regular">Overall</h4>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -41,16 +37,21 @@
 
 <script>
 import { mapState } from 'vuex'
+import Bars from 'vuebars'
 
 export default {
-  name: 'HcapDiff',
+  name: 'ParAvgs',
+  props: ['pars'],
+  components: {
+    Bars
+  },
+
   data () {
     return {
-      isNet: true,
       loading: true,
       userData: {},
       courseData: {},
-      roundData: {},
+      overallData: {},
       personalBest: '',
       yearsField: '',
       courseOverall: '',
@@ -71,30 +72,32 @@ export default {
       return d[0]['attributes']
     },
     loadFields () {
-      let round = this.roundData
+      let overall = this.overallData
       let course  = this.courseData
-      this.yearsField = round['hcap_diff']
-      this.courseOverall = course['hcap_diff']
-      this.personalBest = this.userCourseStats.hcap_diff
+      this.yearsField = overall['par' + this.pars + '_avg']
+      this.courseOverall = course['par' + this.pars + '_avg']
+      this.personalBest = this.userCourseStats['par' + this.pars + '_avg']
     },
   },
 
   mounted: function () {
     let data = this.courseStats.included
-    this.roundData = Object.assign(this.filterType(data, 'round_agg'))
+    this.overallData = Object.assign(this.filterType(data, 'round_agg'))
     this.courseData = Object.assign(this.filterType(data, 'course_agg'))
     this.loading = false
     this.loadFields()
+    console.log('pars', this.pars + '_avg')
   }
 }
 </script>
 <style>
 .scoring--stats {
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
 }
 
 score-label.record {
-  color: #F8C977;
+  color: #6CADED;
 }
 .pers-record {
   color: #ED6C6C;
@@ -111,4 +114,3 @@ score-label.record {
     color: #9ad3de;
   }
 </style>
-

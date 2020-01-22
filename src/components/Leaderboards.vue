@@ -64,7 +64,6 @@ export default {
   },
 
   mounted: function () {
-    console.log('leadeboard', this.current)
   },
   methods: {
     previewToggle (event) {
@@ -72,7 +71,6 @@ export default {
       this.$el.classList.toggle('open')
     },
     swipe (direction) {
-      console.log('swiping', direction)
       this.swipeDirection = direction
     },
     beforeEnter: function(el) {

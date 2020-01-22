@@ -10,7 +10,6 @@ const state = {
   userScore: {},
   userScorecards: [],
   currentScorecard: {},
-
 }
 
 const actions = {

@@ -33,7 +33,7 @@ export default {
   methods: {
     updateMenu: function(event) {
       let nn = this.tournaments.filter(tourn => tourn.attributes.year == event.attributes.year)[0]
-      console.log('nn', nn)
+
       this.current = nn.attributes
       this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', this.current)
     },

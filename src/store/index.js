@@ -7,8 +7,8 @@ import invitations from './modules/invitations'
 import leaderboards from './modules/leaderboards'
 import admin from './modules/admin'
 import profile from './modules/profile'
+import summary from './modules/summary'
 import createPersistedState from 'vuex-persistedstate'
-// import * as Cookies from 'js-cookie'
 
 
 Vue.use(Vuex)
@@ -354,11 +354,11 @@ const store = new Vuex.Store({
 
   },
   modules: {
-    scorecards,
+    course,
     invitations,
     profile,
-    course,
-
+    scorecards,
+    summary
   }
 })
 

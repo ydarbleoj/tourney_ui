@@ -44,10 +44,6 @@ import MoneyPreviewHeader from './MoneyList/PreviewHeader'
 import MoneyList from './MoneyList/Full'
 import MoneyListHeader from './MoneyList/FullHeader'
 
-// import StatsPreview from '../components/Stats/Stats/Preview'
-// import StatsList from '../components/Stats/Stats/List'
-
-
 export default {
   name: 'Stats',
   props: ['current'],

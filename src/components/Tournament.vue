@@ -50,7 +50,7 @@
         <v-layout row wrap >
           <leaderboards :current="currentTournament" v-if="!loading" />
           <rounds :current="currentTournament" v-if="!loading" />
-
+          <OverallSummary :current="currentTournament" v-if="!loading" />
         </v-layout>
       </v-container>
     </main>
@@ -58,18 +58,20 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import Handicap from '../components/Leaderboards/Handicap'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
 import Stats from '../components/Stats/index'
-import Handicap from '../components/Leaderboards/Handicap'
+import OverallSummary from '../components/Summary/index'
 
 export default {
   name: 'Tournament',
   components: {
+    Handicap,
     Leaderboards,
     Rounds,
     Stats,
-    Handicap,
+    OverallSummary
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),

@@ -3,7 +3,7 @@
     loading...
   </v-card>
   <v-card flat v-else="!loading" style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
           <v-card flat class="white">
@@ -11,7 +11,9 @@
               <v-flex xs6>
                 <v-layout row wrap>
                   <v-flex xs12 class="mb-2">
-                    <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Hcap Differential</h4>
+                    <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Scoring Avg</h4>
+                    <label class="score-label mr-2" v-bind:class="{ record : isNet }" @click="isNet = true">NET </label>
+                    <label class="score-label ml-2" v-bind:class="{ record : !isNet }" @click="isNet = false">GROSS</label>
                   </v-flex>
                   <v-flex xs12>
                     <h1 class="personal-score font-weight-regular">{{ this.personalBest }}</h1>
@@ -43,14 +45,14 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'HcapDiff',
+  name: 'ScoringAvg',
   data () {
     return {
       isNet: true,
       loading: true,
       userData: {},
       courseData: {},
-      roundData: {},
+      overallData: {},
       personalBest: '',
       yearsField: '',
       courseOverall: '',
@@ -70,21 +72,29 @@ export default {
       if (d === undefined || !d.length) return {};
       return d[0]['attributes']
     },
-    loadFields () {
-      let round = this.roundData
+    toggleFields () {
+      let overall = this.overallData
       let course  = this.courseData
-      this.yearsField = round['hcap_diff']
-      this.courseOverall = course['hcap_diff']
-      this.personalBest = this.userCourseStats.hcap_diff
+      let net     = this.isNet
+      this.yearsField = net ? overall['net_avg'] : overall['gross_avg']
+      this.courseOverall = net ? course['net_avg'] : course['gross_avg']
+      this.personalBest = net ? this.userCourseStats.net_avg : this.userCourseStats.gross_avg
     },
+  },
+  watch: {
+    isNet () {
+      this.toggleFields()
+      this.$el.classList.toggle('record')
+    }
   },
 
   mounted: function () {
     let data = this.courseStats.included
-    this.roundData = Object.assign(this.filterType(data, 'round_agg'))
+    console.log('data', data)
+    this.overallData = Object.assign(this.filterType(data, 'round_agg'))
     this.courseData = Object.assign(this.filterType(data, 'course_agg'))
     this.loading = false
-    this.loadFields()
+    this.toggleFields()
   }
 }
 </script>
