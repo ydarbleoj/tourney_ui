@@ -55,7 +55,9 @@ export default {
   name: 'AcceptInvite',
   computed: {
     ...mapState({
-      invitation: state => state.invitations.invitation
+      tournamentPlayers: state => state.tournamentPlayers,
+      invitation: state => state.invitations.invitation,
+      accepted: state => state.invitations.accepted
     })
   },
 
@@ -73,12 +75,10 @@ export default {
   },
   methods: {
     accept () {
-      console.log('this.invitation.id', this.invitation)
       this.btnLoading = true
       this.$store.dispatch('invitations/ACCEPT_INVITATION',
         { tournId: this.tournId, id: this.invitation.id, handicap: this.tournHandicap })
         .then((response) => {
-          console.log('response')
           if (response) {
             this.updateMessage = 'Success'
             this.$router.push('/profile')
@@ -99,26 +99,26 @@ export default {
       let el = document.getElementsByName('handicap')[0]
       el.style.minHeight = '55px';
       el.style.textAlign = 'center';
-    },
-
+    }
   },
 
   mounted () {
     this.inputStyle()
-    console.log('user', this.$auth.user())
   },
   created () {
     this.factoredHcap()
     let tok = this.$route.params.token
 
     if (!tok) {
-      this.$route.push('/profile')
+      this.$router.push('/profile')
     } else {
       this.tournId = tok.split(':')[0]
       this.token = tok.split(':')[1]
       this.$store.dispatch('invitations/SET_INVITATION', { tournId: this.tournId, token: this.token })
         .then((response) => {
-          this.loading = false
+          if (this.accepted === true) {
+            this.$router.push('/profile')
+          }
         })
     }
   },

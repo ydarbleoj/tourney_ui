@@ -7,6 +7,7 @@ const state = {
   tournamentId: '',
   invUser: {},
   invitation: {},
+  accepted: false
 }
 
 const actions = {
@@ -39,6 +40,7 @@ const actions = {
 const mutations = {
   SET_INVITATION: (state, {list }) => {
     state.invitation = list.data.attributes
+    state.accepted   = list.data.attributes.accepted
   }
 }
 
