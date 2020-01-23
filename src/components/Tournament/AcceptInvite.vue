@@ -16,23 +16,24 @@
                   <p>You will not be able to edit this once you hit accept.</p>
               </v-flex>
             </v-layout>
-            <v-layout row align-center justify-center class="pa-3">
+            <v-layout row align-center justify-center class="pl-3 pr-3">
               <v-flex xs5>
+                <label style="font-size:12px;color:#999;">
+                  Handicap (max 36.2)
+                </label>
                 <v-text-field
-                  min-height="55px;"
-                  class="centered-input"
+                  class="centered-input pa-0 custom-field"
                   name="handicap"
-                  label="Handicap (max 36.2)"
                   v-model.number="handicap"
                   type="number"
                   color="#F8C977"
-                  style="font-size:55px;"
+                  style="font-size:50px;"
                 >
                 </v-text-field>
               </v-flex>
               <v-spacer></v-spacer>
               <v-flex xs5>
-                <label style="color:#999;font-size:12px;padding:0">Bandon Hcap</label>
+                <label style="color:#999;font-size:12px;padding-top:0">Bandon Hcap</label>
                 <h3 style="color:#F8C977;font-size:55px;" class="font-weight-regular pa-0" v-model="tournHandicap">{{ tournHandicap }}</h3>
               </v-flex>
             </v-layout>
@@ -97,8 +98,11 @@ export default {
     },
     inputStyle () {
       let el = document.getElementsByName('handicap')[0]
-      el.style.minHeight = '55px';
+      let elSlot = document.getElementsByClassName('v-input__slot')[0]
+      console.log('hsdhfksl', el)
+      el.style.minHeight = '65px';
       el.style.textAlign = 'center';
+      elSlot.style.position = "unset";
     }
   },
 
@@ -133,20 +137,11 @@ export default {
 }
 </script>
 <style scoped>
-.centered-input input {
-  color: pink;
-}
 .v-input.centered-input.v-input__control.v-input__slot.v-text-field__slot.v-input input[name=handicap] {
   color: pink;
   padding: 0;
   text-align: center;
   max-height: 55px;
-}
-.v-text-field input {
-  padding: 0;
-}
-div.v-text-field__slot  {
-  min-height: 55px;
 }
 .admin--profile_button {
   background-color: #74C9D7;
