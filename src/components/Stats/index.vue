@@ -1,39 +1,18 @@
 <template>
-  <v-flex xs12 md8 class='money-list-container' ref="moneyList">
-    <v-card flat color="transparent" class="grey--text" ref="moneyListContainer">
-      <v-card-title primary-title>
-        <h3>More Stats</h3>
-      </v-card-title >
-      <v-container fluid pt-0>
-        <v-layout>
-          <v-flex xs12>
-            <v-card class="elevation-20" ref="moneyListCard">
+  <v-container id="summary-container" class="pa-0" ref="summaryCardContainer">
+     <v-layout row wrap>
+      <v-flex xs12 sm12 lg12>
+        <h2 class="text-xs-left font-weight-regular pl-0" style="margin-left: 5%;" >
+          Summary
+        </h2>
 
-              <component :is="currentView + 'Header'" :current="current" @event="toggleView"></component>
+        <div class="ma-3">
+          <course-stats :current="currentTournament" />
 
-              <transition
-                name="fade"
-                v-on:enter='enter'
-              >
-                <component :is='currentView' :current='current'></component>
-              </transition>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <v-card-actions class="expand-footer">
-        <v-spacer></v-spacer>
-        <v-btn flat :class="currentView" value="money" @click="currentView='money-preview'">
-          <span>Money</span>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn flat :class="currentView" value="course" @click="currentView='course-preview'">
-          <span>Course</span>
-        </v-btn>
-        <v-spacer></v-spacer>
-      </v-card-actions>
-    </v-card>
-  </v-flex>
+        </div>
+      </v-flex>
+     </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -43,6 +22,7 @@ import MoneyPreview from './MoneyList/Preview'
 import MoneyPreviewHeader from './MoneyList/PreviewHeader'
 import MoneyList from './MoneyList/Full'
 import MoneyListHeader from './MoneyList/FullHeader'
+import CourseStats from './Course/index'
 
 export default {
   name: 'Stats',
@@ -51,14 +31,13 @@ export default {
     MoneyPreview,
     MoneyPreviewHeader,
     MoneyList,
-    MoneyListHeader
+    MoneyListHeader,
+    CourseStats
   },
 
   data () {
     return {
       el: 'stats',
-      currentView: 'money-preview',
-      currentHeader: 'money-preview-header'
     }
   },
 
@@ -68,7 +47,6 @@ export default {
 
   methods: {
     expandParent: function(event) {
-      console.log('event', event.moneyListContainer.$el)
       event.moneyList.style.position = 'fixed';
       event.moneyList.style.backgroundColor = '#f1f1f1';
       event.moneyList.style.width = '100%';

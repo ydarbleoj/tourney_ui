@@ -7,7 +7,7 @@ import invitations from './modules/invitations'
 import leaderboards from './modules/leaderboards'
 import admin from './modules/admin'
 import profile from './modules/profile'
-import summary from './modules/summary'
+import overallSummary from './modules/overall_summary'
 import createPersistedState from 'vuex-persistedstate'
 
 
@@ -358,7 +358,7 @@ const store = new Vuex.Store({
     invitations,
     profile,
     scorecards,
-    summary
+    overallSummary
   }
 })
 

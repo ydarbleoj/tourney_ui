@@ -1,11 +1,11 @@
 <template>
-  <v-container id="round-container" class="pa-0" ref="roundCardContainer">
+  <v-container id="course-summary-container" class="pa-0" ref="courseSummaryContainer">
     <v-layout row wrap>
       <v-flex xs12 sm12 lg12>
         <h2 class="text-xs-left font-weight-regular pl-0" style="margin-left: 5%;" v-if="isPreview"></h2>
         <v-card class="course-card" @click="isPreview ? previewToggle() : null">
           <v-img
-            :src="'/static/3course.jpg'"
+            :src="'/static/summary.jpg'"
             height='200px'
             class="course-header"
             ref="courseHeader"
@@ -26,7 +26,7 @@
             </v-container>
           </v-img>
           <v-card-text style="background-color:white;" transition="slide-x-transition" v-if="!preview">
-            <!-- <stats  /> -->
+            <stats />
           </v-card-text>
         </v-card>
       </v-flex>
@@ -56,7 +56,7 @@ export default {
   computed: {
     ...mapState({
       summaryData: state => state.summary.summaryData,
-      userSummaryData: state => state.summary.userSummaryData,
+      userSummaryData: state => state.overallSummary.userSummaryData,
       currentTournament: state => state.currentTournament
     })
   },
@@ -81,6 +81,7 @@ export default {
   },
 
   created: function () {
+    console.log('HEllo Summary')
   }
 
 }
@@ -106,10 +107,6 @@ export default {
   z-index: 1000 !important;
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 
-}
-div.flex.tee-time-container {
-  /*background-color: rgba(153, 153, 153, .4);*/
-  background-color: rgba(98, 188, 250, .4);
 }
 .card, .tee-times {
   background-color: rgba(255, 255, 255, 0.1);

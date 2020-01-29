@@ -3,14 +3,15 @@ import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 
 const state = {
-  summaryData: {},
-  userSummaryData: {}
+  courseSummary: {},
+  userSummary: {}
 }
 
 const actions = {
   LOAD_SUMMARY_DATA: async function ({ commit, state}, { tourn_id }) {
+    let options = { tournament_id: tourn_id }
     try {
-      const response = await axios.get('/api/v2/tournaments/summary.json', { tournament_id: tourn_id })
+      const response = await axios.get('/api/v2/tournaments/summary.json', { params: options })
       if (response.status === 200) {
         commit('SET_SUMMARY_DATA', { list: response.data })
         return true
@@ -27,9 +28,9 @@ const actions = {
 
 const mutations = {
   SET_SUMMARY_DATA: (state, { list }) => {
-    Vue.set(state, 'summaryData', JSON.parse(list.summary_data).data)
-    Vue.set(state, 'userSummaryData', JSON.parse(list.user_data).data.attributes)
-  },
+    Vue.set(state, 'courseSummary', list.course)
+    Vue.set(state, 'userSummary', list.user)
+  }
 }
 
 const getters = {}

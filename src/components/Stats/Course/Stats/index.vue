@@ -2,7 +2,7 @@
   <v-card flat v-if="loading" class="white elevation-1" color="white">
     loading...
   </v-card>
-  <v-card flat v-else="!loading">
+  <v-card flat v-else>
     <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
       <v-layout row wrap>
         <v-flex xs12 style="">
@@ -10,16 +10,16 @@
            <v-divider style="background-color:;"></v-divider>
           <ScoringAvg />
           <v-divider style="background-color:;"></v-divider>
-          <LowestScoring />
-          <v-divider style="background-color:;"></v-divider>
           <PuttingAvg />
           <v-divider style="background-color:;"></v-divider>
-          <ParAvgs pars="3"/>
+          <LowestScoring />
+          <v-divider style="background-color:;"></v-divider>
+          <!-- <ParAvgs pars="3"/>
           <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="4"/>
           <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="5"/>
-          <v-divider style="background-color:;"></v-divider>
+          <v-divider style="background-color:;"></v-divider> -->
         </v-flex>
       </v-layout>
     </v-container>
@@ -56,29 +56,19 @@ export default {
 
   computed: {
      ...mapState({
-      currentTournament: state => state.currentTournament,
-      courseStats: state => state.course.courseStats
+      currentTournament: state => state.currentTournament
     })
   },
 
   methods: {
-    filterType (data, type) {
-      let d = data.filter(el => el['type'] === type);
-      if (d === undefined || !d.length) return {};
-      return d[0]['attributes']
-    }
   },
 
   created: function () {
-    this.$store.dispatch('course/LOAD_COURSE_STATS', { tournId: this.currentTournament.id, roundId: this.roundId, })
+    this.$store.dispatch('overallSummary/LOAD_SUMMARY_DATA', { tourn_id: this.currentTournament.id })
       .then(response => {
-        console.log('ksldfj', this.courseStats)
-        let data = this.courseStats.included
-        this.overallData = Object.assign(this.filterType(data, 'round_agg'))
-        this.courseData = Object.assign(this.filterType(data, 'course_agg'))
         this.loading = false
       })
-  }
+    }
 }
 </script>
 <style>

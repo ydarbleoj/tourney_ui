@@ -50,7 +50,7 @@
         <v-layout row wrap >
           <leaderboards :current="currentTournament" v-if="!loading" />
           <rounds :current="currentTournament" v-if="!loading" />
-          <OverallSummary :current="currentTournament" v-if="!loading" />
+          <stats :current="currentTournament" v-if="!loading" />
         </v-layout>
       </v-container>
     </main>
@@ -62,7 +62,6 @@ import Handicap from '../components/Leaderboards/Handicap'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
 import Stats from '../components/Stats/index'
-import OverallSummary from '../components/Summary/index'
 
 export default {
   name: 'Tournament',
@@ -70,8 +69,7 @@ export default {
     Handicap,
     Leaderboards,
     Rounds,
-    Stats,
-    OverallSummary
+    Stats
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),
