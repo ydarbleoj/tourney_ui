@@ -109,6 +109,6 @@ export default {
 
 .skins--title {
   color: #f1f1f1;
-  background-color: #6ce577;
+  background-color: #FFCB47;
 }
 </style>

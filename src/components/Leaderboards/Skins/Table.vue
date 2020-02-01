@@ -243,7 +243,7 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .skins-table table.theme--light thead {
-  background-color: #6ce577;
+  background-color: #FFCB47;
 }
 .skins-table table.theme--light thead tr th {
   color: #f1f1f1;

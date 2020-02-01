@@ -222,8 +222,7 @@ export default {
   color: #6CADED;
 }
 .pers-record {
-  color: #F7A072;
-  color: #ED6C6C;
+  color: #F79256;
 }
 label.scorecard-label {
   color: white;

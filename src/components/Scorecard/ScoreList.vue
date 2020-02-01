@@ -73,7 +73,7 @@ export default {
       }
     },
     puttColor: function (putts) {
-      return putts > 2 ? '' : '#6CADED'
+      return putts > 2 ? '' : '#F79256'
     },
     toggleScore: function (num) {
       this.holeNumber = num
@@ -105,8 +105,7 @@ export default {
     color: #6CADED;
   }
   .three-putt {
-    color: red;
-    color: #F7A072;
+    color: #F79256;
   }
   div.list__tile__sub-title.text-xs-center.handicap-color span {
     color: #6CADED;

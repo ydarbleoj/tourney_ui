@@ -139,7 +139,7 @@ export default {
 
 .team--title {
   color: #f1f1f1;
-  background-color: #FF9D72;
+  background-color: #ACA885;
 }
 
 </style>

@@ -118,7 +118,7 @@ export default {
   display: none;
 }
 .team-table table.theme--light thead {
-  background-color: #FF9D72;
+  background-color: #ACA885;
 }
 .team-table table.theme--light thead tr th {
   color: #f1f1f1;
