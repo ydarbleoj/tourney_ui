@@ -1,5 +1,9 @@
 <template>
-  <v-card class="lb-card" @click="isPreview ? previewToggle() : null">
+  <v-card
+    class="lb-card"
+    @click="isPreview ? previewToggle() : null"
+    v-ripple="isPreview"
+   >
     <v-card-title class="stroke--title pa-0 pt-2 pl-2">
       <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
       <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview">Leaderboard</h2>
@@ -101,7 +105,7 @@ export default {
   height: 100vh;
   overflow: scroll;
   width: 100vw;
-  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .stroke--title {

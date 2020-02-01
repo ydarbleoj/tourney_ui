@@ -24,69 +24,45 @@
 
     <template slot="expand" slot-scope="props">
       <v-layout row wrap class="font-weight-regular pt-3 pb-3 pr-2" align-center>
-        <v-flex xs4>
-          <v-card flat >
-            <v-layout row align-center>
-              <v-flex xs6>
-                <h4 class="font-weight-regular">RND1</h4>
-              </v-flex>
-              <v-flex xs6>
-                <v-card flat>
-                  <v-layout column align-center>
-                    <v-flex xs12>
-                      <h1 class="stroke-stats">{{ props.item.attributes.rnd1_gnr }} <span>%</span></h1>
-                    </v-flex>
-                    <v-flex xs12>
-                      <h5 class="grey--text font-weight-regular">greens in reg</h5>
-                    </v-flex>
-                  </v-layout>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-card>
+        <v-flex xs12 mb-2 ml-3>
+          <h3 class="text-xs-left grey--text font-weight-regular">Greens in Regulation</h3>
         </v-flex>
         <v-flex xs4>
-          <v-card flat >
-            <v-layout row align-center>
-              <v-flex xs6>
-                <h4 class="font-weight-regular">RND2</h4>
-              </v-flex>
-              <v-flex xs6>
-                <v-card flat>
-                  <v-layout column align-center>
-                    <v-flex xs12>
-                      <h1 class="stroke-stats">{{ props.item.attributes.rnd2_gnr }} <span>%</span></h1>
-                    </v-flex>
-                    <v-flex xs12>
-                      <h5 class="grey--text font-weight-regular">greens in reg</h5>
-                    </v-flex>
-                  </v-layout>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-card>
+          <v-layout row align-center>
+            <v-flex xs6 class="text-xs-right">
+              <h4 class="font-weight-regular">R1</h4>
+            </v-flex>
+            <v-flex xs6>
+              <h1 class="stroke-stats">
+                {{ props.item.attributes.rnd1_gnr }}<span class="stroke-percent">%</span>
+              </h1>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex xs4>
+          <v-layout row align-center>
+            <v-flex xs6 class="text-xs-right">
+              <h4 class="font-weight-regular">R2</h4>
+            </v-flex>
+            <v-flex xs6>
+              <h1 class="stroke-stats">
+                {{ props.item.attributes.rnd2_gnr }}<span class="stroke-percent">%</span>
+              </h1>
+            </v-flex>
+          </v-layout>
         </v-flex>
 
         <v-flex xs4>
-          <v-card flat >
-            <v-layout row align-center>
-              <v-flex xs6>
-                <h4 class="font-weight-regular">RND3</h4>
-              </v-flex>
-              <v-flex xs6>
-                <v-card flat>
-                  <v-layout column align-center>
-                    <v-flex xs12>
-                      <h1 class="stroke-stats">{{ props.item.attributes.rnd3_gnr }} <span>%</span></h1>
-                    </v-flex>
-                    <v-flex xs12>
-                      <h5 class="grey--text font-weight-regular">greens in reg</h5>
-                    </v-flex>
-                  </v-layout>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-card>
+          <v-layout row align-center>
+            <v-flex xs6 class="text-xs-right">
+              <h4 class="font-weight-regular">R3</h4>
+            </v-flex>
+            <v-flex xs6>
+              <h1 class="stroke-stats">
+                {{ props.item.attributes.rnd3_gnr }}<span class="stroke-percent">%</span>
+              </h1>
+            </v-flex>
+          </v-layout>
         </v-flex>
       </v-layout>
     </template>
@@ -182,8 +158,13 @@ export default {
 }
 </script>
 <style>
+.stroke-percent {
+  font-weight: normal;
+  color: #2E2F2F;
+  font-size: 20px;
+}
 .stroke-stats {
-  color: #FE8202;
+  color: #9FB8CE;
 }
 .board-table {
   overflow:hidden;

@@ -1,5 +1,9 @@
 <template>
-  <v-card class="skins-lb-card" @click="isPreview ? previewToggle() : null ">
+  <v-card
+    class="skins-lb-card"
+    @click="isPreview ? previewToggle() : null "
+    v-ripple="isPreview"
+  >
     <v-card-title class="skins--title pa-0 pt-2 pl-2">
       <h2 class="text-align-left font-weight-medium white--text" >Skins</h2>
       <h2 class="ml-2 font-weight-medium text-xs-left white--text" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>

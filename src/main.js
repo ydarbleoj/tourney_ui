@@ -30,7 +30,7 @@ import {
   VTabs,
   VImg,
 } from 'vuetify'
-import { Touch } from 'vuetify/lib/directives'
+import { Touch, Ripple } from 'vuetify/lib/directives'
 
 import './stylus/main.styl'
 import App from './App'
@@ -107,7 +107,8 @@ Vue.use(Vuetify, {
     VImg,
   },
   directives: {
-    Touch
+    Touch,
+    Ripple
   }
 })
 

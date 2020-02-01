@@ -1,10 +1,14 @@
 <template>
-  <v-card class="putting-lb-card" @click="isPreview ? previewToggle() : null ">
+  <v-card
+    class="putting-lb-card"
+    @click="isPreview ? previewToggle() : null "
+    v-ripple="isPreview"
+  >
     <v-card-title class="putting--title pb-0 pt-1 pl-2">
       <h2 class="text-align-left font-weight-medium" >Putting</h2>
       <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
       <v-spacer></v-spacer>
-      <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
+      <span v-if="!isPreview" class="text-xs-right" @click="closeLeaderboard()">
         <v-icon color="white">clear</v-icon>
       </span>
     </v-card-title>
