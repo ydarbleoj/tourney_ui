@@ -21,7 +21,7 @@
       </tr>
     </template>
     <template slot="expand" slot-scope="props">
-      <v-layout row wrap class="font-weight-regular pt-3 pb-3 pr-2" align-center>
+      <v-layout row wrap class="font-weight-regular pt-3" align-center>
         <v-flex xs12 mb-2 ml-3>
           <h3 class="text-xs-left grey--text font-weight-regular">Money & Holes</h3>
         </v-flex>
@@ -69,7 +69,12 @@
       <v-layout row align-right>
         <v-flex xs4>
           <v-layout row align-center>
-            <v-flex v-if="props.item.attributes.skins_money.round_one > 0" xs12 style="width:100%;">
+            <v-flex
+              v-if="props.item.attributes.skins_money.round_one > 0"
+              xs12
+              class="pa-2"
+              style="width:100%;"
+             >
               <v-divider class="mb-3"></v-divider>
               <ul
                 style="width:100%;padding:0;"
@@ -94,7 +99,12 @@
 
         <v-flex xs4>
           <v-layout row align-center>
-            <v-flex v-if="props.item.attributes.skins_money.round_two > 0" xs12 style="width:100%;">
+            <v-flex
+              v-if="props.item.attributes.skins_money.round_two > 0"
+              xs12
+              class="pa-2"
+              style="width:100%;"
+            >
               <v-divider class="mb-3"></v-divider>
               <ul
                 style="width:100%;padding:0;"
@@ -107,7 +117,10 @@
                   style="display:inline-block;margin:0 2px;"
 
                 >
-                  {{ item }},
+                  {{ item }}
+                  <span
+                    v-if="i !== cardFilter(props.item.attributes.cards, 'round_2')['holes_won'].length - 1"
+                  >,</span>
                 </li>
               </ul>
             </v-flex>
@@ -116,7 +129,11 @@
 
         <v-flex xs4>
           <v-layout row align-right>
-            <v-flex v-if="props.item.attributes.skins_money.round_three > 0" xs12 style="width:100%;">
+            <v-flex
+              v-if="props.item.attributes.skins_money.round_three > 0"
+              xs12
+              class="pa-2"
+              style="width:100%;">
               <v-divider class="mb-3"></v-divider>
               <ul
                 style="width:100%;padding:0;"
@@ -129,7 +146,10 @@
                   style="display:inline-block;margin:0 2px;"
 
                 >
-                  {{ item }},
+                  {{ item }}
+                  <span
+                    v-if="i !== cardFilter(props.item.attributes.cards, 'round_3')['holes_won'].length - 1"
+                  >,</span>
                 </li>
               </ul>
             </v-flex>
