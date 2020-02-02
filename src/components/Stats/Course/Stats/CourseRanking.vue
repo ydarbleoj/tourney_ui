@@ -14,9 +14,9 @@
               <v-flex xs6>
                 <v-flex xs12>
                   <h1 class="font-weight-regular" style="color:#9FB8CE;font-size: 40px;">
-                    {{ hardestCourse.avg }}
+                    {{ hardestCourse ? hardestCourse.avg : '' }}
                   </h1>
-                  <p style="color:#999;">{{ hardestCourse.name }}</p>
+                  <p style="color:#999;">{{ hardestCourse ? hardestCourse.name : '' }}</p>
                   <v-spacer></v-spacer>
                   <h4 class="font-weight-regular mb-3">Hardest Course</h4>
                 </v-flex>
@@ -24,9 +24,9 @@
               <v-flex xs6>
                 <v-flex xs12>
                    <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">
-                    {{ easiestCourse.avg }}
+                    {{ easiestCourse ? easiestCourse.avg : '' }}
                   </h1>
-                  <p style="color:#999;">{{ easiestCourse.name }}</p>
+                  <p style="color:#999;">{{ easiestCourse ? easiestCourse.name : '' }}</p>
                   <v-spacer></v-spacer>
                   <h4 class="font-weight-regular">Easiest Course</h4>
                 </v-flex>

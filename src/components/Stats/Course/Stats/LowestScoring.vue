@@ -69,8 +69,6 @@ export default {
   mounted: function () {
     this.userData    = this.userSummary["lowest_round"]
     this.courseData  = this.courseSummary["lowest_round"]
-    this.courseLimit = this.courseData.length > 1
-    this.overallSize = this.courseData.length
     this.loading     = false
   }
 }

@@ -14,12 +14,12 @@
               <v-flex xs6>
                 <v-flex xs12>
                   <h1 class="font-weight-regular" style="color:#9FB8CE;font-size: 40px;">
-                    {{ hardestHole.hole_number }}
+                    {{ hardestHole ? hardestHole.hole_number : '' }}
                   </h1>
                    <h4 class="font-weight-regular" style="color:#999;"> Par
-                     <span style="color:#FFCB47;font-size:18px;">{{ hardestHole.par }}</span>
+                     <span style="color:#FFCB47;font-size:18px;">{{ hardestHole ? hardestHole.par : '' }}</span>
                    </h4>
-                  <p style="color:#999;">{{ hardestHole.course_name }}</p>
+                  <p style="color:#999;">{{ hardestHole ? hardestHole.course_name : '' }}</p>
                   <v-spacer></v-spacer>
                   <h4 class="font-weight-regular mb-3">Hardest Hole</h4>
                 </v-flex>
@@ -27,12 +27,12 @@
               <v-flex xs6>
                 <v-flex xs12>
                   <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">
-                    {{ easiestHole.hole_number }}
+                    {{ easiestHole ? easiestHole.hole_number : '' }}
                   </h1>
                    <h4 class="font-weight-regular" style="color:#999;"> Par
-                     <span style="color:#FFCB47;font-size:18px;">{{ easiestHole.par }}</span>
+                     <span style="color:#FFCB47;font-size:18px;">{{ easiestHole ? easiestHole.par : '' }}</span>
                    </h4>
-                  <p style="color:#999;">{{ easiestHole.course_name }}</p>
+                  <p style="color:#999;">{{ easiestHole ? easiestHole.course_name : '' }}</p>
                   <v-spacer></v-spacer>
                   <h4 class="font-weight-regular mb-3">Easiest Hole</h4>
                 </v-flex>

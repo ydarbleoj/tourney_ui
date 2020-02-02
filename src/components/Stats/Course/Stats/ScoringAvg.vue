@@ -61,8 +61,14 @@ export default {
       let overall = this.overallSummary
       let user    = this.userSummary
       let net     = this.isNet
-      this.userScoringAvg = net ? user["avgs"][0]['net_avg'] : user["avgs"][0]['gross_avg']
-      this.overallScoringAvg = net ? overall["avgs"][0]['net_avg'] : overall["avgs"][0]['gross_avg']
+
+      if (user["avgs"]) {
+        this.userScoringAvg = net ? user["avgs"][0]['net_avg'] : user["avgs"][0]['gross_avg']
+      }
+
+      if (overall["avgs"]) {
+        this.overallScoringAvg = net ? overall["avgs"][0]['net_avg'] : overall["avgs"][0]['gross_avg']
+      }
     },
   },
   watch: {

@@ -11,13 +11,13 @@
             <v-layout>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.userDiff }}</h1>
+                  <h1 class="font-weight-regular" style="color:#9FB8CE">{{ userDiff }}</h1>
                   <h4 class=" mb-3 font-weight-regular">Personal</h4>
                 </v-flex>
               </v-flex>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="font-weight-regular ma-0" style="color:#A8C256;">{{ this.overallDiff }}</h1>
+                  <h1 class="font-weight-regular ma-0" style="color:#A8C256;">{{ overallDiff }}</h1>
                   <h4 class=" font-weight-regular">Overall</h4>
                 </v-flex>
               </v-flex>
@@ -53,8 +53,12 @@ export default {
   methods: {},
 
   mounted: function () {
-    this.userDiff = this.userSummary["avgs"][0]["hcap_diff"]
-    this.overallDiff = this.courseSummary["avgs"][0]["hcap_diff"]
+    if (this.userSummary["avgs"]) {
+      this.userDiff = this.userSummary["avgs"][0]["hcap_diff"]
+    }
+    if (this.courseSummary["avgs"]) {
+       this.overallDiff = this.courseSummary["avgs"][0]["hcap_diff"]
+     }
     this.loading = false
   }
 }

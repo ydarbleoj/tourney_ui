@@ -63,10 +63,14 @@ export default {
   },
 
   mounted: function () {
-    this.userAvg          = this.userSummary['avgs'][0]['putts_avg']
-    this.userThreePutt    = this.userSummary['avgs'][0]['three_putts_avg']
-    this.overallAvg       = parseFloat(this.overallSummary['avgs'][0]['putts_avg']).toFixed(2)
-    this.overallThreePutt = this.overallSummary['avgs'][0]['three_putts_avg']
+    if (this.userSummary['avgs']) {
+      this.userAvg          = this.userSummary['avgs'][0]['putts_avg']
+      this.userThreePutt    = this.userSummary['avgs'][0]['three_putts_avg']
+    }
+    if (this.overallSummary["avgs"]) {
+      this.overallAvg       = parseFloat(this.overallSummary['avgs'][0]['putts_avg']).toFixed(2)
+      this.overallThreePutt = this.overallSummary['avgs'][0]['three_putts_avg']
+    }
 
     this.loading = false
   }

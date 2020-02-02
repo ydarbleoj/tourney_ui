@@ -13,9 +13,9 @@
             <v-container fill-height pa-0>
               <v-layout>
                 <v-flex xs7 flexbox>
-                  <div class="headline white--text mt-5">
-                    {{ this.currentTournament.year }}
-                    <span v-if="!isPreview" class="font-weight-normal" style="font-size:18px;">Summary</span>
+                  <div class="headline white--text mt-3">
+                    Summary
+                    <span v-if="!isPreview" class="font-weight-normal" style="font-size:18px;">{{ this.currentTournament.year }}</span>
                   </div>
                 </v-flex>
                 <v-flex class="pa-0 mt-3">
