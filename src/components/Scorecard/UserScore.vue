@@ -5,7 +5,7 @@
       <v-card flat grey class="user-score-card" v-if="!finishRound">
         <v-card flat class="pa-0">
           <v-container fluid fill-height class="pa-0">
-            <v-layout row align-center justify-center class="record" style="height:8vh;" wrap >
+            <v-layout row align-center justify-center style="height:8vh;color:#FFCB47;" wrap >
               <v-flex xs6>
                 <h3 class="text-xs-center pa-0 ma-0">Score</h3>
               </v-flex>
@@ -35,7 +35,7 @@
           <v-layout row wrap align-center justify-center style="width:100vw;">
             <v-flex xs4>
               <div class="text-xs-right pr-3" v-if="cardData.number != 1">
-                <span><v-icon  v-if="type === 'UPDATE' || cardData.number > 1" color="#F8C977" style="font-size:35px;" @click="closeCard(0)" >arrow_backward</v-icon></span>
+                <span><v-icon  v-if="type === 'UPDATE' || cardData.number > 1" color="#A8C256" style="font-size:35px;" @click="closeCard(0)" >arrow_backward</v-icon></span>
               </div>
             </v-flex>
             <v-flex xs4>
@@ -46,7 +46,7 @@
             <v-flex xs4>
               <div class="text-xs-right ">
                 <span>
-                  <v-icon  v-if="type === 'UPDATE'" color="#F8C977" style="font-size:35px;" @click="closeCard(1)" >arrow_forward</v-icon>
+                  <v-icon  v-if="type === 'UPDATE'" color="#A8C256" style="font-size:35px;" @click="closeCard(1)" >arrow_forward</v-icon>
                 </span>
               </div>
             </v-flex>
@@ -208,10 +208,10 @@ export default {
 <style>
 
 div.layout.record.row.wrap {
-  color: #6CADED;
+  color: #9FB8CE;
 }
 div.card__actions.text-xs-center.record {
-  background-color: #6CADED;
+  background-color: #9FB8CE;
 }
 div.user-score-card.card.card--flat {
   /*background-color: rgba(153, 153, 153, 1)*/
@@ -225,7 +225,7 @@ div.text-xs-left.user-score.card.card--flat {
   justify-content: center;
 }
 .vue-scroll-picker-item.-selected {
-  color: #F8C977;
+  color: #A8C256;
 }
 div.vue-scroll-picker-item {
   text-align: center;
@@ -240,7 +240,7 @@ div.vue-scroll-picker-item {
   bottom: 0;
 }
 .score--save_button {
-  background-color: #6CADED;
+  background-color: #FFCB47;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
 }

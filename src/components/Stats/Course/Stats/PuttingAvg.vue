@@ -1,6 +1,6 @@
 <template>
   <v-card v-if="loading" class="white elevation-1" color="white">
-    loading...
+    no, you're loading...
   </v-card>
   <v-card flat v-else style="margin:auto">
     <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
@@ -11,19 +11,19 @@
             <v-layout>
               <v-flex xs6>
                 <v-flex xs12 >
-                  <h1 class="personal-score font-weight-regular">{{ userAvg }}</h1>
-                  <h4 class="font-weight-regular" style="color:#333;font-size:14px;">({{ userThreePutt }} <span class="personal-score font-weight-regular" style="font-size:12px;">3p</span>)</h4>
+                  <h1 class="font-weight-regular" style="color:#9FB8CE">{{ userAvg }}</h1>
+                  <h4 class="font-weight-regular" style="color:#333;font-size:14px;">({{ userThreePutt }} <span class="font-weight-regular" style="font-size:12px;color:#F79256;">3p</span>)</h4>
                   <h4 class=" mb-3 font-weight-regular">Personal</h4>
                 </v-flex>
               </v-flex>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="overall-score font-weight-regular ma-0">
+                  <h1 class="font-weight-regular ma-0" style="color:#A8C256;">
                     {{ overallAvg }}
                   </h1>
                   <h4 class="font-weight-regular" style="color:#333;font-size:14px;">
                     ({{ overallThreePutt }}
-                    <span class="font-weight-regular overall-score" style="font-size:12px;">3p</span>)
+                    <span class="font-weight-regular" style="font-size:12px;color:#F79256;">3p</span>)
                   </h4>
                   <h4 class=" font-weight-regular">Overall </h4>
                 </v-flex>

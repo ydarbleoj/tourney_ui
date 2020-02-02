@@ -5,7 +5,7 @@
   <v-card flat v-else style="margin:auto">
     <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">
-        Best Round
+        Hole Rankings
       </h4>
       <v-layout row wrap align-center>
         <v-flex xs12>
@@ -14,22 +14,27 @@
               <v-flex xs6>
                 <v-flex xs12>
                   <h1 class="font-weight-regular" style="color:#9FB8CE;font-size: 40px;">
-                    {{ this.userData[0].score }}
+                    {{ hardestHole.hole_number }}
                   </h1>
-                  <ul style="color: #666;font-size:12px;" class="pa-0" v-for="item in userData" :key="item.id">
-                    {{ item.course }}
-                  </ul>
-                  <h4 class="font-weight-regular mb-3">Personal</h4>
+                   <h4 class="font-weight-regular" style="color:#999;"> Par
+                     <span style="color:#FFCB47;font-size:18px;">{{ hardestHole.par }}</span>
+                   </h4>
+                  <p style="color:#999;">{{ hardestHole.course_name }}</p>
+                  <v-spacer></v-spacer>
+                  <h4 class="font-weight-regular mb-3">Hardest Hole</h4>
                 </v-flex>
               </v-flex>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">{{ this.courseData ?  this.courseData[0].score : null }}</h1>
-                  <div style="color: #666;font-size:12px;" v-if="courseLimit">{{ this.overallSize }} T</div>
-                  <ul style="color: #666;font-size:18px;" class="pa-0" v-for="item in courseData" :key="item.id" v-else>
-                    {{ item.username }} - {{ item.course}}
-                  </ul>
-                  <h4 class="font-weight-regular">Overall</h4>
+                  <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">
+                    {{ easiestHole.hole_number }}
+                  </h1>
+                   <h4 class="font-weight-regular" style="color:#999;"> Par
+                     <span style="color:#FFCB47;font-size:18px;">{{ easiestHole.par }}</span>
+                   </h4>
+                  <p style="color:#999;">{{ easiestHole.course_name }}</p>
+                  <v-spacer></v-spacer>
+                  <h4 class="font-weight-regular mb-3">Easiest Hole</h4>
                 </v-flex>
               </v-flex>
             </v-layout>
@@ -44,22 +49,19 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'LowestScoring',
+  name: 'HoleRanking',
   data () {
     return {
       isNet: true,
       loading: true,
-      userData: [],
-      courseData: [],
-      courseLimit: false,
-      overallSize: 0
+      easiestHole: {},
+      hardestHole: {},
     }
   },
 
   computed: {
     ...mapState({
       courseSummary: state => state.overallSummary.courseSummary,
-      userSummary: state => state.overallSummary.userSummary
     })
   },
 
@@ -67,10 +69,8 @@ export default {
   },
 
   mounted: function () {
-    this.userData    = this.userSummary["lowest_round"]
-    this.courseData  = this.courseSummary["lowest_round"]
-    this.courseLimit = this.courseData.length > 1
-    this.overallSize = this.courseData.length
+    this.hardestHole = this.courseSummary["hardest_hole"]
+    this.easiestHole = this.courseSummary["easiest_hole"]
     this.loading     = false
   }
 }
@@ -79,13 +79,6 @@ export default {
 .scoring--stats {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
-}
-
-score-label.record {
-  color: #6CADED;
-}
-.pers-record {
-  color: #ED6C6C;
 }
 .personal {
   color: #999;

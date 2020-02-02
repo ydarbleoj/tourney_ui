@@ -1,6 +1,6 @@
 <template>
   <v-card flat v-if="loading" class="white elevation-1" color="white">
-    loading...
+    no, you're loading...
   </v-card>
   <v-card flat v-else>
     <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
@@ -12,14 +12,18 @@
           <v-divider style="background-color:;"></v-divider>
           <PuttingAvg />
           <v-divider style="background-color:;"></v-divider>
+          <CourseRanking />
+          <v-divider style="background-color:;"></v-divider>
           <LowestScoring />
           <v-divider style="background-color:;"></v-divider>
-          <!-- <ParAvgs pars="3"/>
+          <HoleRanking />
+          <v-divider style="background-color:;"></v-divider>
+          <ParAvgs pars="3"/>
           <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="4"/>
           <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="5"/>
-          <v-divider style="background-color:;"></v-divider> -->
+          <v-divider style="background-color:;"></v-divider>
         </v-flex>
       </v-layout>
     </v-container>
@@ -28,21 +32,25 @@
 
 <script>
 import { mapState } from 'vuex'
-import ScoringAvg from '../Stats/ScoringAvg'
-import LowestScoring from '../Stats/LowestScoring'
-import PuttingAvg from '../Stats/PuttingAvg'
+import CourseRanking from '../Stats/CourseRanking'
 import HcapDiff from '../Stats/HcapDiff'
+import HoleRanking from '../Stats/HoleRanking'
+import LowestScoring from '../Stats/LowestScoring'
 import ParAvgs from '../Stats/ParAvgs'
+import PuttingAvg from '../Stats/PuttingAvg'
+import ScoringAvg from '../Stats/ScoringAvg'
 
 export default {
   name: 'index',
   props: ['roundId'],
   components: {
-    ScoringAvg,
-    LowestScoring,
-    PuttingAvg,
-    ParAvgs,
+    CourseRanking,
     HcapDiff,
+    HoleRanking,
+    LowestScoring,
+    ParAvgs,
+    PuttingAvg,
+    ScoringAvg,
   },
 
   data () {

@@ -102,13 +102,13 @@ export default {
 </script>
 <style>
   .two-putt {
-    color: #6CADED;
+    color: #9FB8CE;
   }
   .three-putt {
     color: #F79256;
   }
   div.list__tile__sub-title.text-xs-center.handicap-color span {
-    color: #6CADED;
+    color: #9FB8CE;
   }
   .on_expand {
     padding-top: 130px;

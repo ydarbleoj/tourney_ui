@@ -5,7 +5,7 @@
   <v-card flat v-else style="margin:auto">
     <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">
-        Best Round
+        Course Rankings
       </h4>
       <v-layout row wrap align-center>
         <v-flex xs12>
@@ -14,22 +14,21 @@
               <v-flex xs6>
                 <v-flex xs12>
                   <h1 class="font-weight-regular" style="color:#9FB8CE;font-size: 40px;">
-                    {{ this.userData[0].score }}
+                    {{ hardestCourse.avg }}
                   </h1>
-                  <ul style="color: #666;font-size:12px;" class="pa-0" v-for="item in userData" :key="item.id">
-                    {{ item.course }}
-                  </ul>
-                  <h4 class="font-weight-regular mb-3">Personal</h4>
+                  <p style="color:#999;">{{ hardestCourse.name }}</p>
+                  <v-spacer></v-spacer>
+                  <h4 class="font-weight-regular mb-3">Hardest Course</h4>
                 </v-flex>
               </v-flex>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">{{ this.courseData ?  this.courseData[0].score : null }}</h1>
-                  <div style="color: #666;font-size:12px;" v-if="courseLimit">{{ this.overallSize }} T</div>
-                  <ul style="color: #666;font-size:18px;" class="pa-0" v-for="item in courseData" :key="item.id" v-else>
-                    {{ item.username }} - {{ item.course}}
-                  </ul>
-                  <h4 class="font-weight-regular">Overall</h4>
+                   <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">
+                    {{ easiestCourse.avg }}
+                  </h1>
+                  <p style="color:#999;">{{ easiestCourse.name }}</p>
+                  <v-spacer></v-spacer>
+                  <h4 class="font-weight-regular">Easiest Course</h4>
                 </v-flex>
               </v-flex>
             </v-layout>
@@ -44,13 +43,13 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'LowestScoring',
+  name: 'CourseRanking',
   data () {
     return {
       isNet: true,
       loading: true,
-      userData: [],
-      courseData: [],
+      easiestCourse: {},
+      hardestCourse: {},
       courseLimit: false,
       overallSize: 0
     }
@@ -59,7 +58,6 @@ export default {
   computed: {
     ...mapState({
       courseSummary: state => state.overallSummary.courseSummary,
-      userSummary: state => state.overallSummary.userSummary
     })
   },
 
@@ -67,10 +65,8 @@ export default {
   },
 
   mounted: function () {
-    this.userData    = this.userSummary["lowest_round"]
-    this.courseData  = this.courseSummary["lowest_round"]
-    this.courseLimit = this.courseData.length > 1
-    this.overallSize = this.courseData.length
+    this.hardestCourse = this.courseSummary["hardest_course"]
+    this.easiestCourse = this.courseSummary["easiest_course"]
     this.loading     = false
   }
 }
@@ -79,13 +75,6 @@ export default {
 .scoring--stats {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
-}
-
-score-label.record {
-  color: #6CADED;
-}
-.pers-record {
-  color: #ED6C6C;
 }
 .personal {
   color: #999;

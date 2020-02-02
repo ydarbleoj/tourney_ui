@@ -219,7 +219,7 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .record {
-  color: #6CADED;
+  color: #9FB8CE;
 }
 .pers-record {
   color: #F79256;

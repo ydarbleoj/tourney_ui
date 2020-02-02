@@ -2,7 +2,7 @@
   <v-card v-if="loading" class="white elevation-1" color="white">
     loading...
   </v-card>
-  <v-card flat v-else="!loading" style="margin:auto">
+  <v-card flat v-else style="margin:auto">
     <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
@@ -14,8 +14,8 @@
                     <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">Putting Avg</h4>
                   </v-flex>
                   <v-flex xs12 >
-                    <h1 class="personal-score font-weight-regular">{{ this.personalBest.putts_avg }}</h1>
-                    <h4 class="font-weight-regular" style="color:#333;font-size:14px;">({{ this.personalBest.three_putts_avg }} <span class="personal-score font-weight-regular" style="font-size:12px;">3p</span>)</h4>
+                    <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.personalBest.putts_avg }}</h1>
+                    <h4 class="font-weight-regular" style="color:#333;font-size:14px;">({{ this.personalBest.three_putts_avg }} <span class="font-weight-regular" style="font-size:12px;color:#F79256">3p</span>)</h4>
                     <h4 class=" mb-3 font-weight-regular">Personal</h4>
                   </v-flex>
                 </v-layout>
@@ -23,14 +23,14 @@
               <v-flex xs6>
                 <v-layout row wrap align-center justify-center fill-height>
                   <v-flex xs12>
-                    <h2 class="field-score ma-0 font-weight-regular" >{{ this.yearsField.putts_avg }}
-                     <span class="font-weight-regular" style="color:#333;font-size:14px;">({{ this.yearsField.three_putts_avg }} <span class="field-score font-weight-regular" style="font-size:12px;">3p</span>)</span>
+                    <h2 class="ma-0 font-weight-regular" style="color: #FFCB47;">{{ this.yearsField.putts_avg }}
+                     <span class="font-weight-regular" style="color:#333;font-size:14px;">({{ this.yearsField.three_putts_avg }} <span class="font-weight-regular" style="font-size:12px;color:#F79256">3p</span>)</span>
                     </h2>
                     <h4 class=" font-weight-regular">This Year's Field</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h2 class="overall-score font-weight-regular ma-0">{{ this.courseOverall.putts_avg }}
-                    <span class="font-weight-regular" style="color:#333;font-size:14px;">({{ this.courseOverall.three_putts_avg }} <span class="font-weight-regular overall-score" style="font-size:12px;">3p</span>)</span>
+                    <h2 class="font-weight-regular ma-0" style="color:#A8C256">{{ this.courseOverall.putts_avg }}
+                    <span class="font-weight-regular" style="color:#333;font-size:14px;">({{ this.courseOverall.three_putts_avg }} <span class="font-weight-regular" style="font-size:12px;color:#F79256">3p</span>)</span>
 
                     </h2>
                     <h4 class=" font-weight-regular">Overall </h4>

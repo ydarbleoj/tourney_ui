@@ -2,7 +2,7 @@
   <v-card flat v-if="loading" class="white" color="white">
     loading...
   </v-card>
-  <v-card flat v-else="!loading" style="margin:auto">
+  <v-card flat v-else style="margin:auto">
     <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
@@ -14,7 +14,7 @@
                     <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">Best Round</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h1 class="personal-score font-weight-regular" style="font-size: 40px;">{{ this.personalBest ? this.personalBest.total_net : null }}
+                    <h1 class="font-weight-regular" style="color:#9FB8CE;font-size: 40px;">{{ this.personalBest ? this.personalBest.total_net : null }}
                       <span style="color: #666;font-size:12px;">{{ this.personalBest ? this.personalBest.year : null }}</span>
                     </h1>
                     <h4 class="font-weight-regular mb-3">Personal</h4>
@@ -25,14 +25,14 @@
                 <v-layout row wrap align-center justify-center fill-height>
                   <v-flex xs12>
 
-                    <h4 class="field-score font-weight-regular">{{ this.yearsField ? this.yearsField.username : null}}</h4>
-                     <h2 class="field-score font-weight-regular">{{ this.yearsField ? this.yearsField.total_net : null }}
+                    <h4 class="font-weight-regular" style="color: #999;">{{ this.yearsField ? this.yearsField.username : null}}</h4>
+                     <h2 class="font-weight-regular" style="color: #FFCB47;">{{ this.yearsField ? this.yearsField.total_net : null }}
                     </h2>
                     <h4 class="font-weight-regular">This Year's Field</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h4 class="overall-score font-weight-regular">{{ this.courseOverall ? this.courseOverall.username : null }}</h4>
-                    <h2 class="overall-score font-weight-regular">{{ this.courseOverall ? this.courseOverall.total_net : null }}
+                    <h4 class="font-weight-regular" style="color:#999;">{{ this.courseOverall ? this.courseOverall.username : null }}</h4>
+                    <h2 class="font-weight-regular" style="color:#A8C256">{{ this.courseOverall ? this.courseOverall.total_net : null }}
                       <span style="color: #666;font-size:12px;">{{ this.courseOverall ? this.courseOverall.year : null }}</span>
                     </h2>
                     <h4 class="font-weight-regular">Overall </h4>

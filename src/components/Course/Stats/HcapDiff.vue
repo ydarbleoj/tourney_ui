@@ -2,7 +2,7 @@
   <v-card flat v-if="loading" class="white" color="white">
     loading...
   </v-card>
-  <v-card flat v-else="!loading" style="margin:auto">
+  <v-card flat v-else style="margin:auto">
     <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
       <v-layout row wrap align-center>
         <v-flex xs12>
@@ -14,7 +14,7 @@
                     <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Hcap Differential</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h1 class="personal-score font-weight-regular">{{ this.personalBest }}</h1>
+                    <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.personalBest }}</h1>
                     <h4 class=" mb-3 font-weight-regular">Personal</h4>
                   </v-flex>
                 </v-layout>
@@ -22,12 +22,12 @@
               <v-flex xs6>
                 <v-layout row wrap align-center justify-center fill-height>
                   <v-flex xs12>
-                    <h2 class="field-score ma-0 font-weight-regular" >{{ this.yearsField }}</h2>
+                    <h2 class="ma-0 font-weight-regular" style="color: #FFCB47;">{{ this.yearsField }}</h2>
                     <h4 class=" font-weight-regular">This Year's Field</h4>
                   </v-flex>
                   <v-flex xs12>
-                    <h2 class="overall-score font-weight-regular ma-0">{{ this.courseOverall }}</h2>
-                    <h4 class=" font-weight-regular">Overall </h4>
+                    <h2 class="font-weight-regular ma-0" style="color:#A8C256">{{ this.courseOverall }}</h2>
+                    <h4 class="font-weight-regular">Overall </h4>
                   </v-flex>
                 </v-layout>
               </v-flex>

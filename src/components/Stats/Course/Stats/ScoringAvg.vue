@@ -15,16 +15,16 @@
             <v-layout>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="personal-score font-weight-regular">{{ this.userScoringAvg }}</h1>
+                  <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.userScoringAvg }}</h1>
                   <h4 class=" mb-3 font-weight-regular">Personal</h4>
                 </v-flex>
               </v-flex>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="overall-score font-weight-regular ma-0">
+                  <h1 class="font-weight-regular ma-0" style="color:#A8C256;">
                     {{ parseFloat(this.overallScoringAvg).toFixed(2) }}
                   </h1>
-                  <h4 class=" font-weight-regular">Overall</h4>
+                  <h4 class="font-weight-regular">Overall</h4>
                 </v-flex>
               </v-flex>
             </v-layout>
@@ -84,7 +84,7 @@ export default {
 }
 
 score-label.record {
-  color: #F8C977;
+  color: #FFCB47;
 }
 .pers-record {
   color: #ED6C6C;

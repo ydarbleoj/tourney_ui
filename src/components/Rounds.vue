@@ -2,7 +2,7 @@
   <v-container id="round-container" class="pa-0" ref="roundCardContainer">
     <v-layout row wrap>
       <v-flex xs12 sm12 lg12>
-        <h2 class="text-xs-left font-weight-regular pl-0" style="margin-left: 5%;" v-if="isPreview">Round Info</h2>
+        <h2 class="text-xs-left font-weight-regular pl-0 mb-3" style="margin-left: 5%;" v-if="isPreview">Round Info</h2>
         <v-tabs
           v-model="model"
           color="transparent"
