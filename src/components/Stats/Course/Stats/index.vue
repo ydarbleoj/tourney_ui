@@ -83,9 +83,6 @@ export default {
 .scoring--stats {
   transition: opacity 1s ease, box-shadow 1s ease;
 }
-label.score-label {
-
-}
 .record {
   color: #F8C977;
 }
