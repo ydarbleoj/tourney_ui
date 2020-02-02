@@ -1,5 +1,5 @@
 <template>
-  <v-container id='leaderboard-container' class="pa-0 pb-3" ref="leaderboardCard">
+  <v-container id='leaderboard-container' class="pa-0" ref="leaderboardCard">
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
         <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;" v-if="isPreview">Leaderboards</h2>

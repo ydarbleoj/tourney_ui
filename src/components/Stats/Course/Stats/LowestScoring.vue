@@ -14,7 +14,7 @@
               <v-flex xs6>
                 <v-flex xs12>
                   <h1 class="font-weight-regular" style="color:#9FB8CE;font-size: 40px;">
-                    {{ this.userData[0].score }}
+                    {{ this.userData.score }}
                   </h1>
                   <ul style="color: #666;font-size:12px;" class="pa-0" v-for="item in userData" :key="item.id">
                     {{ item.course }}
@@ -24,10 +24,9 @@
               </v-flex>
               <v-flex xs6>
                 <v-flex xs12>
-                  <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">{{ this.courseData ?  this.courseData[0].score : null }}</h1>
-                  <div style="color: #666;font-size:12px;" v-if="courseLimit">{{ this.overallSize }} T</div>
-                  <ul style="color: #666;font-size:18px;" class="pa-0" v-for="item in courseData" :key="item.id" v-else>
-                    {{ item.username }} - {{ item.course}}
+                  <h1 class="font-weight-regular" style="color:#A8C256;font-size: 40px;">{{ this.courseData ?  this.courseData.score : null }}</h1>
+                  <ul style="color: #999;font-size:12px;" class="pa-0" v-for="item in courseUsers" :key="item.id">
+                    {{ item }}
                   </ul>
                   <h4 class="font-weight-regular">Overall</h4>
                 </v-flex>
@@ -52,6 +51,7 @@ export default {
       userData: [],
       courseData: [],
       courseLimit: false,
+      courseUsers: [],
       overallSize: 0
     }
   },
@@ -71,6 +71,7 @@ export default {
     this.courseData  = this.courseSummary["lowest_round"]
     this.courseLimit = this.courseData.length > 2
     this.overallSize = this.courseSummary["lowest_round"].length
+    this.courseUsers = this.courseData.users
     this.loading     = false
   }
 }

@@ -108,10 +108,9 @@ export default {
     }),
     target () {
       const value = '#scorecard-scroll'
-      console.log('target')
       if (!isNaN(value)) return Number(value)
       else return value
-    },
+    }
   },
 
 
@@ -123,7 +122,7 @@ export default {
       userScoreMargin: '',
       currentView: 'preview',
       cardPos: 0,
-      duration: 600,
+      duration: 1000,
       offset: 0,
       easing: 'easeInOutCubic',
     }
@@ -173,6 +172,7 @@ export default {
         this.preview = !this.preview
         this.$emit('open')
         this.currentView = 'preview'
+        this.listMargin(this.$refs)
         this.closeParent(this.$refs)
       }
     },
@@ -194,10 +194,11 @@ export default {
 
   watch: {
     current: function () {
-      this.$store.dispatch('scorecards/LOAD_SCORECARD', { tournId: this.currentTournament.id, id: this.currentRound.scorecard_id})
-        .then((response) => {
-          this.isLoaded = true
-        })
+      this.$store.dispatch('scorecards/LOAD_SCORECARD', {
+        tournId: this.currentTournament.id, id: this.currentRound.scorecard_id
+      }).then((response) => {
+        this.isLoaded = true
+      })
     }
   },
 
@@ -205,10 +206,11 @@ export default {
   },
 
   created: function () {
-    this.$store.dispatch('scorecards/LOAD_SCORECARD', { tournId: this.currentTournament.id, tournRoundId: this.roundId['id'] })
-      .then(response => {
-        this.isLoaded = true
-      })
+    this.$store.dispatch('scorecards/LOAD_SCORECARD', {
+      tournId: this.currentTournament.id, tournRoundId: this.roundId['id']
+    }).then(response => {
+      this.isLoaded = true
+    })
   }
 }
 </script>

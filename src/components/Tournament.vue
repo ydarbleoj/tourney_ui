@@ -1,59 +1,59 @@
 <template>
-    <main style="height:100%;" class="tournament-wrapper">
-      <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
-        <v-layout row wrap>
-          <v-flex xs3 class="text-xs-left">
-           <v-menu
-                transition="scale-transition"
-                bottom
-              >
-              <v-btn icon slot="activator" light class="ml-2">
-                <v-icon class="">more_vert</v-icon>
-              </v-btn>
-              <v-list>
-                <v-list-tile>
-                  <v-list-tile-title>
-                    <v-icon class="mr-2">person_outline</v-icon><router-link style="color:black;text-decoration:none;" :to="'/profile'">Profile</router-link>
-                  </v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile v-if="$auth.check('admin')">
-                  <v-list-tile-title>
-                    <v-icon class="mr-2">apps</v-icon><router-link style="color:black;text-decoration:none;" :to="'/tournament/admin'">Admin</router-link>
-                  </v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-title>
-                    <v-icon class="mr-2">weekend</v-icon><a v-on:click="logout()" style="color:black;text-decoration:none;" href="javascript:void(0);">Log Out</a>
-                  </v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
-          </v-flex>
-          <v-flex xs6>
-            <v-menu offset-y >
-              <v-btn color="#F8C977" flat slot="activator">
-                <h3 class="black--text font-weight-regular mr-1">Bandon</h3>
-                <h3
-                  class="black--text font-weight-medium"
-                  style="border-bottom:1px solid #F8C977"
-                >{{ this.currentTournament.year }}</h3>
-              </v-btn>
-              <v-list>
-                <v-list-tile v-for="item in items" :key="item['id']" @click="updateTournament(item)">
-                  <v-list-tile-title style="color:#F8C977" class="text-xs-right">{{ item.attributes.year }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
+  <main style="height:100%;" class="tournament-wrapper" id="tourn-container">
+    <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
+      <v-layout row wrap>
+        <v-flex xs3 class="text-xs-left">
+          <v-menu
+              transition="scale-transition"
+              bottom
+            >
+            <v-btn icon slot="activator" light class="ml-2">
+              <v-icon class="">more_vert</v-icon>
+            </v-btn>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <v-icon class="mr-2">person_outline</v-icon><router-link style="color:black;text-decoration:none;" :to="'/profile'">Profile</router-link>
+                </v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile v-if="$auth.check('admin')">
+                <v-list-tile-title>
+                  <v-icon class="mr-2">apps</v-icon><router-link style="color:black;text-decoration:none;" :to="'/tournament/admin'">Admin</router-link>
+                </v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <v-icon class="mr-2">weekend</v-icon><a v-on:click="logout()" style="color:black;text-decoration:none;" href="javascript:void(0);">Log Out</a>
+                </v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-flex>
+        <v-flex xs6>
+          <v-menu offset-y >
+            <v-btn color="#F8C977" flat slot="activator">
+              <h3 class="black--text font-weight-regular mr-1">Bandon</h3>
+              <h3
+                class="black--text font-weight-medium"
+                style="border-bottom:1px solid #F8C977"
+              >{{ this.currentTournament.year }}</h3>
+            </v-btn>
+            <v-list>
+              <v-list-tile v-for="item in items" :key="item['id']" @click="updateTournament(item)">
+                <v-list-tile-title style="color:#F8C977" class="text-xs-right">{{ item.attributes.year }}</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
 
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap >
-          <leaderboards :current="currentTournament" v-if="!loading" />
-          <rounds :current="currentTournament" v-if="!loading" />
-          <stats :current="currentTournament" v-if="!loading" />
-        </v-layout>
-      </v-container>
-    </main>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap>
+        <leaderboards :current="currentTournament" v-if="!loading" />
+        <rounds :current="currentTournament" v-if="!loading" />
+        <stats :current="currentTournament" v-if="!loading" />
+      </v-layout>
+    </v-container>
+  </main>
 </template>
 
 <script>

@@ -22,7 +22,7 @@
                 </v-flex>
                 <v-flex class="pa-0 mt-3">
                   <div class="text-xs-right">
-                    <span v-if="!preview" class="text-xs-right mr-3" @click="closeCourse()">
+                    <span v-if="!preview" class="text-xs-right mr-3" @click="closeCourse();">
                       <v-icon color="white">clear</v-icon>
                     </span>
                   </div>
@@ -86,7 +86,6 @@ export default {
   },
 
   created: function () {
-    console.log('HEllo Summary')
   }
 
 }

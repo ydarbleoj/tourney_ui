@@ -3,7 +3,7 @@
     no, you're loading...
   </v-card>
   <v-card flat v-else>
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+    <v-container fluid pa-0 class="font-weight-regular mb-3" style="height:inherit;">
       <v-layout row wrap>
         <v-flex xs12 style="">
           <HcapDiff />

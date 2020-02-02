@@ -26,15 +26,15 @@
               <v-list-tile-sub-title class="text-xs-center handicap-color"><span>{{ userScore.handicap }}</span> hcap</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
-            <v-card-text class="pa-0" v-if="type == userScore.number" >
-              <transition
-              name="fade"
-              >
-                <user-score :cardData="userScore" :scorecardId="card.id" @event="removeType" />
-              </transition>
-            </v-card-text>
+          <v-card-text class="pa-0" v-if="type == userScore.number" >
+            <transition
+            name="fade"
+            >
+              <user-score :cardData="userScore" :scorecardId="card.id" @event="removeType" />
+            </transition>
+          </v-card-text>
+          <v-divider></v-divider>
         </v-card>
-        <v-divider></v-divider>
       </template>
     </v-list>
   </v-flex>
@@ -95,9 +95,7 @@ export default {
       this.toggleScore(numVar)
     },
   },
-  created: function () {
-    console.log('here', this.card)
-  },
+  created: function () {}
 }
 </script>
 <style>
