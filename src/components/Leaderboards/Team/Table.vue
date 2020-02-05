@@ -28,7 +28,6 @@
                 >
                   {{ item.username }}
                   <v-spacer></v-spacer>
-                  <span class="grey--text">handicap {{ item.handicap }}</span>
                 </li>
               </ul>
             </v-flex>

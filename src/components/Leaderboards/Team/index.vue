@@ -18,7 +18,7 @@
       absolute
       :active.sync="roundNumber"
       :value="true"
-      style="background-color:#FF9D72;"
+      style="background-color:#ACA885;"
     >
       <v-btn flat value="1" style="color:#fff; opacity:0.7;">
         <h3>ONE</h3>
@@ -85,6 +85,7 @@ export default {
     },
     roundFilter (rounds, num) {
       let r = rounds.filter(el => el.roundNumber == num)
+      console.log('round id', r)
       this.roundId = r[0].roundId
     }
   },
