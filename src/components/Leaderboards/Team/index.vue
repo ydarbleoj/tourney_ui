@@ -91,10 +91,13 @@ export default {
   },
   watch: {
     current () {
-      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundId, preview: true })
-        .then(response => {
-          this.loading = false
-        })
+      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', {
+        tournId: this.current.id,
+        roundId: this.roundNumber,
+        preview: true
+      }).then(response => {
+        this.loading = false
+      })
     },
     isPreview () {
       this.toggleParent()
@@ -102,19 +105,22 @@ export default {
       this.$emit('event')
     },
     roundNumber () {
-      console.log('round number', this.teamLeaderboard)
+      console.log('round number', this.roundNumber)
       this.roundFilter(this.teamRounds, this.roundNumber)
-      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundId, preview: false })
-        .then(response => {
-          this.closed = false
-          this.isPreview = false
-        })
+      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', {
+        tournId: this.current.id,
+        roundId: this.roundNumber,
+        preview: false
+      }).then(response => {
+        this.closed = false
+        this.isPreview = false
+      })
     }
 
   },
   created: function () {
     this.roundFilter(this.teamRounds, this.roundNumber)
-    this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundId, preview: true })
+    this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundNumber, preview: true })
       .then(response => {
         this.loading = false
       })
