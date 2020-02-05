@@ -77,7 +77,7 @@ export default {
       this.$parent.$el.style.width = this.isPreview ? '90%' : '100%';
     },
     getFullField () {
-      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundId, preview: false })
+      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundNumber, preview: false })
         .then(response => {
           this.closed = false
           this.isPreview = false

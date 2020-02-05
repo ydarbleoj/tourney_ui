@@ -322,6 +322,7 @@ const store = new Vuex.Store({
       Vue.set(state, 'teamRounds', list.attributes.round_info)
     },
     SET_TEAM_LEADERBOARD: (state, { list }) => {
+      console.log('tema a', list)
       state.teamLeaderboard = list.data
     },
     SET_MONEY_LIST: (state, { list }) => {
