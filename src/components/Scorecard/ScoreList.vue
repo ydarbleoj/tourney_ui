@@ -12,7 +12,7 @@
                 Par {{ userScore.par }}
               </v-list-tile-title>
               <v-list-tile-sub-title class="text-xs-center">
-                <span class="record" style="font-size:24px;padding-right:5px;"> {{ userScore.net }}</span>
+                <span style="font-size:24px;padding-right:5px;color:#A8C256;"> {{ userScore.net }}</span>
                     <span style="font-size:24px;" v-if="userScore.net">/</span>
                 <span class="grey--text" style="font-size:24px;padding-left:5px;">{{ userScore.score }}</span>
              </v-list-tile-sub-title>

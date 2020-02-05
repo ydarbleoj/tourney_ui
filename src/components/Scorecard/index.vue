@@ -12,7 +12,7 @@
               <v-container pa-0>
                 <v-layout row wrap>
                   <v-flex xs5>
-                    <div><h1 class="record font-weight-regular ma-0">{{ playerScorecard.total_net}}</h1></div>
+                    <div><h1 class="font-weight-regular ma-0" style="color:#A8C256">{{ playerScorecard.total_net}}</h1></div>
                     <label class="scorecard-label">NET</label>
                   </v-flex>
                   <v-flex xs1>
@@ -33,7 +33,7 @@
                   <v-flex xs12>
                     <label class='scorecard-label'>OUT</label>
                     <div class="grey--text">
-                      <span class="record">{{ playerScorecard.out_net }}</span>
+                      <span style="color:#A8C256">{{ playerScorecard.out_net }}</span>
                       /
                       <span class="grey--text">{{ playerScorecard.out_gross }}</span>
                     </div>
@@ -42,7 +42,7 @@
                   <v-flex xs12>
                     <label class='scorecard-label'>IN</label>
                     <div class="grey--text">
-                      <span class="record">{{ playerScorecard.in_net }}</span>
+                      <span style="color:#A8C256">{{ playerScorecard.in_net }}</span>
                       /
                       <span class="grey--text">{{ playerScorecard.in_gross }}</span>
                     </div>
@@ -58,7 +58,7 @@
               <v-container class="pa-0 pl-3">
                 <v-layout row wrap>
                   <v-flex xs5>
-                    <div><h1 class="record ma-0 font-weight-regular">{{ playerScorecard.total_putts }}</h1></div>
+                    <div><h1 style="color:#A8C256" class="ma-0 font-weight-regular">{{ playerScorecard.total_putts }}</h1></div>
                     <label class="scorecard-label">PUTTS</label>
                   </v-flex>
                   <v-flex xs1>
