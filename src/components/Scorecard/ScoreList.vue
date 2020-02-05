@@ -73,7 +73,7 @@ export default {
       }
     },
     puttColor: function (putts) {
-      return putts > 2 ? '' : '#F79256'
+      return putts > 2 ? '#F79256' : ''
     },
     toggleScore: function (num) {
       this.holeNumber = num

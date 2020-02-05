@@ -170,10 +170,10 @@ export default {
       } else if (event == 'fullCard') {
         this.$refs.cardHeader.classList.toggle('round-borders')
         this.preview = !this.preview
-        this.$emit('open')
         this.currentView = 'preview'
         this.listMargin(this.$refs)
         this.closeParent(this.$refs)
+        this.$emit('open')
       }
     },
     listMargin (card) {
@@ -221,7 +221,7 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .record {
-  color: #9FB8CE;
+  color: #A8C256;
 }
 .pers-record {
   color: #F79256;

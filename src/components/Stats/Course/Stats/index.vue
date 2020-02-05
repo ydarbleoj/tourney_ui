@@ -14,10 +14,6 @@
           <v-divider style="background-color:;"></v-divider>
           <CourseRanking />
           <v-divider style="background-color:;"></v-divider>
-          <LowestScoring />
-          <v-divider style="background-color:;"></v-divider>
-          <HoleRanking />
-          <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="3"/>
           <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="4"/>
@@ -34,8 +30,6 @@
 import { mapState } from 'vuex'
 import CourseRanking from '../Stats/CourseRanking'
 import HcapDiff from '../Stats/HcapDiff'
-import HoleRanking from '../Stats/HoleRanking'
-import LowestScoring from '../Stats/LowestScoring'
 import ParAvgs from '../Stats/ParAvgs'
 import PuttingAvg from '../Stats/PuttingAvg'
 import ScoringAvg from '../Stats/ScoringAvg'
@@ -46,8 +40,6 @@ export default {
   components: {
     CourseRanking,
     HcapDiff,
-    HoleRanking,
-    LowestScoring,
     ParAvgs,
     PuttingAvg,
     ScoringAvg,
