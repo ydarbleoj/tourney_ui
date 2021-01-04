@@ -9,7 +9,7 @@
               <stroke-button />
             </v-flex>
             <v-flex xs6 ma-2>
-              <stroke-button />
+              <putting-button />
             </v-flex>
           </v-layout>
           <v-layout>
@@ -30,7 +30,7 @@
 import StrokeButton from '../components/Leaderboards/Stroke/Button'
 import Skins from '../components/Leaderboards/Skins/index'
 import Team from '../components/Leaderboards/Team/index'
-import Putting from '../components/Leaderboards/Putting/index'
+import PuttingButton from '../components/Leaderboards/Putting/Button'
 import router from 'vue-router'
 import { mapState } from 'vuex'
 
@@ -39,7 +39,7 @@ export default {
   props: ['current'],
   components: {
     StrokeButton,
-    Putting,
+    PuttingButton,
     Skins,
     Team
   },

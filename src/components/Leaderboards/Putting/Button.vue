@@ -1,23 +1,23 @@
 <template>
   <v-card
-    @click="toStrokeleaderboard"
+    @click="toPuttingleaderboard"
     rounded
     class="lb-card bg-color pa-2"
   >
     <v-card-title class="pa-0">
-      <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
+      <h2 class="text-xs-left font-weight-medium" >Putting</h2>
     </v-card-title>
     <div class="text-xs-left">
       <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
     </div>
     <div class="text-xs-right">
-      <h5 class="grey--text font-weight-regular">Total</h5>
+      <h5 class="black--text font-weight-regular">Total</h5>
     </div>
     <v-card-text v-if="!isloading" class="pa-0">
       <v-list
         dense
         class="bg-color white--text"
-        v-for="(item, index) in strokeLeaderboard" :key="index"
+        v-for="(item, index) in puttingLeaderboard" :key="index"
       >
         <v-layout row class="pt-1">
           <v-flex xs2 class="text-xs-left">
@@ -28,7 +28,7 @@
             {{ item.attributes.username }}
           </v-flex>
           <v-flex class="text-xs-right">
-            {{ item.attributes.total_score }}
+            {{ item.attributes.total_putts }}
           </v-flex>
         </v-layout>
       </v-list>
@@ -41,7 +41,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'StrokeButton',
   computed: {
-    ...mapState(['currentTournament', 'strokeLeaderboard']),
+    ...mapState(['currentTournament', 'puttingLeaderboard']),
   },
   data () {
     return {
@@ -51,15 +51,15 @@ export default {
     }
   },
   methods: {
-    toStrokeleaderboard () {
-      this.$router.push({ name: 'StrokeLeaderboard', params: { id: this.currentTournament.id} })
+    toPuttingleaderboard () {
+      this.$router.push({ name: 'PuttingLeaderboard', params: { id: this.currentTournament.id} })
     }
   },
 
   created: function () {
-    this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.currentTournament.id, preview: true })
+    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: true })
       .then(response => {
-        this.purse = this.currentTournament.num_players * 30
+        this.purse = this.puttingPurse
         this.isloading = false
       })
   },
@@ -69,7 +69,7 @@ export default {
 </script>
 <style scoped>
 .bg-color {
-  background-color: #9FB8CE;
+  background-color: #A8C256;
 }
 .lb-card {
   border-radius: 20px;
