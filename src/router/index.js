@@ -8,7 +8,7 @@ import PlayerScorecards from '@/components/Tournament/Admin/PlayerScorecards'
 import TournamentCreate from '@/components/Tournament/Create/index'
 import TournamentDashboard from '@/components/Tournament/Dashboard'
 import AcceptInvite from '@/components/Tournament/AcceptInvite'
-import Leaderboards from '@/components/Leaderboards'
+import StrokeLeaderboard from '@/components/Leaderboards/Stroke/index'
 import Rounds from '@/components/Rounds'
 import Course from '@/components/Course/index'
 import ResetPassword from '@/components/ResetPassword'
@@ -111,6 +111,13 @@ const router = new Router({
       component: PlayerScorecards,
       props: { default: true },
       meta: { auth: { role: 'admin', redirect: { name: 'admin' }, }}
+    },
+    {
+      path: '/tournament/:id/leaderboards/stroke',
+      name: "StrokeLeaderboard",
+      component: StrokeLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
     }
   ]
 })

@@ -1,35 +1,33 @@
 <template>
-  <v-container id='leaderboard-container' class="pa-0" ref="leaderboardCard">
+  <v-container id='leaderboard-container' class="pa-0" ma0 ref="leaderboardCard">
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
-        <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;" v-if="isPreview">Leaderboards</h2>
-        <v-tabs
-          v-model="model"
-          color="transparent"
-          centered
-          height="0px"
-           v-touch="{
-            left: () => swipe('Left'),
-            right: () => swipe('Right'),
-          }"
-        >
-          <v-tab-item
-            v-for="i in comps"
-            :key="i"
-            style="width: 90vw;margin: 0 auto;"
-          >
-            <transition name="slide-fade" duration="{ enter: 500, leave: 800 }">
-              <component :is="i" :current='current' @event="previewToggle(this)" />
-            </transition>
-          </v-tab-item>
-        </v-tabs>
+        <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;">Leaderboards</h2>
+        <v-container>
+          <v-layout>
+            <v-flex xs6 ma-2>
+              <stroke-button />
+            </v-flex>
+            <v-flex xs6 ma-2>
+              <stroke-button />
+            </v-flex>
+          </v-layout>
+          <v-layout>
+            <v-flex xs6 ma-2>
+              <stroke-button />
+            </v-flex>
+            <v-flex xs6 ma-2>
+              <stroke-button />
+            </v-flex>
+          </v-layout>
+        </v-container>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import Stroke from '../components/Leaderboards/Stroke/index'
+import StrokeButton from '../components/Leaderboards/Stroke/Button'
 import Skins from '../components/Leaderboards/Skins/index'
 import Team from '../components/Leaderboards/Team/index'
 import Putting from '../components/Leaderboards/Putting/index'
@@ -40,7 +38,7 @@ export default {
   name: 'Leaderboards',
   props: ['current'],
   components: {
-    Stroke,
+    StrokeButton,
     Putting,
     Skins,
     Team
@@ -113,7 +111,7 @@ export default {
 #leaderboard-container {
   z-index: 1;
   background-color: white;
-  position: relative;
+  /* position: relative; */
 }
 small.purse-color {
   color: #666;

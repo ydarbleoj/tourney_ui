@@ -43,13 +43,12 @@ import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
 axios.defaults.baseURL = process.env.ROOT_API
-
 Vue.use(VueAxios, axios)
 Vue.router = router
 
 Vue.use(VueAuth, {
-    auth: {
-      request: function (req, token) {
+  auth: {
+    request: function (req, token) {
         this.options.http._setHeaders.call(this, req, {Authorization: 'Bearer ' + token});
       },
       response: function (res) {

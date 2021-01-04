@@ -39,7 +39,6 @@ export default {
     },
     visibilityChanged (isVisible, entry) {
       this.isVisible = isVisible
-      console.log(entry)
     }
   },
 
@@ -50,7 +49,6 @@ export default {
   },
 
   created: function () {
-    console.log('touns', this.tourns)
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
   },
 

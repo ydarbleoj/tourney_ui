@@ -47,6 +47,10 @@ const store = new Vuex.Store({
     adminTeeTimes: [],
     user: {},
     moneyList: [],
+    pageTransition: {
+      name: "router-view",
+      mode: "in-out"
+    }
   },
   actions: {
     CREATE_TOURNAMENT: function ({ commit, state }, { payload }) {
@@ -233,6 +237,20 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    setPageTransition(state, value) {
+      if ("default" === value) {
+        Vue.set(state, "pageTransition", {
+          name: "router-view",
+          mode: "in-out"
+        });
+      }
+      if ("back" === value) {
+        Vue.set(state, "pageTransition", {
+          name: "router-view-back",
+          mode: ""
+        });
+      }
+    },
     ROUND_CREATE: (state, { list }) => {
       Vue.set(state, 'userInviteList', JSON.parse(list.user_list).data)
       Vue.set(state, 'courseMenuList', JSON.parse(list.course_list).data)

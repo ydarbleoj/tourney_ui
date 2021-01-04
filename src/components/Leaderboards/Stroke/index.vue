@@ -1,14 +1,12 @@
 <template>
   <v-card
     class="lb-card"
-    @click="isPreview ? previewToggle() : null"
-    v-ripple="isPreview"
    >
     <v-card-title class="stroke--title pa-0 pt-2 pl-2">
       <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
-      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview">Leaderboard</h2>
+      <h2 class="ml-2 font-weight-medium text-xs-left">Leaderboard</h2>
       <v-spacer></v-spacer>
-      <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
+      <span class="text-xs-right pr-2" @click="closeLeaderboard()">
         <v-icon color="white">clear</v-icon>
       </span>
     </v-card-title>
