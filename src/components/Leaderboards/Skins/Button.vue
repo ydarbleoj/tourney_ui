@@ -1,11 +1,11 @@
 <template>
   <v-card
-    @click="toStrokeleaderboard"
+    @click="toSkinsLeaderboard"
     rounded
     class="lb-card bg-color pa-2"
   >
     <v-card-title class="pa-0">
-      <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
+      <h2 class="text-xs-left font-weight-medium">Skins</h2>
     </v-card-title>
     <div class="text-xs-left">
       <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
@@ -17,7 +17,7 @@
       <v-list
         dense
         class="bg-color white--text"
-        v-for="(item, index) in strokeLeaderboard" :key="index"
+        v-for="(item, index) in skins_leaderboard" :key="index"
       >
         <v-layout row class="pt-1">
           <v-flex xs2 class="text-xs-left">
@@ -27,7 +27,7 @@
             {{ item.attributes.username }}
           </v-flex>
           <v-flex class="text-xs-right">
-            {{ item.attributes.total_score }}
+            {{ item.attributes.total_skins }}
           </v-flex>
         </v-layout>
       </v-list>
@@ -38,10 +38,10 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'StrokeButton',
+  name: 'SkinsButton',
   props: ['current'],
   computed: {
-    ...mapState(['strokeLeaderboard']),
+    ...mapState(['skins_leaderboard']),
   },
   data () {
     return {
@@ -51,20 +51,20 @@ export default {
     }
   },
   methods: {
-    toStrokeleaderboard () {
-      this.$router.push({ name: 'StrokeLeaderboard', params: { id: this.current.id} })
+    toSkinsLeaderboard () {
+      this.$router.push({ name: 'SkinsLeaderboard', params: { id: this.current.id} })
     }
   },
   watch: {
     current () {
-      this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
+      this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: true })
         .then(response => {
-          this.loading = false
+          this.isloading = false
         })
     }
   },
   created: function () {
-    this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
+     this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: true })
       .then(response => {
         this.purse = this.current.num_players * 30
         this.isloading = false
@@ -74,7 +74,7 @@ export default {
 </script>
 <style scoped>
 .bg-color {
-  background-color: #9FB8CE;
+  background-color: #FFCB47;
 }
 .lb-card {
   border-radius: 20px;

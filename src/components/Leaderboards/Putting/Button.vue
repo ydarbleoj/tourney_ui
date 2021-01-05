@@ -17,11 +17,10 @@
       <v-list
         dense
         class="bg-color white--text"
-        v-for="(item, index) in puttingLeaderboard" :key="index"
+        v-for="(item, index) in putting_leaderboard" :key="index"
       >
         <v-layout row class="pt-1">
           <v-flex xs2 class="text-xs-left">
-            {{ index + 1 }}
             {{ item.attributes.position }}
           </v-flex>
           <v-flex class="text-xs-left pr-2 pl-2">
@@ -39,9 +38,10 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'StrokeButton',
+  name: 'PuttingButton',
+  props: ['current'],
   computed: {
-    ...mapState(['currentTournament', 'puttingLeaderboard']),
+    ...mapState(['putting_leaderboard']),
   },
   data () {
     return {
@@ -52,17 +52,25 @@ export default {
   },
   methods: {
     toPuttingleaderboard () {
-      this.$router.push({ name: 'PuttingLeaderboard', params: { id: this.currentTournament.id} })
+      this.$router.push({ name: 'PuttingLeaderboard', params: { id: this.current.id} })
     }
   },
-
+  watch: {
+    current: function () {
+      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
+        .then(response => {
+          this.purse = this.puttingPurse
+          this.loading = false
+        })
+    }
+  },
   created: function () {
-    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: true })
+    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
         this.purse = this.puttingPurse
         this.isloading = false
       })
-  },
+  }
 
 
 }
