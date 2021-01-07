@@ -17,7 +17,6 @@
 
 <script>
 import Store from "./store/index";
-
 export default {
   data () {
     return {
@@ -77,7 +76,7 @@ export default {
 }
 </script>
 <style lang="scss">
-$duration: 0.5s;
+$duration: 0.7s;
 .transition {
   overflow: hidden;
 }

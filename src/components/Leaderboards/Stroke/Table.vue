@@ -7,7 +7,7 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr @click="preview ? null : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
+      <tr @click="props.expanded = !props.expanded">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">
           {{ props.item.attributes.username }}
@@ -15,9 +15,9 @@
           <span class="grey--text">handicap {{ props.item.attributes.handicap }}</span>
         </td>
         <td class="text-xs-center">{{ props.item.attributes.total_score }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ props.item.attributes.rnd1_score }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ props.item.attributes.rnd2_score }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ props.item.attributes.rnd3_score }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.rnd1_score }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.rnd2_score }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.rnd3_score }}</td>
         <td class="text-xs-center">{{ props.item.attributes.net_total }}</td>
       </tr>
     </template>
@@ -75,7 +75,6 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Table',
-  props: ['preview'],
   computed: {
     ...mapState(['strokeLeaderboard']),
   },
@@ -87,77 +86,73 @@ export default {
           text: 'Pos',
           align: 'center',
           sortable: false,
-          value: 'pos'
+          value: 'pos',
+          class: 'sticky-header'
         },
         {
           text: 'Players',
           align: 'left',
           sortable: false,
-          value: 'username'
+          value: 'username',
+          class: 'sticky-header'
         },
         {
           text: 'Total',
           align: 'center',
           sortable: false,
-          value: 'total_score'
+          value: 'total_score',
+          class: 'stroke-row sticky-header'
         },
         {
           text: 'R1',
           align: 'center',
           sortable: false,
           value: 'rnd1_score',
-          class: 'stroke-row hidden_row'
+          class: 'stroke-row sticky-header'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd2_score',
-          class: "stroke-row hidden_row"
+          class: "stroke-row sticky-header"
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
           value: 'rnd3_score',
-          class: 'stroke-row hidden_row'
+          class: 'stroke-row stiky-header'
         },
         {
           text: 'Score',
           align: 'center',
           sortable: false,
-          value: 'net_total'
+          value: 'net_total sticky-header'
         }
       ],
     }
   },
-
   methods: {
-    displayRow: function (props) {
-      let klass;
-      if (this.preview) {
-        klass = props.index < 3 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
-      } else {
-        klass = ''
+    onMutate () {
+      let height = 0
+      const toolbar = this.$refs.toolbar
+      if (toolbar) {
+        height = `${toolbar.$el.offsetHeight}px`
       }
-      return klass
-    },
-  },
-
-  watch: {
-    preview () {
-      let array = [0, 1, 2];
-      let hdrs = document.getElementsByClassName('stroke-row');
-      array.map(num => hdrs[num].classList.toggle('hidden_row'));
+      document.documentElement.style.setProperty('--headerHeight', height)
     }
   },
-
-  created () {
+  mounted () {
+    this.onMutate()
   }
-
 }
 </script>
 <style>
+.v-data-table /deep/ .sticky-header {
+  position: sticky;
+  top: 0;
+}
 .stroke-percent {
   font-weight: normal;
   color: #2E2F2F;
@@ -170,9 +165,6 @@ export default {
   overflow:hidden;
   border-radius: 0 0 20px 20px;
   transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-.hidden_row {
-  display: none;
 }
 .stroke-table table.theme--light thead {
   background-color: #9FB8CE;

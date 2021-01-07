@@ -3,7 +3,7 @@
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
         <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;">Leaderboards</h2>
-        <v-container>
+        <v-container transition="slide-x-reverse-transition">
           <v-layout row>
             <v-flex xs6 ma-2>
               <v-layout column>
@@ -19,8 +19,6 @@
                 <putting-button :current="current" />
 
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
-
-                <stroke-button />
               </v-layout>
             </v-flex>
           </v-layout>

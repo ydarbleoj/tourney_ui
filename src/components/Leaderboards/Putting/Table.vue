@@ -7,13 +7,13 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props" >
-      <tr @click="preview ? null : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
+      <tr @click="props.expanded = !props.expanded">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">{{ props.item.attributes.username }}</td>
         <td class="text-xs-center">{{ props.item.attributes.total_3_putts }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ props.item.attributes.rnd1_putts }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ props.item.attributes.rnd2_putts }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ props.item.attributes.rnd3_putts }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.rnd1_putts }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.rnd2_putts }}</td>
+        <td class="text-xs-center">{{ props.item.attributes.rnd3_putts }}</td>
         <td class="text-xs-center">{{ props.item.attributes.total_putts }}</td>
       </tr>
     </template>
@@ -97,21 +97,21 @@ export default {
           align: 'center',
           sortable: false,
           value: 'rnd1_putts',
-          class: 'putting-rounds hidden_row'
+          class: 'putting-rounds'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd2_putts',
-          class: 'putting-rounds hidden_row'
+          class: 'putting-rounds'
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
           value: 'rnd3_putts',
-          class: 'putting-rounds hidden_row'
+          class: 'putting-rounds'
         },
         {
           text: 'Total',
@@ -124,37 +124,9 @@ export default {
   },
 
   computed: mapState(['putting_leaderboard']),
-
-  methods: {
-    displayRow: function (props) {
-      let klass;
-      if (this.preview) {
-        klass = props.index < 3 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
-      } else {
-        klass = ''
-      }
-      return klass
-    },
-  },
-
-  watch: {
-    preview () {
-      let array = [0, 1, 2]
-      let headers = document.getElementsByClassName('putting-rounds');
-      array.map(num => headers[num].classList.toggle('hidden_row'))
-    }
-  },
-
-  mounted () {
-    console.log('this state', this.putting_leaderboard)
-  }
-
 }
 </script>
-<style>
-.hidden_row {
-  display: none;
-}
+<style scoped>
 .putting-percent {
   font-weight: normal;
   color: #2E2F2F;

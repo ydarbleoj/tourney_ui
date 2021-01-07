@@ -2,7 +2,7 @@
   <v-card
     @click="toStrokeleaderboard"
     rounded
-    class="lb-card bg-color pa-2"
+    class="lb-button bg-color pa-2"
   >
     <v-card-title class="pa-0">
       <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
@@ -76,7 +76,7 @@ export default {
 .bg-color {
   background-color: #9FB8CE;
 }
-.lb-card {
+.lb-button {
   border-radius: 20px;
   transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);

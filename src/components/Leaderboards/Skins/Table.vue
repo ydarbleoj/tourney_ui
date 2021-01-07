@@ -7,16 +7,16 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props" >
-      <tr @click="preview ? !props.expanded : props.expanded = !props.expanded" v-bind:class="displayRow(props)">
+      <tr @click="props.expanded = !props.expanded">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left">{{ props.item.attributes.username }}
           <v-spacer></v-spacer>
           <span class="grey--text">handicap {{ props.item.attributes.handicap }}</span>
         </td>
         <td class="text-xs-center">${{ props.item.attributes.skins_money ? props.item.attributes.skins_money.total : null }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_1')['total'] }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_2')['total'] }}</td>
-        <td v-bind:class="{ hidden_row : preview }" class="text-xs-center">{{ preview ? null : cardFilter(props.item.attributes.cards, 'round_3')['total'] }}</td>
+        <td class="text-xs-center">{{ cardFilter(props.item.attributes.cards, 'round_1')['total'] }}</td>
+        <td class="text-xs-center">{{ cardFilter(props.item.attributes.cards, 'round_2')['total'] }}</td>
+        <td class="text-xs-center">{{ cardFilter(props.item.attributes.cards, 'round_3')['total'] }}</td>
         <td class="text-xs-center">{{ props.item.attributes.total_skins }}</td>
       </tr>
     </template>
@@ -165,8 +165,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Table',
-  props: ['preview'],
-
   data () {
     return {
 
@@ -196,21 +194,21 @@ export default {
           text: 'R1',
           align: 'center',
           sortable: false,
-          class: 'skins-row white--text hidden_row',
+          class: 'skins-row white--text',
           value: 'rnd1'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
-          class: 'skins-row white--text hidden_row',
+          class: 'skins-row white--text',
           value: 'rnd2'
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
-          class: 'skins-row white--text hidden_row',
+          class: 'skins-row white--text',
           value: 'rnd3'
         },
         {
@@ -227,42 +225,24 @@ export default {
   computed: mapState(['skins_leaderboard']),
 
   methods: {
-    displayRow (props) {
-      let klass;
-      if (this.preview) {
-        klass = props.index < 3 || props.item.attributes.username == this.$auth.user().username ? '' : 'hidden_row'
-      } else {
-        klass = ''
-      }
-      return klass
-    },
     cardFilter (cards, rnd) {
       let nn = cards.filter(el => el[rnd])
       if (nn === undefined || !nn.length) return {};
       return nn[0][rnd]
 
-    },
-    checkIfPreview (props) {
-      this.preview ? null : props.expanded = !props.expanded
     }
   },
 
   watch: {
-    preview () {
-      let array = [0, 1, 2]
-      let headers = document.getElementsByClassName('skins-row');
-      array.map(num => headers[num].classList.toggle('hidden_row'))
-    }
   },
 
   created: function (current) {
-    // console.log('skins leaderboards', this.skins_leaderboard)
   }
 
 
 }
 </script>
-<style>
+<style scoped>
 .skins-total {
   color: #FFCB47;
 }

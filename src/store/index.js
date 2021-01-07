@@ -17,7 +17,11 @@ const store = new Vuex.Store({
   strict: true,
   plugins: [
     createPersistedState({
-      paths: ['tournament', 'login', 'profile', 'tounament/admin'],
+      paths: [
+        'tournament', 'login', 'profile', 'tournament/admin',
+        'currentTournament',
+        '/tournament/:id/leaderboards/putting'
+      ],
     })
 
   ],
@@ -281,7 +285,6 @@ const store = new Vuex.Store({
       state.handicapMessage = list
     },
     SET_SKINS_LEADERBOARD: (state, { list }) => {
-      console.log("state", list.data)
       Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {

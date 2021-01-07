@@ -1,32 +1,40 @@
 <template>
-  <v-container id="round-container" class="pa-0" ref="roundCardContainer">
+  <v-container fluid color="pink">
     <v-layout row wrap>
-      <v-flex xs12 sm12 lg12>
-        <h2 class="text-xs-left font-weight-regular pl-0 mb-3" style="margin-left: 5%;" v-if="isPreview">Round Info</h2>
-        <v-tabs
-          v-model="model"
-          color="transparent"
-          centered
-          v-if="isLoaded"
-          height="0px"
-           v-touch="{
-            left: () => swipe('Left'),
-            right: () => swipe('Right'),
-          }"
-        >
+      <v-card width="100%" flat>
+        <v-toolbar flat color="transparent">
+          <template v-slot:extension>
+            <v-tabs
+              v-model="model"
+              color=""
+              centered
+            >
+              <v-tabs-slider color="transparent"></v-tabs-slider>
+              <v-tab
+                v-for="i in items"
+                :key="i"
+                class="pl-2 pr-2"
+              >
+                RND {{ i }}
+              </v-tab>
+            </v-tabs>
+          </template>
+        </v-toolbar>
+        <v-tabs-items v-model="model">
           <v-tab-item
             v-for="i in roundComps"
             :key="i['id']"
-            style="width: 90vw;margin: 0 auto;"
+            hide-on-leave
           >
-            <course :course="i"  @event="courseToggle(this)" />
+            <course :course="i" />
             <v-spacer class="mt-4 round-spacer"></v-spacer>
             <div id="scorecard-scroll">
-              <scorecard :current="current" :roundId="i" @open="isOpen" v-if="currentRound === i['attributes']['round_number']" />
+              <scorecard :current="current" :roundId="i" v-if="currentRound === i['attributes']['round_number']" />
             </div>
           </v-tab-item>
-        </v-tabs>
-      </v-flex>
+        </v-tabs-items>
+      </v-card>
+
     </v-layout>
   </v-container>
 </template>
@@ -51,6 +59,7 @@ export default {
       swipeDirection: 'None',
       rndNum: 1,
       model: 'tab-stroke',
+      items: ['1', '2', '3'],
       roundComps: [],
       windowSize: {
         x: 0,
@@ -77,9 +86,6 @@ export default {
     },
     onResize () {
       this.windowSize = { x: this.$el.innerWidth, y: this.$el.innerHeight }
-    },
-    isOpen () {
-      this.courseToggle(this)
     },
     swipe (direction) {
       let rnd = this.currentRound
