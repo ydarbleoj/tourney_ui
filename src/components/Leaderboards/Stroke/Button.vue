@@ -7,9 +7,6 @@
     <v-card-title class="pa-0">
       <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
     </v-card-title>
-    <div class="text-xs-left">
-      <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
-    </div>
     <div class="text-xs-right">
       <h5 class="white--text font-weight-regular">Total</h5>
     </div>
@@ -45,9 +42,7 @@ export default {
   },
   data () {
     return {
-      isloading: true,
-      isPreview: true,
-      purse: 0
+      isloading: true
     }
   },
   methods: {
@@ -59,14 +54,13 @@ export default {
     current () {
       this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
         .then(response => {
-          this.loading = false
+          this.isloading = false
         })
     }
   },
   created: function () {
     this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
-        this.purse = this.current.num_players * 30
         this.isloading = false
       })
   },

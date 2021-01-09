@@ -7,9 +7,6 @@
     <v-card-title class="pa-0">
       <h2 class="text-xs-left font-weight-medium">Skins</h2>
     </v-card-title>
-    <div class="text-xs-left">
-      <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
-    </div>
     <div class="text-xs-right">
       <h5 class="white--text font-weight-regular">Total</h5>
     </div>
@@ -66,7 +63,6 @@ export default {
   created: function () {
      this.$store.dispatch('LOAD_SKINS', { id: this.current.id, preview: true })
       .then(response => {
-        this.purse = this.current.num_players * 30
         this.isloading = false
       })
   },

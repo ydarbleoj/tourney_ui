@@ -1,36 +1,26 @@
 <template>
-  <v-card class="course-card">
+  <v-card class="course-card" @click="coursePage">
     <v-img
       :src="'/static/' + this.course['attributes']['new_course_id'] + 'course.jpg'"
       height='200px'
       class="course-header"
       ref="courseHeader"
     >
-      <v-container fill-height pa-0>
+      <v-container fill-height pa-0 class=''>
         <v-layout>
-          <v-flex xs7 flexbox>
-            <div class="headline white--text mt-5">Round {{ this.course['attributes']['round_number'] }} </div>
-            <span class="headline white--text">{{ this.course['attributes']['name'] }}</span>
-            <div class="white--text">
-              {{ this.course['attributes']['tee'] }} -
-              {{ this.course['attributes']['rating'] }} /
-              {{ this.course['attributes']['slope'] }}
-            </div>
-            <div class="white--text">
-              par: {{ this.course['attributes']['par'] }}
-            </div>
-          </v-flex>
-          <v-flex class="pa-0 mt-3">
-            <div class="text-xs-right">
-              <span v-if="!preview" class="text-xs-right mr-3" @click="closeCourse()">
-                <v-icon color="white">clear</v-icon>
-              </span>
-            </div>
+          <v-flex xs6 class="pa-0">
             <div style='height:100%;'>
               <v-layout v-if="preview" align-end row style="width:100%;height:inherit;">
-                <v-flex xs12 class="text-xs-center white--text">
-                  <v-icon color="white" >access_time</v-icon>
-                  <h3 class="font-weight-medium">{{ roundGroup }}  -  {{ roundTime }}</h3>
+                <v-flex xs12 class="text-xs-center white--text ma-2">
+                  <h4>
+                    <v-icon color="white" >access_time</v-icon>
+                    <span class="font-weight-normal">
+                      {{ roundTime }}
+                    </span>
+                  </h4>
+                  <h3 class="white--text font-weight-normal">
+                    {{ this.course['attributes']['name'] }}
+                  </h3>
                 </v-flex>
               </v-layout>
             </div>
@@ -38,21 +28,15 @@
         </v-layout>
       </v-container>
     </v-img>
-    <v-card-text style="background-color:white;" transition="slide-x-transition" v-if="!preview">
-      <stats :roundId="rndId" />
-    </v-card-text>
   </v-card>
 </template>
-
 <script>
 import { mapState } from 'vuex'
-import Stats from './Stats/index'
 
 export default {
-  name: 'index',
+  name: 'Button',
   props: ['course'],
   components: {
-    Stats,
   },
 
   data () {

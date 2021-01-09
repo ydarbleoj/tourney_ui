@@ -1,47 +1,39 @@
 <template>
-  <v-container fluid color="pink">
-    <v-layout row wrap>
-      <v-card width="100%" flat>
-        <v-toolbar flat color="transparent">
-          <template v-slot:extension>
-            <v-tabs
-              v-model="model"
-              color=""
-              centered
-            >
-              <v-tabs-slider color="transparent"></v-tabs-slider>
-              <v-tab
-                v-for="i in items"
-                :key="i"
-                class="pl-2 pr-2"
-              >
-                RND {{ i }}
-              </v-tab>
-            </v-tabs>
-          </template>
-        </v-toolbar>
-        <v-tabs-items v-model="model">
-          <v-tab-item
-            v-for="i in roundComps"
-            :key="i['id']"
-            transition="fade-transition"
-            reverse-transition="fade-transition"
+  <v-card width="100%" flat class="ma-4">
+    <v-toolbar flat color="transparent">
+      <template v-slot:extension>
+        <v-tabs
+          v-model="tab"
+          centered
+        >
+          <v-tabs-slider color="transparent"></v-tabs-slider>
+          <v-tab
+            v-for="i in items"
+            :key="i"
+            class="pl-2 pr-2"
           >
-            <course :course="i" />
-            <v-spacer class="mt-4 round-spacer"></v-spacer>
-            <div id="scorecard-scroll">
-              <scorecard :current="current" :roundId="i" v-if="currentRound === i['attributes']['round_number']" />
-            </div>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-card>
-
-    </v-layout>
-  </v-container>
+            round {{ i }}
+          </v-tab>
+        </v-tabs>
+      </template>
+    </v-toolbar>
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+        v-for="i in roundComps"
+        :key="i['id']"
+        transition="fade-transition"
+        reverse-transition="fade-transition"
+      >
+        <course-button :course="i" />
+        <v-spacer class="mt-4 round-spacer"></v-spacer>
+        <!-- <scorecard :current="current" :roundId="i" v-if="currentRound === i['attributes']['round_number']" /> -->
+      </v-tab-item>
+    </v-tabs-items>
+  </v-card>
 </template>
 
 <script>
-import Course from '../components/Course/index'
+import CourseButton from '../components/Course/Button'
 import Scorecard from '../components/Scorecard/index'
 import { mapState, mapMutations } from 'vuex'
 
@@ -49,17 +41,16 @@ export default {
   name: 'Rounds',
   props: ['current'],
   components: {
-    Course,
+    CourseButton,
     Scorecard,
   },
 
   data () {
     return {
-      isLoaded: false,
-      isPreview: true,
+      isLoading: false,
       swipeDirection: 'None',
       rndNum: 1,
-      model: 'tab-stroke',
+      tab: null,
       items: ['1', '2', '3'],
       roundComps: [],
       windowSize: {
@@ -76,53 +67,9 @@ export default {
   },
 
   methods: {
-    origPosition (card) {
-      let position = {
-        top: card.getBoundingClientRect().top,
-        left: card.getBoundingClientRect().left,
-        bottom: card.getBoundingClientRect().bottom,
-        scbottom: screen.bottom,
-      }
-      this.cardPos = Object.assign(position);
-    },
-    onResize () {
-      this.windowSize = { x: this.$el.innerWidth, y: this.$el.innerHeight }
-    },
-    swipe (direction) {
-      let rnd = this.currentRound
-      if (direction != 'Left' && rnd == 1) return
-      let num = direction == 'Left' ? rnd + 1 : rnd - 1
-      this.swipeDirection = direction
-      this.updateRound(num)
-    },
     updateRound (num) {
       this.$store.commit('SET_CURRENT_ROUND',{ list: num })
-    },
-    courseToggle (event) {
-      let card = this.$refs.roundCardContainer
-      this.isPreview = !this.isPreview
-      this.origPosition(card)
-      this.expandParent(card)
-      this.$el.classList.toggle('open')
-    },
-    expandParent (card) {
-      let isPrev = this.isPreview
-      card.style.zIndex = isPrev ? 1 : 9999;
-      card.style.position = isPrev ? 'relative' : 'fixed';
-      card.style.minHeight = isPrev ? '' : '100vh';
-      card.style.top = isPrev ? '' : 0;
-      card.style.padding = isPrev ? '16px 0' : '0';
-      card.style.margin = isPrev ? '4px 0' : '0';
-      card.style.left = isPrev ? '' : 0;
-      document.getElementsByClassName('round-spacer')[0].classList.toggle('hide')
-    },
-    options () {
-      return {
-        duration: this.duration,
-        offset: this.offset,
-        easing: this.easing
-      }
-    },
+    }
   },
 
   watch: {
@@ -130,7 +77,7 @@ export default {
       this.roundComps = []
       this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
         .then(response => {
-          this.loading = false
+          this.isloading = false
           this.roundComps = this.rounds
         })
     }
@@ -139,27 +86,14 @@ export default {
   created: function (current) {
     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
       .then(response => {
-        this.isLoaded = true
+        this.isloading = true
         this.roundComps = this.rounds
       })
   },
-
-  mounted () {
-    this.onResize()
-  }
 }
 </script>
-<style>
-.hide {
-  display: none;
-}
+<style lang="scss" scoped>
 #round-container {
-  margin: 4px 0;
-  position: relative;
-}
-#round-container .open {
-  z-index: 9999 !important;
-  position: fixed;
   width: 100%;
   bottom: 0;
   left: 0;
@@ -168,55 +102,8 @@ export default {
   margin: 0;
   overflow: scroll;
 }
-.open {
-  height: 100vh;
-  top: 0;
-  left: 0;
-  position: fixed;
-  z-index: 1000;
-  overflow: scroll;
+.fade-transition-enter-active, .fade-transition-leave-active {
+  transition: .5s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
-.mint-swipe-item .is-active .open {
-  margin: 0;
-  padding: 0;
-}
-.mint-swipe-items-wrap>div {
-  padding-top: 20px;
-  position: relative;
-}
-.mint-swipe .my-swipe {
-  padding-top: 20px;
-  color: #fff;
-  font-size: 30px;
-  text-align: center;
-}
-.mint-swipe .my-swipe .open {
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-  margin: 0;
-}
-.rnd1 {
-  color: white;
-}
-.expand {
-  top: 0;
-  left: 0;
-  padding: 0;
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
-}
-.slide-enter-active, .slide-leave-active {
-  transition: all .8s ease-out;
-}
-
-.slide-enter, .slide-leave-to {
-  transition: all .8s ease-out;
-}
-
-.slide-enter-to, .slide-leave {
-  transition: all .8s ease-out;
-}
-
 </style>
 

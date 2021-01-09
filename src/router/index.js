@@ -10,7 +10,6 @@ import TournamentDashboard from '@/components/Tournament/Dashboard'
 import AcceptInvite from '@/components/Tournament/AcceptInvite'
 import StrokeLeaderboard from '@/components/Leaderboards/Stroke/index'
 import PuttingLeaderboard from '@/components/Leaderboards/Putting/index'
-import Rounds from '@/components/Rounds'
 import Course from '@/components/Course/index'
 import ResetPassword from '@/components/ResetPassword'
 import ForgotPassword from '@/components/ForgotPassword'
@@ -124,6 +123,20 @@ const router = new Router({
       path: '/tournament/:id/leaderboards/putting',
       name: "PuttingLeaderboard",
       component: PuttingLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/course/:name',
+      name: "Course",
+      component: Course,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/scorecard/:course_name',
+      name: "Scorecard",
+      component: Scorecard,
       props: { default: true },
       meta: { auth: true }
     }

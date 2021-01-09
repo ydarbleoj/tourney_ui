@@ -7,9 +7,6 @@
     <v-card-title class="pa-0">
       <h2 class="text-xs-left font-weight-medium" >Putting</h2>
     </v-card-title>
-    <div class="text-xs-left">
-      <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
-    </div>
     <div class="text-xs-right">
       <h5 class="black--text font-weight-regular">Total</h5>
     </div>
@@ -46,8 +43,7 @@ export default {
   data () {
     return {
       isloading: true,
-      isPreview: true,
-      purse: 0
+      isPreview: true
     }
   },
   methods: {
@@ -59,15 +55,13 @@ export default {
     current: function () {
       this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
         .then(response => {
-          this.purse = this.puttingPurse
-          this.loading = false
+          this.isloading = false
         })
     }
   },
   created: function () {
     this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
       .then(response => {
-        this.purse = this.puttingPurse
         this.isloading = false
       })
   }
