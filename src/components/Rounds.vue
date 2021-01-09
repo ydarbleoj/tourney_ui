@@ -24,7 +24,8 @@
           <v-tab-item
             v-for="i in roundComps"
             :key="i['id']"
-            hide-on-leave
+            transition="fade-transition"
+            reverse-transition="fade-transition"
           >
             <course :course="i" />
             <v-spacer class="mt-4 round-spacer"></v-spacer>
