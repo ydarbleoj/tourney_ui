@@ -14,9 +14,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "express": "*",
-    "body-parser": "*",
+    "@mdi/font": "^5.9.55",
     "@websanova/vue-auth": "^2.20.4-beta",
+    "body-parser": "*",
+    "express": "*",
     "js-cookie": "^2.2.0",
     "vue": "^2.5.10",
     "vue-axios": "^2.0.2",
