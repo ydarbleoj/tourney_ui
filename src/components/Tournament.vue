@@ -44,7 +44,6 @@
               </v-list-tile>
             </v-list>
           </v-menu>
-
         </v-flex>
       </v-layout>
       <v-layout row wrap>

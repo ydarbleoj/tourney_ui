@@ -11,6 +11,7 @@
             v-for="i in items"
             :key="i"
             class="pl-2 pr-2"
+            @click="updateRound(i)"
           >
             round {{ i }}
           </v-tab>
@@ -24,6 +25,7 @@
         transition="fade-transition"
         reverse-transition="fade-transition"
       >
+
         <course-button :course="i" />
         <v-spacer class="mt-4 round-spacer"></v-spacer>
         <!-- <scorecard :current="current" :roundId="i" v-if="currentRound === i['attributes']['round_number']" /> -->
@@ -49,9 +51,8 @@ export default {
     return {
       isLoading: false,
       swipeDirection: 'None',
-      rndNum: 1,
       tab: null,
-      items: ['1', '2', '3'],
+      items: [1, 2, 3],
       roundComps: [],
       windowSize: {
         x: 0,
@@ -68,7 +69,8 @@ export default {
 
   methods: {
     updateRound (num) {
-      this.$store.commit('SET_CURRENT_ROUND',{ list: num })
+      console.log('crreut', num)
+      this.$store.commit('SET_CURRENT_ROUND',{ list: this.rounds[num - 1] })
     }
   },
 
@@ -84,6 +86,7 @@ export default {
   },
 
   created: function (current) {
+    console.log('crruent', this.currentRound)
     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
       .then(response => {
         this.isloading = true

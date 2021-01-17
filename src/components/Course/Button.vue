@@ -10,7 +10,7 @@
         <v-layout>
           <v-flex xs6 class="pa-0">
             <div style='height:100%;'>
-              <v-layout v-if="preview" align-end row style="width:100%;height:inherit;">
+              <v-layout align-end row style="width:100%;height:inherit;">
                 <v-flex xs12 class="text-xs-center white--text ma-2">
                   <h4>
                     <v-icon color="white" >access_time</v-icon>
@@ -19,7 +19,7 @@
                     </span>
                   </h4>
                   <h3 class="white--text font-weight-normal">
-                    {{ this.course['attributes']['name'] }}
+                    {{ courseName }}
                   </h3>
                 </v-flex>
               </v-layout>
@@ -36,28 +36,17 @@ import { mapState } from 'vuex'
 export default {
   name: 'Button',
   props: ['course'],
-  components: {
-  },
-
   data () {
     return {
-      isPreview: true,
-      preview: true,
-      show: false,
       rndId: this.course.id,
       roundTime: '',
-      roundGroup: ''
+      courseName: ''
     }
   },
-
   computed: {
-    ...mapState(['userTeeTimes'])
+    ...mapState(['userTeeTimes', 'currentTournament', 'currentRound'])
   },
-
   methods: {
-    closeCourse () {
-      this.preview = !this.preview
-    },
     filterTeeTime (rndNum, list) {
       let n = list.filter(el => el.attributes.round_number === rndNum)
       if (n === undefined || !n.length) return '';
@@ -68,40 +57,39 @@ export default {
       this.$router.push(
         {
           name: 'Course',
-          params: { id: this.current.id, name: this.course.name }
+          params: {
+            id: this.currentTournament.id,
+            name: this.courseName.split(' ').join('_')
+          }
         }
       )
     }
-
   },
-
   watch: {
     course: function () {
-      this.$store.dispatch('course/LOAD_COURSE', { tourn_id: this.currentTournament.id, id: this.currentRound.course_id, roundNumber: this.currentRound.round_id })
-    },
-    preview () {
-      this.isPreview = !this.isPreview
-      this.$el.classList.toggle('open')
+      this.$store.dispatch(
+        'course/LOAD_COURSE', {
+          tourn_id: this.currentTournament.id,
+          id: this.currentRound.course_id,
+          roundNumber: this.currentRound.round_id
+        }
+      )
     }
   },
-
   created: function () {
-    let rndNum = this.course['attributes']['round_number']
+    let course = this.course['attributes']
+    let rndNum = course['round_number']
     let times = this.userTeeTimes
     let t = this.filterTeeTime(rndNum, times)
 
     if (t === undefined) return false;
 
+    this.courseName = course['name']
     this.roundTime = t.tee_time
-    this.roundGroup = 'Group ' + t.group
   }
-
 }
 </script>
-<style>
-.hide {
-  display: none;
-}
+<style scoped>
 .course-card {
   position: relative;
   border-radius: 20px;
@@ -109,34 +97,5 @@ export default {
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
   background-color: #FBFCFD;
   z-index: 1;
-}
-.course-card.open {
-  width: 100%;
-  position: absolute;
-  border-radius: 0;
-  top: 0;
-  left: 0;
-  z-index: 1000 !important;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
-
-}
-div.flex.tee-time-container {
-  /*background-color: rgba(153, 153, 153, .4);*/
-  background-color: rgba(98, 188, 250, .4);
-}
-.card, .tee-times {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-.slide-fade-enter-active {
-  transition: all .8s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s ease;
-  opacity: 0;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(20px);
-  opacity: 0;
 }
 </style>

@@ -19,8 +19,7 @@ const store = new Vuex.Store({
     createPersistedState({
       paths: [
         'tournament', 'login', 'profile', 'tournament/admin',
-        'currentTournament',
-        '/tournament/:id/leaderboards/putting'
+        'currentTournament', 'rounds'
       ],
     })
 
@@ -32,9 +31,6 @@ const store = new Vuex.Store({
     tournamentPlayers: [],
     courses: [],
     rounds: [],
-    roundOne: {},
-    roundTwo: {},
-    roundThree: {},
     tournaments: [],
     currentTournament: [],
     strokeLeaderboard: [],
@@ -43,7 +39,7 @@ const store = new Vuex.Store({
     puttingPurse: 0,
     teamLeaderboard: [],
     teamRounds: [],
-    currentRound: null,
+    currentRound: 1,
     teeTime: [],
     userTeeTimes: [],
     awaitingTees: [],
@@ -288,11 +284,7 @@ const store = new Vuex.Store({
       Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {
-
-      state.currentRound = 1
-      // state.roundOne = list.data[0]
-      // state.roundTwo = list.data[1]
-      // state.roundThree = list.data[2]
+      Vue.set(state, 'currentRound', JSON.parse(list).data[0])
       Vue.set(state, 'rounds', JSON.parse(list).data)
     },
     SET_USER_TEE_TIMES: (state, { list }) => {
@@ -344,7 +336,6 @@ const store = new Vuex.Store({
       Vue.set(state, 'teamRounds', list.attributes.round_info)
     },
     SET_TEAM_LEADERBOARD: (state, { list }) => {
-      console.log('tema a', list)
       state.teamLeaderboard = list.data
     },
     SET_MONEY_LIST: (state, { list }) => {
@@ -354,6 +345,9 @@ const store = new Vuex.Store({
   getters: {
     openNewCourses: state => {
       return state.courses
+    },
+    getRound: state => {
+      return state.currentRound
     },
     getStrokeLeaderboard: state => {
       return state.strokeLeaderboard

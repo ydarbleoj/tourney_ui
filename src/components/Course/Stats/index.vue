@@ -1,8 +1,5 @@
 <template>
-  <v-card flat v-if="loading" class="white elevation-1" color="white">
-    loading...
-  </v-card>
-  <v-card flat v-else="!loading">
+  <v-card flat>
     <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
       <v-layout row wrap>
         <v-flex xs12 style="">
@@ -72,7 +69,6 @@ export default {
   created: function () {
     this.$store.dispatch('course/LOAD_COURSE_STATS', { tournId: this.currentTournament.id, roundId: this.roundId, })
       .then(response => {
-        console.log('ksldfj', this.courseStats)
         let data = this.courseStats.included
         this.overallData = Object.assign(this.filterType(data, 'round_agg'))
         this.courseData = Object.assign(this.filterType(data, 'course_agg'))
@@ -84,9 +80,6 @@ export default {
 <style>
 .scoring--stats {
   transition: opacity 1s ease, box-shadow 1s ease;
-}
-label.score-label {
-
 }
 .record {
   color: #F8C977;
