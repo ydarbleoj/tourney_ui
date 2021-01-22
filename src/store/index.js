@@ -19,7 +19,7 @@ const store = new Vuex.Store({
     createPersistedState({
       paths: [
         'tournament', 'login', 'profile', 'tournament/admin',
-        'currentTournament', 'rounds'
+        'currentTournament', 'rounds', 'courseStats', 'currentRound'
       ],
     })
 

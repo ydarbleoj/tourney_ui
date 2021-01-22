@@ -2,8 +2,11 @@
   <v-card flat v-if="loading" class="white" color="white">
     loading...
   </v-card>
-  <v-card flat v-else style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
+  <v-card flat v-else >
+    <v-container fluid pa-0
+     class="font-weight-regular mb-4 mt-4"
+     style="height:inherit;"
+    >
       <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">
         Hole Rankings
       </h4>

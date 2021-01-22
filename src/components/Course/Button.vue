@@ -4,7 +4,6 @@
       :src="'/static/' + this.course['attributes']['new_course_id'] + 'course.jpg'"
       height='200px'
       class="course-header"
-      ref="courseHeader"
     >
       <v-container fill-height pa-0 class=''>
         <v-layout>
@@ -59,7 +58,7 @@ export default {
           name: 'Course',
           params: {
             id: this.currentTournament.id,
-            name: this.courseName.split(' ').join('_')
+            course_id: this.course['attributes']['new_course_id']
           }
         }
       )

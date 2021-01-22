@@ -127,11 +127,11 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/tournament/:id/course/:name',
+      path: '/tournament/:id/course/:course_id',
       name: "Course",
       component: Course,
       props: { default: true },
-      meta: { auth: true }
+      meta: { auth: true, transitionName: 'pageTransition' }
     },
     {
       path: '/tournament/:id/scorecard/:course_name',

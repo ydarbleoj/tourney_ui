@@ -31,7 +31,7 @@ import {
   VImg,
 } from 'vuetify'
 import { Touch, Ripple } from 'vuetify/lib/directives'
-
+import '@mdi/font/css/materialdesignicons.css'
 import './stylus/main.styl'
 import App from './App'
 import router from './router'

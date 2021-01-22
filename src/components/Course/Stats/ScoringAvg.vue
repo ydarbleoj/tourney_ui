@@ -2,8 +2,11 @@
   <v-card flat v-if="loading" class="white" color="white">
     loading...
   </v-card>
-  <v-card flat v-else style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
+  <v-card flat v-else>
+    <v-container
+      fluid
+      class="font-weight-regular pa-4"
+    >
       <v-layout row wrap align-center>
         <v-flex xs12>
           <v-card flat class="white">

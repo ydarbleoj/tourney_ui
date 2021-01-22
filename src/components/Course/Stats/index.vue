@@ -1,20 +1,29 @@
 <template>
   <v-card flat>
+    <h2 class="font-weight-regular pt-3">
+      Course Statistics
+    </h2>
     <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
       <v-layout row wrap>
         <v-flex xs12 style="">
           <HcapDiff />
-           <v-divider style="background-color:;"></v-divider>
+          <v-divider style="background-color:;"></v-divider>
+
           <ScoringAvg />
           <v-divider style="background-color:;"></v-divider>
+
           <LowestScoring />
           <v-divider style="background-color:;"></v-divider>
+
           <PuttingAvg />
           <v-divider style="background-color:;"></v-divider>
+
           <ParAvgs pars="3"/>
           <v-divider style="background-color:;"></v-divider>
+
           <ParAvgs pars="4"/>
           <v-divider style="background-color:;"></v-divider>
+
           <ParAvgs pars="5"/>
           <v-divider style="background-color:;"></v-divider>
         </v-flex>

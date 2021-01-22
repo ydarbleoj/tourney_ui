@@ -3,15 +3,18 @@
     no, you're loading...
   </v-card>
   <v-card flat v-else>
+    <h3>
+      Course Statistics
+    </h3>
     <v-container fluid pa-0 class="font-weight-regular mb-3" style="height:inherit;">
       <v-layout row wrap>
-        <v-flex xs12 style="">
+        <v-flex xs12>
           <HcapDiff />
            <v-divider style="background-color:;"></v-divider>
           <ScoringAvg />
-          <v-divider style="background-color:;"></v-divider>
+          <v-divider class="mb-4" style="background-color:;"></v-divider>
           <PuttingAvg />
-          <v-divider style="background-color:;"></v-divider>
+          <v-divider class="mb-4" style="background-color:;"></v-divider>
           <CourseRanking />
           <v-divider style="background-color:;"></v-divider>
           <ParAvgs pars="3"/>

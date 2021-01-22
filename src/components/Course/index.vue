@@ -6,41 +6,61 @@
       class="course-header"
     >
       <v-container fill-height pa-0>
-        <v-row>
-          <v-flex xs12>
-            <v-btn
-              class="ma-2 back-button"
-              small
-              fab
-              color="transparent"
-            >
-              <span color="white">
-              go
-              </span>
-            </v-btn>
-            <!-- <h3 class="headline text-center white--text">{{ this.currentRound['attributes']['name'] }}</h3>
-            <span class="white--text mt-5">Round {{ this.currentRound['attributes']['round_number'] }} </span> -->
-
+        <v-btn
+          absolute
+          class="ma-2 back-button"
+          style="top:0;left:0;"
+          outline
+          color="white"
+          depressed
+          small
+          fab
+          @click="$router.back()"
+        >
+          <v-icon color="white">
+            mdi-chevron-left
+          </v-icon>
+        </v-btn>
+        <v-layout row align-end>
+          <v-flex xs12 ma-4>
+            <h3 class="headline ml-2 text-right white--text">
+              {{ this.currentRound['attributes']['name'] }}
+            </h3>
+            <h3 class="white--text ml-2 text-center">Round {{ this.currentRound['attributes']['round_number'] }} </h3>
           </v-flex>
-        </v-row>
-        <!-- <v-layout row>
-          <v-flex xs12>
-            <div class="white--text">
-              {{ this.currentRound['attributes']['tee'] }} -
-              {{ this.currentRound['attributes']['rating'] }} /
-              {{ this.currentRound['attributes']['slope'] }}
-            </div>
-            <div class="white--text">
-              par: {{ this.currentRound['attributes']['par'] }}
-            </div>
-
-          </v-flex>
-        </v-layout> -->
+        </v-layout>
       </v-container>
     </v-img>
     <v-card-text style="background-color:white;" transition="fade-transition">
+      <v-card flat class="mb-2 text-right">
+        <v-container>
+        <v-layout row>
+          <v-flex xs6>
+            <h2 class="font-weight-regular">Green Tees</h2>
+            <h3 class="font-weight-regular pa-2">
+              {{ this.currentRound['attributes']['yardage'] }}
+              <span class="grey--text font-weight-medium">yards</span>
+            </h3>
+          </v-flex>
+          <v-flex xs6>
+            <h2 class="font-weight-regular">
+              Par {{ this.currentRound['attributes']['par'] }}
+            </h2>
+            <h3 class="font-weight-regular pa-2">
+              {{ this.currentRound['attributes']['rating'] }} /
+              {{ this.currentRound['attributes']['slope'] }}
+            </h3>
+          </v-flex>
+        </v-layout>
+        </v-container>
+        <h3 class="font-weight-medium pr-2 pl-2 pb-4" style="color:#FFCB47">
+          Currently, ranked as the third most difficult.
+        </h3>
+      </v-card>
+      <v-divider class="mb-4" style="background-color:;"></v-divider>
       <stats
         :roundId="this.currentRound['attributes']['round_number']"
+        v-if="!isloading"
       />
     </v-card-text>
   </v-card>
@@ -61,12 +81,14 @@ export default {
     return {
       show: false,
       roundTime: '',
-      roundGroup: ''
+      roundGroup: '',
+      isloading: true,
+
     }
   },
 
   computed: {
-    ...mapState(['userTeeTimes', 'currentRound'])
+    ...mapState(['userTeeTimes', 'currentRound', 'currentTournament'])
   },
 
   methods: {
@@ -98,6 +120,16 @@ export default {
 
     this.roundTime = t.tee_time
     this.roundGroup = 'Group ' + t.group
+
+    this.$store.dispatch(
+      'course/LOAD_COURSE', {
+        tourn_id: this.currentTournament.id,
+        id: this.currentRound.course_id,
+        roundNumber: this.currentRound.round_id
+      }
+    ).then(response => {
+      this.isloading = false
+    })
   }
 }
 </script>
@@ -107,6 +139,7 @@ export default {
 }
 .back-button {
   border-color: white;
+  background-color: transparent;
 }
 .slide-fade-enter-active {
   /* transition: all .8s ease; */

@@ -2,8 +2,8 @@
   <v-card flat v-if="loading" class="white" color="white">
     loading...
   </v-card>
-  <v-card flat v-else style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+  <v-card flat v-else>
+    <v-container fluid pa-0 class="font-weight-regular mb-4 mt-4" style="height:inherit;">
       <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Hcap Differential</h4>
       <v-layout row wrap align-center>
         <v-flex xs12>

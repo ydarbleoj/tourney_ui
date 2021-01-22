@@ -1,12 +1,13 @@
 <template>
-  <v-card width="100%" flat class="ma-4">
+  <v-card width="100%" flat class="pl-4 pr-4 pt-4">
     <v-toolbar flat color="transparent">
-      <template v-slot:extension>
+      <template>
         <v-tabs
           v-model="tab"
           centered
+          class="pb-4"
         >
-          <v-tabs-slider color="transparent"></v-tabs-slider>
+          <v-tabs-slider class="tab-slider"></v-tabs-slider>
           <v-tab
             v-for="i in items"
             :key="i"
@@ -105,8 +106,17 @@ export default {
   margin: 0;
   overflow: scroll;
 }
+.tab-slider {
+  background-color: turquoise;
+  opacity: 0.7;
+  border-radius: 25px;
+  height: 48px;
+}
 .fade-transition-enter-active, .fade-transition-leave-active {
   transition: .5s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.v-ripple__container {
+    display:none !important;
 }
 </style>
 
