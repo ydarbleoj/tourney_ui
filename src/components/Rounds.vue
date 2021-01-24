@@ -29,7 +29,12 @@
 
         <course-button :course="i" />
         <v-spacer class="mt-4 round-spacer"></v-spacer>
-        <!-- <scorecard :current="current" :roundId="i" v-if="currentRound === i['attributes']['round_number']" /> -->
+        {{ i }}
+        <scorecard
+          :current="current"
+          :roundId="i"
+          v-if="currentRound === i['attributes']['round_number']"
+        />
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -37,7 +42,7 @@
 
 <script>
 import CourseButton from '../components/Course/Button'
-import Scorecard from '../components/Scorecard/index'
+import ScorecardButton from '../components/Scorecard/Button'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -45,7 +50,7 @@ export default {
   props: ['current'],
   components: {
     CourseButton,
-    Scorecard,
+    ScorecardButton,
   },
 
   data () {
@@ -114,9 +119,6 @@ export default {
 }
 .fade-transition-enter-active, .fade-transition-leave-active {
   transition: .5s cubic-bezier(0.25, 0.8, 0.5, 1);
-}
-.v-ripple__container {
-    display:none !important;
 }
 </style>
 
