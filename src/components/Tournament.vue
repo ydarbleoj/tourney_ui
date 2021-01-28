@@ -1,5 +1,5 @@
 <template>
-  <main style="height:100%;" class="tournament-wrapper" id="tourn-container">
+  <main style="height:100%;" class="tournament-wrapper"  id="tourn-container">
     <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
       <v-layout row wrap>
         <v-flex xs3 class="text-xs-left">
@@ -30,20 +30,7 @@
           </v-menu>
         </v-flex>
         <v-flex xs6>
-          <v-menu offset-y >
-            <v-btn color="#F8C977" flat slot="activator">
-              <h3 class="black--text font-weight-regular mr-1">Bandon</h3>
-              <h3
-                class="black--text font-weight-medium"
-                style="border-bottom:1px solid #F8C977"
-              >{{ this.currentTournament.year }}</h3>
-            </v-btn>
-            <v-list>
-              <v-list-tile v-for="item in items" :key="item['id']" @click="updateTournament(item)">
-                <v-list-tile-title style="color:#F8C977" class="text-xs-right">{{ item.attributes.year }}</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <tournament-menu />
         </v-flex>
       </v-layout>
       <v-layout row wrap>
@@ -61,6 +48,7 @@ import Handicap from '../components/Leaderboards/Handicap'
 import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
 import Stats from '../components/Stats/index'
+import TournamentMenu from '../components/TournamentMenu'
 
 export default {
   name: 'Tournament',
@@ -68,7 +56,8 @@ export default {
     Handicap,
     Leaderboards,
     Rounds,
-    Stats
+    Stats,
+    TournamentMenu
   },
   computed: {
     ...mapState(['tournaments', 'currentTournament', 'currentRound']),

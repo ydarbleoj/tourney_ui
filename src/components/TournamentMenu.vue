@@ -1,12 +1,45 @@
 <template>
-  <v-card flat height="56px">
-    <v-list>
-      <v-list-tile v-for="item in tournaments" :key="item" @click="updateMenu(item)">
-        <v-list-tile-title>Bandon {{ item.attributes.year }}</v-list-tile-title>
-      </v-list-tile>
-    </v-list>
+  <v-card flat class="tournament-menu-card">
+    <v-card-title>
+      <h1 class="black--text font-weight-regular mr-1">
+        Bandon
+      </h1>
+      <h3
+        class="black--text font-weight-medium"
+        style="border-bottom:1px solid #F8C977"
+        @click="openMenu"
+      >
+        {{ this.currentTournament.year }}
+      </h3>
+    </v-card-title>
+    <v-card-text v-if="open">
+      <v-card
+        v-bind:class="{ overlay: open }"
+        class="d-flex align-end flex-column overlay"
+        flat
+      >
+        <v-flex xs12 pr-2>
+          <v-card
+            v-for="item in items"
+            class="flex xs12 pt-4 pb-4 pr-5 text-xs-right"
+            :key="item['id']"
+            @click="updateTournament(item)"
+            flat
+            transition="fade"
+            reverse-trasition="fade"
+          >
+            <h1
+              style="font-size:35px;"
+              class="font-weight-regular"
+              v-bind:class="{ active: isActive(item.attributes.year) }"
+            >
+              {{ item.attributes.year }}
+            </h1>
+          </v-card>
+        </v-flex>
+      </v-card>
+    </v-card-text>
     <v-spacer></v-spacer>
-
   </v-card>
 </template>
 
@@ -15,9 +48,6 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'TournamentMenu',
-  props: ['tourns'],
-  components: {
-  },
   computed: {
     ...mapState(['tournaments', 'currentTournament']),
     ...mapGetters(['getTournament', 'getTournaments'])
@@ -25,39 +55,66 @@ export default {
 
   data () {
     return {
-
-      items: [],
+      open: false,
+      loading: false,
+      overlay: 'overlay',
+      active: 'active',
+      items: []
     }
   },
 
   methods: {
-    updateMenu: function(event) {
-      let nn = this.tournaments.filter(tourn => tourn.attributes.year == event.attributes.year)[0]
-
-      this.current = nn.attributes
-      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', this.current)
+    openMenu () {
+      this.open = true
     },
-    visibilityChanged (isVisible, entry) {
-      this.isVisible = isVisible
-    }
-  },
-
-  watch: {
-    current: function () {
-      this.year = this.current.year
-    }
+    isActive (year) {
+      return year === this.currentTournament.year
+    },
+    updateItemsList () {
+      let tourns = this.tournaments.slice().reverse()
+      this.items = tourns
+    },
+    updateTournament (item) {
+      this.loading = true
+      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', item)
+        .then(response => {
+          this.loading = false
+          this.open = false
+        })
+    },
   },
 
   created: function () {
     this.$store.dispatch('LOAD_TOURNAMENT_LIST')
-  },
-
-  mounted: function() {
-    // this.items = this.tournaments
+    this.updateItemsList()
   }
 }
 
 </script>
 <style>
-
+.tournament-menu-card {
+  position: relative;
+  height: 60px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  z-index: 10;
+  background-color: #F8C977;
+}
+.active {
+  color: #F8C977;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

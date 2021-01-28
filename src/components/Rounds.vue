@@ -26,7 +26,6 @@
         transition="fade-transition"
         reverse-transition="fade-transition"
       >
-
         <course-button :course="i" />
         <v-spacer class="mt-4 round-spacer"></v-spacer>
         {{ i }}
