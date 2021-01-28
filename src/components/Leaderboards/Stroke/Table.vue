@@ -67,11 +67,10 @@
       </v-layout>
     </template>
   </v-data-table>
-
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Table',
@@ -87,48 +86,45 @@ export default {
           align: 'center',
           sortable: false,
           value: 'pos',
-          class: 'sticky-header'
         },
         {
           text: 'Players',
           align: 'left',
           sortable: false,
           value: 'username',
-          class: 'sticky-header'
         },
         {
           text: 'Total',
           align: 'center',
           sortable: false,
           value: 'total_score',
-          class: 'stroke-row sticky-header'
         },
         {
           text: 'R1',
           align: 'center',
           sortable: false,
           value: 'rnd1_score',
-          class: 'stroke-row sticky-header'
+          class: 'stroke-row'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd2_score',
-          class: "stroke-row sticky-header"
+          class: "stroke-row"
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
           value: 'rnd3_score',
-          class: 'stroke-row stiky-header'
+          class: 'stroke-row'
         },
         {
           text: 'Score',
           align: 'center',
           sortable: false,
-          value: 'net_total sticky-header'
+          value: 'net_total'
         }
       ],
     }
@@ -149,10 +145,6 @@ export default {
 }
 </script>
 <style>
-.v-data-table /deep/ .sticky-header {
-  position: sticky;
-  top: 0;
-}
 .stroke-percent {
   font-weight: normal;
   color: #2E2F2F;
@@ -163,7 +155,6 @@ export default {
 }
 .board-table {
   overflow:hidden;
-  border-radius: 0 0 20px 20px;
   transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .stroke-table table.theme--light thead {

@@ -8,10 +8,6 @@
     >
       <router-view class="transition"/>
     </transition>
-    <v-footer id="footer" style="background-color:white;height:50px;margin-top:5px;">
-      <v-spacer></v-spacer>
-      <div style="color:#999;opacity:0.5;" class="pa-4"> Tourney &copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
   </v-app>
 </template>
 

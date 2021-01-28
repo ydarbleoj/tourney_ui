@@ -2,18 +2,10 @@
   <v-card
     class="lb-card"
    >
-    <v-card-title class="stroke--title pa-0 pt-2 pl-2">
-      <h2 class="text-xs-left font-weight-medium" >Stroke</h2>
-      <h2 class="ml-2 font-weight-medium text-xs-left">Leaderboard</h2>
-      <v-spacer></v-spacer>
-      <span class="text-xs-right pr-2">
-        <v-icon color="white">clear</v-icon>
-      </span>
+    <v-card-title class="pa-0 pt-2 pl-2">
+      <Header :purse="strokePurse" :name="'Stroke'" />
     </v-card-title>
-    <div class="stroke--title text-xs-left pb-3 pl-2 pt-0">
-      <h4 class="black--text font-weight-regular">Purse $<span>{{ purse }}</span></h4>
-    </div>
-    <v-card-text v-if="!isloading" class="pa-0 mb-5">
+    <v-card-text v-if="!isloading" class="pa-0">
       <stroke-table />
     </v-card-text>
   </v-card>
@@ -21,17 +13,20 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import StrokeTable from './Table'
+import Header from '../Header'
 
 export default {
   name: 'index',
   props: ['current'],
   components: {
-    StrokeTable
+    StrokeTable,
+    Header
   },
   data () {
     return {
-      purse: 0,
-      isloading: true
+      strokePurse: 0,
+      isloading: true,
+      year: ""
     }
   },
 
@@ -54,13 +49,14 @@ export default {
   mounted: function () {
     this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.getTournament.id, preview: false })
       .then(response => {
-        this.purse = this.getTournament.num_players * 30
+        this.strokePurse = this.getTournament.num_players * 30
         this.isloading = false
+        this.year = this.getTournament.year
       })
   }
 }
 </script>
-<style>
+<style scoped>
 .lb-card {
   border-radius: 0;
   top: 0;
@@ -69,11 +65,8 @@ export default {
   height: 100vh;
   overflow: scroll;
   width: 100vw;
-  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-.stroke--title {
-  color: #f1f1f1;
   background-color: #9FB8CE;
+  color: #f1f1f1;
+  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 </style>

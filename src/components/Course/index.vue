@@ -6,21 +6,7 @@
       class="course-header"
     >
       <v-container fill-height pa-0>
-        <v-btn
-          absolute
-          class="ma-2 back-button"
-          style="top:0;left:0;"
-          outline
-          color="white"
-          depressed
-          small
-          fab
-          @click="$router.back()"
-        >
-          <v-icon color="white">
-            mdi-chevron-left
-          </v-icon>
-        </v-btn>
+        <BackButton />
         <v-layout row align-end>
           <v-flex xs12 ma-4>
             <h3 class="headline ml-2 text-right white--text">
@@ -69,12 +55,14 @@
 <script>
 import { mapState } from 'vuex'
 import Stats from './Stats/index'
+import BackButton from '../BackButton'
 
 export default {
   name: 'index',
   props: ['course'],
   components: {
-    Stats
+    Stats,
+    BackButton
   },
 
   data () {

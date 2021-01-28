@@ -2,9 +2,8 @@
   <v-card v-if="isLoaded" flat class="lb-scorecard scorecard_container" ref="scorecardCard">
     <v-card-title
       class="scorecard-card pa-0"
-      :class="{ openCard : !preview }"
     >
-      <v-container class="pa-0"  @click="toggleView(currentView); $vuetify.goTo(target, options)">
+      <v-container class="pa-0">
         <v-layout row wrap align-center justify-center class="grey darken-3 round-borders" ref="cardHeader" >
           <v-flex xs5>
             <v-card class="text-xs-center grey darken-3" flat >
@@ -91,13 +90,15 @@
 </template>
 <script>
 import ScoreList from './ScoreList'
+import BackButton from '../BackButton'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Scorecard',
   props: ['current', 'roundId'],
   components: {
-    ScoreList
+    ScoreList,
+    BackButton
   },
   computed: {
     ...mapState({

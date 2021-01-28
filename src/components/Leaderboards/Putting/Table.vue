@@ -69,7 +69,9 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Table',
-  props: ['preview'],
+  computed: {
+    ...mapState(['putting_leaderboard'])
+  },
 
   data () {
     return {
@@ -122,11 +124,10 @@ export default {
       ]
     }
   },
-
-  computed: mapState(['putting_leaderboard']),
 }
 </script>
-<style scoped>
+
+<style>
 .putting-percent {
   font-weight: normal;
   color: #2E2F2F;
@@ -137,8 +138,6 @@ export default {
 }
 .board-table {
   overflow:hidden;
-  border-radius: 0 0 20px 20px;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .putting-table table.theme--light thead {
   background-color: #A8C256;

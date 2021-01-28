@@ -7,7 +7,7 @@
       <h3
         class="black--text font-weight-medium"
         style="border-bottom:1px solid #F8C977"
-        @click="openMenu"
+        @click="toggleMenu"
       >
         {{ this.currentTournament.year }}
       </h3>
@@ -36,6 +36,20 @@
               {{ item.attributes.year }}
             </h1>
           </v-card>
+        <v-card-text>
+          <v-card
+            class="flex xs12 pt-4 text-xs-center"
+            @click="toggleMenu"
+            flat
+          >
+            <h1
+              style="font-size:28px;"
+              class="font-weight-regular"
+            >
+              Close
+            </h1>
+          </v-card>
+        </v-card-text>
         </v-flex>
       </v-card>
     </v-card-text>
@@ -58,14 +72,14 @@ export default {
       open: false,
       loading: false,
       overlay: 'overlay',
-      active: 'active',
+      active: false,
       items: []
     }
   },
 
   methods: {
-    openMenu () {
-      this.open = true
+    toggleMenu () {
+      this.open = !this.open
     },
     isActive (year) {
       return year === this.currentTournament.year

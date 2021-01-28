@@ -165,6 +165,8 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Table',
+  computed: mapState(['skins_leaderboard']),
+
   data () {
     return {
 
@@ -173,56 +175,47 @@ export default {
           text: 'Pos',
           align: 'center',
           sortable: false,
-          value: 'pos',
-          class: 'white--text '
+          value: 'pos'
         },
         {
           text: 'Players',
           align: 'left',
           sortable: false,
-          value: 'username',
-          class: 'white--text '
+          value: 'username'
         },
         {
           text: 'Money',
           align: 'center',
           sortable: false,
-          value: '',
-          class: 'white--text'
+          value: ''
         },
         {
           text: 'R1',
           align: 'center',
           sortable: false,
-          class: 'skins-row white--text',
           value: 'rnd1'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
-          class: 'skins-row white--text',
           value: 'rnd2'
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
-          class: 'skins-row white--text',
           value: 'rnd3'
         },
         {
           text: 'Total',
           align: 'center',
           sortable: false,
-          value: 'total',
-          class: 'white--text '
+          value: 'total'
         },
       ]
     }
   },
-
-  computed: mapState(['skins_leaderboard']),
 
   methods: {
     cardFilter (cards, rnd) {
@@ -232,17 +225,9 @@ export default {
 
     }
   },
-
-  watch: {
-  },
-
-  created: function (current) {
-  }
-
-
 }
 </script>
-<style scoped>
+<style>
 .skins-total {
   color: #FFCB47;
 }
@@ -253,7 +238,6 @@ export default {
 }
 .board-table {
   overflow:hidden;
-  border-radius: 0 0 20px 20px;
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .skins-table table.theme--light thead {
