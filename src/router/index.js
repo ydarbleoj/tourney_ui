@@ -86,7 +86,7 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/tournament',
+      path: '/tournament/:id',
       name: 'Tournament',
       component: Tournament,
       props: { default: true },
@@ -142,7 +142,7 @@ const router = new Router({
       meta: { auth: true, transitionName: 'pageTransition' }
     },
     {
-      path: '/tournament/:id/scorecard/:course_name',
+      path: '/tournament/:id/scorecard/:scorecard_id',
       name: "Scorecard",
       component: Scorecard,
       props: { default: true },
@@ -152,15 +152,11 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.name === 'AcceptInvite')) {
-    if (!localStorage.default_auth_token) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
+  if (!localStorage.default_auth_token) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
   } else {
     next()
   }

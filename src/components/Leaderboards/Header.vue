@@ -38,8 +38,9 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTournament']),
-    ...mapGetters(['getTournament'])
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament
+    }),
   },
 
   mounted: function () {

@@ -62,7 +62,7 @@ export default {
     ...mapState({
       summaryData: state => state.summary.summaryData,
       userSummaryData: state => state.overallSummary.userSummaryData,
-      currentTournament: state => state.currentTournament
+      currentTournament: state => state.tournament.currentTournament
     })
   },
 

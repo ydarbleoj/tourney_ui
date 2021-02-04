@@ -56,11 +56,22 @@
       </v-layout>
     </v-container>
     <v-divider></v-divider>
-    <v-card-actions class="pa-3 text-xs-center align-center">
+    <v-card-actions v-if="isLoaded" class="pa-3 text-xs-center align-center">
       <v-layout row wrap fill-height align-center style="" class="text-xs-center pt-4 pb-4">
         <v-flex xs6>
           <div class="text-xs-center">
-            <v-btn flat round class="admin--profile_button font-weight-regular" color="white" :to="'tournament'">Bandon</v-btn>
+            <v-btn
+              flat
+              round
+              class="admin--profile_button font-weight-regular"
+              color="white"
+              :to="{
+                name: 'Tournament',
+                params: {
+                  id: this.currentTournament.id
+                }
+              }"
+            >Bandon</v-btn>
           </div>
         </v-flex>
         <v-flex xs6>
@@ -74,7 +85,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
@@ -96,6 +107,10 @@ export default {
   computed: {
     ...mapState({
       profileData: state => state.profile.profileData,
+      currentTournament: state => state.tournament.currentTournament
+    }),
+    ...mapGetters({
+      getTournament: 'tournament/getTournament'
     })
   },
 
@@ -129,13 +144,14 @@ export default {
   },
 
   created: function () {
-    console.log('created profile', this.$auth.user())
     this.$store.dispatch('profile/LOAD_PROFILE_DATA').then((response) => {
-      console.log('hith', response)
       if (response) {
         this.loadProfileData()
+        this.$store.dispatch('tournament/LOAD_TOURNAMENT_LIST')
+          .then(response => {
+            this.isLoaded = true
+          })
       }
-      this.isLoaded = true
     })
   }
 }

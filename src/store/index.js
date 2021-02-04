@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import scorecards from './modules/scorecards'
+import admin from './modules/admin'
 import course from './modules/course'
 import invitations from './modules/invitations'
 import leaderboards from './modules/leaderboards'
-import admin from './modules/admin'
-import profile from './modules/profile'
 import overallSummary from './modules/overall_summary'
+import profile from './modules/profile'
+import scorecards from './modules/scorecards'
+import tournament from './modules/tournament'
 import createPersistedState from 'vuex-persistedstate'
 
 
@@ -18,8 +19,11 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: [
-        'tournament', 'login', 'profile', 'tournament/admin',
-        'currentTournament', 'rounds', 'courseStats', 'currentRound'
+        'login', 'profile',
+        'rounds', 'courseStats', 'currentRound',
+        'tournament.tournaments',
+        'tournament.currentTournament',
+        'scorecardPreviews'
       ],
     })
 
@@ -31,8 +35,7 @@ const store = new Vuex.Store({
     tournamentPlayers: [],
     courses: [],
     rounds: [],
-    tournaments: [],
-    currentTournament: [],
+    scorecardPreviews: [],
     strokeLeaderboard: [],
     skins_leaderboard: [],
     putting_leaderboard: [],
@@ -166,19 +169,13 @@ const store = new Vuex.Store({
       let options = { tournament_id: id }
       return axios.get('/api/v2/rounds/lists.json', { params: options }).then((response) => {
         if (response.status === 200) {
+          console.log('load ', response.data)
           commit('SET_ROUNDS', { list: response.data.rounds })
+          commit('SET_SCORECARD_PREVIEWS', { list: response.data.scorecard_previews })
           commit('SET_USER_TEE_TIMES', { list: response.data.user_times } )
         }
       }, (err) => {
         console.log('error in rounds', err)
-      })
-    },
-    LOAD_TOURNAMENT_LIST: function ({ commit }) {
-     return axios.get('/api/v2/tournaments.json').then((response) => {
-        commit('CURRENT_TOURNAMENT', { list: response.data })
-        commit('SET_TOURNAMENT_LIST', { list: response.data })
-      }, (err) => {
-        console.log(err)
       })
     },
     LOAD_MONEY_LIST: function ({ commit, state }, { tournId }) {
@@ -195,12 +192,10 @@ const store = new Vuex.Store({
         console.log('money list error', err)
       })
     },
-    UPDATE_CURRENT_TOURNAMENT: function ({ commit }, payload) {
-      return commit('RESET_CURRENT_TOURNAMENT', { list: payload })
-    },
-    UPDATE_ROUNDS: function ({ commit }, payload) {
-      commit('SET_ROUNDS', { list: payload.rounds })
-    },
+    // NOT USED
+    // UPDATE_ROUNDS: function ({ commit }, payload) {
+    //   commit('SET_ROUNDS', { list: payload.rounds })
+    // },
     LOAD_ADMIN_TEE_TIME: function ({ commit, state }, { tournId, roundId }) {
       let options = { tournament_id: tournId, tournament_round_id: roundId }
       return axios.get('/api/v2/tournaments/admin/tee_times.json', { params: options }).then((response) => {
@@ -287,6 +282,9 @@ const store = new Vuex.Store({
       Vue.set(state, 'currentRound', JSON.parse(list).data[0])
       Vue.set(state, 'rounds', JSON.parse(list).data)
     },
+    SET_SCORECARD_PREVIEWS: (state, { list }) => {
+      Vue.set(state, 'scorecardPreviews', JSON.parse(list).data)
+    },
     SET_USER_TEE_TIMES: (state, { list }) => {
       state.userTeeTimes = JSON.parse(list).data
     },
@@ -302,9 +300,6 @@ const store = new Vuex.Store({
       const total = threePutts.reduce(reducer)
       Vue.set(state, 'puttingPurse', total)
       Vue.set(state, 'putting_leaderboard', list.data)
-    },
-    SET_TOURNAMENT_LIST: (state, { list }) => {
-      Vue.set(state, 'tournaments', JSON.parse(list.tournament).data)
     },
     SET_ADMIN_TEE_TIME: (state, { list }) => {
       state.adminTeeTimes = JSON.parse(list.times).data
@@ -326,15 +321,6 @@ const store = new Vuex.Store({
     SET_ADMIN_MESSAGE: (state, { list }) => {
       state.adminMessage = list
     },
-    CURRENT_TOURNAMENT: (state, { list }) => {
-      let tourn = JSON.parse(list.tournament).data.pop()
-      Vue.set(state, 'currentTournament', tourn.attributes)
-      Vue.set(state, 'teamRounds', tourn.attributes.round_info)
-    },
-    RESET_CURRENT_TOURNAMENT: (state, { list }) => {
-      Vue.set(state, 'currentTournament', list.attributes)
-      Vue.set(state, 'teamRounds', list.attributes.round_info)
-    },
     SET_TEAM_LEADERBOARD: (state, { list }) => {
       state.teamLeaderboard = list.data
     },
@@ -349,14 +335,11 @@ const store = new Vuex.Store({
     getRound: state => {
       return state.currentRound
     },
+    getScorecardPreview: state => num => {
+      return state.scorecardPreviews.filter(el => el.attributes.round_num == num)
+    },
     getStrokeLeaderboard: state => {
       return state.strokeLeaderboard
-    },
-    getTournament: state => {
-      return state.currentTournament
-    },
-    getTournaments: state => {
-      return state.tournaments
     },
     userScorecardIds: state => userId => {
       return state.strokeLeaderboard
@@ -373,9 +356,10 @@ const store = new Vuex.Store({
   modules: {
     course,
     invitations,
+    overallSummary,
     profile,
     scorecards,
-    overallSummary
+    tournament
   }
 })
 

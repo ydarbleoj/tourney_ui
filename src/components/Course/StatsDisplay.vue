@@ -76,7 +76,11 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentRound', 'currentTournament', 'courseStats'])
+    ...mapState({
+      courseStats: state => state.courseStats,
+      currentRound: state => state.currentRound,
+      currentTournament: state => state.tournament.currentTournament
+    })
   },
 
   methods: {

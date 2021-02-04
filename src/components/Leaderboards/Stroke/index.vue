@@ -17,7 +17,6 @@ import Header from '../Header'
 
 export default {
   name: 'index',
-  props: ['current'],
   components: {
     StrokeTable,
     Header
@@ -31,28 +30,28 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getTournament']),
+    ...mapState({
+     currentTournament: state => state.tournament.currentTournament
+    }),
   },
   methods: {
     closeLeaderboard () {
       this.isPreview = true
     }
   },
-  watch: {
-    current () {
-      this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.getTournament.id, preview: false })
-        .then(response => {
-          this.isloading = false
-        })
-    }
-  },
+
   mounted: function () {
-    this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.getTournament.id, preview: false })
-      .then(response => {
-        this.strokePurse = this.getTournament.num_players * 30
-        this.isloading = false
-        this.year = this.getTournament.year
-      })
+    console.log('get', this.currentTournament)
+    this.$store.dispatch(
+      'LOAD_STROKE_LEADERBOARD',
+      {
+        id: this.currentTournament.id, preview: false
+      }
+    ).then(response => {
+      this.strokePurse = this.currentTournament.num_players * 30
+      this.isloading = false
+      this.year = this.currentTournament.year
+    })
   }
 }
 </script>

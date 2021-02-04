@@ -76,7 +76,11 @@ export default {
   },
 
   computed: {
-    ...mapState(['userTeeTimes', 'currentRound', 'currentTournament'])
+    ...mapState({
+      userTeeTimes: state => state.userTeeTimes,
+      currentRound: state => state.currentRound,
+      currentTournament: state => state.tournament.currentTournament
+    })
   },
 
   methods: {
@@ -128,17 +132,5 @@ export default {
 .back-button {
   border-color: white;
   background-color: transparent;
-}
-.slide-fade-enter-active {
-  /* transition: all .8s ease; */
-}
-.slide-fade-leave-active {
-  /* transition: all .3s ease;
-  opacity: 0; */
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  /* transform: translateY(20px);
-  opacity: 0; */
 }
 </style>

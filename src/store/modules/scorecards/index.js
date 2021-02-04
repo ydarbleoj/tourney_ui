@@ -9,8 +9,15 @@ const state = {
   courseScorecard: {},
   userScore: {},
   userScorecards: [],
-  currentScorecard: {},
 }
+
+const plugins = [
+  createPersistedState({
+    paths: [
+      'scorecards.playerScorecard',
+    ]
+  })
+]
 
 const actions = {
   LOAD_SCORECARD: function ({ commit, state }, { tournId, tournRoundId }) {
@@ -122,6 +129,7 @@ const mutations = {
     })
   },
   SET_SCORECARD: (state, { list }) => {
+    console.log('hhee', list)
     state.playerScorecard = list.data === null ? {} : list.data['attributes']
   },
   SET_SCORE_LIST: (state, { list }) => {
@@ -148,9 +156,10 @@ const getters = {
 
 export default {
   namespaced: true,
-  state,
   actions,
-  mutations,
   getters,
+  mutations,
+  plugins,
+  state
 }
 

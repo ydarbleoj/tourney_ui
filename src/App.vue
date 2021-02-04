@@ -72,7 +72,7 @@ export default {
 }
 </script>
 <style lang="scss">
-$duration: 0.7s;
+$duration: 1s;
 .transition {
   overflow: hidden;
 }

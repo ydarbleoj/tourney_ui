@@ -32,11 +32,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getTournament']),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament
+    })
   },
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_SKINS', { id: this.getTournament.id, preview: false })
+      this.$store.dispatch('LOAD_SKINS', { id: this.currentTournament.id, preview: false })
         .then(response => {
           this.isloading = false
         })
@@ -44,9 +46,9 @@ export default {
   },
 
   created: function () {
-    this.$store.dispatch('LOAD_SKINS', { id: this.getTournament.id, preview: false })
+    this.$store.dispatch('LOAD_SKINS', { id: this.currentTournament.id, preview: false })
       .then(response => {
-        this.skinsPurse = this.getTournament.num_players * 30
+        this.skinsPurse = this.currentTournament.num_players * 30
         this.isloading = false
       })
   },

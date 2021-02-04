@@ -44,6 +44,7 @@ export default {
     return {
       isloading: true,
       isPreview: true,
+      open: false,
       purse: 0
     }
   },

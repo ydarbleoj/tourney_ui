@@ -33,26 +33,27 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getTournament'])
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament
+    })
   },
 
   watch: {
     current () {
-      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.getTournament.id, preview: false })
+      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: false })
         .then(response => {
           this.headerPurse = this.puttingPurse
-          this.year = this.getTournament.year
+          this.year = this.currentTournament.year
           this.isloading = false
         })
     }
   },
 
   mounted () {
-    console.log("tour", this.getTournament)
-    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.getTournament.id, preview: false })
+    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: false })
       .then(response => {
         this.headerPurse = this.puttingPurse
-        this.year = this.getTournament.year
+        this.year = this.currentTournament.year
         this.isloading = false
       })
   }

@@ -1,5 +1,5 @@
 <template>
-  <v-container id='leaderboard-container' class="pa-0" ma0 ref="leaderboardCard">
+  <v-container id='leaderboard-container' class="pa-0" ma0>
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
         <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;">Leaderboards</h2>
@@ -69,19 +69,7 @@ export default {
     previewToggle (event) {
       this.isPreview = !this.isPreview
       this.$el.classList.toggle('open')
-    },
-    swipe (direction) {
-      this.swipeDirection = direction
-    },
-    beforeEnter: function(el) {
-      el.style.opacity = 0
-    },
-    enter: function(el) {
-      el.style.opacity = 1
-    },
-    afterEnter: function(el) {
-      el.style.opacity = 1
-    },
+    }
   },
 
 }
@@ -93,17 +81,6 @@ export default {
 .hide {
   display: none;
 }
-#leaderboard-container.open {
-  z-index: 1000 !important;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow:hidden;
-  transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
 .title-color {
   color: #4ABDAC;
 }
@@ -113,7 +90,6 @@ export default {
 #leaderboard-container {
   z-index: 1;
   background-color: white;
-  /* position: relative; */
 }
 small.purse-color {
   color: #666;
@@ -126,7 +102,7 @@ small.purse-color {
   color: #f1f1f1;
   font-size: 16px;
 }
-.slide-fade-enter-active {
+/* .slide-fade-enter-active {
   transition: all .3s ease;
 }
 .slide-fade-leave-active {
@@ -135,5 +111,5 @@ small.purse-color {
 .slide-fade-enter, .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
-}
+} */
 </style>

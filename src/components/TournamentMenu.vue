@@ -9,14 +9,17 @@
         style="border-bottom:1px solid #F8C977"
         @click="toggleMenu"
       >
-        {{ this.currentTournament.year }}
+        {{ displayYear }}
       </h3>
     </v-card-title>
-    <v-card-text v-if="open">
+    <v-card-text
+      v-if="open"
+    >
       <v-card
         v-bind:class="{ overlay: open }"
         class="d-flex align-end flex-column overlay"
         flat
+        transition="fade-transition"
       >
         <v-flex xs12 pr-2>
           <v-card
@@ -58,13 +61,19 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'TournamentMenu',
   computed: {
-    ...mapState(['tournaments', 'currentTournament']),
-    ...mapGetters(['getTournament', 'getTournaments'])
+    ...mapState({
+      currentTournament: state=> state.tournament.currentTournament,
+      tournaments: state => state.tournament.tournaments
+    }),
+    ...mapGetters({
+      getTournament: 'tournament/getTournament'
+      // getTournaments: state => state.tournament.getTournaments
+    })
   },
 
   data () {
@@ -73,7 +82,8 @@ export default {
       loading: false,
       overlay: 'overlay',
       active: false,
-      items: []
+      items: [],
+      displayYear: ""
     }
   },
 
@@ -89,17 +99,27 @@ export default {
       this.items = tourns
     },
     updateTournament (item) {
+      let itemId = item.id
       this.loading = true
-      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', item)
+      this.$store.dispatch('tournament/UPDATE_CURRENT_TOURNAMENT', item)
         .then(response => {
           this.loading = false
           this.open = false
+          this.displayYear = this.currentTournament.year
+          this.$router.push(
+            {
+              name: "Tournament",
+              params: {
+                id: item.id
+              }
+            }
+          )
         })
     },
   },
 
-  created: function () {
-    this.$store.dispatch('LOAD_TOURNAMENT_LIST')
+  mounted: function () {
+    this.displayYear = this.currentTournament.year
     this.updateItemsList()
   }
 }
@@ -126,8 +146,11 @@ export default {
   color: #F8C977;
 }
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 1s;
+  transition-timing-function: ease-out;
+  transition: 0.25s;
+  transform: translateY(0);
 }
+  /* transition: opacity 1s; */
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }

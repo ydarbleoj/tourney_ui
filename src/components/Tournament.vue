@@ -34,7 +34,7 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap>
-        <leaderboards :current="currentTournament" v-if="!loading" />
+        <leaderboards :current="currentTournament"  v-if="!loading" />
         <rounds :current="currentTournament" v-if="!loading" />
         <!-- <stats :current="currentTournament" v-if="!loading" /> -->
       </v-layout>
@@ -60,8 +60,10 @@ export default {
     TournamentMenu
   },
   computed: {
-    ...mapState(['tournaments', 'currentTournament', 'currentRound']),
-    ...mapGetters(['getTournament', 'getTournaments'])
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      tournaments: state => state.tournament.tournaments
+    })
   },
 
   data () {
@@ -74,15 +76,6 @@ export default {
     }
   },
   methods: {
-    updateTournament (item) {
-      this.loading = true
-      this.$store.dispatch('UPDATE_CURRENT_TOURNAMENT', item)
-        .then(response => {
-          let current = this.currentTournament
-          this.items = this.tournaments.filter(el => el.attributes.year != current.year)
-          this.loading = false
-        })
-    },
     logout () {
       this.$auth.logout({
         params: {},
@@ -92,14 +85,11 @@ export default {
     }
   },
 
-  created: function () {
-    this.$store.dispatch('LOAD_TOURNAMENT_LIST')
-      .then(response => {
-        let current = this.currentTournament
-        this.items = this.tournaments.filter(el => el.attributes.year != current.year)
-        this.loading = false
-      })
-  },
+  mounted: function () {
+    if (typeof this.currentTournament != "undefined") {
+      this.loading = false
+    }
+  }
 
 }
 

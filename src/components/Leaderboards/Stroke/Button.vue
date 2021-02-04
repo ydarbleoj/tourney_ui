@@ -38,7 +38,7 @@ export default {
   name: 'StrokeButton',
   props: ['current'],
   computed: {
-    ...mapState(['strokeLeaderboard']),
+    ...mapState(['strokeLeaderboard'])
   },
   data () {
     return {
@@ -47,22 +47,35 @@ export default {
   },
   methods: {
     toStrokeleaderboard () {
-      this.$router.push({ name: 'StrokeLeaderboard', params: { id: this.current.id} })
+      this.$router.push({
+        name: 'StrokeLeaderboard',
+        params: {
+          id: this.current.id
+        }
+      })
     }
   },
   watch: {
     current () {
-      this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
-        .then(response => {
-          this.isloading = false
-        })
+      this.$store.dispatch(
+        'LOAD_STROKE_LEADERBOARD',
+        {
+          id: this.current.id, preview: true
+        }
+      ).then(response => {
+        this.isloading = false
+      })
     }
   },
   created: function () {
-    this.$store.dispatch('LOAD_STROKE_LEADERBOARD', { id: this.current.id, preview: true })
-      .then(response => {
-        this.isloading = false
-      })
+    this.$store.dispatch(
+      'LOAD_STROKE_LEADERBOARD',
+      {
+        id: this.current.id, preview: true
+      }
+    ).then(response => {
+      this.isloading = false
+    })
   },
 }
 </script>

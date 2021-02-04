@@ -8,7 +8,7 @@
     depressed
     small
     fab
-    @click="$router.back(-1)"
+    @click.native="goBack"
   >
     <v-icon color="white">
       mdi-chevron-left
@@ -17,9 +17,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'BackButton'
+  name: 'BackButton',
+  computed: {
+  },
+
+  data () {
+    return {
+
+    }
+  },
+
+  methods: {
+    goBack () {
+      this.$store.commit("setPageTransition", "back");
+      this.$router.go(-1)
+    }
+  },
+
+  created () {
+  }
 }
+
+
 </script>
 <style scoped>
 .back-button {

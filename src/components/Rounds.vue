@@ -1,5 +1,6 @@
 <template>
-  <v-card width="100%" flat class="pl-4 pr-4 pt-4">
+  <v-card width="100%" flat class="pa-4">
+    <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 0;">Round Info</h2>
     <v-toolbar flat color="transparent">
       <template>
         <v-tabs
@@ -27,13 +28,8 @@
         reverse-transition="fade-transition"
       >
         <course-button :course="i" />
-        <v-spacer class="mt-4 round-spacer"></v-spacer>
-        {{ i }}
-        <scorecard
-          :current="current"
-          :roundId="i"
-          v-if="currentRound === i['attributes']['round_number']"
-        />
+        <v-spacer class="mb-4"></v-spacer>
+        <scorecard-button :round="i" />
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -56,9 +52,10 @@ export default {
     return {
       isLoading: false,
       swipeDirection: 'None',
-      tab: null,
+      tab: 1,
       items: [1, 2, 3],
       roundComps: [],
+      currentRoundNumber: 1,
       windowSize: {
         x: 0,
         y: 0
@@ -67,16 +64,18 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTournament', 'rounds', 'currentRound', 'roundOne',
-      'roundTwo', 'roundThree']),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      rounds: state => state.rounds,
+      currentRound: state => state.currentRound,
+    }),
     ...mapMutations(['SET_CURRENT_ROUND'])
   },
 
   methods: {
     updateRound (num) {
-      console.log('crreut', num)
       this.$store.commit('SET_CURRENT_ROUND',{ list: this.rounds[num - 1] })
-    }
+    },
   },
 
   watch: {
@@ -86,16 +85,17 @@ export default {
         .then(response => {
           this.isloading = false
           this.roundComps = this.rounds
+           this.currentRoundNumber = this.currentRound['attributes']['round_number']
         })
     }
   },
 
   created: function (current) {
-    console.log('crruent', this.currentRound)
     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
       .then(response => {
         this.isloading = true
-        this.roundComps = this.rounds
+        this.roundComps = this.rounds,
+        this.currentRoundNumber = this.currentRound['attributes']['round_number']
       })
   },
 }
@@ -117,7 +117,7 @@ export default {
   height: 48px;
 }
 .fade-transition-enter-active, .fade-transition-leave-active {
-  transition: .5s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: .7s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 </style>
 

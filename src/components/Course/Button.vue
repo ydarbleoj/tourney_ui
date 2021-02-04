@@ -17,9 +17,9 @@
                       {{ roundTime }}
                     </span>
                   </h4>
-                  <h3 class="white--text font-weight-normal">
+                  <h2 class="white--text font-weight-regular">
                     {{ courseName }}
-                  </h3>
+                  </h2>
                 </v-flex>
               </v-layout>
             </div>
@@ -43,7 +43,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userTeeTimes', 'currentTournament', 'currentRound'])
+    ...mapState({
+      userTeeTimes: state => state.userTeeTimes,
+      currentRound: state => state.currentRound,
+      currentTournament: state => state.tournament.currentTournament
+    })
   },
   methods: {
     filterTeeTime (rndNum, list) {
@@ -65,16 +69,9 @@ export default {
     }
   },
   watch: {
-    course: function () {
-      this.$store.dispatch(
-        'course/LOAD_COURSE', {
-          tourn_id: this.currentTournament.id,
-          id: this.currentRound.course_id,
-          roundNumber: this.currentRound.round_id
-        }
-      )
-    }
+
   },
+
   created: function () {
     let course = this.course['attributes']
     let rndNum = course['round_number']
@@ -93,7 +90,6 @@ export default {
   position: relative;
   border-radius: 20px;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
   background-color: #FBFCFD;
   z-index: 1;
 }

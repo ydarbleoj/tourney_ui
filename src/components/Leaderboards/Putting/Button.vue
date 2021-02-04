@@ -38,7 +38,10 @@ export default {
   name: 'PuttingButton',
   props: ['current'],
   computed: {
-    ...mapState(['putting_leaderboard']),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      putting_leaderboard: state => state.putting_leaderboard
+    })
   },
   data () {
     return {
@@ -48,19 +51,30 @@ export default {
   },
   methods: {
     toPuttingleaderboard () {
-      this.$router.push({ name: 'PuttingLeaderboard', params: { id: this.current.id} })
+      this.$router.push({
+        name: 'PuttingLeaderboard',
+        params: {
+          id: this.current.id
+        }
+      })
     }
   },
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
-        .then(response => {
-          this.isloading = false
-        })
+      this.$store.dispatch(
+        'LOAD_PUTTING_LEADERBOARD',
+        {
+          id: this.current.id, preview: true
+        }
+      ).then(response => {
+        this.isloading = false
+      })
     }
   },
   created: function () {
-    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.current.id, preview: true })
+    this.$store.dispatch(
+      'LOAD_PUTTING_LEADERBOARD',
+      { id: this.current.id, preview: true })
       .then(response => {
         this.isloading = false
       })

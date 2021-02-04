@@ -3,7 +3,13 @@
     <h2 class="font-weight-regular pt-3">
       Course Statistics
     </h2>
-    <v-container fluid pa-0 class="font-weight-regular" style="height:inherit;">
+    <v-container
+      v-if="!loading"
+      fluid
+      pa-0
+      class="font-weight-regular"
+      style="height:inherit;"
+    >
       <v-layout row wrap>
         <v-flex xs12 style="">
           <HcapDiff />
@@ -62,7 +68,7 @@ export default {
 
   computed: {
      ...mapState({
-      currentTournament: state => state.currentTournament,
+      currentTournament: state => state.tournament.currentTournament,
       courseStats: state => state.course.courseStats
     })
   },
