@@ -6,7 +6,7 @@
       v-on:after-enter="afterEnter"
       v-on:after-leave="afterLeave"
     >
-      <router-view class="transition"/>
+      <router-view :key="$route.path" class="transition"/>
     </transition>
   </v-app>
 </template>

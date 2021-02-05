@@ -17,6 +17,7 @@ import ForgotPassword from '@/components/ForgotPassword'
 import Profile from '@/components/Profile/Profile'
 import ProfileEdit from '@/components/Profile/Edit'
 import Scorecard from '@/components/Scorecard/index'
+import ScorecardHole from '@/components/Scorecard/Hole'
 import UserScore from '@/components/Scorecard/UserScore'
 import Summary from '@/components/Stats/Course/index'
 
@@ -145,6 +146,13 @@ const router = new Router({
       path: '/tournament/:id/scorecard/:scorecard_id',
       name: "Scorecard",
       component: Scorecard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/scorecard/:id/hole/:number',
+      name: "ScorecardHole",
+      component: ScorecardHole,
       props: { default: true },
       meta: { auth: true }
     },

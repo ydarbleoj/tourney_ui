@@ -23,21 +23,25 @@ export default {
   computed: {
   },
 
-  data () {
-    return {
-
-    }
+  computed: {
+    ...mapGetters({
+      getTournament: 'tournament/getTournament'
+    })
   },
 
   methods: {
     goBack () {
       this.$store.commit("setPageTransition", "back");
-      this.$router.go(-1)
+      this.$router.push(
+        {
+          name: 'Tournament',
+          params: {
+            id: this.getTournament.id
+          }
+        }
+      )
     }
   },
-
-  created () {
-  }
 }
 
 

@@ -24,8 +24,8 @@
       <v-tab-item
         v-for="i in roundComps"
         :key="i['id']"
-        transition="fade-transition"
-        reverse-transition="fade-transition"
+        transition="false"
+        reverse-transition="false"
       >
         <course-button :course="i" />
         <v-spacer class="mb-4"></v-spacer>
@@ -73,6 +73,11 @@ export default {
   },
 
   methods: {
+    isActive (round) {
+      let num = round['round_number']
+      // num == this.currentRoundNumber ? true : false
+      return true
+    },
     updateRound (num) {
       this.$store.commit('SET_CURRENT_ROUND',{ list: this.rounds[num - 1] })
     },
@@ -116,8 +121,23 @@ export default {
   border-radius: 25px;
   height: 48px;
 }
-.fade-transition-enter-active, .fade-transition-leave-active {
-  transition: .7s cubic-bezier(0.25, 0.8, 0.5, 1);
+.tabItem {
+  opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.7s;
+}
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+  50% {
+    opacity: 0.6;
+  }
+	100% {
+		opacity: 1;
+	}
 }
 </style>
 

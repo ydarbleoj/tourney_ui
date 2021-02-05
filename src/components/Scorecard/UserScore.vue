@@ -34,21 +34,9 @@
         >
           <v-layout row wrap align-center justify-center style="width:100vw;">
             <v-flex xs4>
-              <div class="text-xs-right pr-3" v-if="cardData.number != 1">
-                <span><v-icon  v-if="type === 'UPDATE' || cardData.number > 1" color="#FFCB47" style="font-size:35px;" @click="closeCard(0)" >arrow_backward</v-icon></span>
-              </div>
-            </v-flex>
-            <v-flex xs4>
               <v-btn flat round class="score--save_button" @click="updateScore" v-bind:loading="btnLoading">
-                <h4>{{updateMessage }}</h4>
+                <h4>{{ updateMessage }}</h4>
               </v-btn>
-            </v-flex>
-            <v-flex xs4>
-              <div class="text-xs-right ">
-                <span>
-                  <v-icon  v-if="type === 'UPDATE'" color="#FFCB47" style="font-size:35px;" @click="closeCard(1)" >arrow_forward</v-icon>
-                </span>
-              </div>
             </v-flex>
           </v-layout>
           <v-spacer></v-spacer>
@@ -82,7 +70,7 @@ export default {
 
   computed: {
     ...mapState({
-      currentTournament: state => state.currentTournament,
+      currentTournament: state => state.tournament.currentTournament,
     }),
   },
 
@@ -110,7 +98,6 @@ export default {
   },
 
   created: function () {
-    console.log('carddata', this.cardData)
     this.puttBinding = this.cardData.putts == null ? 2 : this.cardData.putts
     this.putts = this.puttBinding
     this.setType()
@@ -174,16 +161,15 @@ export default {
       const options = { putts: this.putts, score: this.shots }
       if (us_id) {
         this.$store.dispatch('scorecards/UPDATE_USER_SCORE', { scorecardId: this.scorecardId, scoreId: us_id, scores: options }).then(response => {
-          console.log('update hrere', response)
             if (response) {
               this.updateMessage = 'Success'
               this.type = 'UPDATE'
+              this.$emit('onUpdate')
+              this.btnLoading = false
             } else {
               this.updateMessage = 'Failed'
               this.type = 'SAVE'
             }
-            setTimeout(() => this.updateMessage = 'Update', 3000)
-            this.btnLoading = false
         })
       } else {
         let user_score = { handicap: this.cardData.handicap, par: this.cardData.par, number: this.cardData.number, putts: this.putts, score: this.shots, hole_id: this.cardData.hole_id }
@@ -193,12 +179,11 @@ export default {
             if (response) {
               this.updateMessage = 'Success'
               this.type = 'UPDATE'
+              this.$emit('onUpdate')
             } else {
               this.updateMessage = 'Failed'
               this.type = 'SAVE'
             }
-            setTimeout(() => this.updateMessage = 'Update', 3000)
-
         })
       }
     }

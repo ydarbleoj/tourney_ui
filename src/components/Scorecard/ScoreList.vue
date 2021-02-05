@@ -1,9 +1,15 @@
 <template>
   <v-flex xs12 sm12>
     <v-list three-line class="on_expand pa-0">
-      <template v-for="userScore in card.holes">
-        <v-card class="score-display" ref="scoreDisplay" >
-          <v-list-tile v-bind:key="userScore.number"  @click.native="toggleScore(userScore.number)" style="padding-top:5px;">
+      <template
+        v-for="userScore in card.holes"
+      >
+        <v-card
+          class="score-display" ref="scoreDisplay"
+          v-bind:key="userScore.number"
+          @click="holePage(userScore.number)"
+        >
+          <v-list-tile style="padding-top:5px;">
             <v-list-tile-content >
               <h3 class="ma-0 font-weight-regular">{{ userScore.number}}</h3>
             </v-list-tile-content>
@@ -51,8 +57,7 @@ export default {
   components: {
     UserScore
   },
-  computed: {
-  },
+
   data () {
     return {
       currentView: '',
@@ -63,6 +68,17 @@ export default {
   },
 
   methods: {
+    holePage (number) {
+      this.$router.push(
+        {
+          name: 'ScorecardHole',
+          params: {
+            id: this.card.id,
+            number: number
+          }
+        }
+      )
+    },
     strokes: function (holeHcap) {
       let hcap =  this.card.handicap
 
@@ -94,8 +110,7 @@ export default {
       if (this.holeNumber === 18) return;
       this.toggleScore(numVar)
     },
-  },
-  created: function () {}
+  }
 }
 </script>
 <style>

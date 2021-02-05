@@ -15,6 +15,8 @@ const plugins = [
   createPersistedState({
     paths: [
       'scorecards.playerScorecard',
+      'scorecards.scorecard',
+      'scorecards.getHoleInfo'
     ]
   })
 ]
@@ -129,7 +131,6 @@ const mutations = {
     })
   },
   SET_SCORECARD: (state, { list }) => {
-    console.log('hhee', list)
     state.playerScorecard = list.data === null ? {} : list.data['attributes']
   },
   SET_SCORE_LIST: (state, { list }) => {
@@ -151,6 +152,9 @@ const getters = {
   },
   score: state => {
     return state.userScore
+  },
+  getHoleInfo: state => num => {
+    return state.playerScorecard.holes.filter(hole => num == hole.number)
   }
 }
 
