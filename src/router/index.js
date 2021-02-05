@@ -18,7 +18,7 @@ import Profile from '@/components/Profile/Profile'
 import ProfileEdit from '@/components/Profile/Edit'
 import Scorecard from '@/components/Scorecard/index'
 import UserScore from '@/components/Scorecard/UserScore'
-import Stats from '@/components/Stats/index'
+import Summary from '@/components/Stats/Course/index'
 
 Vue.use(Router)
 
@@ -132,14 +132,14 @@ const router = new Router({
       name: "SkinsLeaderboard",
       component: SkinsLeaderboard,
       props: { default: true },
-      meta: { auth: true, transitionName: 'pageTransition' }
+      meta: { auth: true }
     },
     {
       path: '/tournament/:id/course/:course_id',
       name: "Course",
       component: Course,
       props: { default: true },
-      meta: { auth: true, transitionName: 'pageTransition' }
+      meta: { auth: true }
     },
     {
       path: '/tournament/:id/scorecard/:scorecard_id',
@@ -147,7 +147,14 @@ const router = new Router({
       component: Scorecard,
       props: { default: true },
       meta: { auth: true }
-    }
+    },
+    {
+      path: '/tournament/:id/summary',
+      name: "Summary",
+      component: Summary,
+      props: { default: true },
+      meta: { auth: true, transitionName: 'pageTransition' }
+    },
   ]
 })
 

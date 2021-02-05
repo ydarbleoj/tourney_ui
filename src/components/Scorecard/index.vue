@@ -81,17 +81,12 @@
         </v-layout>
       </v-container>
     </v-card-title>
-    <v-card-text>
-
-      <v-layout row wrap white v-if="currentView == 'fullCard'">
-        <transition
-          name="fade"
-          v-on:enter="enter"
-        >
-          <score-list :card="playerScorecard" />
+    <v-card-text class="pa-0">
+      <v-layout row wrap white>
+        <transition name="fade">
+          <score-list :card="scorecard" v-if="isLoaded" />
         </transition>
       </v-layout>
-
     </v-card-text>
   </v-card>
 </template>
@@ -114,7 +109,6 @@ export default {
       currentRound: state => state.currentRound,
     }),
     ...mapGetters({
-      getScorecardPreview: 'getScorecardPreview',
       scorecard: 'scorecards/scorecard'
     }),
     target () {

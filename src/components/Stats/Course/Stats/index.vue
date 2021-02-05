@@ -1,16 +1,22 @@
 <template>
-  <v-card flat v-if="loading" class="white elevation-1" color="white">
+  <v-card flat v-if="loading" color="white">
     no, you're loading...
   </v-card>
   <v-card flat v-else>
     <h3>
       Course Statistics
     </h3>
-    <v-container fluid pa-0 class="font-weight-regular mb-3" style="height:inherit;">
+    <v-container
+      fluid
+      pa-0
+      class="font-weight-regular"
+      style="height:inherit;"
+    >
       <v-layout row wrap>
         <v-flex xs12>
           <HcapDiff />
            <v-divider style="background-color:;"></v-divider>
+
           <ScoringAvg />
           <v-divider class="mb-4" style="background-color:;"></v-divider>
           <PuttingAvg />
@@ -59,7 +65,7 @@ export default {
 
   computed: {
      ...mapState({
-      currentTournament: state => state.currentTournament
+      currentTournament: state => state.tournament.currentTournament
     })
   },
 

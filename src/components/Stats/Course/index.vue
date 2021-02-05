@@ -1,78 +1,80 @@
 <template>
-  <v-container id="course-summary-container" class="pa-0" ref="courseSummaryContainer">
-    <v-layout row wrap>
-      <v-flex xs12 sm12 lg12>
-        <h2 class="text-xs-left font-weight-regular pl-0" style="margin-left: 5%;" v-if="isPreview"></h2>
-        <v-card class="course-card" @click="isPreview ? previewToggle() : null">
-          <v-img
-            :src="'/static/summary.jpg'"
-            height='200px'
-            class="course-header"
-            ref="courseHeader"
-          >
-            <v-container fill-height pa-0>
-              <v-layout>
-                <v-flex xs7 flexbox>
-                  <div class="mt-4">
-                    <h2 class="font-weight-regular text-xs-left pt-2 pl-4 white--text">
-                      Stats
-                      <span v-if="!isPreview" class="font-weight-normal" style="font-size:18px;">{{ this.currentTournament.year }}</span>
-                    </h2>
-                  </div>
-                </v-flex>
-                <v-flex class="pa-0 mt-3">
-                  <div class="text-xs-right">
-                    <span v-if="!preview" class="text-xs-right mr-3" @click="closeCourse();">
-                      <v-icon color="white">clear</v-icon>
-                    </span>
-                  </div>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-img>
-          <v-card-text style="background-color:white;" transition="slide-x-transition" v-if="!preview">
-            <stats />
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+ <v-card class="course-card">
+    <v-img
+      :src="'/static/summary.jpg'"
+      height='250px'
+      class="course-header"
+    >
+      <v-container fill-height pa-0>
+        <BackButton />
+        <v-layout row align-end>
+          <v-flex xs12 ma-4>
+            <h3 class="headline white--text">
+              {{ year }}
+            </h3>
+            <h2 class="white--text text-center">Summary</h2>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-img>
+    <v-card-text style="background-color:white;" transition="fade-transition">
+      <v-card flat class="mb-2 text-right">
+        <v-container>
+          <v-layout row>
+            <v-flex xs6>
+              <h2 class="font-weight-regular">Green Tees</h2>
+              <h3 class="font-weight-regular pa-2">
+                <span class="grey--text font-weight-medium">yards</span>
+              </h3>
+            </v-flex>
+            <v-flex xs6>
+              <h2 class="font-weight-regular">
+                Par
+              </h2>
+              <h3 class="font-weight-regular pa-2">
+              </h3>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <h3 class="font-weight-medium pr-2 pl-2 pb-4" style="color:#FFCB47">
+          Currently, ranked as the third most difficult.
+        </h3>
+      </v-card>
+      <v-divider class="mb-4" style="background-color:;"></v-divider>
+
+      <stats v-if="!isLoading" />
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import Stats from './Stats/index'
+import BackButton from '../../BackButton'
 
 export default {
   name: 'index',
-  props: ['current'],
   components: {
-    Stats,
+    BackButton,
+    Stats
   },
 
   data () {
     return {
-      isPreview: true,
-      preview: true,
-      show: false,
+      isLoading: true,
+      year: ""
     }
   },
 
   computed: {
     ...mapState({
-      summaryData: state => state.summary.summaryData,
+      summaryData: state => state.overallSummary.summaryData,
       userSummaryData: state => state.overallSummary.userSummaryData,
       currentTournament: state => state.tournament.currentTournament
     })
   },
 
   methods: {
-    previewToggle () {
-      this.preview = !this.preview
-    },
-    closeCourse () {
-      this.preview = !this.preview
-    },
   },
 
   watch: {
@@ -86,6 +88,13 @@ export default {
   },
 
   created: function () {
+    this.year = this.currentTournament.year
+    this.$store.dispatch(
+      'overallSummary/LOAD_SUMMARY_DATA',
+      { tourn_id: this.currentTournament.id }
+    ).then(response => {
+      this.isLoading = false
+    })
   }
 
 }
@@ -96,35 +105,10 @@ export default {
 }
 .course-card {
   position: relative;
-  border-radius: 20px;
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
   background-color: #FBFCFD;
   z-index: 1;
 }
-.course-card.open {
-  width: 100%;
-  position: absolute;
-  border-radius: 0;
-  top: 0;
-  left: 0;
-  z-index: 1000 !important;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
-
-}
 .card, .tee-times {
   background-color: rgba(255, 255, 255, 0.1);
-}
-.slide-fade-enter-active {
-  transition: all .8s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s ease;
-  opacity: 0;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(20px);
-  opacity: 0;
 }
 </style>

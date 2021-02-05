@@ -98,7 +98,6 @@ export default {
     if (preview.length == 0) return;
 
     let scorecard = preview[0].attributes
-    console.log('scorecard round', scorecard)
     this.course_name = scorecard.course_name
     this.total_net = scorecard.total_net
     this.total_putts = scorecard.total_putts
