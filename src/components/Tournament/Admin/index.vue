@@ -19,7 +19,7 @@
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-title>
-                      <v-icon class="mr-2">golf_course</v-icon><router-link :to="'/tournament'">Bandon</router-link>
+                      <v-icon class="mr-2">golf_course</v-icon><router-link :to="`/tournament/${this.currentTournament.id}`">Bandon</router-link>
                     </v-list-tile-title>
                   </v-list-tile>
                   <v-list-tile>
@@ -31,7 +31,7 @@
               </v-menu>
             </v-flex>
             <v-flex xs6>
-              <h3 class="mt-1">{{ currentTournament.year }} Admin</h3>
+              <h3 class="mt-1">{{ this.currentTournament.year }} Admin</h3>
             </v-flex>
           </v-layout>
         </v-toolbar>
@@ -41,7 +41,7 @@
         text-xs-center
         class="pa-0"
         style="height:100%;margin-top:8vh;margin-bottom:8vh;">
-        <v-card-text>
+        <v-card-text class="pa-0">
           <component :is="view" />
 
         </v-card-text>
@@ -82,7 +82,9 @@ export default {
     TeeTimes,
   },
   computed: {
-    ...mapState(['currentTournament',]),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament
+    }),
   },
 
   data () {
@@ -108,8 +110,6 @@ export default {
       this.view = v
     }
   },
-
-
 
 }
 

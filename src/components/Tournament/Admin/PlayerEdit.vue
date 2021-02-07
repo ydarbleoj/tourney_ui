@@ -115,8 +115,12 @@ export default {
   props: ['user'],
   components: {
   },
+
   computed: {
-    ...mapState(['currentTournament', 'tournamentPlayers'])
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      tournamentPlayers: state => state.tournamentPlayers
+    })
   },
 
   data () {

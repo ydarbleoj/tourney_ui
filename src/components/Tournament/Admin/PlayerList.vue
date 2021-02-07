@@ -23,7 +23,10 @@ export default {
     AddPlayer
   },
   computed: {
-    ...mapState(['currentTournament', 'tournamentPlayers'])
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      tournamentPlayers: state => state.tournamentPlayers
+    })
   },
 
   data () {
@@ -39,11 +42,12 @@ export default {
   },
 
   created () {
-    this.$store.dispatch('LOAD_ADMIN_PLAYERS', { tournId: this.currentTournament.id })
-      .then(response => {
-        console.log('')
-        this.loading = false
-      })
+    this.$store.dispatch(
+      'LOAD_ADMIN_PLAYERS',
+      { tournId: this.currentTournament.id }
+    ).then(response => {
+      this.loading = false
+    })
   }
 
 }

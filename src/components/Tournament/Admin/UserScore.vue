@@ -81,10 +81,10 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      'UserScore',
-      'currentTournament'
-    ]),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      UserScore: state => state.UserScore
+    })
   },
 
   data () {

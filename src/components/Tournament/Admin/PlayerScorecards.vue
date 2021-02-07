@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapState({
-      currentTournament: state => state.currentTournament,
+      currentTournament: state => state.tournament.currentTournament,
       userScorecards: state => state.scorecards.userScorecards
     })
   },

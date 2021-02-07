@@ -68,8 +68,12 @@ export default {
   },
 
   computed: {
-    ...mapState(['tournamentPlayers', 'currentTournament']),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      tournamentPlayers: state => state.tournamentPlayers
+    })
   },
+
   methods: {
     newView (v) {
       console.log('here', this.props)
@@ -89,15 +93,6 @@ export default {
       props.expanded = !props.expanded
     }
   },
-
-  watch: {
-  },
-
-  created () {
-    console.log('tour', this.tournamentPlayers)
-    console.log('invite', this.invited)
-  }
-
 }
 </script>
 <style>

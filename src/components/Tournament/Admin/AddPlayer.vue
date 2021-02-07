@@ -35,9 +35,15 @@ export default {
   name: 'AddPlayer',
   components: {
   },
+
   computed: {
-    ...mapState(['currentTournament', 'tournamentPlayers', 'inviteList'])
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      tournamentPlayers: state => state.tournamentPlayers,
+      inviteList: state => state.inviteList
+    })
   },
+
 
   data () {
     return {

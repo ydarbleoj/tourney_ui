@@ -98,9 +98,6 @@ export default {
   components: {
     ScoreList
   },
-  computed: {
-  },
-
 
   data () {
     return {

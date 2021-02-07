@@ -1,5 +1,5 @@
 <template>
-  <v-card flat >
+  <v-card flat class="pa-0">
     <v-card-title class="pt-1 pl-3">
       <h2 class="text-xs-left" style="color:#FF9D72;width:100%;">Set Teams</h2>
       <v-spacer></v-spacer>
@@ -13,7 +13,7 @@
             <v-card flat tile>
               <v-list two-line>
                 <template v-for="groups in adminTeeTimes">
-                  <label> Group {{ groups.attributes.group }}</label>
+                  <label class="pl-2"> {{ groups.attributes.group }}</label>
                   <v-divider></v-divider>
                   <group :teeGroup="groups" :parentData="awaitingTees" @event="addToAwaiting"/>
                   <v-divider></v-divider>
@@ -25,7 +25,6 @@
             <v-card flat class="grey lighten-2 pt-1">
               <label>Awaiting</label>
               <v-divider></v-divider>
-                  <!-- :value="false" -->
               <v-list class="grey lighten-2">
                 <v-list-group
                   v-for="(item, index) in awaitingTees"
@@ -34,8 +33,15 @@
                 >
                   <v-list-tile slot="activator">
                     <v-list-tile-content>
-                      <v-list-tile-title style="font-size: 12px;" v-if="item.first_name">{{ item.first_name }} {{ item.last_name }}</v-list-tile-title>
-                      <v-list-tile-title style="font-size: 12px;"v-else>{{ item.attributes.first_name }} {{ item.attributes.last_name }}</v-list-tile-title>
+                      <v-list-tile-title style="font-size: 12px;" v-if="item.first_name">
+                         {{ item.first_name }} {{ item.last_name }}
+                      </v-list-tile-title>
+                      <v-list-tile-title style="font-size: 12px;"v-else>
+                        {{ item.attributes.first_name }} {{ item.attributes.last_name }}
+                      </v-list-tile-title>
+                      <span class="grey--text" style="font-size:14px;">
+                        Hcap {{ setHandicap(item) }}
+                      </span>
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile v-for="subitem in groupChoices" v-bind:key="subitem" @click="addTeeTime(subitem, item, index)">
@@ -95,8 +101,13 @@ export default {
   },
 
   computed: {
-    ...mapState(['teeTime', 'adminTeeTimes', 'currentRound', 'awaitingTees', 'currentTournament', 'currentCourse'
-    ]),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      currentRound: state => state.currentRound,
+      adminTeeTimes: state => state.adminTeeTimes,
+      awaitingTees: state => state.awaitingTees
+    }),
+      // 'teeTime', 'adminTeeTimes', 'currentRound', 'awaitingTees', 'currentTournament', 'currentCourse'
     ...mapGetters([
       'adminTeeTimeGetter'
     ]),
@@ -104,8 +115,20 @@ export default {
   },
 
   methods: {
+    availableGroup (){
+    },
+    setHandicap (item) {
+      return typeof(item.attributes) !== 'undefined' ? item.attributes.handicap : item.handicap
+    },
     addToAwaiting: function(event) {
-      this.$store.commit('ADD_USER_AWAITING', { user: event.user, key: event.key, group: event.group })
+      this.$store.commit(
+        'ADD_USER_AWAITING',
+        {
+          user: event.user,
+          key: event.key,
+          group: event.group
+        }
+      )
     },
     addTeeTime: function(event, user, index) {
       let i = this.groupChoices.findIndex(group => group === event);
@@ -116,10 +139,15 @@ export default {
       this.roundId = r[0].roundId
     },
     loadTeeTimes () {
-      this.$store.dispatch('LOAD_ADMIN_TEE_TIME', { tournId: this.currentTournament.id, roundId: this.roundId })
-        .then(response => {
-          this.loading = false
-        })
+      this.$store.dispatch(
+        'LOAD_ADMIN_TEE_TIME',
+        {
+          tournId: this.currentTournament.id,
+          roundId: this.roundId
+        }
+      ).then(response => {
+        this.loading = false
+      })
     }
   },
 
@@ -133,7 +161,9 @@ export default {
   },
 
   created: function (current) {
+    console.log('awating', this.awaitingTees)
     let rounds = this.currentTournament.round_info
+    console.log('rounds', rounds)
     this.roundFilter(rounds, 1)
     this.loadTeeTimes()
   }

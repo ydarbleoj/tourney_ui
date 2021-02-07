@@ -191,24 +191,34 @@ const store = new Vuex.Store({
         console.log('money list error', err)
       })
     },
-    // NOT USED
-    // UPDATE_ROUNDS: function ({ commit }, payload) {
-    //   commit('SET_ROUNDS', { list: payload.rounds })
-    // },
     LOAD_ADMIN_TEE_TIME: function ({ commit, state }, { tournId, roundId }) {
       let options = { tournament_id: tournId, tournament_round_id: roundId }
-      return axios.get('/api/v2/tournaments/admin/tee_times.json', { params: options }).then((response) => {
+
+      return axios.get(
+        '/api/v2/tournaments/admin/tee_times.json',
+        { params: options }
+      ).then((response) => {
         if (response.status === 200) {
+          console.log('tee ', response.data)
           commit('SET_ADMIN_TEE_TIME', { list: response.data })
         }
       }, (err) => {
         console.log(err)
       })
     },
-    CREATE_TEE_TIMES: function ({ commit, state }, { tournId, teeTimes }) {
-      let options = { tournament_id: tournId, tee_time: teeTimes }
-      return axios.post('/api/v2/tournaments/admin/tee_times.json', options).then((response) => {
+    CREATE_TEE_TIMES: function ({ commit, state }, { tournId, teamId, ids }) {
+      let options = {
+        tournament_id: tournId,
+        team_id: teamId,
+        ids: ids
+      }
+
+      return axios.post(
+        '/api/v2/tournaments/admin/tee_times.json',
+        options
+      ).then((response) => {
         if (response.data.status === 200) {
+          console.log('create tee times', response.data)
           commit('SET_ADMIN_MESSAGE', { list: response.data })
         }
       }, (err) => {

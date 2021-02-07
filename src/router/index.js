@@ -101,7 +101,7 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/tournament/admin',
+      path: '/tournament/:id/admin',
       name: 'TournamentAdmin',
       component: TournamentAdmin,
       props: { default: true },
