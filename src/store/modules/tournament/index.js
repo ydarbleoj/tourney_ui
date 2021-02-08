@@ -36,14 +36,14 @@ const mutations = {
     Vue.set(state, 'tournaments', JSON.parse(list.tournament).data)
   },
   CURRENT_TOURNAMENT: (state, { list }) => {
-    console.log('kcurrnenemek ', tourn)
     let tourn = JSON.parse(list.tournament).data.pop()
     Vue.set(state, 'currentTournament', tourn.attributes)
     Vue.set(state, 'currentRoundInfo', tourn.attributes.round_info)
   },
   RESET_CURRENT_TOURNAMENT: (state, { list }) => {
+    console.log('store', list)
     Vue.set(state, 'currentTournament', list.attributes)
-    Vue.set(state, 'currentRoundInfo', list.attributes.round_info)
+    // Vue.set(state, 'currentRoundInfo', list.attributes.round_info)
   },
 }
 

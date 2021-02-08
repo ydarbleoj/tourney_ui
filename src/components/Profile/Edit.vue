@@ -59,9 +59,11 @@
       <v-card-title class="pa-0 text-xs-center">
         <h3 class="font-weight-medium">Create Tournament</h3>
         <v-spacer></v-spacer>
-        <router-link :to="'/tournament/create'">
-          <span><v-icon color="#F8C977" style="font-size:35px;" :to="'/tournament/create'" >arrow_forward</v-icon></span>
-        </router-link>
+        <span @click="toCreatePage">
+          <v-icon color="#F8C977" style="font-size:35px;">
+             arrow_forward
+          </v-icon>
+        </span>
       </v-card-title>
     </v-card>
      <v-card-actions class="pa-3text-xs-center align-center">
@@ -106,6 +108,9 @@ export default {
   },
 
   methods: {
+    toCreatePage () {
+      this.$router.push({ name: "TournamentCreate" })
+    },
     edit () {
       this.btnLoading = true
       let user = {

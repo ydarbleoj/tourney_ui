@@ -60,7 +60,8 @@ const store = new Vuex.Store({
       return axios.post('/api/v2/tournaments.json', { tournament: payload }).then((response) => {
         commit('ROUND_CREATE', { list: response.data })
         if (response.data.success) {
-          return true
+          let list = response.data
+          return JSON.parse(list.tournament).data
         } else {
           return false
         }
@@ -74,7 +75,7 @@ const store = new Vuex.Store({
       })
     },
     CREATE_TOURNAMENT_ROUNDS: function ({ commit, state }, { tournId, payload }) {
-      let options = { tournament_id: tournId, round: payload}
+      let options = { tournament_id: tournId, round: payload }
       return axios.post('/api/v2/tournaments/rounds.json', options).then((response) => {
         if (response.data.success) {
           commit('CURRENT_TOURNAMENT', { list: response.data })
@@ -257,7 +258,6 @@ const store = new Vuex.Store({
     ROUND_CREATE: (state, { list }) => {
       Vue.set(state, 'userInviteList', JSON.parse(list.user_list).data)
       Vue.set(state, 'courseMenuList', JSON.parse(list.course_list).data)
-      Vue.set(state, 'currentTournament', JSON.parse(list.tournament).data)
     },
     SET_ADMIN_PLAYERS: (state, { list }) => {
       let inv = JSON.parse(list.invited).data
@@ -305,7 +305,8 @@ const store = new Vuex.Store({
     SET_PUTTING_LEADERBOARD: (state, { list }) => {
       const reducer = (acc, currentValue) => acc + currentValue;
       const threePutts = list.data.map(el => el.attributes.total_3_putts)
-      const total = threePutts.reduce(reducer)
+      const total = (threePutts.length == 0) ? 0 : threePutts.reduce(reducer)
+
       Vue.set(state, 'puttingPurse', total)
       Vue.set(state, 'putting_leaderboard', list.data)
     },

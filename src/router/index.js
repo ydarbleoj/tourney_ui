@@ -167,7 +167,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!localStorage.default_auth_token) {
+  if (!localStorage.default_auth_token && to.path !== '/login') {
     next({
       path: '/login',
       query: { redirect: to.fullPath }

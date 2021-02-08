@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'Build',
@@ -107,6 +107,7 @@ export default {
       this.end_date = d
       return d
     },
+    ...mapMutations(['tournament/RESET_CURRENT_TOURNAMENT'])
   },
 
   data () {
@@ -115,7 +116,7 @@ export default {
       date2: new Date().toISOString().substr(0, 10),
       dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
       name: 'Bandon',
-      year: 2019,
+      year: 2021,
       num_players: 16,
       num_rounds: 3,
       start_date: null,
@@ -149,6 +150,11 @@ export default {
 
       this.$store.dispatch('CREATE_TOURNAMENT', { payload: payload }).then(response => {
         if (response) {
+          console.log('this', response)
+          this.$store.commit(
+            'tournament/RESET_CURRENT_TOURNAMENT',
+            { list: response }
+          )
           this.$emit('toggleView', 'round')
         }
       })

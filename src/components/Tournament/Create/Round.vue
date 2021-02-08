@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import AddCourse from '../Create/AddCourse'
 
 export default {
@@ -31,7 +31,11 @@ export default {
     AddCourse,
   },
   computed: {
-    ...mapState(['currentTournament', 'userInviteList', 'courseMenuList']),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      userInviteList: state => state.userInviteList,
+      courseMenuList: state => state.courseMenuList
+    }),
   },
 
   data () {
@@ -41,20 +45,34 @@ export default {
   },
 
   methods: {
+    ...mapMutations({
+      resetCurrentTournament: 'tournament/RESET_CURRENT_TOURNAMENAT'
+    }),
     createRounds () {
       let rounds = this.$refs.roundData.map(el => el.save())
-      this.$store.dispatch('CREATE_TOURNAMENT_ROUNDS', { tournId: this.currentTournament.id, payload: rounds })
-        .then(response => {
-          if (response) {
-            this.$router.push({ path: '/tournament/admin' })
-          }
-        })
+      this.$store.dispatch(
+        'CREATE_TOURNAMENT_ROUNDS',
+        {
+          tournId: this.currentTournament.id,
+          payload: rounds
+        }
+      ).then(response => {
+        if (response) {
+          this.$router.push({
+            name: 'TournamentAdmin',
+            params: {
+              id: this.currentTournament.id
+            }
+          })
+        }
+      })
     },
 
   },
 
   created: function () {
-    this.listInfo = this.currentTournament.attributes.round_info
+    console.log('current', this.currentTournament)
+    this.listInfo = this.currentTournament.round_info
   },
 
 }

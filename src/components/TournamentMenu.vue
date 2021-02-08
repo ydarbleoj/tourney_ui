@@ -32,7 +32,7 @@
             reverse-trasition="fade"
           >
             <h1
-              style="font-size:35px;"
+              style="font-size:28px;"
               class="font-weight-regular"
               v-bind:class="{ active: isActive(item.attributes.year) }"
             >

@@ -76,7 +76,7 @@
         </v-flex>
         <v-flex xs6>
           <div class="text-xs-center">
-            <v-btn flat round class="admin--edit_button font-weight-regular" color="white" :to="'/profile/edit/' + this.$auth.user().id">Settings</v-btn>
+            <v-btn flat round class="admin--edit_button font-weight-regular" color="white" :to="`/profile/edit/${this.$auth.user().id}`">Settings</v-btn>
           </div>
         </v-flex>
       </v-layout>

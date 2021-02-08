@@ -135,7 +135,10 @@ export default {
       this.$store.commit('ADD_USER_TEE_TIME', { user: user, index: index, group: i })
     },
     roundFilter (rounds, num) {
-      let r = rounds.filter((el) => el.roundNumber == num)
+      console.log('round', rounds)
+      console.log('num', num)
+      let r = rounds.filter(el => el.roundNumber == num)
+      console.log('roundfilter', r)
       this.roundId = r[0].roundId
     },
     loadTeeTimes () {
@@ -154,6 +157,7 @@ export default {
   watch: {
     roundNumber () {
       let num = this.roundNumber
+      console.log('this.round', this.roundNumber)
       let rounds = this.currentTournament.round_info
       this.roundFilter(rounds, num)
       this.loadTeeTimes()
