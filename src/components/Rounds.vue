@@ -8,8 +8,9 @@
           centered
           class="pb-4"
         >
-          <v-tabs-slider class="tab-slider"></v-tabs-slider>
+          <v-tabs-slider color="#A8C256"></v-tabs-slider>
           <v-tab
+            color="white"
             v-for="i in items"
             :key="i"
             class="pl-2 pr-2"
@@ -22,6 +23,7 @@
     </v-toolbar>
     <v-tabs-items v-model="tab">
       <v-tab-item
+        active-class="active-tab"
         v-for="i in roundComps"
         :key="i['id']"
         transition="false"
@@ -52,7 +54,7 @@ export default {
     return {
       isLoading: false,
       swipeDirection: 'None',
-      tab: 1,
+      tab: 0,
       items: [1, 2, 3],
       roundComps: [],
       currentRoundNumber: 1,
@@ -99,7 +101,7 @@ export default {
     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
       .then(response => {
         this.isloading = true
-        this.roundComps = this.rounds,
+        this.roundComps = this.rounds
         this.currentRoundNumber = this.currentRound['attributes']['round_number']
       })
   },
@@ -115,11 +117,9 @@ export default {
   margin: 0;
   overflow: scroll;
 }
-.tab-slider {
-  background-color: turquoise;
-  opacity: 0.7;
-  border-radius: 25px;
-  height: 48px;
+.v-tabs__item--active.tab-slider {
+  color: #f1f1f1;
+  background-color: #A8C256;
 }
 .tabItem {
   opacity: 1;
@@ -139,5 +139,14 @@ export default {
 		opacity: 1;
 	}
 }
+.active-tab {
+  color: #f1f1f1;
+  background-color: #A8C256;
+}
+.text-decoration-underline {
+  background-color: #FFCB47;
+
+}
+  // color: #FFCB47;
 </style>
 

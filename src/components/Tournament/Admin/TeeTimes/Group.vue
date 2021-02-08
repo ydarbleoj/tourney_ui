@@ -30,7 +30,7 @@
         </v-list>
         <v-card-actions class="justify-center pa-0 mb-3">
           <v-btn round color="grey light-2" value="teeGroup" @click="updateTeeTime()">
-            <span>Submit</span>
+            <span>{{ btnMessage }}</span>
           </v-btn>
           <p>
             {{ this.adminMessage }}
@@ -55,12 +55,20 @@ export default {
     }),
   },
 
+  data () {
+    return {
+      btnMessage: 'Submit'
+    }
+  },
+
   methods: {
     removeElement(user, key) {
+      this.btnMessage = "Update"
       let g = this.teeGroup.attributes.group
       this.$emit('event', { user: user, key: key, group: g })
     },
     updateTeeTime(event){
+      this.btnMessage = 'Updating'
       const group = this.teeGroup.attributes
       const ids   = this.mapScorecardIds(group.players)
 
@@ -71,7 +79,10 @@ export default {
           teamId: group.id,
           ids: ids
         }
-      )
+      ).then(response => {
+        this.btnMessage = "Success"
+        setTimeout(() => this.btnMessage = "Submit", 3000)
+      })
     },
     mapScorecardIds (players) {
       return players.map(p => (p.attributes == undefined) ? p.scorecard_id : p.id)

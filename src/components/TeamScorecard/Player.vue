@@ -59,7 +59,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import UserScore from './UserScore'
+import UserScore from '@/components/TeamScorecard/UserScore'
 
 export default {
   name: "Player",
@@ -115,6 +115,7 @@ export default {
   },
 
   created () {
+    console.log('catr', this.card)
     let hole = this.holeInfo()
     if (hole === undefined) return;
 

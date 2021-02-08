@@ -1,16 +1,17 @@
 <template>
   <v-card flat>
-    <h2 class="font-weight-regular pt-3">
-      Course Statistics
-    </h2>
+    <TeeTime v-if="!loading" />
+
     <v-container
-      v-if="!loading"
       fluid
       pa-0
       class="font-weight-regular"
       style="height:inherit;"
     >
-      <v-layout row wrap>
+      <h2 class="font-weight-regular pt-3">
+        Course Statistics
+      </h2>
+      <v-layout row wrap v-if="!loading">
         <v-flex xs12 style="">
           <HcapDiff />
           <v-divider style="background-color:;"></v-divider>
@@ -45,16 +46,18 @@ import LowestScoring from '../Stats/LowestScoring'
 import PuttingAvg from '../Stats/PuttingAvg'
 import HcapDiff from '../Stats/HcapDiff'
 import ParAvgs from '../Stats/ParAvgs'
+import TeeTime from '../TeeTime'
 
 export default {
   name: 'index',
   props: ['roundId'],
   components: {
-    ScoringAvg,
-    LowestScoring,
-    PuttingAvg,
-    ParAvgs,
     HcapDiff,
+    LowestScoring,
+    ParAvgs,
+    PuttingAvg,
+    ScoringAvg,
+    TeeTime
   },
 
   data () {
@@ -63,6 +66,7 @@ export default {
       userData: {},
       courseData: {},
       overallData: {},
+      teeTimes: []
     }
   },
 

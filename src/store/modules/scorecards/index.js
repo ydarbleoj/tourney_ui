@@ -9,6 +9,7 @@ const state = {
   courseScorecard: {},
   userScore: {},
   userScorecards: [],
+  teamCard: []
 }
 
 const plugins = [
@@ -16,16 +17,39 @@ const plugins = [
     paths: [
       'scorecards.playerScorecard',
       'scorecards.scorecard',
-      'scorecards.getHoleInfo'
+      'scorecards.getHoleInfo',
+      'scorecards.teamCard'
     ]
   })
 ]
 
 const actions = {
-  LOAD_SCORECARD: function ({ commit, state }, { tournId, tournRoundId }) {
-    let options = { tournament_id: tournId, tournament_round_id: tournRoundId }
-    return axios.get('/api/v2/rounds/scorecards.json', { params: options}).then((response) => {
+  LOAD_SCORECARD: function ({ commit, state }, { tournId, tournRoundId, teamId }) {
+    let options = {
+      tournament_id: tournId,
+      tournament_round_id: tournRoundId,
+      team_id: teamId
+    }
+
+    return axios.get(
+      '/api/v2/rounds/scorecards.json',
+      { params: options}
+    ).then((response) => {
       commit('SET_SCORECARD', { list: response.data })
+    }, (err) => {
+      console.log(err)
+    })
+  },
+  LOAD_TEAM_SCORECARD: function ({ commit, state }, { tournId, team_id }) {
+    let options = {
+      tournament_id: tournId
+    }
+
+    return axios.get(
+      '/api/v2/rounds/team_scorecards/' + team_id + '.json',
+      { params: options}
+    ).then((response) => {
+      commit('SET_TEAM_SCORECARD', { list: response.data })
     }, (err) => {
       console.log(err)
     })
@@ -133,6 +157,9 @@ const mutations = {
   SET_SCORECARD: (state, { list }) => {
     state.playerScorecard = list.data === null ? {} : list.data['attributes']
   },
+  SET_TEAM_SCORECARD: (state, { list }) => {
+    state.teamCard = list.data === null ? {} : list.data['attributes']
+  },
   SET_SCORE_LIST: (state, { list }) => {
     state.scoreList = list
   },
@@ -149,6 +176,9 @@ const getters = {
   },
   scorecard: state => {
     return state.playerScorecard
+  },
+  getTeamCard: state => {
+    return state.teamCard
   },
   score: state => {
     return state.userScore

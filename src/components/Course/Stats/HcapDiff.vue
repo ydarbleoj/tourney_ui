@@ -11,18 +11,17 @@
         <v-flex xs12>
           <v-card flat class="white">
             <v-layout>
-              <v-flex xs6>
+              <v-flex xs12>
                 <v-layout row wrap>
-                  <v-flex xs12 class="mb-2">
-                    <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Hcap Differential</h4>
+                  <v-flex xs7 class="mb-2">
+                    <h2 class="text-xs-left mt-1 mb-2 font-weight-regular">Hcap Differential</h2>
                   </v-flex>
-                  <v-flex xs12>
+                  <v-flex xs5>
                     <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.personalBest }}</h1>
-                    <h4 class=" mb-3 font-weight-regular">Personal</h4>
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs6>
+              <v-flex xs12>
                 <v-layout row wrap align-center justify-center fill-height>
                   <v-flex xs12>
                     <h2 class="ma-0 font-weight-regular" style="color: #FFCB47;">{{ this.yearsField }}</h2>

@@ -6,6 +6,7 @@ const state = {
   courseStats: [],
   userCourseStats: {},
   currentCourse: {},
+  teeTimes: []
 }
 
 const actions = {
@@ -35,6 +36,8 @@ const mutations = {
   SET_COURSE_STATS: (state, { list }) => {
     Vue.set(state, 'courseStats', JSON.parse(list.course_data))
     Vue.set(state, 'userCourseStats', JSON.parse(list.user_data).data.attributes)
+    console.log('list tee', JSON.parse(list.tee_times).data)
+    Vue.set(state, 'teeTimes', JSON.parse(list.tee_times).data)
   },
 }
 

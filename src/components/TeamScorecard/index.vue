@@ -25,8 +25,6 @@
                     <div><h1 class="grey--text">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
-                    <div><h1 class="grey--text ma-0 font-weight-regular" >{{ total_score }}</h1></div>
-                    <label class='scorecard-label'>GROSS</label>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -60,15 +58,12 @@
           </v-flex>
           <v-flex xs5>
             <v-card class="text-xs-center grey darken-3" flat>
-              <h5 class="mb-0 pt-2 white--text">{{ handicap }} Handicap</h5>
+              <h3 class="mb-0 pt-2 white--text">Par {{ course_par }}</h3>
               <v-container class="pa-0 pl-3">
                 <v-layout row wrap>
                   <v-flex xs5>
                     <div><h1 style="color:#A8C256" class="ma-0 font-weight-regular">{{ total_putts }}</h1></div>
                     <label class="scorecard-label">PUTTS</label>
-                  </v-flex>
-                  <v-flex xs1>
-                    <div><h1 class="grey--text font-weight-regular">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
                     <div><h1 class="pers-record ma-0 font-weight-regular" > {{ total_3putts }}</h1></div>
@@ -84,19 +79,19 @@
     <v-card-text class="pa-0">
       <v-layout row wrap white>
         <transition name="fade">
-          <score-list :card="scorecard" v-if="isLoaded" />
+          <score-list :card="teamCard" v-if="isLoaded" />
         </transition>
       </v-layout>
     </v-card-text>
   </v-card>
 </template>
 <script>
-import ScoreList from './ScoreList'
+import ScoreList from '@/components/TeamScorecard/ScoreList'
 import BackButton from '../BackButton'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'Scorecard',
+  name: 'TeamScorecard',
   props: ['current', 'roundId'],
   components: {
     ScoreList,
@@ -109,7 +104,7 @@ export default {
       currentRound: state => state.currentRound,
     }),
     ...mapGetters({
-      scorecard: 'scorecards/scorecard'
+      teamCard: 'scorecards/getTeamCard'
     }),
     target () {
       const value = '#scorecard-scroll'
@@ -127,7 +122,7 @@ export default {
       total_net: 0,
       total_putts: 0,
       total_3putts: 0,
-      handicap: 0,
+      course_par: 0,
       total_score: 0,
       scorecardId: null,
       out_net: 0,
@@ -143,14 +138,14 @@ export default {
 
   methods: {
     loadHeaderInfo () {
-      let card = this.scorecard
+      let card = this.teamCard
       if (card == undefined) return;
 
       this.course_name = card.course_name
       this.total_net = card.total_net
       this.total_putts = card.total_putts
       this.total_3putts = card.total_3putts
-      this.handicap = card.handicap
+      this.course_par = +card.course_par * 2
       this.total_score = card.total_score
       this.scorecardId = card.id
       this.out_net = card.out_net
@@ -169,11 +164,10 @@ export default {
 
   created: function () {
     this.$store.dispatch(
-      'scorecards/LOAD_SCORECARD',
+      'scorecards/LOAD_TEAM_SCORECARD',
       {
         tournId: this.$route.params.id,
-        tournRoundId: this.$route.params.scorecard_id,
-        teamId: this.$route.params.teamId
+        team_id: this.$route.params.team_id
       }
     ).then(response => {
       this.loadHeaderInfo()

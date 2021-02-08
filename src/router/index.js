@@ -18,6 +18,8 @@ import Profile from '@/components/Profile/Profile'
 import ProfileEdit from '@/components/Profile/Edit'
 import Scorecard from '@/components/Scorecard/index'
 import ScorecardHole from '@/components/Scorecard/Hole'
+import TeamScorecard from '@/components/TeamScorecard/index'
+import TeamScorecardHole from '@/components/TeamScorecard/Hole'
 import UserScore from '@/components/Scorecard/UserScore'
 import Summary from '@/components/Stats/Course/index'
 
@@ -153,6 +155,20 @@ const router = new Router({
       path: '/scorecard/:id/hole/:number',
       name: "ScorecardHole",
       component: ScorecardHole,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/team_scorecard/:team_id',
+      name: "TeamScorecard",
+      component: TeamScorecard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/team_scorecard/:id/hole/:number',
+      name: "TeamScorecardHole",
+      component: TeamScorecardHole,
       props: { default: true },
       meta: { auth: true }
     },

@@ -76,7 +76,7 @@ export default {
       this.$store.commit("setPageTransition");
       this.$router.push(
         {
-          name: 'TeamScorecardHole',
+          name: 'ScorecardHole',
           params: {
             id: this.scorecard_id,
             number: next
