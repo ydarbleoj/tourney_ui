@@ -172,7 +172,7 @@ const store = new Vuex.Store({
         if (response.status === 200) {
           commit('SET_ROUNDS', { list: response.data.rounds })
           commit('SET_SCORECARD_PREVIEWS', { list: response.data.scorecard_previews })
-          commit('SET_USER_TEE_TIMES', { list: response.data.user_times } )
+          // commit('SET_USER_TEE_TIMES', { list: response.data.user_times } )
         }
       }, (err) => {
         console.log('error in rounds', err)
@@ -294,7 +294,7 @@ const store = new Vuex.Store({
       Vue.set(state, 'scorecardPreviews', JSON.parse(list).data)
     },
     SET_USER_TEE_TIMES: (state, { list }) => {
-      state.userTeeTimes = JSON.parse(list).data
+      // state.userTeeTimes = JSON.parse(list).data
     },
     SET_CURRENT_ROUND: (state, { list }) => {
       Vue.set(state, 'currentRound', list)
