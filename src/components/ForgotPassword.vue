@@ -50,11 +50,11 @@ export default {
       }
     },
     submitSuccessful () {
-      this.notice = 'Email with password reset instructions has been sent.'
+      this.notice = 'Your password was reset.'
       this.error = ''
       this.email = ''
 
-      setTimeout(() =>window.location.href = 'https://giphy.com/gifs/charles-barkley-eMXDVl0VyaHSg/fullscreen', 2000);
+      this.$router.push({ name: 'Login' })
     },
     submitFailed (error) {
       const e = error.response

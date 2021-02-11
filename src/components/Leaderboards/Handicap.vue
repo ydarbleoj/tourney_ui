@@ -45,7 +45,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTournament', 'handicapMessage'])
+    ...mapState(['tournament/currentTournament', 'handicapMessage'])
   },
 
   methods: {
