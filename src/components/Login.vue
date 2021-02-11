@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height style="background-color:#fff;">
-    <v-layout align-center justify-center row fill-height color="white">
+    <v-layout row align-center justify-center color="white">
       <v-flex xs12 class="text-xs-center" color="white">
         <h1 style="color:#74C9D7" class="font-weight-regular mb-5">Login</h1>
         <p style="color:red;" >{{ errorMessage }}</p>
@@ -20,9 +20,11 @@
             required
           ></v-text-field>
 
-          <div class="text-xs-right">
-            <router-link to="/forgot_password">Forgot Password</router-link>
-          </div>
+          <v-flex x12 class="text-xs-right pt-4">
+            <span @click="toForgotPassword">
+              Forgot Password
+            </span>
+          </v-flex>
 
           <v-btn flat round class="admin--edit_button font-weight-regular mt-5" color="white" @click="login">{{ btnMessage }}</v-btn>
         </form>
@@ -78,6 +80,10 @@ export default {
     },
     setRedirect () {
       return 'redirect' in this.$route.query ? this.$route.query.redirect : '/profile'
+    },
+    toForgotPassword () {
+      console.log('akldfjl')
+      this.$router.push({ name: 'ForgotPassword' })
     }
   },
 
