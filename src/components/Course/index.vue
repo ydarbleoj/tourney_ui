@@ -45,7 +45,7 @@
       </v-card>
       <v-divider class="mb-4" style="background-color:;"></v-divider>
       <stats
-        :roundId="this.currentRound['attributes']['round_number']"
+        :roundId="this.currentRound['id']"
         v-if="!isloading"
       />
     </v-card-text>
@@ -104,6 +104,7 @@ export default {
   },
 
   created: function () {
+    console.log('hitting round', this.currentRound)
     let rndNum = this.currentRound['attributes']['round_number']
     let times = this.userTeeTimes
     let t = this.filterTeeTime(rndNum, times)
@@ -112,16 +113,16 @@ export default {
 
     this.roundTime = t.tee_time
     this.roundGroup = 'Group ' + t.group
-
-    this.$store.dispatch(
-      'course/LOAD_COURSE', {
-        tourn_id: this.currentTournament.id,
-        id: this.currentRound.course_id,
-        roundNumber: this.currentRound.round_id
-      }
-    ).then(response => {
-      this.isloading = false
-    })
+    this.isloading = false
+    // this.$store.dispatch(
+    //   'course/LOAD_COURSE', {
+    //     tourn_id: this.currentTournament.id,
+    //     id: this.currentRound.id,
+    //     roundNumber: this.currentRound.round_id
+    //   }
+    // ).then(response => {
+    //   this.isloading = false
+    // })
   }
 }
 </script>

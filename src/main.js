@@ -43,6 +43,7 @@ import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
 axios.defaults.baseURL = process.env.ROOT_API
+
 Vue.use(VueAxios, axios)
 Vue.router = router
 
