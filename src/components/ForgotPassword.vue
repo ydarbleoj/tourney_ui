@@ -50,11 +50,11 @@ export default {
       }
     },
     submitSuccessful () {
-      this.notice = 'Your password was reset.'
+      this.notice = 'Your password was reset to the original.'
       this.error = ''
       this.email = ''
 
-      this.$router.push({ name: 'Login' })
+      setTimeout(this.$router.push({ name: 'Login' }), 2000)
     },
     submitFailed (error) {
       const e = error.response
