@@ -170,7 +170,7 @@ const store = new Vuex.Store({
       let options = { tournament_id: id }
       return axios.get('/api/v2/rounds/lists.json', { params: options }).then((response) => {
         if (response.status === 200) {
-          console.log('first', response)
+          console.log('first', response.data)
           commit('SET_ROUNDS', { list: response.data.rounds })
           commit('SET_SCORECARD_PREVIEWS', { list: response.data.scorecard_previews })
           // commit('SET_USER_TEE_TIMES', { list: response.data.user_times } )
@@ -295,7 +295,8 @@ const store = new Vuex.Store({
       Vue.set(state, 'scorecardPreviews', JSON.parse(list).data)
     },
     SET_USER_TEE_TIMES: (state, { list }) => {
-      // state.userTeeTimes = JSON.parse(list).data
+      console.log('ksjdf', list)
+      state.userTeeTimes = JSON.parse(list).data
     },
     SET_CURRENT_ROUND: (state, { list }) => {
       Vue.set(state, 'currentRound', list)

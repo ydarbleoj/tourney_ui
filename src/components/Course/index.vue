@@ -104,7 +104,6 @@ export default {
   },
 
   created: function () {
-    console.log('hitting round', this.currentRound)
     let rndNum = this.currentRound['attributes']['round_number']
     let times = this.userTeeTimes
     let t = this.filterTeeTime(rndNum, times)

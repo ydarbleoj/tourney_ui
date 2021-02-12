@@ -76,6 +76,7 @@ export default {
     let course = this.course['attributes']
     let rndNum = course['round_number']
     let times = this.userTeeTimes
+    console.log('times', times)
     let t = this.filterTeeTime(rndNum, times)
 
     if (t === undefined) return false;
