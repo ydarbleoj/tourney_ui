@@ -9,7 +9,11 @@ const state = {
   courseScorecard: {},
   userScore: {},
   userScorecards: [],
-  teamCard: []
+  teamCard: [],
+  teamCardOne: [],
+  teamCardTwo: [],
+  teamCardThree: [],
+  teamCardFour: []
 }
 
 const plugins = [
@@ -155,7 +159,7 @@ const mutations = {
     })
   },
   SET_SCORECARD: (state, { list }) => {
-    console.log("card", list)
+    // Vue.set(state, 'teamCardOne', JSON.parse(list.data.team_cards
     state.playerScorecard = list.data === null ? {} : list.data['attributes']
   },
   SET_TEAM_SCORECARD: (state, { list }) => {
