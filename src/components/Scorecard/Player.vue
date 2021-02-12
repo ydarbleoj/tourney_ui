@@ -47,7 +47,6 @@
       class="pa-0"
       v-if="displayScore"
     >
-    <v-card flat class="overlay">
       <transition
       name="fade"
       >
@@ -57,7 +56,6 @@
           @onUpdate="updateHoles"
         />
       </transition>
-    </v-card>
     </v-card-text>
   </v-card>
 </template>
