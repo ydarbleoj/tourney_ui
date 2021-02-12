@@ -1,10 +1,13 @@
 <template>
   <v-card flat class="hole-container">
-    <v-layout row>
+    <v-layout column>
       <v-flex xs12>
-        <h2 class="pa-4">
+        <h2 class="pl-4 pt-4">
           Hole {{ holeNumber }}
         </h2>
+      </v-flex>
+      <v-flex xs6 class="pl-4 pb-2">
+        <span class="pr-2">Par {{ par }}</span> <span> Hcap {{ handicap }}</span>
       </v-flex>
     </v-layout>
     <v-card-text class="pa-0" v-if="isLoaded">
@@ -32,6 +35,8 @@ export default {
     return {
       isLoaded: false,
       holeNumber: this.$route.params.number,
+      par: '',
+      handicap: ''
     }
   },
 
@@ -45,6 +50,12 @@ export default {
     })
   },
 
+  methods: {
+     holeInfo () {
+      return this.scorecard.holes.filter(hole => this.holeNumber == hole.number)[0]
+    }
+  },
+
   created () {
     if (this.scorecard.length == 0) {
       this.$store.dispatch(
@@ -53,9 +64,13 @@ export default {
         tournId: this.currentTournament.id,
         tournRoundId: this.currentRound.id
       }).then(response => {
+        this.handicap = this.holeInfo().handicap
+        this.par      = this.holeInfo().par
         this.isLoaded = true
       })
     } else {
+      this.handicap = this.holeInfo().handicap
+      this.par      = this.holeInfo().par
       this.isLoaded = true
     }
   }
