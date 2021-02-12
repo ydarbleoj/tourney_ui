@@ -34,14 +34,13 @@ const mutations = {
     state.teeTime = list[0]['tee_times']
   },
   SET_COURSE_STATS: (state, { list }) => {
-    let userStats = JSON.parse(list.user_data)
-    console.log('log', userStats)
-
+    console.log('log', list)
     Vue.set(state, 'courseStats', JSON.parse(list.course_data))
-    if (userStats.data !== null) {
+
+    let userStats =  Object.keys(list.user_data).length === 0 ? null : JSON.parse(list.user_data)
+    if (userStats !== null && userStats.data !== null) {
       Vue.set(state, 'userCourseStats', JSON.parse(list.user_data).data.attributes)
     }
-    console.log('list tee', JSON.parse(list.tee_times).data)
     Vue.set(state, 'teeTimes', JSON.parse(list.tee_times).data)
   },
 }

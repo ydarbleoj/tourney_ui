@@ -22,7 +22,11 @@ const plugins = [
       'scorecards.playerScorecard',
       'scorecards.scorecard',
       'scorecards.getHoleInfo',
-      'scorecards.teamCard'
+      'scorecards.teamCard',
+      'scorecards.teamCardOne',
+      'scorecards.teamCardTwo',
+      'scorecards.teamCardThree',
+      'scorecards.teamCardFour'
     ]
   })
 ]
@@ -159,8 +163,20 @@ const mutations = {
     })
   },
   SET_SCORECARD: (state, { list }) => {
-    // Vue.set(state, 'teamCardOne', JSON.parse(list.data.team_cards
-    state.playerScorecard = list.data === null ? {} : list.data['attributes']
+    let player      = JSON.parse(list.player_card)
+    let team        = JSON.parse(list.team_cards)
+    let team_data   = Object.keys(team).length === 0 ? {} : team.data
+    let player_data = Object.keys(player).length === 0 ? {} : player.data.attributes
+
+    let cardOne = Object.keys(team_data[0]).length === 0 ? {} : team_data[0].attributes
+    let cardTwo = Object.keys(team_data[1]).length === 0 ? {} : team_data[1].attributes
+    let cardThree = Object.keys(team_data[2]).length === 0 ? {}: team_data[2].attributes
+    console.log('aksj', cardThree)
+
+    Vue.set(state, 'teamCardOne', cardOne)
+    Vue.set(state, 'teamCardTwo', cardTwo)
+    Vue.set(state, 'teamCardThree', cardThree)
+    Vue.set(state, 'playerScorecard', player_data)
   },
   SET_TEAM_SCORECARD: (state, { list }) => {
     state.teamCard = list.data === null ? {} : list.data['attributes']
