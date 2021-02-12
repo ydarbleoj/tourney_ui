@@ -55,7 +55,6 @@ export default {
         })
     },
     resetSuccessful (response) {
-      console.log('res', response)
       this.$auth.login({
         data: {
           auth: {

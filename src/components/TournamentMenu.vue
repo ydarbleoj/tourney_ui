@@ -24,7 +24,7 @@
         <v-flex xs12 pr-2>
           <v-card
             v-for="item in items"
-            class="flex xs12 pt-4 pb-4 pr-5 text-xs-right"
+            class="flex xs12 pt-3 pb-3 pr-5 text-xs-right"
             :key="item['id']"
             @click="updateTournament(item)"
             flat

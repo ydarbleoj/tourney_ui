@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="grey darken-3 round-borders" @click="scorecardPage">
+  <v-card flat class="grey darken-3 round-borders" @click="scorecardPage" v-if="userHasACard">
     <v-card-title>
       <v-container class="pa-0">
         <v-layout row wrap align-center justify-center >
@@ -74,7 +74,8 @@ export default {
       total_3putts: 0,
       handicap: 0,
       total_score: 0,
-      roundId: null
+      roundId: null,
+      userHasACard: true
     }
   },
 
@@ -95,8 +96,10 @@ export default {
   created: function () {
     let preview = this.getScorecardPreview(this.round['attributes']['round_number'])
 
-    if (preview.length == 0) return;
-
+    if (preview.length == 0) {
+      this.userHasACard = false
+      return
+    }
     let scorecard = preview[0].attributes
     this.course_name = scorecard.course_name
     this.total_net = scorecard.total_net
