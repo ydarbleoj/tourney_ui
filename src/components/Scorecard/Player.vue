@@ -1,5 +1,5 @@
 <template>
-  <v-card flat v-bind:class="{ overlay: displayScore }">
+  <v-card flat>
     <v-layout row class="pl-2 pt-2 pb-2" fill-height align-center @click="updateDisplayScore">
       <v-flex xs8 class="text-xs-left  text--black">
         <h2 class="pl-2 font-weight-regular">
@@ -133,6 +133,5 @@ export default {
 </script>
 <style scoped>
 .overlay {
-  z-index: 100;
 }
 </style>

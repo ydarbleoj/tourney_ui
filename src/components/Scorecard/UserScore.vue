@@ -158,13 +158,17 @@ export default {
     updateScore() {
       this.btnLoading = true
       let us_id = this.cardData.user_score_id
+      let holeNumber = this.cardData.number
       const options = { putts: this.putts, score: this.shots }
       if (us_id) {
         this.$store.dispatch('scorecards/UPDATE_USER_SCORE', { scorecardId: this.scorecardId, scoreId: us_id, scores: options }).then(response => {
             if (response) {
               this.updateMessage = 'Success'
               this.type = 'UPDATE'
-              this.$emit('onUpdate')
+              this.closeCard(holeNumber)
+              if (holeNumber !== 18) {
+                this.$emit('onUpdate')
+              }
               this.btnLoading = false
             } else {
               this.updateMessage = 'Failed'
@@ -179,7 +183,10 @@ export default {
             if (response) {
               this.updateMessage = 'Success'
               this.type = 'UPDATE'
-              this.$emit('onUpdate')
+              this.closeCard(holeNumber)
+              if (holeNumber !== 18) {
+                this.$emit('onUpdate')
+              }
             } else {
               this.updateMessage = 'Failed'
               this.type = 'SAVE'
