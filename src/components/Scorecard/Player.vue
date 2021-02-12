@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat v-bind:class="{ overlay: displayScore }">
     <v-layout row class="pl-2 pt-2 pb-2" fill-height align-center @click="updateDisplayScore">
       <v-flex xs8 class="text-xs-left  text--black">
         <h2 class="pl-2 font-weight-regular">
@@ -43,7 +43,11 @@
         <span><v-icon>arrow_forward</v-icon></span>
       </v-flex>
     </v-layout>
-    <v-card-text class="pa-0" v-if="displayScore">
+    <v-card-text
+      class="pa-0"
+      v-if="displayScore"
+    >
+    <v-card flat class="overlay">
       <transition
       name="fade"
       >
@@ -53,6 +57,7 @@
           @onUpdate="updateHoles"
         />
       </transition>
+    </v-card>
     </v-card-text>
   </v-card>
 </template>
@@ -127,4 +132,7 @@ export default {
 }
 </script>
 <style scoped>
+.overlay {
+  z-index: 100;
+}
 </style>

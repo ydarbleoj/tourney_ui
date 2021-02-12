@@ -49,7 +49,8 @@ export default {
       isLoaded: false,
       holeNumber: this.$route.params.number,
       par: '',
-      handicap: ''
+      handicap: '',
+      hideCard: false
     }
   },
 

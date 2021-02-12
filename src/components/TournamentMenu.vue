@@ -17,7 +17,7 @@
     >
       <v-card
         v-bind:class="{ overlay: open }"
-        class="d-flex align-end flex-column overlay"
+        class="d-flex align-end flex-column"
         flat
         transition="fade-transition"
       >
