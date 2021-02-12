@@ -134,10 +134,10 @@ export default {
     closeCard(num) {
       if (this.cardData.number === 18) {
         this.completeScorecard();
+        this.$emit('event', num)
+        this.type == 'SAVE'
         return
       }
-      this.$emit('event', num)
-      this.type == 'SAVE'
     },
     completeScorecard () {
       this.finishRound = !this.finishRound
@@ -146,8 +146,8 @@ export default {
       this.btnLoading = true
       this.$store.dispatch('scorecards/FINISH_SCORECARD', { tournId: this.currentTournament.id, scorecardId: this.scorecardId, opts: true })
         .then(response => {
-          this.btnLoading = false
           if (response) {
+            this.btnLoading = false
             this.updateMessage = 'Success'
           } else {
             this.updateMessage = 'Failed'
