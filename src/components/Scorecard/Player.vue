@@ -45,7 +45,6 @@
     </v-layout>
     <v-card-text
       class="pa-0"
-      v-if="displayScore"
     >
       <transition
       name="fade"
@@ -130,6 +129,4 @@ export default {
 }
 </script>
 <style scoped>
-.overlay {
-}
 </style>

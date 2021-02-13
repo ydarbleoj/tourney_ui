@@ -42,17 +42,6 @@
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
-      <v-card flat v-else class="pt-5" style="">
-        <v-layout row wrap align-center justify-center>
-          <v-flex xs12>
-
-            <v-btn flat round class="score--save_button" style="background-color:#ED6C6C;" @click="finishCard()" v-bind:loading="btnLoading">
-              <h4>{{ completeMessage }}</h4>
-            </v-btn>
-          </v-flex>
-
-        </v-layout>
-      </v-card>
     </v-flex>
   </v-layout>
 </template>
@@ -71,6 +60,7 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
+      currentRound: state => state.currentRound,
     }),
   },
 
@@ -131,12 +121,22 @@ export default {
     changePutts(value) {
       this.putts = value
     },
+    scorecardPage () {
+      this.$store.commit("setPageTransition", "back");
+      this.$router.push(
+        {
+          name: 'Scorecard',
+          params: {
+            id: this.currentTournament.id,
+            scorecard_id: this.currentRound.id
+          }
+        }
+      )
+    },
     closeCard(num) {
       if (this.cardData.number === 18) {
-        this.completeScorecard();
-        this.$emit('event', num)
-        this.type == 'SAVE'
-        return
+        this.$emit('onUpdate')
+        setTimeout(() =>  this.scorecardPage(), 900)
       }
     },
     completeScorecard () {
@@ -166,10 +166,10 @@ export default {
               this.updateMessage = 'Success'
               this.type = 'UPDATE'
               this.closeCard(holeNumber)
+              this.btnLoading = false
               if (holeNumber !== 18) {
                 this.$emit('onUpdate')
               }
-              this.btnLoading = false
             } else {
               this.updateMessage = 'Failed'
               this.type = 'SAVE'

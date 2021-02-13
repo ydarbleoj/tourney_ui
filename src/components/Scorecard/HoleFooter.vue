@@ -3,7 +3,7 @@
     fixed
     :value="true"
     color="white"
-    style="background-color:#FF9D72;"
+    style="background-color:#FF9D72;z-index:1;"
   >
     <v-layout row fill-height align-center>
       <v-flex xs4 class="pl-2">
@@ -18,8 +18,8 @@
         class="text-xs-center"
         @click="scorecardPage()"
       >
-        <h3>
-          Scorecard
+        <h3 style="color:#74C9D7;text-decoration: underline;">
+          Back to Scorecard
         </h3>
       </v-flex>
       <v-flex xs4 class="text-xs-right pr-2">
@@ -57,6 +57,7 @@ export default {
 
   methods: {
     scorecardPage () {
+      this.$store.commit("setPageTransition", "back");
       this.$router.push(
         {
           name: 'Scorecard',
