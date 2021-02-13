@@ -176,7 +176,6 @@ const mutations = {
     let player_data = Object.keys(player).length === 0 ? {} : player.data.attributes
     let team_card_data = Object.keys(team_scorecard).length === 0 ? {} : team_scorecard.data.attributes
 
-    console.log('sdjhf', team_data[2])
     let cardOne = Object.keys(team_data[0]).length === 0 ? {} : team_data[0].attributes
     let cardTwo = Object.keys(team_data[1]).length === 0 ? {} : team_data[1].attributes
 

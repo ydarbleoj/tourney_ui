@@ -63,7 +63,7 @@ export default {
           name: 'TeamScorecard',
           params: {
             id: this.getTournament.id,
-            team_id: this.$route.params.team_id
+            team_id: this.scorecard_id
           }
         }
       )

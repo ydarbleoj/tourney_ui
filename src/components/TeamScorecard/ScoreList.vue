@@ -66,6 +66,7 @@ export default {
 
   methods: {
     holePage (number) {
+      console.log('log', this.card)
       this.$router.push(
         {
           name: 'TeamScorecardHole',

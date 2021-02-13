@@ -9,7 +9,21 @@
       <v-container class="pa-4">
         <v-layout row wrap align-center justify-center>
           <v-flex xs5>
-            <BackButton />
+            <v-btn
+              absolute
+              class="ma-2 back-button"
+              style="top:0;left:0;"
+              outline
+              color="white"
+              depressed
+              small
+              fab
+              @click.native="backButton"
+            >
+              <v-icon color="white">
+                mdi-chevron-left
+              </v-icon>
+            </v-btn>
             <v-card class="text-xs-center grey darken-3" flat >
               <h3 class="mb-0 white--text font-weight-regular">{{ course_name }}</h3>
               <v-container pa-0>
@@ -102,7 +116,7 @@ export default {
   computed: {
     ...mapState({
       currentCourse: state => state.currentCourse,
-      currentTournament: state => state.currentTournament,
+      currentTournament: state => state.tournament.currentTournament,
       currentRound: state => state.currentRound,
     }),
     ...mapGetters({
@@ -141,7 +155,6 @@ export default {
   methods: {
     loadHeaderInfo () {
       let card = this.teamCard
-      console.log('carf', card)
       if (card == undefined) return;
 
       this.course_name = card.course_name
@@ -159,10 +172,20 @@ export default {
       this.in_gross = card.in_gross
       this.in_putts = card.in_putts
       this.in_3putts = card.in_3putts
+    },
+    backButton () {
+      console.log('curre', this.currentTournament)
+      this.$store.commit("setPageTransition", "back");
+      this.$router.push(
+        {
+          name: 'Course',
+          params: {
+            id: this.currentTournament.id,
+            course_id: this.teamCard.new_course_id
+          }
+        }
+      )
     }
-  },
-
-  watch: {
   },
 
   created: function () {

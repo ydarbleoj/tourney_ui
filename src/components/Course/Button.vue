@@ -57,6 +57,7 @@ export default {
       return n[0].attributes
     },
     coursePage () {
+      this.$store.commit("setPageTransition");
       this.$router.push(
         {
           name: 'Course',
