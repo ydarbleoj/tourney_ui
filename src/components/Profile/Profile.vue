@@ -133,13 +133,14 @@ export default {
       })
     },
     loadProfileData () {
-      this.hcap_diff = this.profileData.attributes.hcap_diff
-      this.net_avg = this.profileData.attributes.net_avg
-      this.gross_avg = this.profileData.attributes.gross_avg
-      this.total_net = this.profileData.attributes.lowest_round.total_net
-      this.course_name = this.profileData.attributes.lowest_round.course_name
-      this.year = this.profileData.attributes.lowest_round.year
-
+      if (this.profileData !== null) {
+        this.hcap_diff = this.profileData.attributes.hcap_diff
+        this.net_avg = this.profileData.attributes.net_avg
+        this.gross_avg = this.profileData.attributes.gross_avg
+        this.total_net = this.profileData.attributes.lowest_round.total_net
+        this.course_name = this.profileData.attributes.lowest_round.course_name
+        this.year = this.profileData.attributes.lowest_round.year
+      }
     }
   },
 
