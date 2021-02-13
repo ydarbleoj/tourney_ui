@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-    <v-layout row class="pl-2 pt-2 pb-2" fill-height align-center @click="updateDisplayScore">
+    <v-layout row class="pl-2 pt-2 pb-2" fill-height align-center>
       <v-flex xs8 class="text-xs-left  text--black">
         <h2 class="pl-2 font-weight-regular">
           {{ name }}
@@ -43,17 +43,6 @@
         <span><v-icon>arrow_forward</v-icon></span>
       </v-flex>
     </v-layout>
-    <v-card-text class="pa-0" v-if="displayScore">
-      <transition
-      name="fade"
-      >
-        <user-score
-          :cardData="holeInfo()"
-          :scorecardId="card.id"
-          @onUpdate="updateHoles"
-        />
-      </transition>
-    </v-card-text>
   </v-card>
 </template>
 

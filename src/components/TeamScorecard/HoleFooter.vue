@@ -59,10 +59,10 @@ export default {
     scorecardPage () {
       this.$router.push(
         {
-          name: 'Scorecard',
+          name: 'TeamScorecard',
           params: {
-            id: this.getTournament.id,
-            scorecard_id: this.roundId
+            id: this.currentTournament.id,
+            team_id: this.$route.params.team_id
           }
         }
       )
@@ -76,7 +76,7 @@ export default {
       this.$store.commit("setPageTransition");
       this.$router.push(
         {
-          name: 'ScorecardHole',
+          name: 'TeamScorecardHole',
           params: {
             id: this.scorecard_id,
             number: next

@@ -8,7 +8,19 @@
       </v-flex>
     </v-layout>
     <v-card-text class="pa-0" v-if="isLoaded">
-      <Player :card="scorecard" :holeNumber="holeNumber" />
+       <Player :card="scorecard" :holeNumber="holeNumber" />
+
+      <v-divider class="pa-4"></v-divider>
+
+      <Player :card="this.teamCardOne" :holeNumber="holeNumber" v-if="cardPresent(this.teamCardOne)" />
+
+      <Player :card="this.teamCardTwo" :holeNumber="holeNumber" v-if="cardPresent(this.teamCardTwo)" />
+
+      <v-divider class="pa-4"></v-divider>
+
+      <Player :card="this.teamCardThree" :holeNumber="holeNumber" v-if="cardPresent(this.teamCardThree)" />
+
+      <v-divider class="pa-4"></v-divider>
     </v-card-text>
     <v-card-actions v-if="isLoaded">
       <HoleFooter />
@@ -38,10 +50,14 @@ export default {
   computed: {
     ...mapState({
       currentRound: state => state.currentRound,
-      currentTournament: state => state.tournament.currentTournament
+      currentTournament: state => state.tournament.currentTournament,
+      teamCardOne: state => state.scorecards.teamCardOne,
+      teamCardTwo: state => state.scorecards.teamCardTwo,
+      teamCardThree: state => state.scorecards.teamCardThree,
     }),
     ...mapGetters({
-      teamCard: 'scorecards/getTeamCard'
+      teamCard: 'scorecards/getTeamCard',
+      scorecard: 'scorecards/scorecard'
     })
   },
 

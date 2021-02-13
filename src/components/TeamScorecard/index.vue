@@ -139,6 +139,7 @@ export default {
   methods: {
     loadHeaderInfo () {
       let card = this.teamCard
+      console.log('carf', card)
       if (card == undefined) return;
 
       this.course_name = card.course_name
