@@ -170,11 +170,13 @@ const mutations = {
 
     let cardOne = Object.keys(team_data[0]).length === 0 ? {} : team_data[0].attributes
     let cardTwo = Object.keys(team_data[1]).length === 0 ? {} : team_data[1].attributes
-    let cardThree = Object.keys(team_data[2]).length === 0 ? {}: team_data[2].attributes
+    if (team_data[2] !== undefined) {
+      let cardThree = Object.keys(team_data[2]).length === 0 ? {}: team_data[2].attributes
+      Vue.set(state, 'teamCardThree', cardThree)
+    }
 
     Vue.set(state, 'teamCardOne', cardOne)
     Vue.set(state, 'teamCardTwo', cardTwo)
-    Vue.set(state, 'teamCardThree', cardThree)
     Vue.set(state, 'playerScorecard', player_data)
   },
   SET_TEAM_SCORECARD: (state, { list }) => {
