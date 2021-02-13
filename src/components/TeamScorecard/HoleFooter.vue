@@ -18,8 +18,8 @@
         class="text-xs-center"
         @click="scorecardPage()"
       >
-        <h3>
-          Scorecard
+        <h3 style="color:#74C9D7;text-decoration: underline;">
+          Team Scorecard
         </h3>
       </v-flex>
       <v-flex xs4 class="text-xs-right pr-2">
@@ -57,11 +57,12 @@ export default {
 
   methods: {
     scorecardPage () {
+      this.$store.commit("setPageTransition", "back");
       this.$router.push(
         {
           name: 'TeamScorecard',
           params: {
-            id: this.currentTournament.id,
+            id: this.getTournament.id,
             team_id: this.$route.params.team_id
           }
         }

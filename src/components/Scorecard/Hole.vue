@@ -52,7 +52,7 @@ export default {
   },
 
   methods: {
-     holeInfo () {
+    holeInfo () {
       return this.scorecard.holes.filter(hole => this.holeNumber == hole.number)[0]
     },
     cardPresent (card) {

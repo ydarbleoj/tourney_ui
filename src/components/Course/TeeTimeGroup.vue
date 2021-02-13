@@ -54,6 +54,7 @@ export default {
 
   methods: {
     scorecardPage () {
+      this.$store.commit("setPageTransition");
       this.$router.push(
         {
           name: 'TeamScorecard',

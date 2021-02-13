@@ -3,13 +3,7 @@
     <v-layout row class="pl-2 pt-2 pb-2" fill-height align-center>
       <v-flex xs8 class="text-xs-left  text--black">
         <h2 class="pl-2 font-weight-regular">
-          {{ name }}
-          <span
-            class="text-xs-center pa-0"
-            style="color:#F8C977;font-size:24px;height:24px;"
-          >
-            {{ strokes(handicap) }}
-          </span>
+          Group {{ group }}
         </h2>
       </v-flex>
       <v-flex xs3 class="text-xs-right pr-2" v-if="newScore">
@@ -50,7 +44,7 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: "Player",
+  name: "TeamScore",
   props: ['card', 'holeNumber'],
 
   components: {
@@ -62,6 +56,7 @@ export default {
       gross: 4,
       net: 3,
       putts: 2,
+      group: '',
       newScore: true,
       handicap: null,
       displayScore: false
@@ -70,7 +65,7 @@ export default {
 
   methods: {
     playerName () {
-      return this.card.player_name
+      return this.card.group
     },
     holeInfo () {
       return this.card.holes.filter(hole => this.holeNumber == hole.number)[0]
@@ -85,7 +80,7 @@ export default {
       }
     },
     puttColor: function (putts) {
-      return putts > 2 ? '#F79256' : ''
+      return putts > 4 ? '#F79256' : ''
     },
     updateDisplayScore () {
       this.displayScore = !this.displayScore
@@ -94,6 +89,7 @@ export default {
       let hole = this.holeInfo()
       if (hole === undefined) return;
 
+      this.group = this.playerName()
       this.gross = hole.score
       this.net   = hole.net
       this.putts = hole.putts
@@ -102,11 +98,10 @@ export default {
   },
 
   created () {
-    console.log('catr', this.card)
     let hole = this.holeInfo()
     if (hole === undefined) return;
 
-    this.name  = this.playerName()
+    this.group = this.playerName()
     this.gross = hole.score
     this.net   = hole.net
     this.putts = hole.putts

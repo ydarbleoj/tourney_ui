@@ -25,6 +25,8 @@
                     <div><h1 class="grey--text">/</h1></div>
                   </v-flex>
                   <v-flex xs5>
+                    <div><h1 class="grey--text ma-0 font-weight-regular" >{{ total_score }}</h1></div>
+                    <label class='scorecard-label'>GROSS</label>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -147,7 +149,7 @@ export default {
       this.total_putts = card.total_putts
       this.total_3putts = card.total_3putts
       this.course_par = +card.course_par * 2
-      this.total_score = card.total_score
+      this.total_score = card.gross
       this.scorecardId = card.id
       this.out_net = card.out_net
       this.out_gross = card.out_gross
