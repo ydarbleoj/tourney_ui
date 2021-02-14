@@ -34,7 +34,8 @@ export default {
 
   computed: {
     ...mapState({
-      currentTournament: state => state.tournament.currentTournament
+      currentTournament: state => state.tournament.currentTournament,
+      puttingPurse: state => state.puttingPurse
     })
   },
 
@@ -52,6 +53,7 @@ export default {
   mounted () {
     this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: false })
       .then(response => {
+        console.log('putting', this.puttingPurse)
         this.headerPurse = this.puttingPurse
         this.year = this.currentTournament.year
         this.isloading = false
