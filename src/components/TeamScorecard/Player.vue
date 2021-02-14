@@ -11,6 +11,8 @@
             {{ strokes(handicap) }}
           </span>
         </h2>
+        <span class="pl-2" style="color:#F8C977" v-if="lowestScore">lowest</span>
+        <span class="pl-2" style="color:#F8C977" v-if="secondLowest">second lowest</span>
       </v-flex>
       <v-flex xs3 class="text-xs-right pr-2" v-if="newScore">
         <v-layout row align-center>
@@ -64,11 +66,33 @@ export default {
       putts: 2,
       newScore: true,
       handicap: null,
-      displayScore: false
+      displayScore: false,
+      lowestScore: false,
+      secondLowest: false
     }
   },
 
+  computed: {
+    ...mapGetters({
+      teamCard: 'scorecards/getTeamCard'
+    })
+  },
+
   methods: {
+    isLowest (id) {
+      const score = this.teamHoleInfo()
+      console.log('hole', score)
+      return score.score_1_id == id
+    },
+    isSecondLowest (id) {
+      const score = this.teamHoleInfo()
+      console.log('hole', score)
+      return score.score_2_id == id
+
+    },
+    teamHoleInfo () {
+      return this.teamCard.holes.filter(hole => this.holeNumber == hole.number)[0]
+    },
     playerName () {
       return this.card.player_name
     },
@@ -94,6 +118,8 @@ export default {
       let hole = this.holeInfo()
       if (hole === undefined) return;
 
+      this.lowestScore = this.isLowest(hole.user_score_id)
+      this.secondLowest = this.isSecondLowest(hole.user_score_id)
       this.gross = hole.score
       this.net   = hole.net
       this.putts = hole.putts
@@ -102,11 +128,13 @@ export default {
   },
 
   created () {
-    console.log('catr', this.card)
     let hole = this.holeInfo()
+    console.log('hole', hole.user_score_id)
     if (hole === undefined) return;
 
     this.name  = this.playerName()
+    this.lowestScore = this.isLowest(hole.user_score_id)
+    this.secondLowest = this.isSecondLowest(hole.user_score_id)
     this.gross = hole.score
     this.net   = hole.net
     this.putts = hole.putts
