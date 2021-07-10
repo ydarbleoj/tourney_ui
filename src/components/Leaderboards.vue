@@ -68,15 +68,11 @@ export default {
 
   data (){
     return {
-      el: 'stroke',
-      model: 'tab-stroke',
       swipeDirection: 'None',
       isPreview: true,
       isLoading: true,
-      currentView: 'stroke',
       activeButton: 'active',
       inactiveButton: 'inactive',
-      comps: ['stroke', 'putting', 'skins', 'team'],
     }
   },
 
@@ -93,12 +89,7 @@ export default {
     })
   },
 
-  methods: {
-    // previewToggle (event) {
-    //   this.isPreview = !this.isPreview
-    //   this.$el.classList.toggle('open')
-    // }
-  },
+  methods: {},
 
   created () {
     this.$store.dispatch(

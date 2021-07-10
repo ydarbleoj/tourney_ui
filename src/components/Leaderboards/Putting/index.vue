@@ -41,8 +41,9 @@ export default {
 
   watch: {
     current () {
-      this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: false })
-        .then(response => {
+      this.$store.dispatch(
+        'LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id }
+      ).then(() => {
           this.headerPurse = this.puttingPurse
           this.year = this.currentTournament.year
           this.isloading = false
@@ -51,13 +52,13 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id, preview: false })
-      .then(response => {
-        console.log('putting', this.puttingPurse)
-        this.headerPurse = this.puttingPurse
-        this.year = this.currentTournament.year
-        this.isloading = false
-      })
+    this.$store.dispatch(
+      'LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id }
+    ).then(() => {
+      this.headerPurse = this.puttingPurse
+      this.year = this.currentTournament.year
+      this.isloading = false
+    })
   }
 }
 </script>

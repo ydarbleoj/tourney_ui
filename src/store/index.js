@@ -134,33 +134,41 @@ const store = new Vuex.Store({
         commit('SET_HANDICAP', { list: response.data })
       })
     },
-    LOAD_TEAM_LEADERBOARD: function ({ commit, state }, { tournId, roundId, preview }) {
-      let options = { tournament_id: tournId, round_id: roundId, preview: preview }
-      return axios.get('/api/v2/leaderboards/teams.json', { params: options }).then((response) => {
+    LOAD_TEAM_LEADERBOARD: function ({ commit, state }, { tournId, roundId }) {
+      let options = { tournament_id: tournId, round_id: roundId }
+      return axios.get(
+        '/api/v2/leaderboards/teams.json', { params: options }
+      ).then((response) => {
         commit('SET_TEAM_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
-    LOAD_SKINS: function ({ commit, state }, { id, preview }) {
-      let options = { tournament_id: id, preview: preview  }
-      return axios.get('/api/v2/leaderboards/skins.json', { params: options }).then((response) => {
+    LOAD_SKINS: function ({ commit, state }, { id }) {
+      let options = { tournament_id: id }
+      return axios.get(
+        '/api/v2/leaderboards/skins.json', { params: options }
+      ).then((response) => {
         commit('SET_SKINS_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
-    LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id, preview }) {
-      let options = { tournament_id: id, preview: preview }
-      return axios.get('/api/v2/leaderboards/putts.json', { params: options}).then((response) => {
+    LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id }) {
+      let options = { tournament_id: id }
+      return axios.get(
+        '/api/v2/leaderboards/putts.json', { params: options}
+      ).then((response) => {
         commit('SET_PUTTING_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
     },
-    LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id, preview }) {
-      let options = { tournament_id: id, preview: preview }
-      return axios.get('/api/v2/leaderboards/strokes.json', { params: options }).then((response) => {
+    LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id }) {
+      let options = { tournament_id: id }
+      return axios.get(
+        '/api/v2/leaderboards/strokes.json', { params: options }
+      ).then((response) => {
         commit('SET_STROKE_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
