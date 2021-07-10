@@ -3,22 +3,40 @@
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
         <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;">Leaderboards</h2>
-        <v-container transition="slide-x-reverse-transition">
+        <v-container v-if="!isLoading" transition="slide-x-reverse-transition">
           <v-layout row>
             <v-flex xs6 ma-2>
               <v-layout column>
-                <stroke-button :current="current" />
-
+                <preview-button
+                  :current="current"
+                  :title="'Stroke'"
+                  :leaderboard="getStrokePreview"
+                  :link="'StrokeLeaderboard'"
+                />
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
-
-                <skins-button :current="current" />
+                <preview-button
+                  :current="current"
+                  :title="'Skins'"
+                  :leaderboard="getSkinsPreview"
+                  :link="'SkinsLeaderboard'"
+                />
               </v-layout>
             </v-flex>
             <v-flex xs6 ma-2>
               <v-layout column>
-                <putting-button :current="current" />
-
+                <preview-button
+                  :current="current"
+                  :title="'Putting'"
+                  :leaderboard="getPuttingPreview"
+                  :link="'PuttingLeaderboard'"
+                />
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
+                <preview-button
+                  :current="current"
+                  :title="'Team'"
+                  :leaderboard="getStrokePreview"
+                  :link="'StrokeLeaderboard'"
+                />
               </v-layout>
             </v-flex>
           </v-layout>
@@ -29,12 +47,13 @@
 </template>
 
 <script>
+import PreviewButton from '../components/Leaderboards/PreviewButton'
 import StrokeButton from '../components/Leaderboards/Stroke/Button'
 import SkinsButton from '../components/Leaderboards/Skins/Button'
 import Team from '../components/Leaderboards/Team/index'
 import PuttingButton from '../components/Leaderboards/Putting/Button'
 import router from 'vue-router'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Leaderboards',
@@ -43,6 +62,7 @@ export default {
     StrokeButton,
     PuttingButton,
     SkinsButton,
+    PreviewButton,
     Team
   },
 
@@ -52,6 +72,7 @@ export default {
       model: 'tab-stroke',
       swipeDirection: 'None',
       isPreview: true,
+      isLoading: true,
       currentView: 'stroke',
       activeButton: 'active',
       inactiveButton: 'inactive',
@@ -60,18 +81,33 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTournament']),
+    ...mapState({
+      currentTournament: state => state.tournament.currentTournament,
+      leaderboardsPreview: state => state.leaderboards.leaderboardsPreview
+    }),
+    ...mapGetters({
+      getStrokePreview: 'leaderboards/getStrokePreview',
+      getPuttingPreview: 'leaderboards/getPuttingPreview',
+      getSkinsPreview: 'leaderboards/getSkinsPreview'
+
+    })
   },
 
-  mounted: function () {
-  },
   methods: {
-    previewToggle (event) {
-      this.isPreview = !this.isPreview
-      this.$el.classList.toggle('open')
-    }
+    // previewToggle (event) {
+    //   this.isPreview = !this.isPreview
+    //   this.$el.classList.toggle('open')
+    // }
   },
 
+  created () {
+    this.$store.dispatch(
+      'leaderboards/LOAD_PREVIEW_LEADERBOARD',
+      { id: this.current.id }
+    ).then(() => {
+      this.isLoading = false
+    })
+  }
 }
 </script>
 <style >

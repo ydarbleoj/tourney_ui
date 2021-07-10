@@ -367,6 +367,7 @@ const store = new Vuex.Store({
   modules: {
     course,
     invitations,
+    leaderboards,
     overallSummary,
     profile,
     scorecards,

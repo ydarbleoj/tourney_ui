@@ -2,7 +2,7 @@
   "name": "Tourney",
   "version": "2.7.2",
   "description": "A Vue.js project",
-  "author": "ydarbleoj <brady.joel@gmail.com>",
+  "author": "ydarbleoj <joel.brady@hey.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
