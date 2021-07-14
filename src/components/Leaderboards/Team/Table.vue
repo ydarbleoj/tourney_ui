@@ -3,11 +3,11 @@
     :headers="headers"
     :items="teamLeaderboard"
     hide-actions
-    class='team-table fixed-header board-table'
+    class='team-table board-table'
     item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr @click="preview ? null : props.expanded = !props.expanded" v-bind:style="setStyle">
+      <tr >
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left mt-5">
           <h4 class="font-weight-medium mb-2">

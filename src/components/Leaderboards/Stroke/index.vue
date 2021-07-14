@@ -44,9 +44,7 @@ export default {
     console.log('get', this.currentTournament)
     this.$store.dispatch(
       'LOAD_STROKE_LEADERBOARD',
-      {
-        id: this.currentTournament.id, preview: false
-      }
+      { id: this.currentTournament.id }
     ).then(response => {
       this.strokePurse = this.currentTournament.num_players * 30
       this.isloading = false

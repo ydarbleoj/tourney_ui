@@ -34,8 +34,8 @@
                 <preview-button
                   :current="current"
                   :title="'Team'"
-                  :leaderboard="getStrokePreview"
-                  :link="'StrokeLeaderboard'"
+                  :leaderboard="getTeamPreview"
+                  :link="'TeamLeaderboard'"
                 />
               </v-layout>
             </v-flex>
@@ -48,10 +48,7 @@
 
 <script>
 import PreviewButton from '../components/Leaderboards/PreviewButton'
-import StrokeButton from '../components/Leaderboards/Stroke/Button'
-import SkinsButton from '../components/Leaderboards/Skins/Button'
 import Team from '../components/Leaderboards/Team/index'
-import PuttingButton from '../components/Leaderboards/Putting/Button'
 import router from 'vue-router'
 import { mapState, mapGetters } from 'vuex'
 
@@ -59,9 +56,6 @@ export default {
   name: 'Leaderboards',
   props: ['current'],
   components: {
-    StrokeButton,
-    PuttingButton,
-    SkinsButton,
     PreviewButton,
     Team
   },
@@ -84,8 +78,8 @@ export default {
     ...mapGetters({
       getStrokePreview: 'leaderboards/getStrokePreview',
       getPuttingPreview: 'leaderboards/getPuttingPreview',
-      getSkinsPreview: 'leaderboards/getSkinsPreview'
-
+      getSkinsPreview: 'leaderboards/getSkinsPreview',
+      getTeamPreview: 'leaderboards/getTeamPreview'
     })
   },
 

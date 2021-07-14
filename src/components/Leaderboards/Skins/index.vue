@@ -1,7 +1,5 @@
 <template>
-  <v-card
-    class="skins-lb-card"
-  >
+  <v-card class="skins-lb-card">
     <v-card-title class="skins--title pa-0 pt-2 pl-2">
       <Header :purse="skinsPurse" :name="'Skins'" />
     </v-card-title>

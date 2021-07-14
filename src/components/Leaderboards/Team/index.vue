@@ -1,152 +1,68 @@
 <template>
-  <v-card class="team-lb-card" @click="isPreview ? previewToggle() : null">
-    <v-card-title class="team--title pa-0 pt-2 pl-2">
-      <h2 class="text-xs-left font-weight-medium" >Team</h2>
-      <h2 class="ml-2 font-weight-medium text-xs-left" v-if="!isPreview" transition="fade-transition">Leaderboard</h2>
-      <v-spacer></v-spacer>
-      <span v-if="!isPreview" class="text-xs-right pr-2" @click="closeLeaderboard()">
-        <v-icon color="white">clear</v-icon>
-      </span>
+  <v-card
+    class="lb-card"
+   >
+    <v-card-title class="pa-0 pt-2 pl-2">
+      <Header :purse="purse" :name="'Team'" />
     </v-card-title>
-
-    <v-card-text v-if="!loading" class="team--title pa-0">
-      <h3 class="text-xs-center font-weight-medium">Round {{ roundNumber }}</h3>
-      <team-table :preview="isPreview"/>
+    <v-card-text v-if="!isloading" class="pa-0">
+      <team-table />
     </v-card-text>
-    <v-bottom-nav
-      v-if="!isPreview"
-      absolute
-      :active.sync="roundNumber"
-      :value="true"
-      style="background-color:#ACA885;"
-    >
-      <v-btn flat value="1" style="color:#fff; opacity:0.7;">
-        <h3>ONE</h3>
-      </v-btn>
-      <v-btn flat value="2" style="color:#fff;opacity:0.7;">
-        <h3>TWO</h3>
-      </v-btn>
-      <v-btn flat value="3" style="color:#fff;opacity:0.7;">
-        <h3>THREE</h3>
-      </v-btn>
-    </v-bottom-nav>
   </v-card>
 </template>
 <script>
-
-
 import { mapState, mapGetters } from 'vuex'
-import TeamTable from './Table'
+import teamTable from './Table'
+import Header from '../Header'
 
 export default {
   name: 'index',
-  props: ['current'],
   components: {
-    TeamTable
+    teamTable,
+    Header
   },
   data () {
     return {
-      isPreview: true,
-      loading: true,
-      closed: true,
-      roundNumber: 1,
-      roundId: null,
+      purse: 0,
+      isloading: true,
+      year: ""
     }
   },
 
   computed: {
-    ...mapState(['teamLeaderboard', 'teamRounds']),
+    ...mapState({
+     currentTournament: state => state.tournament.currentTournament
+    }),
   },
-
   methods: {
     closeLeaderboard () {
       this.isPreview = true
-    },
-    previewToggle () {
-      if (this.isPreview && this.closed) {
-        this.getFullField()
-      } else if (this.isPreview && !this.closed) {
-        this.closed = !this.closed
-      } else {
-        return null
-      }
-
-    },
-    toggleParent () {
-      this.$parent.$el.style.margin = this.isPreview ? '0 auto' : '0';
-      this.$parent.$el.style.width = this.isPreview ? '90%' : '100%';
-    },
-    getFullField () {
-      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundNumber, preview: false })
-        .then(response => {
-          this.closed = false
-          this.isPreview = false
-        })
-    },
-    roundFilter (rounds, num) {
-      let r = rounds.filter(el => el.roundNumber == num)
-      console.log('round id', r)
-      this.roundId = r[0].roundId
     }
   },
-  watch: {
-    current () {
-      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', {
-        tournId: this.current.id,
-        roundId: this.roundNumber,
-        preview: true
-      }).then(response => {
-        this.loading = false
-      })
-    },
-    isPreview () {
-      this.toggleParent()
-      this.$el.classList.toggle('open')
-      this.$emit('event')
-    },
-    roundNumber () {
-      console.log('round number', this.roundNumber)
-      this.roundFilter(this.teamRounds, this.roundNumber)
-      this.$store.dispatch('LOAD_TEAM_LEADERBOARD', {
-        tournId: this.current.id,
-        roundId: this.roundNumber,
-        preview: false
-      }).then(response => {
-        this.closed = false
-        this.isPreview = false
-      })
-    }
 
-  },
-  created: function () {
-    this.roundFilter(this.teamRounds, this.roundNumber)
-    this.$store.dispatch('LOAD_TEAM_LEADERBOARD', { tournId: this.current.id, roundId: this.roundNumber, preview: true })
-      .then(response => {
-        this.loading = false
-      })
-  },
+  mounted: function () {
+    this.$store.dispatch(
+      'LOAD_TEAM_LEADERBOARD',
+      { id: this.currentTournament.id, roundId: "" }
+    ).then(response => {
+      this.purse = 160//this.currentTournament.num_players * 30
+      this.isloading = false
+      this.year = this.currentTournament.year
+    })
+  }
 }
 </script>
-<style>
-.team-lb-card {
-  width: 100%;
-  border-radius: 20px;
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
-}
-.team-lb-card.open {
+<style scoped>
+.lb-card {
   border-radius: 0;
   top: 0;
   left: 0;
   z-index: 1000 !important;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
   height: 100vh;
   overflow: scroll;
-}
-
-.team--title {
-  color: #f1f1f1;
+  width: 100vw;
   background-color: #ACA885;
+  color: #f1f1f1;
+  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-
 </style>
