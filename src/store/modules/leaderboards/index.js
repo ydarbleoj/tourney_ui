@@ -1,20 +1,18 @@
 import axios from 'axios'
 import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
+import team from './team'
 
 const state = {
   strokePreview: [],
   puttingPreview: [],
   skinsPreview: [],
   teamPreview: [],
-  teamLeaderboard: []
 }
 
 const plugins = [
   createPersistedState({
-    paths: [
-      'leaderboards.teamLeaderboard'
-    ]
+    paths: []
   })
 ]
 
@@ -29,18 +27,6 @@ const actions = {
       commit('SET_PREVIEW_LEADERBOARDS', { list: res.data })
     }, (err) =>{
       console.log('error preview leaderboard', err)
-    })
-  },
-  LOAD_TEAM_LEADERBOARD: function({ commit, state }, { tournamentId, roundId}) {
-    return axios.get(
-      'api/v3/leaderboards/teams.json',
-      { params:
-        { tournament_id: tournamentId, round_id: roundId }
-      }
-    ).then(() => {
-      commit("SET_TEAM_LEADERBOARD", { list: res.data })
-    }, (err) => {
-      console.log('error loading team page', err)
     })
   }
 }
@@ -77,11 +63,11 @@ const getters = {
   }
 }
 
-
 export default {
   namespaced: true,
   actions,
   getters,
+  modules: { team },
   mutations,
   plugins,
   state

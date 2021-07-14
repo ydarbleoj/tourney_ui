@@ -5,7 +5,7 @@
     <v-card-title class="pa-0 pt-2 pl-2">
       <Header :purse="strokePurse" :name="'Stroke'" />
     </v-card-title>
-    <v-card-text v-if="!isloading" class="pa-0">
+    <v-card-text v-if="!isLoading" class="pa-0">
       <stroke-table />
     </v-card-text>
   </v-card>
@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       strokePurse: 0,
-      isloading: true,
+      isLoading: true,
       year: ""
     }
   },
@@ -47,7 +47,7 @@ export default {
       { id: this.currentTournament.id }
     ).then(response => {
       this.strokePurse = this.currentTournament.num_players * 30
-      this.isloading = false
+      this.isLoading = false
       this.year = this.currentTournament.year
     })
   }

@@ -37,12 +37,6 @@
         <td class="text-xs-center">{{ props.item.attributes.total_net }}</td>
       </tr>
     </template>
-
-    <template slot="expand" slot-scope="props">
-      <v-layout row wrap class="font-weight-regular pt-3 pb-3 pr-2" align-center>
-
-      </v-layout>
-    </template>
   </v-data-table>
 
 </template>
@@ -54,7 +48,9 @@ export default {
   name: 'Table',
   props: ['preview'],
   computed: {
-    ...mapState(['teamLeaderboard']),
+    ...mapState({
+      teamLeaderboard: state => state.leaderboards.team.teamLeaderboard
+    }),
   },
 
   data () {
@@ -100,6 +96,7 @@ export default {
   },
 
   created () {
+
   }
 
 }

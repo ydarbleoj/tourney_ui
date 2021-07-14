@@ -40,7 +40,6 @@ const store = new Vuex.Store({
     skins_leaderboard: [],
     putting_leaderboard: [],
     puttingPurse: 0,
-    teamLeaderboard: [],
     teamRounds: [],
     currentRound: 1,
     teeTime: [],
@@ -132,16 +131,6 @@ const store = new Vuex.Store({
         commit('SET_HANDICAP', { list: response.data })
       }, (err) => {
         commit('SET_HANDICAP', { list: response.data })
-      })
-    },
-    LOAD_TEAM_LEADERBOARD: function ({ commit, state }, { tournId, roundId }) {
-      let options = { tournament_id: tournId, round_id: roundId }
-      return axios.get(
-        '/api/v2/leaderboards/teams.json', { params: options }
-      ).then((response) => {
-        commit('SET_TEAM_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
       })
     },
     LOAD_SKINS: function ({ commit, state }, { id }) {
@@ -339,9 +328,6 @@ const store = new Vuex.Store({
     },
     SET_ADMIN_MESSAGE: (state, { list }) => {
       state.adminMessage = list
-    },
-    SET_TEAM_LEADERBOARD: (state, { list }) => {
-      state.teamLeaderboard = list.data
     },
     SET_MONEY_LIST: (state, { list }) => {
       state.moneyList = list

@@ -5,7 +5,7 @@
     <v-card-title class="pa-0 pt-2 pl-2">
       <Header :purse="purse" :name="'Team'" />
     </v-card-title>
-    <v-card-text v-if="!isloading" class="pa-0">
+    <v-card-text v-if="!isLoading" class="pa-0">
       <team-table />
     </v-card-text>
   </v-card>
@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       purse: 0,
-      isloading: true,
+      isLoading: true,
       year: ""
     }
   },
@@ -42,11 +42,11 @@ export default {
 
   mounted: function () {
     this.$store.dispatch(
-      'LOAD_TEAM_LEADERBOARD',
-      { id: this.currentTournament.id, roundId: "" }
-    ).then(response => {
+      'leaderboards/team/LOAD_TEAM_LEADERBOARD',
+      { tournamentId: this.currentTournament.id, roundId: "" }
+    ).then(() => {
       this.purse = 160//this.currentTournament.num_players * 30
-      this.isloading = false
+      this.isLoading = false
       this.year = this.currentTournament.year
     })
   }
