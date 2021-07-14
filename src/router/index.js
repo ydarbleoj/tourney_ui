@@ -12,6 +12,7 @@ import StrokeLeaderboard from '@/components/Leaderboards/Stroke/index'
 import PuttingLeaderboard from '@/components/Leaderboards/Putting/index'
 import SkinsLeaderboard from '@/components/Leaderboards/Skins/index'
 import TeamLeaderboard from '@/components/Leaderboards/Team/index'
+import TeamPage from '@/components/Leaderboards/Team/Page'
 import Course from '@/components/Course/index'
 import ResetPassword from '@/components/ResetPassword'
 import ForgotPassword from '@/components/ForgotPassword'
@@ -142,6 +143,13 @@ const router = new Router({
       path: '/tournament/:id/leaderboards/team',
       name: "TeamLeaderboard",
       component: TeamLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/leaderboards/team/:team_id',
+      name: "TeamPage",
+      component: TeamPage,
       props: { default: true },
       meta: { auth: true }
     },

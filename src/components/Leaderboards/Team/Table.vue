@@ -7,7 +7,7 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr >
+      <tr @click="toPage(props.item.id)">
         <td class="text-xs-center">{{ props.item.attributes.position }}</td>
         <td class="text-xs-left mt-5">
           <h4 class="font-weight-medium mb-2">
@@ -49,7 +49,8 @@ export default {
   props: ['preview'],
   computed: {
     ...mapState({
-      teamLeaderboard: state => state.leaderboards.team.teamLeaderboard
+      teamLeaderboard: state => state.leaderboards.team.teamLeaderboard,
+      currentTournament: state => state.tournament.currentTournament
     }),
   },
 
@@ -86,6 +87,16 @@ export default {
   },
 
   methods: {
+    toPage (teamId) {
+      this.$store.commit("setPageTransition", "");
+      this.$router.push({
+        name: "TeamPage",
+        params: {
+          id: this.currentTournament.id,
+          team_id: teamId
+        }
+      })
+    }
   },
 
   watch: {
@@ -107,8 +118,6 @@ export default {
 }
 .board-table {
   overflow:hidden;
-  border-radius: 0 0 20px 20px;
-  transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 .hidden_row {
   display: none;

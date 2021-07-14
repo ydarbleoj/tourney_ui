@@ -41,7 +41,6 @@ export default {
   },
 
   mounted: function () {
-    console.log('get', this.currentTournament)
     this.$store.dispatch(
       'LOAD_STROKE_LEADERBOARD',
       { id: this.currentTournament.id }
