@@ -20,9 +20,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'BackButton',
   computed: {
-  },
-
-  computed: {
     ...mapGetters({
       getTournament: 'tournament/getTournament'
     })

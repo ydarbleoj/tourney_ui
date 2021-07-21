@@ -3,13 +3,23 @@ import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 
 const state = {
-  teamLeaderboard: []
+  teamLeaderboard: [],
+  teamInfo: {},
+  teamPlayers: [],
+  teamStats: {},
+  teamImages: [],
+  teamScorecard: []
 }
 
 const plugins = [
   createPersistedState({
     paths: [
-      'leaderboards.team.teamLeaderboard'
+      'leaderboards.team.teamLeaderboard',
+      'leaderboards.team.teamInfo',
+      'leaderboards.team.teamPlayers',
+      'leaderboards.team.teamData',
+      'leaderboards.team.teamImages',
+      'leaderboards.team.teamScorecards'
     ]
   })
 ]
@@ -44,11 +54,30 @@ const mutations = {
     state.teamLeaderboard = list.data
   },
   SET_TEAM_PAGE: (state, { list }) => {
-    console.log('hitss', list)
+    let i = JSON.parse(list.info)
+    let p = JSON.parse(list.players)
+    let s = JSON.parse(list.stats)
+    let info = Object.keys(i).length === 0 ? {} : i.data.attributes
+    let players = Object.keys(p).length === 0 ? [] : p.data
+    let stats = Object.keys(s).length === 0 ? [] : s.data.attributes
+
+    console.log('hitss', stats)
+    Vue.set(state, 'teamInfo', info)
+    Vue.set(state, 'teamPlayers', players)
+    Vue.set(state, 'teamStats', stats)
   }
 }
 
 const getters = {
+  getTeamInfo: state => {
+    return state.teamInfo
+  },
+  getTeamPlayers: state => {
+    return state.teamPlayers
+  },
+  getTeamStats: state => {
+    return state.teamStats
+  }
 }
 
 export default {

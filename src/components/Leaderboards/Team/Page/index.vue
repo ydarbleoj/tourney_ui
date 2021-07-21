@@ -1,13 +1,23 @@
 <template>
-  <v-card>
-    <h3>Hi</h3>
+  <v-card flat v-if="!isLoading">
+    <info />
+    <players />
+    <stats />
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
+import Info from './Info'
+import Players from './Players'
+import Stats from './Stats'
 
 export default {
-  name: 'Page',
+  name: 'TeamPage',
+  components: {
+    Info,
+    Players,
+    Stats
+  },
   data () {
     return {
       isLoading: true
@@ -16,7 +26,7 @@ export default {
   computed: {
     ...mapState({
      currentTournament: state => state.tournament.currentTournament
-    }),
+    })
   },
   mounted: function () {
     this.$store.dispatch(
