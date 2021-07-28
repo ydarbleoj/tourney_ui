@@ -8,7 +8,7 @@ const state = {
   teamPlayers: [],
   teamStats: {},
   teamImages: [],
-  teamScorecard: []
+  teamScorecard: [],
 }
 
 const plugins = [
@@ -54,14 +54,15 @@ const mutations = {
     state.teamLeaderboard = list.data
   },
   SET_TEAM_PAGE: (state, { list }) => {
+    // Consider moving these to the getters
     let i = JSON.parse(list.info)
     let p = JSON.parse(list.players)
     let s = JSON.parse(list.stats)
+
     let info = Object.keys(i).length === 0 ? {} : i.data.attributes
     let players = Object.keys(p).length === 0 ? [] : p.data
     let stats = Object.keys(s).length === 0 ? [] : s.data.attributes
 
-    console.log('hitss', stats)
     Vue.set(state, 'teamInfo', info)
     Vue.set(state, 'teamPlayers', players)
     Vue.set(state, 'teamStats', stats)
@@ -77,6 +78,12 @@ const getters = {
   },
   getTeamStats: state => {
     return state.teamStats
+  },
+  getTeamPageImage: state => {
+    return state.teamInfo.new_course_id
+  },
+  getTeamPageCourseName: state => {
+    return state.teamInfo.course_name
   }
 }
 

@@ -10,7 +10,7 @@
     fab
     @click.native="goBack"
   >
-    <v-icon color="white">
+    <v-icon color="white" style="font-size:32px;">
       mdi-chevron-left
     </v-icon>
   </v-btn>
@@ -42,7 +42,7 @@ export default {
 </script>
 <style scoped>
 .back-button {
-  border-color: white;
+  border-color: transparent;
   background-color: transparent;
 }
 </style>

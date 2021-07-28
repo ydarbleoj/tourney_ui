@@ -1,31 +1,59 @@
 <template>
-  <v-card flat v-if="!isLoading">
-    <info />
-    <players />
-    <stats />
+  <v-card
+    flat
+    v-if="!isLoading"
+    style="background-color:#FFF;">
+    <v-img
+      :src="'/static/' + imageId + 'course.jpg'"
+      height='70vh'
+      class="course-header"
+    >
+      <v-container fill-height pa-0>
+        <BackButton />
+        <h1 class="pl-2 pt-5 white--text">{{ courseName }}</h1>
+      </v-container>
+    </v-img>
+    <v-card-text class="pa-0">
+      <v-flex xs12 class="mt-3 mb-3">
+        <info />
+      </v-flex>
+        <!-- <v-flex xs12 class="mb-3">
+          <players />
+        </v-flex>
+        <stats /> -->
+
+    </v-card-text>
   </v-card>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Info from './Info'
 import Players from './Players'
 import Stats from './Stats'
+import BackButton from '../../../BackButton'
 
 export default {
   name: 'TeamPage',
   components: {
+    BackButton,
     Info,
     Players,
     Stats
   },
   data () {
     return {
-      isLoading: true
+      isLoading: true,
+      imageId: 2,
+      courseName: "Bandon"
     }
   },
   computed: {
     ...mapState({
      currentTournament: state => state.tournament.currentTournament
+    }),
+    ...mapGetters({
+      teamImageId: 'leaderboards/team/getTeamPageImage',
+      teamCourseName: 'leaderboards/team/getTeamPageCourseName'
     })
   },
   mounted: function () {
@@ -38,7 +66,20 @@ export default {
     ).then(response => {
       this.isLoading = false
       this.year = this.currentTournament.year
+      this.imageId = this.teamImageId
+      this.courseName = this.teamCourseName
     })
   }
 }
 </script>
+<style>
+.team-text-color {
+	color: #ACA885;
+}
+.team-background-color {
+  background-color: #ACA885;
+}
+.stroke-text-color {
+  color: #9FB8CE;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <v-card flat grey>
+  <v-card flat style="background-color:transparent;">
     <v-card-text>
 			<v-layout row wrap>
 				<v-flex xs4>

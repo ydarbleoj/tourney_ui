@@ -1,5 +1,9 @@
 <template>
-  <v-card flat class="grey darken-3 round-borders" @click="scorecardPage" v-if="userHasACard">
+  <v-card
+    flat
+    class="grey darken-3 round-borders"
+    @click="scorecardPage"
+    v-if="userHasACard">
     <v-card-title>
       <v-container class="pa-0">
         <v-layout row wrap align-center justify-center >

@@ -1,34 +1,20 @@
-<template>
-  <v-card>
-		<v-card-text>
-			<v-layout row wrap>
-				<v-flex xs6>
-					<h3>Players</h3>
-				</v-flex>
-				<v-flex xs6>
-					<v-layout>
-						<v-flex xs2>
-							<h5>Lowest</h5>
-						</v-flex>
-					` <v-flex xs2>
-							<h5>Second</h5>
-						</v-flex>
-						<v-flex xs2>
-							<h5>Potential</h5>
-						</v-flex>
-						<v-flex xs3>
-							<h5>Impact</h5>
-						</v-flex>
-						<v-flex xs3>
-							<h5>Score</h5>
-						</v-flex>
-					</v-layout>
-				</v-flex>
-			</v-layout>
-		</v-card-text>
-		<v-card v-for="item in teamPlayers" :key="item.id">
-			<player-agg :player="item.attributes" />
-		</v-card>
+<template >
+  <v-card flat>
+    <v-layout row>
+      <v-flex xs2 class="outer">
+        <div class="inner rotate">
+		      <h2 style="color:#FFCB47;">Impressions</h2>
+        </div>
+      </v-flex>
+      <v-flex xs10>
+        <v-card
+          flat
+          style="background-color:transparent;"
+          v-for="item in teamPlayers" :key="item.id">
+          <player-agg :player="item.attributes" />
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-card>
 </template>
 <script>
@@ -55,3 +41,24 @@ export default {
   mounted: function () {}
 }
 </script>
+<style scoped>
+.team-text-color {
+	color: #ACA885;
+}
+.team-background-color {
+  background-color: #ACA885;
+}
+.inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.outer {
+  position: relative;
+  display: inline-block;
+  margin: 0 15px;
+}
+.rotate {
+  transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+}
+</style>
