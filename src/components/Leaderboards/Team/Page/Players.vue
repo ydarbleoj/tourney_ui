@@ -1,12 +1,8 @@
 <template >
   <v-card flat>
+		<h2 style="color:#333;font-weight:500" class="pl-2">Player Stats</h2>
     <v-layout row>
-      <v-flex xs2 class="outer">
-        <div class="inner rotate">
-		      <h2 style="color:#FFCB47;">Impressions</h2>
-        </div>
-      </v-flex>
-      <v-flex xs10>
+      <v-flex xs12>
         <v-card
           flat
           style="background-color:transparent;"
@@ -28,6 +24,7 @@ export default {
 	},
   data () {
     return {
+      chartData: null
     }
   },
   computed: {
@@ -38,7 +35,15 @@ export default {
       teamPlayers: 'leaderboards/team/getTeamPlayers'
     })
   },
-  mounted: function () {}
+  methods: {
+    fillData () {
+      this.chartData = {
+        // labels:
+      }
+    }
+  },
+  mounted: function () {
+  }
 }
 </script>
 <style scoped>

@@ -55,17 +55,16 @@ const mutations = {
   },
   SET_TEAM_PAGE: (state, { list }) => {
     // Consider moving these to the getters
-    let i = JSON.parse(list.info)
-    let p = JSON.parse(list.players)
-    let s = JSON.parse(list.stats)
+    let info    = JSON.parse(list.info)
+    let players = JSON.parse(list.players)
+    let stats   = JSON.parse(list.stats)
 
-    let info = Object.keys(i).length === 0 ? {} : i.data.attributes
-    let players = Object.keys(p).length === 0 ? [] : p.data
-    let stats = Object.keys(s).length === 0 ? [] : s.data.attributes
-
-    Vue.set(state, 'teamInfo', info)
-    Vue.set(state, 'teamPlayers', players)
-    Vue.set(state, 'teamStats', stats)
+    // let info = Object.keys(i).length === 0 ? {} : i.data.attributes
+    // let players = Object.keys(p).length === 0 ? [] : p.data
+    // let stats = Object.keys(s).length === 0 ? [] : s.data.attributes
+    Vue.set(state, 'teamInfo', keys(info, {}).attributes)
+    Vue.set(state, 'teamPlayers', keys(players, []))
+    Vue.set(state, 'teamStats', keys(stats, []))
   }
 }
 
@@ -86,6 +85,10 @@ const getters = {
     return state.teamInfo.course_name
   }
 }
+
+const keys = ((object, emptyObject) => {
+  return Object.keys(object).length == 0 ? emptyObject : object.data
+})
 
 export default {
   namespaced: true,

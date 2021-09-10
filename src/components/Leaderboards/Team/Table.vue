@@ -8,11 +8,18 @@
   >
     <template slot="items" slot-scope="props">
       <tr @click="toPage(props.item.id)">
-        <td class="text-xs-center">{{ props.item.attributes.position }}</td>
+        <td class="font-weight-light text-xs-center">
+          <h2>
+            {{ props.item.attributes.position }}
+          </h2>
+        </td>
         <td class="text-xs-left mt-5">
-          <h4 class="font-weight-medium mb-2">
+          <h1
+            class="font-weight-medium mb-2 team-stats"
+            style="font-size:20px;"
+          >
             {{ props.item.attributes.group }}
-          </h4>
+          </h1>
           <v-layout row wrap v-bind:class="{ hidden_row : preview }">
             <v-flex xs12 style="width:100%;">
               <ul
@@ -24,17 +31,30 @@
                   :key="i"
                   d-inline-flex
                   style="display:inline-block;margin:0;width:50%"
-
+                  class="font-weight-regular"
                 >
-                  {{ item.username }}
-                  <v-spacer></v-spacer>
+                  <h3>
+                    {{ item.username }}
+                    <span style="color:#777;font-size:12px;">{{ item.handicap }}</span>
+                    <v-spacer></v-spacer>
+                  </h3>
                 </li>
               </ul>
             </v-flex>
           </v-layout>
         </td>
-        <td class="text-xs-center">{{ props.item.attributes.total }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.total_net }}</td>
+        <td
+          class="text-xs-center mr-1 team-stats"
+          style="font-size:24px;"
+        >
+          {{ props.item.attributes.total }}
+        </td>
+        <td
+          class="text-xs-center"
+          style="color:#777;font-size:16px;"
+        >
+          {{ props.item.attributes.total_net }}
+        </td>
       </tr>
     </template>
   </v-data-table>

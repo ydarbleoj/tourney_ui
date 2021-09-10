@@ -5,7 +5,7 @@
     style="background-color:#FFF;">
     <v-img
       :src="'/static/' + imageId + 'course.jpg'"
-      height='70vh'
+      height='60vh'
       class="course-header"
     >
       <v-container fill-height pa-0>
@@ -13,15 +13,10 @@
         <h1 class="pl-2 pt-5 white--text">{{ courseName }}</h1>
       </v-container>
     </v-img>
-    <v-card-text class="pa-0">
-      <v-flex xs12 class="mt-3 mb-3">
-        <info />
-      </v-flex>
-        <!-- <v-flex xs12 class="mb-3">
-          <players />
-        </v-flex>
-        <stats /> -->
-
+    <v-card-text class="pa-0" style="background:transparent;">
+      <info />
+      <players />
+      <stats />
     </v-card-text>
   </v-card>
 </template>

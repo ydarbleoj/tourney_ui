@@ -36,12 +36,12 @@ const mutations = {
     let strokes = JSON.parse(list.strokes)
     let putting = JSON.parse(list.putting)
     let skins = JSON.parse(list.skins)
-    let team = JSON.parse(list.team)
-
-    Vue.set(state, 'strokePreview', strokes)
-    Vue.set(state, 'puttingPreview', putting)
-    Vue.set(state, 'skinsPreview', skins)
-    Vue.set(state, 'teamPreview', team)
+    // let team = JSON.parse(list.team)
+    console.log(keys(strokes))
+    Vue.set(state, 'strokePreview', keys(strokes))
+    Vue.set(state, 'puttingPreview', keys(putting))
+    Vue.set(state, 'skinsPreview', keys(skins))
+    // Vue.set(state, 'teamPreview', keys(team))
   },
   SET_TEAM_LEADERBOARD: (state, { list }) => {
     state.teamLeaderboard = list.data
@@ -50,18 +50,22 @@ const mutations = {
 
 const getters = {
   getStrokePreview: state => {
-    return state.strokePreview.data
+    return state.strokePreview
   },
   getPuttingPreview: state => {
-    return state.puttingPreview.data
+    return state.puttingPreview
   },
   getSkinsPreview: state => {
-    return state.skinsPreview.data
+    return state.skinsPreview
   },
   getTeamPreview: state => {
-    return state.teamPreview.data
+    return state.teamPreview
   }
 }
+
+const keys = ((object) => {
+  return Object.keys(object).length == 0 ? [] : object.data
+})
 
 export default {
   namespaced: true,

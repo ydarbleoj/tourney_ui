@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat class="rounded-card">
 		<v-card-text>
 			<v-layout row>
 				<v-flex xs4 class="text-xs-center">
@@ -18,17 +18,17 @@
           </v-icon>
         </v-flex>
 			</v-layout>
-      <v-layout row align-center>
+      <v-layout row align-center style="color:#555;">
 				<v-flex xs4 class="text-xs-center">
-					<h2 class="grey--text">{{ teamInfo.group }}</h2>
+					<h2>{{ teamInfo.group }}</h2>
 				</v-flex>
 				<v-flex xs4 class="text-xs-center">
-					<h1 class="grey--text">
+					<h1>
 						{{ teamInfo.total }}
 					</h1>
 				</v-flex>
         <v-flex xs4 class="text-xs-center">
-					<h2 class="grey--text">3rd Place</h2>
+					<h2>{{ teamInfo.position }}</h2>
         </v-flex>
 			</v-layout>
 		</v-card-text>
@@ -75,7 +75,7 @@ export default {
   background-color: #ACA885;
 }
 .rounded-card {
-  background-color: grey;
+  margin-top: -25px;
 	border-radius: 20px;
   transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
