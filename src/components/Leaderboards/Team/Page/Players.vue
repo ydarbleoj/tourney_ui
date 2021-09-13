@@ -28,9 +28,19 @@
       <v-flex xs12>
         <v-card
           flat
-          style="background-color:transparent;"
-          v-for="item in teamPlayers" :key="item.id">
-          <player-agg :player="item.attributes" />
+          style="background-color:transparent;">
+          <v-carousel
+            :continuous="false"
+            :show-arrows="false"
+            hide-delimiter-background
+            :height="270"
+          >
+            <v-carousel-item
+              v-for="item in teamPlayers" :key="item.id">
+              <player-agg :player="item.attributes" />
+            </v-carousel-item>
+          </v-carousel>
+
         </v-card>
       </v-flex>
     </v-layout>
@@ -59,11 +69,6 @@ export default {
     })
   },
   methods: {
-    fillData () {
-      this.chartData = {
-        // labels:
-      }
-    }
   },
   mounted: function () {
   }
