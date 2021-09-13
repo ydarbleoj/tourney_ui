@@ -83,6 +83,9 @@ const getters = {
   },
   getTeamPageCourseName: state => {
     return state.teamInfo.course_name
+  },
+  getTeamPageRoundNumber: state => {
+    return state.teamInfo.round_number
   }
 }
 

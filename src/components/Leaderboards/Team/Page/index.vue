@@ -5,18 +5,18 @@
     style="background-color:#FFF;">
     <v-img
       :src="'/static/' + imageId + 'course.jpg'"
-      height='60vh'
+      height='40vh'
       class="course-header"
     >
       <v-container fill-height pa-0>
         <BackButton />
-        <h1 class="pl-2 pt-5 white--text">{{ courseName }}</h1>
       </v-container>
     </v-img>
     <v-card-text class="pa-0" style="background:transparent;">
-      <info />
+      <container />
+      <!-- <info />
       <players />
-      <stats />
+      <stats /> -->
     </v-card-text>
   </v-card>
 </template>
@@ -25,12 +25,14 @@ import { mapState, mapGetters } from 'vuex'
 import Info from './Info'
 import Players from './Players'
 import Stats from './Stats'
+import Container from './Container'
 import BackButton from '../../../BackButton'
 
 export default {
   name: 'TeamPage',
   components: {
     BackButton,
+    Container,
     Info,
     Players,
     Stats
