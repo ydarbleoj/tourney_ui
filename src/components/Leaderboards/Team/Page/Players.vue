@@ -40,7 +40,6 @@
               <player-agg :player="item.attributes" />
             </v-carousel-item>
           </v-carousel>
-
         </v-card>
       </v-flex>
     </v-layout>
@@ -67,6 +66,18 @@ export default {
     ...mapGetters({
       teamPlayers: 'leaderboards/team/getTeamPlayers'
     })
+  },
+  setup() {
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+      console.log('slide change');
+    };
+    return {
+      onSwiper,
+      onSlideChange,
+    };
   },
   methods: {
   },
