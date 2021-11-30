@@ -14,9 +14,6 @@
     </v-img>
     <v-card-text class="pa-0" style="background:transparent;">
       <container />
-      <!-- <info />
-      <players />
-      <stats /> -->
     </v-card-text>
   </v-card>
 </template>

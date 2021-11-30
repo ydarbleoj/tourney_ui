@@ -1,17 +1,20 @@
 <template>
   <v-card
     flat
-		class="rounded-card pa-4"
+		class="rounded-card pt-4 pb-4"
     style="background-color:#FFF;">
-			<div>
-				<h1
-					style="font-weight:500">
-				{{ courseName }}
-				</h1>
-				<p style="font-size:18px;color:#444;">Round {{ roundNumber }}</p>
-			</div>
-			<info />
-			<players />
+    <div class="pl-4 pr-4">
+      <h1
+        style="font-weight:500">
+      {{ courseName }}
+      </h1>
+      <p style="font-size:18px;color:#444;">Round {{ roundNumber }}</p>
+    </div>
+    <div class="pl-4 pr-4">
+      <info />
+    </div>
+
+    <players />
   </v-card>
 </template>
 <script>
@@ -64,6 +67,5 @@ export default {
   margin-top: -25px;
 	border-radius: 20px;
   transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
 }
 </style>

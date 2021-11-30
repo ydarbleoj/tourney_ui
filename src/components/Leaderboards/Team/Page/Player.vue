@@ -1,7 +1,7 @@
 <template>
   <v-card
 		flat
-		class="border-card mb-4">
+		class="border-card pa-3 ma-2 player-card">
 		<v-container fill-height pa-0>
 			<v-layout row align-center>
 				<v-flex xs7>
@@ -22,7 +22,7 @@
 
 				<v-flex xs5 class="text-xs-right">
 					<h1
-						class="team-text-color"
+						class="white--text"
 						style="font-weight:400;font-size:65px;">
 						{{ player.adjusted_score }}
 					</h1>
@@ -32,7 +32,7 @@
 		<v-layout row align-center>
 			<v-flex xs7 class="text-xs-left">
 				<h1
-					style="color:#BDBDBD;font-weight:400;font-size:80px;letter-spacing:-8px;">
+					style="color:#BDBDBD;font-weight:400;font-size:65px;letter-spacing:-8px;">
 					{{ player.impact }}%
 				</h1>
 			</v-flex>
@@ -103,12 +103,16 @@ export default {
 .team-background-color {
   background-color: #ACA885;
 }
+.player-card {
+	background-color: #F79256;;
+}
 .rounded-card {
 	background:linear-gradient(to right transparent 0%, white 10%, red 90%, red 100%);
 }
 .border-card {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  /* box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1); */
+	border-radius: 25px;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
 }
 .bar-wrapper {
 	height: 100px;

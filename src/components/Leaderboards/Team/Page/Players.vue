@@ -1,45 +1,47 @@
 <template >
   <v-card flat class="mt-3">
-		<h2 style="font-weight:500;">Player Stats & Impact</h2>
-    <p class="mt-2">
-      The following table highlights 3 aspects of team scoring: the lowest, the second lowest, and
-      the potential score.
-    </p>
-    <p>
-      Team scoring accounts for two things when determining the lowest scores: the score and when it was
-      entered.
-    </p>
-    <p>
-      That being the case, potential scores are those that are equal to the lowest or second
-      lowest, but where not accounted as such due to time of entry.
-    </p>
-    <v-layout row wrap align-center class="mb-4">
-      <v-flex class="text-xs-left">
-        <p><span class="lowest-bg scoring-legend"></span>Lowest</p>
-      </v-flex>
-      <v-flex class="text-xs-left">
-        <p><span class="second-lowest-bg scoring-legend"></span>Second Lowest</p>
-      </v-flex>
-      <v-flex class="text-xs-left">
-        <p><span class="potential-bg scoring-legend"></span>Potential</p>
-      </v-flex>
-    </v-layout>
+    <div class="pl-4 pr-4">
+      <h2 style="font-weight:500;">Player Stats & Impact</h2>
+      <p class="mt-2">
+        The following table highlights 3 aspects of team scoring: the lowest, the second lowest, and
+        the potential score.
+      </p>
+      <p>
+        Team scoring accounts for two things when determining the lowest scores: the score and when it was
+        entered.
+      </p>
+      <p>
+        That being the case, potential scores are those that are equal to the lowest or second
+        lowest, but where not accounted as such due to time of entry.
+      </p>
+      <v-layout row wrap align-center class="mb-4">
+        <v-flex class="text-xs-left">
+          <p><span class="lowest-bg scoring-legend"></span>Lowest</p>
+        </v-flex>
+        <v-flex class="text-xs-left">
+          <p><span class="second-lowest-bg scoring-legend"></span>Second Lowest</p>
+        </v-flex>
+        <v-flex class="text-xs-left">
+          <p><span class="potential-bg scoring-legend"></span>Potential</p>
+        </v-flex>
+      </v-layout>
+    </div>
     <v-layout row>
       <v-flex xs12>
         <v-card
           flat
-          style="background-color:transparent;">
-          <v-carousel
-            :continuous="false"
-            :show-arrows="false"
-            hide-delimiter-background
-            :height="270"
-          >
-            <v-carousel-item
-              v-for="item in teamPlayers" :key="item.id">
+          style="">
+           <hooper
+            :height="auto"
+            :itemsToShow="1.25"
+            :centerMode="true"
+            :transition="900"
+           >
+            <slide
+              v-for="(item, indx) in teamPlayers" :key="item.id" :idnex="indx">
               <player-agg :player="item.attributes" />
-            </v-carousel-item>
-          </v-carousel>
+            </slide>
+          </hooper>
         </v-card>
       </v-flex>
     </v-layout>
@@ -48,11 +50,15 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import PlayerAgg from './Player'
+import { Hooper, Slide } from 'hooper'
+import 'hooper/dist/hooper.css';
 
 export default {
   name: 'Players',
 	components: {
-		PlayerAgg
+		PlayerAgg,
+    Hooper,
+    Slide
 	},
   data () {
     return {
