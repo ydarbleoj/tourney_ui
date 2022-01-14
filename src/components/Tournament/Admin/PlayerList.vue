@@ -1,10 +1,5 @@
 <template>
   <v-card flat>
-    <v-card-title flat class="pa-0 pt-2 pl-3">
-      <h2 class="text-xs-center font-weight-medium" style="color:#74C9D7;">Players</h2>
-      <v-spacer></v-spacer>
-    </v-card-title>
-
     <v-card-text v-if="!loading" class="pa-0">
       <players-table @toggleView="playerCard"/>
       <add-player />
@@ -25,7 +20,7 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      tournamentPlayers: state => state.tournamentPlayers
+      tournamentPlayers: state => state.admin.tournamentPlayers
     })
   },
 
@@ -43,9 +38,9 @@ export default {
 
   created () {
     this.$store.dispatch(
-      'LOAD_ADMIN_PLAYERS',
-      { tournId: this.currentTournament.id }
+      'admin/LOAD_ADMIN_PLAYERS', { tournId: this.currentTournament.id }
     ).then(response => {
+      console.log("his", this.tournamentPlayers)
       this.loading = false
     })
   }

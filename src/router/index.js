@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Tournament from '@/components/Tournament'
 import TournamentAdmin from '@/components/Tournament/Admin/index'
+import AdminPlayerPage from '@/components/Tournament/Admin/Player/index'
 import PlayerScorecards from '@/components/Tournament/Admin/PlayerScorecards'
 import TournamentCreate from '@/components/Tournament/Create/index'
 import TournamentDashboard from '@/components/Tournament/Dashboard'
@@ -108,6 +109,13 @@ const router = new Router({
       path: '/tournament/:id/admin',
       name: 'TournamentAdmin',
       component: TournamentAdmin,
+      props: { default: true },
+      meta: { auth: { role: 'admin', redirect: { name: 'admin'}, }}
+    },
+    {
+      path: '/tournament/:id/admin/:leaderboard_id',
+      name: 'AdminPlayerPage',
+      component: AdminPlayerPage,
       props: { default: true },
       meta: { auth: { role: 'admin', redirect: { name: 'admin'}, }}
     },

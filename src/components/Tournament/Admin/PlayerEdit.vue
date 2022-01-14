@@ -1,11 +1,10 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-4">
     <v-layout row wrap>
       <v-flex xs12>
-
-        <v-card flat>
+        <v-card flat style="background-color:#666;border-radius: 25px;" class="white--text">
           <v-card-title class="pb-0 text-xs-center">
-            <h3 class="font-weight-medium">Profile Edit</h3>
+            <h3 class="font-weight-medium black--text">Profile Edit</h3>
           </v-card-title>
           <v-card-text class="pt-0 pb-0">
             <v-layout row wrap class="font-weight-regular pb-2">
@@ -25,6 +24,7 @@
                           class="players-attrs"
                           style="padding:0;height: 50px;"
                           color="#E69DA7"
+                          background-color="#666"
                           solo
                           flat
                           v-bind:value="handicap(user)"
@@ -45,6 +45,7 @@
                           v-model="editRole"
                           :label="rolez(user)"
                           :items="roles"
+                          background-color="#666"
                           color="#F8C977"
                           solo
                           flat
@@ -74,35 +75,30 @@
           </v-card-text>
           <v-card-actions class="pa-3">
             <div class="text-xs-right" style="width:100%;">
-              <v-btn flat round class="admin--profile_button" @click="setParams(user.item)" v-bind:loading="btnLoading">{{ updateMessage }}</v-btn>
+              <v-btn flat round class="admin--update_button" @click="setParams(user.item)" v-bind:loading="btnLoading">
+                {{ updateMessage }}
+              </v-btn>
             </div>
           </v-card-actions>
         </v-card>
         <v-divider></v-divider>
-        <v-card flat class="pb-3">
+        <v-card flat class="pb-3 mt-3 mb-3">
           <v-card-title class="pb-0 text-xs-center">
-            <h3 class="font-weight-medium">Edit Scorecards</h3>
+            <h2 class="font-weight-medium">Edit Scorecards</h2>
             <v-spacer></v-spacer>
             <span @click="scorecardsView"><v-icon color="#F8C977" style="font-size:35px;" >arrow_forward</v-icon></span>
           </v-card-title>
         </v-card>
         <v-divider></v-divider>
-        <v-card flat class="pb-3">
-          <v-card-title class="pb-0 text-xs-center">
-            <h3 class="font-weight-medium">Delete Player</h3>
-            <v-spacer></v-spacer>
-            <div class="text-xs-right">
-              <v-btn flat round
-                class="admin--delete_button"
-                @click="removePlayer(user.item)"
-                v-bind:loading="btnDelete"
-              >
-                Delete
-              </v-btn>
-            </div>
-          </v-card-title>
+        <v-card flat class="pt-5 pb-5 text-xs-center">
+          <v-btn flat round
+            class="admin--add_button"
+            @click="removePlayer(user.item)"
+            v-bind:loading="btnDelete"
+          >
+            Delete
+          </v-btn>
         </v-card>
-        <v-divider></v-divider>
       </v-flex>
     </v-layout>
   </v-container>
@@ -119,7 +115,6 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      tournamentPlayers: state => state.tournamentPlayers
     })
   },
 
@@ -140,9 +135,9 @@ export default {
 
   methods: {
     setParams (item) {
-      let role = item.attributes.role
-      let hcap = item.attributes.handicap
-      let dnf  = item.attributes.dnf
+      let role = item.role
+      let hcap = item.handicap
+      let dnf  = item.dnf
       let opts = {}
       console.log('hi', this.DNF)
 
@@ -164,25 +159,28 @@ export default {
     },
     updatePlayer (opts, lbId) {
       this.btnLoading = true
-      this.$store.dispatch('UPDATE_PLAYER_ADMIN', { tournId: this.currentTournament.id, opts: opts, lbId: lbId })
-        .then(response => {
-          if (response) {
-            this.updated = true
-            this.updateMessage = 'Success'
-          } else {
-            this.updateMessage = 'Failed'
-          }
-          setTimeout(() => this.updateMessage = 'Update', 3000)
-          this.btnLoading = false
+      this.$store.dispatch('admin/UPDATE_PLAYER', {
+        tournId: this.currentTournament.id,
+        opts: opts,
+        lbId: lbId
+      }).then(response => {
+        if (response) {
+          this.updated = true
+          this.updateMessage = 'Success'
+        } else {
+          this.updateMessage = 'Failed'
+        }
+        setTimeout(() => this.updateMessage = 'Update', 3000)
+        this.btnLoading = false
       })
     },
     removePlayer (item) {
       this.btnDelete = true
-      let call = item.type == 'invitation' ? 'DELETE_INVITATION' : 'DELETE_PLAYER'
-      this.$store.dispatch(call, { tournId: this.currentTournament.id, id: item.id })
-        .then(response => {
-          this.btnDelete = false
-        })
+      this.$store.dispatch('admin/DELETE_PLAYER', {
+        tournId: this.currentTournament.id, id: item.id
+      }).then(response => {
+        this.btnDelete = false
+      })
     },
     scorecardsView () {
       this.$emit('toggleView', { view: 'player-scorecards', user: this.user })
@@ -191,25 +189,31 @@ export default {
       if (Number.isInteger(props)) {
         this.editHandicap = props
         return props
-      } else if (typeof props.item !== 'undefined') {
-        let currentHandicap = props.item.attributes.handicap
+      } else if (typeof props !== 'undefined') {
+        let currentHandicap = props.handicap
         return currentHandicap
       }
     },
     rolez (props) {
-      this.editRole = props.item.attributes.role
+      this.editRole = props.role
     },
   },
 
   created () {
-    this.DNF = this.user.item.attributes.dnf
+    this.DNF = this.user.dnf
   }
 
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .admin--add_button {
-  background-color: #74C9D7;
+  background-color: #d7a474;
+  color: #FBFCFD;
+  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 1s ease, box-shadow 1s ease;
+}
+.admin--update_button {
+  background-color: #494846;
   color: #FBFCFD;
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;

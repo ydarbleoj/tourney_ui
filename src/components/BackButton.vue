@@ -19,6 +19,7 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'BackButton',
+  props: ['routeName', 'routeParams'],
   computed: {
     ...mapGetters({
       getTournament: 'tournament/getTournament'
@@ -28,14 +29,10 @@ export default {
   methods: {
     goBack () {
       this.$store.commit("setPageTransition", "back");
-      this.$router.push(
-        {
-          name: 'Tournament',
-          params: {
-            id: this.getTournament.id
-          }
-        }
-      )
+      this.$router.push({
+        name: this.routeName,
+        params: this.routeParams
+      })
     }
   },
 }

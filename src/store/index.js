@@ -66,13 +66,6 @@ const store = new Vuex.Store({
         }
       })
     },
-    LOAD_ADMIN_PLAYERS: function ({ commit, state }, { tournId }) {
-      let options = { tournament_id: tournId }
-      return axios.get('/api/v2/tournaments/admin/users.json', { params: options }).then((response) => {
-        console.log('rep', response)
-        commit('SET_ADMIN_PLAYERS', { list: response.data })
-      })
-    },
     CREATE_TOURNAMENT_ROUNDS: function ({ commit, state }, { tournId, payload }) {
       let options = { tournament_id: tournId, round: payload }
       return axios.post('/api/v2/tournaments/rounds.json', options).then((response) => {
@@ -83,16 +76,6 @@ const store = new Vuex.Store({
           return false
         }
 
-      })
-    },
-    UPDATE_PLAYER_ADMIN: function ({ commit, state }, { tournId, opts, lbId }) {
-      opts['tournament_id'] = tournId
-      return axios.put('/api/v2/tournaments/admin/users/' + lbId + '.json',  opts).then((response) => {
-        if (response.data.success) {
-          return true
-        } else {
-          return false
-        }
       })
     },
     INVITE_USERS: function ({ commit, state }, { tournId, invitees }) {
@@ -112,15 +95,6 @@ const store = new Vuex.Store({
       return axios.delete('/api/v2/tournaments/admin/invitations/' + id + '.json', { params: options}).then((response) => {
         if (response.data.success == true) {
           commit('REMOVE_INVITATION', { id: response.data.id })
-        }
-        return response.success
-      })
-    },
-    DELETE_PLAYER: function ({ commit, state }, { tournId, id }) {
-      let options = { tournament_id: tournId }
-      return axios.delete('/api/v2/tournaments/admin/users/' + id + '.json', { params: options}).then((response) => {
-        if (response.status == 200) {
-          commit('REMOVE_PLAYER', { id: response.data.id })
         }
         return response.success
       })
@@ -257,26 +231,11 @@ const store = new Vuex.Store({
       Vue.set(state, 'userInviteList', JSON.parse(list.user_list).data)
       Vue.set(state, 'courseMenuList', JSON.parse(list.course_list).data)
     },
-    SET_ADMIN_PLAYERS: (state, { list }) => {
-      let inv = JSON.parse(list.invited).data
-      let users = JSON.parse(list.users).data
-      let arr = []
-
-      arr.push(inv, users)
-      arr = arr.flat()
-      Vue.set(state, 'invited', JSON.parse(list.invited).data)
-      Vue.set(state, 'inviteList', list.invitees)
-      Vue.set(state, 'tournamentPlayers', arr)
-    },
     REMOVE_INVITATION: (state, { id }) => {
       const index = state.invited.findIndex(block => block.id === id)
       const index2 = state.tournamentPlayers.findIndex(block => block.id === id)
       state.tournamentPlayers.splice(index2, 1)
       state.invited.splice(index, 1)
-    },
-    REMOVE_PLAYER: (state, { id }) => {
-      const index = state.tournamentPlayers.findIndex(block => block.id === id )
-      state.tournamentPlayers.splice(index, 1)
     },
     SET_HANDICAP: (state, { list }) => {
       state.handicapMessage = list
@@ -359,6 +318,7 @@ const store = new Vuex.Store({
 
   },
   modules: {
+    admin,
     course,
     invitations,
     leaderboards,

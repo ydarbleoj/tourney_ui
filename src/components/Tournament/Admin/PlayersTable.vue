@@ -7,7 +7,7 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr @click="expandRow(props, $event)" v-bind:ref="'row' + props.item.id">
+      <tr v-bind:ref="'row' + props.item.id">
         <td class="text-xs-center">{{ props.index + 1}}</td>
         <td class="text-xs-left pl-2">
           <h4 class="font-weight-regular" v-if="props.item.attributes.first_name">{{ props.item.attributes.first_name }} {{ props.item.attributes.last_name }}</h4>
@@ -15,7 +15,9 @@
           <v-spacer></v-spacer>
           <span class="grey--text" v-if="props.item.attributes.pending">pending</span>
         </td>
-        <td class="text-xs-center"><v-icon color="#F8C977">edit</v-icon></td>
+        <td class="text-xs-center" @click="playerPage(props.item.id)">
+          <v-icon color="#F8C977">edit</v-icon>
+        </td>
       </tr>
     </template>
 
@@ -23,7 +25,6 @@
       <component :is="view" :user="setUser(props)" @toggleView="newView" />
     </template>
   </v-data-table>
-
 </template>
 
 <script>
@@ -70,11 +71,21 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      tournamentPlayers: state => state.tournamentPlayers
+      tournamentPlayers: state => state.admin.tournamentPlayers
     })
   },
 
   methods: {
+    playerPage (id) {
+      this.$store.commit("setPageTransition");
+      this.$router.push({
+        name: 'AdminPlayerPage',
+        params: {
+          tournId: this.currentTournament.id,
+          leaderboard_id: id
+        }
+      })
+    },
     newView (v) {
       console.log('here', this.props)
       console.log('this', v)

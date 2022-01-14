@@ -81,12 +81,10 @@ export default {
   methods: {
     isLowest (id) {
       const score = this.teamHoleInfo()
-      console.log('hole', score)
       return score.score_1_id == id
     },
     isSecondLowest (id) {
       const score = this.teamHoleInfo()
-      console.log('hole', score)
       return score.score_2_id == id
 
     },

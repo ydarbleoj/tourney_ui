@@ -1,83 +1,69 @@
 <template>
-    <main style="height:100%;" class="tournament-wrapper">
-        <v-toolbar color="white"  flat fixed style="padding:0;height:8vh;">
-
-          <v-layout row wrap>
-            <v-flex xs3 class="text-xs-left">
-             <v-menu
-                transition="scale-transition"
-                bottom
-              >
-                <v-btn icon slot="activator" light class="ma-0">
-                  <v-icon class="">menu</v-icon>
-                </v-btn>
-                <v-list>
-                  <v-list-tile>
-                    <v-list-tile-title>
-                      <v-icon class="mr-2">person_outline</v-icon><router-link :to="'/profile'">Profile</router-link>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-title>
-                      <v-icon class="mr-2">golf_course</v-icon><router-link :to="`/tournament/${this.currentTournament.id}`">Bandon</router-link>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-title>
-                      <v-icon class="mr-2">weekend</v-icon><a v-on:click="logout()" href="javascript:void(0);">Log Out</a>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </v-flex>
-            <v-flex xs6>
-              <h3 class="mt-1">{{ this.currentTournament.year }} Admin</h3>
+  <v-card flat class="mb-5">
+    <v-container class="bg">
+      <v-layout row>
+        <v-flex xs3>
+          <BackButton
+            :routeName="'Tournament'"
+            :routeParams="this.backParams()"
+          />
+        </v-flex>
+        <v-flex xs6 class="text-xs-center white--text">
+          <h1 style="font-weight:300;">BANDON</h1>
+        </v-flex>
+      </v-layout>
+      <v-layout row mt-3>
+        <v-flex xs12>
+          <v-layout row align-center>
+            <v-flex xs7>
+              <h1 style="font-weight:300;font-size:60px;color:#F8C977">
+                {{ this.currentTournament.year }}
+              </h1>
+              <h2 style="font-weight:400;" class="text-xs-left">
+                Purse: $<span>{{ purse }}</span>
+              </h2>
             </v-flex>
           </v-layout>
-        </v-toolbar>
-      <v-card
-        color="white"
-        fluid
-        text-xs-center
-        class="pa-0"
-        style="height:100%;margin-top:8vh;margin-bottom:8vh;">
-        <v-card-text class="pa-0">
-          <component :is="view" />
-
-        </v-card-text>
-      </v-card>
-      <v-bottom-nav
-        fixed
-        value="true"
-        :active.sync="view"
-        shift
-        color="white"
-        style="height:8vh;"
-      >
-        <v-btn flat color="#74C9D7" dark value="player-list">
-          <span>Players</span>
-          <v-icon>people_outline</v-icon>
-        </v-btn>
-        <v-btn flat color="#FF9D72" dark value="tee-times">
-          <span>Tee Times</span>
-          <v-icon>access_time</v-icon>
-        </v-btn>
-        <v-btn flat color="#74C9D7" dark value="edit">
-          <span>Edit</span>
-          <v-icon>edit</v-icon>
-        </v-btn>
-      </v-bottom-nav>
-    </main>
+          <v-layout row align-end mt-3>
+            <v-flex xs5 class="text-xs-left white--text">
+              <h1 style="font-weight:400;">
+                Active:
+                <span style="color:#666;">
+                  {{ this.currentTournament.active_players }}
+                </span>
+              </h1>
+            </v-flex>
+            <v-flex xs5 class="text-xs-center">
+              <div class="white--text">
+                <h1 style="font-weight:400;">
+                  DNF:
+                  <span style="color:#666;">
+                    {{ this.currentTournament.dnf_players }}
+                  </span>
+                </h1>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <PlayerList />
+    <BottomNavigation />
+  </v-card>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import PlayerList from '../Admin/PlayerList'
 import TeeTimes from '../Admin/TeeTimes/index'
+import BackButton from '../../BackButton'
+import BottomNavigation from './BottomNavigation'
 
 export default {
   name: 'TournamentAdmin',
   components: {
+    BackButton,
+    BottomNavigation,
     PlayerList,
     TeeTimes,
   },
@@ -95,6 +81,7 @@ export default {
       items: [],
       loading: true,
       userAdmin: false,
+      purse: "360",
       player: '',
     }
   },
@@ -106,10 +93,14 @@ export default {
         redirect: '/login'
       })
     },
-    changeView (v) {
-      this.view = v
-    }
+    backParams () {
+      return { id: this.currentTournament.id }
+    },
   },
+
+  mounted () {
+    console.log(this.currentTournament)
+  }
 
 }
 
@@ -125,5 +116,8 @@ a {
 .tournament-wrapper {
   overflow:hidden;
   background-color: white;
+}
+.bg {
+  background-color: #449ce9;
 }
 </style>

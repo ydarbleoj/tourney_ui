@@ -72,7 +72,7 @@ export default {
 }
 </script>
 <style lang="scss">
-$duration: 1s;
+$duration: 0.5s;
 .transition {
   overflow: hidden;
 }
@@ -105,7 +105,7 @@ $duration: 1s;
 // router view back
 
 .router-view-back-leave-active {
-  transition: transform $duration ease-in-out;
+  transition: transform 0.4s ease-in-out;
   z-index: 2;
   transform: translateX(0%);
 }
