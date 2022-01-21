@@ -4,7 +4,7 @@
       <v-layout row>
 				<v-flex xs3>
           <BackButton
-            :routeName="'TournamentAdmin'"
+            :routeName="'AdminServicePage'"
             :routeParams="this.backParams()"
           />
         </v-flex>
@@ -21,16 +21,12 @@
                 {{ this.playerName }}
                 <br>
                 <span class="info-span text-xs-left">
-                  Handicap {{ this.handicapIndex }}
+                  Handicap {{ this.handicap }}
                 </span>
               </h3>
 						</v-flex>
             <v-flex xs5 class="text-xs-center" style="color:#F8C977">
               <div class="place-wrap">
-                <h1 style="font-weight:300;font-size:60px;">
-                  {{ getPosition() }}
-                  <span>{{ getOrdinal() }}</span>
-                </h1>
               </div>
             </v-flex>
 					</v-layout>
@@ -38,67 +34,65 @@
              <v-flex xs5 class="text-xs-left">
               <h2 style="font-weight:400;">
                 Status:
-                <span class="white--text">{{ getStatus() }}</span>
+                 <v-icon
+                  style="height:24px;width:24px;border-radius:50%"
+                  :class="[this.status ? 'success' : 'error']"
+                >
+                  {{ this.status ? 'mdi-check' : 'mdi-close' }}
+                </v-icon>
               </h2>
             </v-flex>
           </v-layout>
 				</v-flex>
 			</v-layout>
 		</v-container>
-    <PlayerEdit :user="this.playerPage" />
+    <PlayerTable />
   </v-card>
 </template>
 <script>
 import { mapState } from 'vuex'
-import PlayerEdit from '../PlayerEdit'
+import PlayerTable from './PlayerTable'
 import BackButton from '../../../BackButton'
 
 export default {
-  name: "AdminPlayerPage",
+  name: "PlayerServicePage",
   components: {
-    PlayerEdit,
+    PlayerTable,
     BackButton
   },
   data () {
     return {
       playerName: "",
-      handicapIndex: 0,
-      position: 1,
+      handicap: "",
+      status: true
     }
   },
 
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      playerPage: state => state.admin.adminPlayerPage,
+      playerServices: state => state.admin.playerServices,
     })
   },
 
   methods: {
     getStatus () {
-      const status = this.playerPage.pending ? "Pending" : "Active";
+      const status = this.playerServices.status
       return status
     },
-    getOrdinal () {
-      let newString = this.position.toString().replace(/[0-9]/g, '');
-      return newString
-    },
-    getPosition () {
-      return parseInt(this.position)
-    },
-    backParams () {
+     backParams () {
       return { id: this.currentTournament.id }
     }
   },
 
   mounted () {
-    this.$store.dispatch('admin/LOAD_PLAYER', {
+    this.$store.dispatch('admin/LOAD_PLAYER_SERVICES', {
       tournId: this.currentTournament.id,
       id: this.$route.params.leaderboard_id
     }).then(response => {
-      this.playerName = this.playerPage.username
-      this.handicapIndex = this.playerPage.handicap
-      this.position = this.playerPage.current_position
+      this.playerName = this.playerServices.username
+      this.handicap = this.playerServices.handicap
+      this.status = this.playerServices.status
     })
   }
 }

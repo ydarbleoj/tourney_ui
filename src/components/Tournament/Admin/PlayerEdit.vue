@@ -75,7 +75,7 @@
           </v-card-text>
           <v-card-actions class="pa-3">
             <div class="text-xs-right" style="width:100%;">
-              <v-btn flat round class="admin--update_button" @click="setParams(user.item)" v-bind:loading="btnLoading">
+              <v-btn flat round class="admin--update_button" @click="setParams(user)" v-bind:loading="btnLoading">
                 {{ updateMessage }}
               </v-btn>
             </div>
@@ -93,7 +93,7 @@
         <v-card flat class="pt-5 pb-5 text-xs-center">
           <v-btn flat round
             class="admin--add_button"
-            @click="removePlayer(user.item)"
+            @click="removePlayer(user)"
             v-bind:loading="btnDelete"
           >
             Delete
@@ -135,11 +135,11 @@ export default {
 
   methods: {
     setParams (item) {
+      console.log('hi', item)
       let role = item.role
       let hcap = item.handicap
       let dnf  = item.dnf
       let opts = {}
-      console.log('hi', this.DNF)
 
       if (this.editRole !== '' && this.editRole !== role) {
         opts['role'] = this.editRole
@@ -154,15 +154,15 @@ export default {
       }
 
       if (Object.entries(opts).length !== 0) {
-        this.updatePlayer(opts, item['id'])
+        this.updatePlayer(opts, item.id)
       }
     },
     updatePlayer (opts, lbId) {
       this.btnLoading = true
       this.$store.dispatch('admin/UPDATE_PLAYER', {
         tournId: this.currentTournament.id,
-        opts: opts,
-        lbId: lbId
+        id: lbId,
+        options: opts
       }).then(response => {
         if (response) {
           this.updated = true

@@ -1,7 +1,7 @@
 <template>
   <v-bottom-nav
     fixed
-    :active.sync="view"
+    :active.sync="viewSetup"
     value="false"
     shift
     color="white"
@@ -33,8 +33,8 @@
       flat
       color="#F8C977"
       dark
-      value="monitor"
-      @click="goToPage('TournamentAdminServices')"
+      value="services"
+      @click="goToPage('AdminServicePage')"
     >
       <span>Services</span>
       <v-icon>mdi-hexagon-multiple</v-icon>
@@ -47,15 +47,23 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'BottomNavigation',
+  props: ['view'],
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament
     }),
+     viewSetup: {
+      get: function() {
+        return this.view;
+      },
+      set: function(newValue) {
+        this.$emit('update:view', newValue);
+      }
+    }
   },
 
    data () {
     return {
-      view: 'player-list'
     }
   },
 
@@ -68,7 +76,7 @@ export default {
           id: this.currentTournament.id
         }
       })
-    }
+    },
   },
 }
 </script>

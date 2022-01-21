@@ -34,7 +34,14 @@
         >
           <v-layout row wrap align-center justify-center style="width:100vw;">
             <v-flex xs4>
-              <v-btn flat round class="score--save_button" @click="updateScore" v-bind:loading="btnLoading">
+              <v-btn
+                flat
+                round
+                :disabled="disableButton"
+                class="score--save_button"
+                @click="updateScore"
+                v-bind:loading="btnLoading"
+              >
                 <h4>{{ updateMessage }}</h4>
               </v-btn>
             </v-flex>
@@ -74,6 +81,7 @@ export default {
       btnLoading: false,
       updateMessage: 'Save',
       heightList: [],
+      disableButton: false,
       count: 0,
       shotList: [
         [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Birdie 2' }, {value: 3, name: 'Par 3'}, {value: 4, name: 'Bogey 4'}, {value: 5, name: 'Double 5'}, {value: 6, name: 'Triple 6'}, {value: 7, name: 'Quad 7'}, {value: 8, name: 'Other 8'}],
@@ -156,10 +164,12 @@ export default {
         })
     },
     updateScore() {
+      this.disableButton = true
       this.btnLoading = true
       let us_id = this.cardData.user_score_id
       let holeNumber = this.cardData.number
       const options = { putts: this.putts, score: this.shots }
+
       if (us_id) {
         this.$store.dispatch('scorecards/UPDATE_USER_SCORE', { scorecardId: this.scorecardId, scoreId: us_id, scores: options }).then(response => {
             if (response) {
@@ -167,6 +177,7 @@ export default {
               this.type = 'UPDATE'
               this.closeCard(holeNumber)
               this.btnLoading = false
+              this.disableButton = false
               if (holeNumber !== 18) {
                 this.$emit('onUpdate')
               }
@@ -180,6 +191,7 @@ export default {
         this.$store.dispatch('scorecards/CREATE_USER_SCORE', { scorecardId: this.scorecardId, scores: user_score })
           .then(response => {
             this.btnLoading = false
+            this.disableButton = false
             if (response) {
               this.updateMessage = 'Success'
               this.type = 'UPDATE'

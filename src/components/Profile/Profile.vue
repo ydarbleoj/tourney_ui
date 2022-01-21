@@ -1,21 +1,38 @@
 <template>
   <v-card flat style="height:100vh;">
-    <v-container fluid>
-      <v-layout row wrap fill-height align-center style="height:30vh;">
-        <v-flex xs6 justify-space-between>
-          <div >
-            <v-img src="/static/sand.jpg" height="80px" style="width:80px;border-radius:50%;margin:0 auto;"></v-img>
-          </div>
-        </v-flex>
-        <v-flex xs6>
-          <v-card-title class="pa-0">
-            <h2 class="font-weight-regular align-center">{{ $auth.user().username }}</h2>
-          </v-card-title>
-          <p class="align-center ma-0">{{ $auth.user().home }}</p>
+    <v-container class="bg">
+      <v-layout row wrap class="mb-3">
+        <v-flex xs12>
+          <image-container
+            :name="$auth.user().username"
+            :subtext="$auth.user().home"
+            :classType="'player-profile'"
+          />
         </v-flex>
       </v-layout>
-      <v-divider></v-divider>
-      <v-layout row wrap fill-height align-center style="" class="text-xs-center pt-4 pb-4">
+       <v-layout
+        row wrap
+        align-center
+        class="text-xs-center pt-2 pb-4"
+      >
+        <v-flex xs6>
+          <h3 class="font-weight-regular">Appearances</h3>
+          <h1 style="color:#666">5</h1>
+        </v-flex>
+        <v-flex xs6>
+          <h3 class="font-weight-regular">Avg Finish</h3>
+          <h1 style="color:#666">3.5</h1>
+        </v-flex>
+       </v-layout>
+      <v-layout
+        row wrap
+        align-center
+        class="text-xs-center pt-2 pb-4 mb-5"
+        style="background-color:#666;border-radius: 10px;"
+      >
+        <v-flex xs12 class="text-xs-left ml-2">
+          <h2 class="white--text pl-2 mb-2 font-weight-regular">Notable Stats</h2>
+        </v-flex>
         <v-flex xs4>
           <h1 class="font-weight-regular" style="color:#74C9D7">
             {{ hcap_diff }}
@@ -38,59 +55,63 @@
           <h5 class="font-weight-regular">Average</h5>
         </v-flex>
       </v-layout>
-      <v-divider></v-divider>
-      <v-layout row wrap class="text-xs-center pt-4 pb-4">
-        <v-flex xs12 >
-          <h4 class="font-weight-regular">Lowest Round</h4>
+      <v-layout
+        row wrap align-center
+        class="bx-shadow pa-3 mb-4"
+        style="border-radius:25px;"
+        @click="toBandon()"
+      >
+        <v-flex xs6>
+          <h1 class="font-weight-medium" style="color:#74C9D7">Bandon</h1>
         </v-flex>
-         <v-flex xs12>
-          <v-layout row wrap>
-            <v-flex xs12 class="text-xs-center">
-              <h1 class="font-weight-regular pt-2" style="color:#F7A072;font-size:35px;">{{ total_net }}</h1>
-              <h4 class="font-weight-regular">{{ course_name }}
-                {{ year }}
-              </h4>
-            </v-flex>
-          </v-layout>
+        <v-flex xs6 class="text-xs-right">
+          <v-icon color="#666">
+            mdi-chevron-right
+          </v-icon>
+        </v-flex>
+      </v-layout>
+      <v-layout
+        row wrap align-center
+        class="bx-shadow pa-3 mb-4"
+        style="border-radius:25px;"
+      >
+         <v-flex xs6>
+          <h1 class="font-weight-medium" style="color:#F8C977">Scorecards</h1>
+        </v-flex>
+        <v-flex xs6 class="text-xs-right">
+          <v-icon color="#666">
+            mdi-chevron-right
+          </v-icon>
+        </v-flex>
+      </v-layout>
+      <v-layout
+        row wrap align-center
+        class="bx-shadow pa-3 mb-4"
+        style="border-radius:25px;"
+        @click="toSettings()"
+      >
+        <v-flex xs6>
+          <h1 class="font-weight-medium" style="color:#666">Settings</h1>
+        </v-flex>
+        <v-flex xs6 class="text-xs-right">
+          <v-icon color="#666">
+            mdi-chevron-right
+          </v-icon>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-divider></v-divider>
-    <v-card-actions v-if="isLoaded" class="pa-3 text-xs-center align-center">
-      <v-layout row wrap fill-height align-center style="" class="text-xs-center pt-4 pb-4">
-        <v-flex xs6>
-          <div class="text-xs-center">
-            <v-btn
-              flat
-              round
-              class="admin--profile_button font-weight-regular"
-              color="white"
-              :to="{
-                name: 'Tournament',
-                params: {
-                  id: this.currentTournament.id
-                }
-              }"
-            >Bandon</v-btn>
-          </div>
-        </v-flex>
-        <v-flex xs6>
-          <div class="text-xs-center">
-            <v-btn flat round class="admin--edit_button font-weight-regular" color="white" :to="`/profile/edit/${this.$auth.user().id}`">Settings</v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-    </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import ImageContainer from './ImageContainer'
 
 export default {
   name: 'Profile',
-  props: [],
-
+  components: {
+    ImageContainer
+  },
   data () {
     return {
       userId: this.$auth.user().id,
@@ -132,14 +153,29 @@ export default {
         redirect: '/login'
       })
     },
+    toBandon() {
+      this.$store.commit("setPageTransition");
+      this.$router.push({
+        name: 'Tournament',
+        params: {
+          id: this.currentTournament.id
+        }
+      })
+    },
+    toSettings() {
+      this.$store.commit("setPageTransition");
+      this.$router.push({
+        name: 'ProfileEdit',
+        params: {
+          id: this.userId
+        }
+      })
+    },
     loadProfileData () {
       if (this.profileData !== null) {
         this.hcap_diff = this.profileData.attributes.hcap_diff
         this.net_avg = this.profileData.attributes.net_avg
         this.gross_avg = this.profileData.attributes.gross_avg
-        this.total_net = this.profileData.attributes.lowest_round.total_net
-        this.course_name = this.profileData.attributes.lowest_round.course_name
-        this.year = this.profileData.attributes.lowest_round.year
       }
     }
   },
@@ -158,37 +194,7 @@ export default {
 }
 </script>
 <style>
-.admin--delete_button {
-  background-color: #F7A072;
-  color: #f1f1f1;
+.bx-shadow {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
-}
-.admin--delete_button:active {
-  top: 1px;
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
-}
-.admin--edit_button {
-  background-color: #F8C977;
-  color: #f1f1f1;
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
-}
-.admin--edit_button:active {
-  top: 1px;
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 1s ease, box-shadow 1s ease;
-}
-.admin--profile_button {
-  background-color: #74C9D7;
-  color: #FBFCFD;
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 2s ease, box-shadow 2s ease;
-}
-.admin--profile_button:active {
-  top: 1px;
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
-  transition: opacity 2s ease, box-shadow 1s ease;
 }
 </style>

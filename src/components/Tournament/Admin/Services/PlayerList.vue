@@ -7,19 +7,17 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import PlayersTable from '../Admin/PlayersTable'
-import AddPlayer from '../Admin/AddPlayer'
+import PlayersTable from './Table'
 
 export default {
-  name: 'PlayersList',
+  name: 'PlayerList',
   components: {
     PlayersTable,
-    AddPlayer
   },
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      tournamentPlayers: state => state.admin.tournamentPlayers
+      services: state => state.admin.services
     })
   },
 
@@ -29,14 +27,11 @@ export default {
     }
   },
 
-  methods: {
-  },
-
   created () {
     this.$store.dispatch(
-      'admin/LOAD_ADMIN_PLAYERS', { tournId: this.currentTournament.id }
+      'admin/LOAD_SERVICES', { tournId: this.currentTournament.id }
     ).then(response => {
-      console.log("his", this.tournamentPlayers)
+      console.log("services", this.services)
       this.loading = false
     })
   }

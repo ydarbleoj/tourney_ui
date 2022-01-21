@@ -3,7 +3,9 @@ import createPersistedState from 'vuex-persistedstate'
 
 const state = {
   tournamentPlayers: [],
-  adminPlayerPage: {}
+  adminPlayerPage: {},
+  services: [],
+  playerServices: {}
 }
 
 const actions = {
@@ -14,16 +16,16 @@ const actions = {
       commit('SET_ADMIN_PLAYERS', { list: response.data })
     })
   },
-  LOAD_PLAYER: function ({ commit, state }, { tournId, id}) {
+  LOAD_PLAYER: function ({ commit, state }, { tournId, id }) {
     return axios.get(
       `/api/v3/tournaments/${tournId}/admin/players/${id}.json`
     ).then((response) => {
       commit('SET_ADMIN_PLAYER_PROFILE', { list: response.data })
     })
   },
-  UPDATE_PLAYER: function ({ commit, state }, { tournId, opts, id}) {
+  UPDATE_PLAYER: function ({ commit, state }, { tournId, id, options}) {
     return axios.patch(
-      `/api/v3/tournaments/${tournId}/admin/players/${id}.json`, opts
+      `/api/v3/tournaments/${tournId}/admin/players/${id}.json`, options
     ).then((response) => {
       if (response.data.success) {
         return true
@@ -42,6 +44,21 @@ const actions = {
       return response.success
     })
   },
+  LOAD_SERVICES: function ({ commit, state }, { tournId }) {
+    return axios.get(
+      `/api/v3/tournaments/${tournId}/admin/service_monitors.json`
+    ).then((response) => {
+      commit('SET_ADMIN_SERVICES', { list: response.data })
+    })
+  },
+  LOAD_PLAYER_SERVICES: function ({ commit, state }, { tournId, id }) {
+    console.log("load player", id)
+    return axios.get(
+      `/api/v3/tournaments/${tournId}/admin/service_monitors/${id}.json`
+    ).then((response) => {
+      commit('SET_PLAYER_SERVICE_PROFILE', { list: response.data })
+    })
+  },
 }
 
 const mutations = {
@@ -52,12 +69,15 @@ const mutations = {
   SET_ADMIN_PLAYER_PROFILE: (state, { list }) => {
     state.adminPlayerPage = list.data.attributes
   },
-  SET_ADMIN_PLAYER_PROFILE: (state, { list }) => {
-    state.adminPlayerPage = list.data.attributes
-  },
   REMOVE_PLAYER: (state, { id }) => {
     const index = state.tournamentPlayers.findIndex(block => block.id === id )
     state.tournamentPlayers.splice(index, 1)
+  },
+  SET_ADMIN_SERVICES: (state, { list }) => {
+    state.services = list.data
+  },
+  SET_PLAYER_SERVICE_PROFILE: (state, { list }) => {
+    state.playerServices = list.data.attributes
   },
 }
 

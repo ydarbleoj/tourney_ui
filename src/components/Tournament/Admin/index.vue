@@ -48,7 +48,7 @@
       </v-layout>
     </v-container>
     <PlayerList />
-    <BottomNavigation />
+    <BottomNavigation :view="'player-list'"/>
   </v-card>
 </template>
 
