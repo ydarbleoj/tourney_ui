@@ -3,6 +3,7 @@ import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 
 const state = {
+  userProfile: {},
   profileData: {},
 }
 
@@ -24,7 +25,7 @@ const actions = {
 const mutations = {
   SET_PROFILE_DATA: (state, { list }) => {
     Vue.set(state, 'profileData', JSON.parse(list.user_data).data)
-    Vue.set(state, 'user', JSON.parse(list.user).data.attributes)
+    Vue.set(state, 'userProfile', JSON.parse(list.user).data.attributes)
   },
   RESET_USER: (state, { list }) => {
     Vue.set(state, 'user', list)

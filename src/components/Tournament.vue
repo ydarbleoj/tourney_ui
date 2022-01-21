@@ -3,34 +3,10 @@
     <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
       <v-layout row wrap>
         <v-flex xs3 class="text-xs-left">
-          <v-menu
-              transition="scale-transition"
-              bottom
-            >
-            <v-btn icon slot="activator" light class="ml-2">
-              <v-icon class="">more_vert</v-icon>
-            </v-btn>
-            <v-list>
-              <v-list-tile>
-                <v-list-tile-title>
-                  <v-icon class="mr-2">person_outline</v-icon><router-link style="color:black;text-decoration:none;" :to="'/profile'">Profile</router-link>
-                </v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile v-if="$auth.check('admin')">
-                <v-list-tile-title>
-                  <v-icon class="mr-2">apps</v-icon>
-                  <router-link style="color:black;text-decoration:none;" :to="`/tournament/${this.currentTournament.id}/admin`">
-                    Admin
-                  </router-link>
-                </v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile>
-                <v-list-tile-title>
-                  <v-icon class="mr-2">weekend</v-icon><a v-on:click="logout()" style="color:black;text-decoration:none;" href="javascript:void(0);">Log Out</a>
-                </v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+           <BackButton
+            :routeName="'Profile'"
+            :routeParams="{ id: $auth.user().id }"
+          />
         </v-flex>
         <v-flex xs6>
           <tournament-menu />
@@ -52,10 +28,12 @@ import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
 import Stats from '../components/Stats/index'
 import TournamentMenu from '../components/TournamentMenu'
+import BackButton from './BackButton'
 
 export default {
   name: 'Tournament',
   components: {
+    BackButton,
     Handicap,
     Leaderboards,
     Rounds,

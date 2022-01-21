@@ -4,13 +4,14 @@
     class="ma-2 back-button"
     style="top:0;left:0;"
     outline
-    color="white"
     depressed
     small
     fab
     @click.native="goBack"
   >
-    <v-icon color="white" style="font-size:32px;">
+    <v-icon
+     style="font-size:32px;"
+    >
       mdi-chevron-left
     </v-icon>
   </v-btn>
@@ -25,6 +26,11 @@ export default {
       getTournament: 'tournament/getTournament'
     })
   },
+  data () {
+    return {
+      btnColor: "white-btn"
+    }
+  },
 
   methods: {
     goBack () {
@@ -33,6 +39,9 @@ export default {
         name: this.routeName,
         params: this.routeParams
       })
+    },
+    setColor () {
+      return this.btnColor
     }
   },
 }
@@ -41,5 +50,8 @@ export default {
 .back-button {
   border-color: transparent;
   background-color: transparent;
+}
+.white-btn {
+  color: white;
 }
 </style>

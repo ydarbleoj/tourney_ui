@@ -1,11 +1,17 @@
 <template>
   <v-card flat style="height:100vh;" class="pa-3">
-    <router-link :to="'/profile'">
-      <span ><v-icon color="#F8C977" class="pa-0" style="font-size:28px;" :to="'/profile'">arrow_backward</v-icon></span>
-    </router-link>
-    <v-card-title class="pl-0 pb-0">
-      <h4 class="font-weight-regular grey--text text-xs-left">Your Account</h4>
-    </v-card-title>
+    <v-layout row wrap align-center>
+      <v-flex x3>
+        <BackButton
+          :routeName="'Profile'"
+          :routeParams="{ id: $auth.user().id }"
+        />
+      </v-flex>
+       <v-flex xs6>
+        <h4 class="font-weight-regular grey--text text-xs-center">Your Account</h4>
+       </v-flex>
+       <v-flex xs3></v-flex>
+    </v-layout>
     <v-card-text>
       <form v-if="!updatePassword" >
         <v-text-field
@@ -82,15 +88,13 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 import axios from 'axios'
+import BackButton from '../BackButton'
 
 export default {
   name: 'Edit',
-  // mixins: [validationMixin],
-  // validations: {
-  //   first_name: { required, maxLength: maxLength(10)},
-  //   last_name: { required, maxLength: maxLength(10) },
-  //   email: { required, email },
-  // },
+  components: {
+    BackButton
+  },
 
   data () {
     return {

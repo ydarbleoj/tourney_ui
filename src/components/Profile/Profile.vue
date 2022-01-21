@@ -17,11 +17,11 @@
       >
         <v-flex xs6>
           <h3 class="font-weight-regular">Appearances</h3>
-          <h1 style="color:#666">5</h1>
+          <h1 style="color:#666">{{ appearances }}</h1>
         </v-flex>
         <v-flex xs6>
           <h3 class="font-weight-regular">Avg Finish</h3>
-          <h1 style="color:#666">3.5</h1>
+          <h1 style="color:#666">{{ average_finish }}</h1>
         </v-flex>
        </v-layout>
       <v-layout
@@ -122,12 +122,15 @@ export default {
       total_net: 0,
       course_name: '',
       year: '',
+      appearances: 0,
+      average_finish: 0
     }
   },
 
   computed: {
     ...mapState({
       profileData: state => state.profile.profileData,
+      userProfile: state => state.profile.userProfile,
       currentTournament: state => state.tournament.currentTournament
     }),
     ...mapGetters({
@@ -173,9 +176,12 @@ export default {
     },
     loadProfileData () {
       if (this.profileData !== null) {
+        console.log("this", this.userProfile)
         this.hcap_diff = this.profileData.attributes.hcap_diff
         this.net_avg = this.profileData.attributes.net_avg
         this.gross_avg = this.profileData.attributes.gross_avg
+        this.appearances = this.userProfile.appearances
+        this.average_finnish = this.userProfile.average_finish
       }
     }
   },
