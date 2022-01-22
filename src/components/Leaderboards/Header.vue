@@ -2,7 +2,10 @@
   <v-container class="pb-0 pt-4">
     <v-layout class="mb-6" no-gutters>
       <v-flex md="4">
-        <BackButton />
+        <BackButton
+          :routeName="'Tournament'"
+          :routeParams="{ id: this.currentTournament.id }"
+        />
       </v-flex>
     </v-layout>
     <v-layout no-gutters>

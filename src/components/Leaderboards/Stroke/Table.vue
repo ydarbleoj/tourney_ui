@@ -7,18 +7,36 @@
     item-key="id"
   >
     <template slot="items" slot-scope="props">
-      <tr @click="props.expanded = !props.expanded">
-        <td class="text-xs-center">{{ props.item.attributes.position }}</td>
+      <tr >
+        <td class="text-xs-center">{{ props.item.attributes.current_position }}</td>
+        <td class="text-xs-left">
+          <span>
+            <v-icon v-if="movementUp(props.item.attributes)" color="green">
+              mdi-arrow-up
+            </v-icon>
+            <v-icon v-if="movementDown(props.item.attributes)" color="red">
+              mdi-arrow-down
+            </v-icon>
+          </span>
+          {{
+            (props.item.attributes.movement == 0 || props.item.attributes.dnf) ? '' : props.item.attributes.movement
+          }}
+        </td>
         <td class="text-xs-left">
           {{ props.item.attributes.username }}
           <v-spacer></v-spacer>
           <span class="grey--text">handicap {{ props.item.attributes.handicap }}</span>
         </td>
         <td class="text-xs-center">{{ props.item.attributes.total_score }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.rnd1_score }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.rnd2_score }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.rnd3_score }}</td>
-        <td class="text-xs-center">{{ props.item.attributes.net_total }}</td>
+        <td class="text-xs-right">{{ props.item.attributes.rnd1_score }}</td>
+        <td class="text-xs-right">{{ props.item.attributes.rnd2_score }}</td>
+        <td class="text-xs-right">{{ props.item.attributes.rnd3_score }}</td>
+        <td class="text-xs-right">{{ props.item.attributes.total_net }}</td>
+        <td class="text-xs-center">
+          <v-icon color="#999">
+            mdi-chevron-right
+          </v-icon>
+        </td>
       </tr>
     </template>
 
@@ -75,15 +93,24 @@ import { mapState } from 'vuex'
 export default {
   name: 'Table',
   computed: {
-    ...mapState(['strokeLeaderboard']),
+    ...mapState({
+      strokeLeaderboard: state => state.leaderboards.strokeLeaderboard
+
+    }),
   },
 
   data () {
     return {
       headers: [
         {
-          text: 'Pos',
-          align: 'center',
+          text: '',
+          align: 'left',
+          sortable: false,
+          value: 'pos',
+        },
+        {
+          text: '',
+          align: 'left',
           sortable: false,
           value: 'pos',
         },
@@ -95,37 +122,43 @@ export default {
         },
         {
           text: 'Total',
-          align: 'center',
+          align: 'right',
           sortable: false,
           value: 'total_score',
         },
         {
           text: 'R1',
-          align: 'center',
+          align: 'right',
           sortable: false,
           value: 'rnd1_score',
           class: 'stroke-row'
         },
         {
           text: 'R2',
-          align: 'center',
+          align: 'right',
           sortable: false,
           value: 'rnd2_score',
           class: "stroke-row"
         },
         {
           text: 'R3',
-          align: 'center',
+          align: 'right',
           sortable: false,
           value: 'rnd3_score',
           class: 'stroke-row'
         },
         {
           text: 'Score',
-          align: 'center',
+          align: 'right',
           sortable: false,
           value: 'net_total'
-        }
+        },
+        {
+          text: '',
+          align: 'right',
+          sortable: false,
+          value: 'pos',
+        },
       ],
     }
   },
@@ -137,6 +170,13 @@ export default {
         height = `${toolbar.$el.offsetHeight}px`
       }
       document.documentElement.style.setProperty('--headerHeight', height)
+    },
+    movementUp (pos) {
+      if (pos.movement > 0) { return true }
+    },
+    movementDown (pos) {
+      if (pos.dnf) { return false }
+      if (pos.movement < 0) { return true }
     }
   },
   mounted () {

@@ -3,7 +3,7 @@
     <v-container color="white" fluid text-xs-center class="pa-0" style="height: 100%;">
       <v-layout row wrap>
         <v-flex xs3 class="text-xs-left">
-           <BackButton
+          <BackButton
             :routeName="'Profile'"
             :routeParams="{ id: $auth.user().id }"
           />

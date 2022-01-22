@@ -36,7 +36,6 @@ const store = new Vuex.Store({
     courses: [],
     rounds: [],
     scorecardPreviews: [],
-    strokeLeaderboard: [],
     skins_leaderboard: [],
     putting_leaderboard: [],
     puttingPurse: 0,
@@ -123,16 +122,6 @@ const store = new Vuex.Store({
         '/api/v2/leaderboards/putts.json', { params: options}
       ).then((response) => {
         commit('SET_PUTTING_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
-      })
-    },
-    LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id }) {
-      let options = { tournament_id: id }
-      return axios.get(
-        '/api/v2/leaderboards/strokes.json', { params: options }
-      ).then((response) => {
-        commit('SET_STROKE_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
@@ -256,9 +245,6 @@ const store = new Vuex.Store({
     },
     SET_CURRENT_ROUND: (state, { list }) => {
       Vue.set(state, 'currentRound', list)
-    },
-    SET_STROKE_LEADERBOARD: (state, { list }) => {
-      Vue.set(state, 'strokeLeaderboard', list.data)
     },
     SET_PUTTING_LEADERBOARD: (state, { list }) => {
       const reducer = (acc, currentValue) => acc + currentValue;

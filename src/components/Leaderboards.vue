@@ -2,7 +2,6 @@
   <v-container id='leaderboard-container' class="pa-0" ma0>
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
-        <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 5%;">Leaderboards</h2>
         <v-container v-if="!isLoading" transition="slide-x-reverse-transition">
           <v-layout row>
             <v-flex xs6 ma-2>
@@ -12,6 +11,8 @@
                   :title="'Stroke'"
                   :leaderboard="getStrokePreview"
                   :link="'StrokeLeaderboard'"
+                  :position="'stroke_position'"
+                  :total="'total_score'"
                 />
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
                 <preview-button
@@ -19,6 +20,8 @@
                   :title="'Skins'"
                   :leaderboard="getSkinsPreview"
                   :link="'SkinsLeaderboard'"
+                  :position="'count'"
+                  :total="'skins_total'"
                 />
               </v-layout>
             </v-flex>
@@ -29,6 +32,8 @@
                   :title="'Putting'"
                   :leaderboard="getPuttingPreview"
                   :link="'PuttingLeaderboard'"
+                  :position="'putting_position'"
+                  :total="'total_putts'"
                 />
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
                 <preview-button
@@ -36,6 +41,8 @@
                   :title="'Team'"
                   :leaderboard="getTeamPreview"
                   :link="'TeamLeaderboard'"
+                  :position="'count'"
+                  :total="'team_wins_total'"
                 />
               </v-layout>
             </v-flex>

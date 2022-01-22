@@ -5,12 +5,17 @@
 		:class="bgColor"
     class="lb-button pa-2"
   >
-    <v-card-title class="pa-0">
-      <h2 class="text-xs-left font-weight-medium" >{{ title }}</h2>
+    <v-card-title class="pa-0 mb-2">
+      <h4 class="text-xs-left pl-2 font-weight-regular" >
+        {{ title }}
+        <br>
+        <span>Leaderboard</span>
+      </h4>
     </v-card-title>
-    <div class="text-xs-right">
-      <h5 class="white--text font-weight-regular">Total</h5>
+    <div class="text-xs-right mb-1">
+      <h5 class="white--text font-weight-regular pr-1">Total</h5>
     </div>
+    <v-divider color="white"></v-divider>
     <v-card-text class="pa-0">
       <v-list
         dense
@@ -18,15 +23,15 @@
         class="white--text"
         v-for="(item, index) in leaderboard" :key="index"
       >
-        <v-layout row class="pt-1">
-          <v-flex xs2 class="text-xs-left">
-            {{ item.attributes.position }}
+        <v-layout row class="pt-1 mb-2">
+          <v-flex xs1 class="text-xs-left">
+            {{ position == 'count' ? index + 1 : item.attributes[position] }}.
           </v-flex>
-          <v-flex class="text-xs-left pr-2">
+          <v-flex class="text-xs-left pl-1">
             {{ item.attributes.username }}
           </v-flex>
-          <v-flex class="text-xs-center">
-            {{ item.attributes.total }}
+          <v-flex class="text-xs-right pr-1" style="font-size:14px;">
+            {{ item.attributes[total] }}
           </v-flex>
         </v-layout>
       </v-list>
@@ -40,7 +45,9 @@ export default {
 		current: Object,
 		leaderboard: Array,
 		link: String,
-		title: String
+    position: String,
+		title: String,
+    total: String
 	},
   computed: {
 		bgColor () {
@@ -63,6 +70,7 @@ export default {
     }
   },
 	created () {
+    console.log('props', this.leaderboard)
 	}
 }
 </script>

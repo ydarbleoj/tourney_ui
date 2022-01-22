@@ -42,7 +42,7 @@ export default {
 
   mounted: function () {
     this.$store.dispatch(
-      'LOAD_STROKE_LEADERBOARD',
+      'leaderboards/LOAD_STROKE_LEADERBOARD',
       { id: this.currentTournament.id }
     ).then(response => {
       this.strokePurse = this.currentTournament.num_players * 30
