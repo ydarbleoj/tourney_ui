@@ -9,6 +9,7 @@ const state = {
   skinsPreview: [],
   teamPreview: [],
   strokeLeaderboard: [],
+  strokePlayer: {},
 }
 
 const plugins = [
@@ -40,6 +41,14 @@ const actions = {
       console.log(err)
     })
   },
+  LOAD_STROKE_PLAYER: function ({ commit, state }, { tournId, id }) {
+    let options = { tournament_id: tournId }
+    return axios.get(
+      `/api/v3/leaderboards/strokes/${id}.json`, { params: options }
+    ).then((response) => {
+      commit('SET_STROKE_PLAYER_PROFILE', { list: response.data })
+    })
+  },
 }
 
 const mutations = {
@@ -60,6 +69,9 @@ const mutations = {
   SET_STROKE_LEADERBOARD: (state, { list }) => {
     console.log("aslkdjf", list)
     Vue.set(state, 'strokeLeaderboard', list.data)
+  },
+  SET_STROKE_PLAYER_PROFILE: (state, { list }) => {
+    state.strokePlayer = list.data.attributes
   },
 }
 

@@ -10,7 +10,7 @@
           />
         </v-flex>
       </v-layout>
-       <v-layout
+      <v-layout
         row wrap
         align-center
         class="text-xs-center pt-2 pb-4"
@@ -23,7 +23,7 @@
           <h3 class="font-weight-regular">Avg Finish</h3>
           <h1 style="color:#666">{{ average_finish }}</h1>
         </v-flex>
-       </v-layout>
+      </v-layout>
       <v-layout
         row wrap
         align-center

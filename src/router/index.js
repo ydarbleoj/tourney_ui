@@ -12,6 +12,7 @@ import TournamentCreate from '@/components/Tournament/Create/index'
 import TournamentDashboard from '@/components/Tournament/Dashboard'
 import AcceptInvite from '@/components/Tournament/AcceptInvite'
 import StrokeLeaderboard from '@/components/Leaderboards/Stroke/index'
+import StrokePlayerPage from '@/components/Leaderboards/Stroke/PlayerPage'
 import PuttingLeaderboard from '@/components/Leaderboards/Putting/index'
 import SkinsLeaderboard from '@/components/Leaderboards/Skins/index'
 import TeamLeaderboard from '@/components/Leaderboards/Team/index'
@@ -146,6 +147,13 @@ const router = new Router({
       path: '/tournament/:id/leaderboards/stroke',
       name: "StrokeLeaderboard",
       component: StrokeLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/leaderboards/stroke/:leaderboard_id',
+      name: "StrokePlayerPage",
+      component: StrokePlayerPage,
       props: { default: true },
       meta: { auth: true }
     },

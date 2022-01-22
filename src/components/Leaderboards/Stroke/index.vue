@@ -35,9 +35,6 @@ export default {
     }),
   },
   methods: {
-    closeLeaderboard () {
-      this.isPreview = true
-    }
   },
 
   mounted: function () {
