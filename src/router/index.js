@@ -14,6 +14,7 @@ import AcceptInvite from '@/components/Tournament/AcceptInvite'
 import StrokeLeaderboard from '@/components/Leaderboards/Stroke/index'
 import StrokePlayerPage from '@/components/Leaderboards/Stroke/PlayerPage'
 import PuttingLeaderboard from '@/components/Leaderboards/Putting/index'
+import PuttingPlayerPage from '@/components/Leaderboards/Putting/PlayerPage'
 import SkinsLeaderboard from '@/components/Leaderboards/Skins/index'
 import TeamLeaderboard from '@/components/Leaderboards/Team/index'
 import TeamPage from '@/components/Leaderboards/Team/Page/index'
@@ -161,6 +162,13 @@ const router = new Router({
       path: '/tournament/:id/leaderboards/putting',
       name: "PuttingLeaderboard",
       component: PuttingLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/leaderboards/putting/:leaderboard_id',
+      name: "PuttingPlayerPage",
+      component: PuttingPlayerPage,
       props: { default: true },
       meta: { auth: true }
     },

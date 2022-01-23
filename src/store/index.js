@@ -19,7 +19,7 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: [
-        'login', 'profile',
+        'login', 'profile', 'user',
         'rounds', 'courseStats', 'currentRound',
         'tournament.tournaments',
         'tournament.currentTournament',
@@ -37,8 +37,6 @@ const store = new Vuex.Store({
     rounds: [],
     scorecardPreviews: [],
     skins_leaderboard: [],
-    putting_leaderboard: [],
-    puttingPurse: 0,
     teamRounds: [],
     currentRound: 1,
     teeTime: [],
@@ -112,16 +110,6 @@ const store = new Vuex.Store({
         '/api/v2/leaderboards/skins.json', { params: options }
       ).then((response) => {
         commit('SET_SKINS_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
-      })
-    },
-    LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id }) {
-      let options = { tournament_id: id }
-      return axios.get(
-        '/api/v2/leaderboards/putts.json', { params: options}
-      ).then((response) => {
-        commit('SET_PUTTING_LEADERBOARD', { list: response.data })
       }, (err) => {
         console.log(err)
       })
@@ -245,14 +233,6 @@ const store = new Vuex.Store({
     },
     SET_CURRENT_ROUND: (state, { list }) => {
       Vue.set(state, 'currentRound', list)
-    },
-    SET_PUTTING_LEADERBOARD: (state, { list }) => {
-      const reducer = (acc, currentValue) => acc + currentValue;
-      const threePutts = list.data.map(el => el.attributes.total_3_putts)
-      const total = (threePutts.length == 0) ? 0 : threePutts.reduce(reducer)
-
-      Vue.set(state, 'puttingPurse', total)
-      Vue.set(state, 'putting_leaderboard', list.data)
     },
     SET_ADMIN_TEE_TIME: (state, { list }) => {
       state.adminTeeTimes = JSON.parse(list.times).data

@@ -16,9 +16,9 @@
     </v-layout>
     <v-layout>
       <v-flex md="6" class="text-xs-right">
-        <h4 class="font-weight-regular">Purse $
+        <h2 class="font-weight-regular">Purse $
           <span class="font-weight-medium">{{ purse }}</span>
-        </h4>
+        </h2>
       </v-flex>
     </v-layout>
   </v-container>

@@ -35,14 +35,14 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      puttingPurse: state => state.puttingPurse
+      puttingPurse: state => state.leaderboards.puttingPurse
     })
   },
 
   watch: {
     current () {
       this.$store.dispatch(
-        'LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id }
+        'leaderboards/LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id }
       ).then(() => {
           this.headerPurse = this.puttingPurse
           this.year = this.currentTournament.year
@@ -53,7 +53,7 @@ export default {
 
   mounted () {
     this.$store.dispatch(
-      'LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id }
+      'leaderboards/LOAD_PUTTING_LEADERBOARD', { id: this.currentTournament.id }
     ).then(() => {
       this.headerPurse = this.puttingPurse
       this.year = this.currentTournament.year
@@ -64,13 +64,12 @@ export default {
 </script>
 <style scoped>
 .putting-lb-card {
-  width: 100vw;
   border-radius: 0;
   top: 0;
   left: 0;
-  z-index: 1000 !important;
-  height: 100vh;
   overflow: scroll;
+  height: 100vh;
+  width: 100vw;
   color: #f1f1f1;
   background-color: #A8C256;
 }

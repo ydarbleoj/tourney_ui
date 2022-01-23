@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex xs3>
           <BackButton
-            :routeName="'StrokeLeaderboard'"
+            :routeName="'PuttingLeaderboard'"
             :routeParams="{ id: this.currentTournament.id }"
           />
         </v-flex>
@@ -36,10 +36,12 @@
 					</v-layout>
           <v-layout row align-end mt-3>
              <v-flex xs7 class="text-xs-left">
-              <h2 style="font-weight:400;">
-                Status:
-                <span class="white--text">{{ getStatus() }}</span>
-              </h2>
+              <h3 style="font-weight:400;">
+                Your 3 putt pot donations?
+              </h3>
+              <h1 class="font-weight-regular" style="font-size:40px;">
+                {{ total3Putts }} <span style="font-size:28px;">$</span>
+              </h1>
             </v-flex>
 						<v-flex xs5 class="text-xs-center">
 							<h1 style="color:#fff;font-size:40px;" class="font-weight-regular">
@@ -98,31 +100,31 @@
 			style="background-color:#999;border-radius: 10px;"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h2 class="white--text pl-2 mb-2 font-weight-regular">Greens In Regulation</h2>
+				<h3 class="white--text pl-2 mb-2 font-weight-regular">3 Putts per Round Averages</h3>
 			</v-flex>
 			<v-layout row wrap align-center>
-				<v-flex xs3 class="text-xs-right pl-3">
-					<h1 class="font-weight-regular" style="color:#74C9D7;font-size:45px;">
-						{{ gnr }}%
+				<v-flex xs3 class="text-xs-center pl-3">
+					<h1 class="font-weight-regular" style="color:#A8C256;font-size:70px;">
+						{{ threePuttAvg }}
 					</h1>
 				</v-flex>
 				<v-flex xs9>
-					<v-layout row wrap ml-3>
+					<v-layout row wrap>
 						<v-flex xs4>
 							<h1 class="font-weight-regular" style="color:white">
-								{{ gnr1 }}%
+								{{ threePuttAvg1 }}
 							</h1>
 							<h3 style="color:#444" class="font-weight-regular">Round 1</h3>
 						</v-flex>
 						<v-flex xs4>
 								<h1 class="font-weight-regular" style="color:white">
-								{{ gnr2 }}%
+								{{ threePuttAvg2 }}
 							</h1>
 							<h3 style="color:#444" class="font-weight-regular">Round 2</h3>
 						</v-flex>
 						<v-flex xs4>
 								<h1 class="font-weight-regular" style="color:white">
-								{{ gnr3 }}%
+								{{ threePuttAvg3 }}
 							</h1>
 							<h3 style="color:#444" class="font-weight-regular">Round 3</h3>
 						</v-flex>
@@ -136,28 +138,33 @@
 			class="text-xs-center pt-2 pb-4 mt-2 mb-5 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="pl-2 mb-2 font-weight-regular">Some Averages This Week</h3>
+				<h2 class="pl-2 mb-2 font-weight-regular">Scrambling</h2>
 			</v-flex>
 			<v-layout row wrap align-center>
-				<v-flex xs12>
+				<v-flex xs3 class="text-xs-right pl-3">
+					<h1 class="font-weight-regular" style="color:#F8C977;font-size:45px;">
+						{{ scramble }}%
+					</h1>
+				</v-flex>
+				<v-flex xs9>
 					<v-layout row wrap ml-3>
 						<v-flex xs4>
-							<h1 class="font-weight-regular" :class="[par3Avg < 3 ? 'under-par' : '']">
-								{{ par3Avg }}
+							<h1 class="font-weight-regular">
+								{{ scramble1 }}%
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Par 3's</h3>
+							<h3 style="color:#444" class="font-weight-regular">Round 1</h3>
 						</v-flex>
 						<v-flex xs4>
-								<h1 class="font-weight-regular" :class="[par4Avg < 4 ? 'under-par' : '']">
-								{{ par4Avg }}
+								<h1 class="font-weight-regular">
+								{{ scramble2 }}%
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Par 4's</h3>
+							<h3 style="color:#444" class="font-weight-regular">Round 2</h3>
 						</v-flex>
 						<v-flex xs4>
-								<h1 class="font-weight-regular" :class="[par5Avg < 5 ? 'under-par' : '']">
-								{{ par5Avg }}
+								<h1 class="font-weight-regular">
+								{{ scramble3 }}%
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Par 5's</h3>
+							<h3 style="color:#444" class="font-weight-regular">Round 3</h3>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -170,7 +177,7 @@ import { mapState } from 'vuex'
 import BackButton from '../../BackButton'
 
 export default {
-  name: "StrokePlayerPage",
+  name: "PuttingPlayerPage",
   components: {
     BackButton
   },
@@ -179,13 +186,15 @@ export default {
       playerName: "",
       handicapIndex: 0,
       position: 1,
-			gnr: 0,
-			gnr1: 0,
-			gnr2: 0,
-			gnr3: 0,
-			par3Avg: 0,
-			par4Avg: 0,
-			par5Avg: 0,
+      total3Putts: 0,
+			threePuttAvg: 0,
+			threePuttAvg1: 0,
+			threePuttAvg2: 0,
+			threePuttAvg3: 0,
+			scramble: 0,
+			scramble1: 0,
+			scramble2: 0,
+			scramble3: 0,
       avg1: 0,
       avg2: 0,
       avg3: 0
@@ -221,7 +230,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('leaderboards/LOAD_STROKE_PLAYER', {
+    this.$store.dispatch('leaderboards/LOAD_PUTTING_PLAYER', {
       tournId: this.currentTournament.id,
       id: this.$route.params.leaderboard_id
     }).then(response => {
@@ -229,28 +238,25 @@ export default {
       this.playerName = this.strokePlayer.username
       this.handicapIndex = this.strokePlayer.handicap
       this.position = this.strokePlayer.current_position
-			this.gnr = this.strokePlayer.greens_in_reg
-      this.gnr1 = this.strokePlayer.round1_gnr
-      this.gnr2 = this.strokePlayer.round2_gnr
-      this.gnr3 = this.strokePlayer.round3_gnr
-      this.par3Avg = this.strokePlayer.par3_average
-      this.par4Avg = this.strokePlayer.par4_average
-      this.par5Avg = this.strokePlayer.par5_average
-      this.avg1 = this.strokePlayer.round1_average
-      this.avg2 = this.strokePlayer.round2_average
-      this.avg3 = this.strokePlayer.round3_average
-
+			this.threePuttAvg = this.strokePlayer.three_putt_average
+      this.threePuttAvg1 = this.strokePlayer.round1_3putt_average
+      this.threePuttAvg2 = this.strokePlayer.round2_3putt_average
+      this.threePuttAvg3 = this.strokePlayer.round3_3putt_average
+      this.scramble = this.strokePlayer.scrambling
+      this.scramble1 = this.strokePlayer.round1_scrambling
+      this.scramble2 = this.strokePlayer.round2_scrambling
+      this.scramble3 = this.strokePlayer.round3_scrambling
+      this.avg1 = this.strokePlayer.round1_putting_average
+      this.avg2 = this.strokePlayer.round2_putting_average
+      this.avg3 = this.strokePlayer.round3_putting_average
+      this.total3Putts = this.strokePlayer.total_3_putts
     })
   }
 }
 </script>
 <style lang="scss" scoped>
 .bg {
-  background-color: #449ce9;
-	background-color: #9FB8CE;
-}
-.under-par {
-  color: red
+	background-color: #A8C256;
 }
 .wrap-info {
   margin-top: 10px;

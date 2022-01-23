@@ -3,7 +3,7 @@
     :headers="headers"
     :items="strokeLeaderboard"
     hide-actions
-    class='stroke-table board-table'
+    class=''
     item-key="id"
   >
     <template slot="items" slot-scope="props">
@@ -81,27 +81,27 @@ export default {
           align: 'center',
           sortable: false,
           value: 'total_score',
+          width: '1%'
         },
         {
           text: 'R1',
           align: 'center',
           sortable: false,
           value: 'rnd1_score',
-          class: 'stroke-row'
+          width: '1%'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd2_score',
-          class: "stroke-row"
+          width: '1%'
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
-          value: 'rnd3_score',
-          class: 'stroke-row'
+          value: 'rnd3_score'
         },
         {
           text: 'Score',
@@ -135,7 +135,6 @@ export default {
       if (pos.movement < 0) { return true }
     },
     toPlayerPage (id) {
-      console.log('jhit')
       this.$store.commit("setPageTransition");
       this.$router.push({
         name: 'StrokePlayerPage',
@@ -151,7 +150,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .stroke-percent {
   font-weight: normal;
   color: #2E2F2F;
@@ -172,8 +171,14 @@ export default {
   font-size: 14px;
   letter-spacing: 1px;
 }
+table.v-table thead th {
+}
+
 
 table.v-table thead td:not(:nth-child(1)), table.v-table tbody td:not(:nth-child(1)), table.v-table thead th:not(:nth-child(1)), table.v-table tbody th:not(:nth-child(1)), table.v-table thead td:first-child, table.v-table tbody td:first-child, table.v-table thead th:first-child, table.v-table tbody th:first-child {
-  padding: 10px 0 10px 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 3px;
+  padding-left: 3px;
 }
 </style>

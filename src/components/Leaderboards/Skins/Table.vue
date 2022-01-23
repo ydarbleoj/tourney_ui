@@ -90,7 +90,7 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="sss" scoped>
 .skins-total {
   color: #FFCB47;
 }
@@ -111,8 +111,7 @@ export default {
   font-size: 14px;
   letter-spacing: 1px;
 }
-
-table.table thead td:not(:nth-child(1)), table.table tbody td:not(:nth-child(1)), table.table thead th:not(:nth-child(1)), table.table tbody th:not(:nth-child(1)), table.table thead td:first-child, table.table tbody td:first-child, table.table thead th:first-child, table.table tbody th:first-child {
-  padding: 0;
+table.v-table thead td:not(:nth-child(1)), table.v-table tbody td:not(:nth-child(1)), table.v-table thead th:not(:nth-child(1)), table.v-table tbody th:not(:nth-child(1)), table.v-table thead td:first-child, table.v-table tbody td:first-child, table.v-table thead th:first-child, table.v-table tbody th:first-child {
+  padding: 10px 0 10px 0;
 }
 </style>

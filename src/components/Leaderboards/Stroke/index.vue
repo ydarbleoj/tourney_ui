@@ -54,12 +54,10 @@ export default {
   border-radius: 0;
   top: 0;
   left: 0;
-  z-index: 1000 !important;
   height: 100vh;
   overflow: scroll;
   width: 100vw;
   background-color: #9FB8CE;
   color: #f1f1f1;
-  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 </style>
