@@ -36,7 +36,6 @@ const store = new Vuex.Store({
     courses: [],
     rounds: [],
     scorecardPreviews: [],
-    skins_leaderboard: [],
     teamRounds: [],
     currentRound: 1,
     teeTime: [],
@@ -102,16 +101,6 @@ const store = new Vuex.Store({
         commit('SET_HANDICAP', { list: response.data })
       }, (err) => {
         commit('SET_HANDICAP', { list: response.data })
-      })
-    },
-    LOAD_SKINS: function ({ commit, state }, { id }) {
-      let options = { tournament_id: id }
-      return axios.get(
-        '/api/v2/leaderboards/skins.json', { params: options }
-      ).then((response) => {
-        commit('SET_SKINS_LEADERBOARD', { list: response.data })
-      }, (err) => {
-        console.log(err)
       })
     },
     LOAD_ROUNDS: function ({ commit, state }, { id }) {
@@ -216,9 +205,6 @@ const store = new Vuex.Store({
     },
     SET_HANDICAP: (state, { list }) => {
       state.handicapMessage = list
-    },
-    SET_SKINS_LEADERBOARD: (state, { list }) => {
-      Vue.set(state, 'skins_leaderboard', list.data)
     },
     SET_ROUNDS: (state, { list }) => {
       Vue.set(state, 'currentRound', JSON.parse(list).data[0])

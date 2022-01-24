@@ -3,24 +3,22 @@
     :headers="headers"
     :items="teamLeaderboard"
     hide-actions
-    class='team-table board-table'
+    class='leaderboard-table'
     item-key="id"
   >
     <template slot="items" slot-scope="props">
       <tr @click="toPage(props.item.id)">
-        <td class="font-weight-light text-xs-center">
-          <h2>
-            {{ props.item.attributes.position }}
-          </h2>
+        <td class="font-weight-regular text-xs-center" style="font-size:20px;">
+          {{ props.item.attributes.position }}
         </td>
         <td class="text-xs-left mt-5">
           <h1
-            class="font-weight-medium mb-2 team-stats"
-            style="font-size:20px;"
+            class="font-weight-medium mb-2"
+            style="font-size:20px;color:#9FB8CE"
           >
             {{ props.item.attributes.group }}
           </h1>
-          <v-layout row wrap v-bind:class="{ hidden_row : preview }">
+          <v-layout row wrap>
             <v-flex xs12 style="width:100%;">
               <ul
                 style="width:100%;padding:0;"
@@ -30,13 +28,13 @@
                   id="this"
                   :key="i"
                   d-inline-flex
-                  style="display:inline-block;margin:0;width:50%"
+                  style="display:inline-block;margin-bottom:4px;;width:50%"
                   class="font-weight-regular"
                 >
                   <h3>
                     {{ item.username }}
-                    <span style="color:#777;font-size:12px;">{{ item.handicap }}</span>
-                    <v-spacer></v-spacer>
+                    <br style="height:2px;margin:0;padding:0;">
+                    <span style="font-size:12px;color:#666;">Handicap {{ item.handicap }}</span>
                   </h3>
                 </li>
               </ul>
@@ -44,16 +42,21 @@
           </v-layout>
         </td>
         <td
-          class="text-xs-center mr-1 team-stats"
-          style="font-size:24px;"
+          class="text-xs-center mr-1"
+          style="font-size:20px;"
         >
           {{ props.item.attributes.total }}
         </td>
         <td
           class="text-xs-center"
-          style="color:#777;font-size:16px;"
+          style="font-size:20px;"
         >
           {{ props.item.attributes.total_net }}
+        </td>
+        <td class="text-xs-center">
+          <v-icon color="#999">
+            mdi-chevron-right
+          </v-icon>
         </td>
       </tr>
     </template>
@@ -79,29 +82,41 @@ export default {
       setStyle: {},
       headers: [
         {
-          text: 'Pos',
+          text: '',
           align: 'center',
           sortable: false,
-          value: 'pos'
+          value: 'pos',
+          width: '10%'
         },
         {
           text: 'Group',
           align: 'left',
           sortable: false,
           value: 'group',
+          width: '60%'
         },
         {
           text: 'Total',
           align: 'center',
           sortable: false,
-          value: 'total'
+          value: 'total',
+          width: '10%'
+
         },
         {
-          text: 'Score',
+          text: 'Strokes',
           align: 'center',
           sortable: false,
-          value: 'net_total'
-        }
+          value: 'net_total',
+          width: '10%'
+        },
+        {
+          text: '',
+          align: 'center',
+          sortable: false,
+          value: 'pos',
+          width: '10%'
+        },
       ]
     }
   },
@@ -150,8 +165,13 @@ export default {
   font-size: 14px;
   letter-spacing: 1px;
 }
-
 table.v-table thead td:not(:nth-child(1)), table.v-table tbody td:not(:nth-child(1)), table.v-table thead th:not(:nth-child(1)), table.v-table tbody th:not(:nth-child(1)), table.v-table thead td:first-child, table.v-table tbody td:first-child, table.v-table thead th:first-child, table.v-table tbody th:first-child {
-  padding: 1px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 0;
+  padding-left: 0;
+}
+table.v-table thead th {
+  white-space: normal
 }
 </style>

@@ -37,22 +37,22 @@
           <h1 class="font-weight-regular" style="color:#74C9D7">
             {{ hcap_diff }}
           </h1>
-          <h5 class="font-weight-regular">Handicap</h5>
-          <h5 class="font-weight-regular">Differential</h5>
+          <h4 class="font-weight-medium" style="color:#999">Handicap</h4>
+          <h4 class="font-weight-medium" style="color:#999">Differential</h4>
         </v-flex>
         <v-flex xs4>
           <h1 class="font-weight-regular" style="color:#F8C977">
             {{ net_avg }}
           </h1>
-          <h5 class="font-weight-regular">Net</h5>
-          <h5 class="font-weight-regular">Average</h5>
+          <h4 class="font-weight-medium" style="color:#999">Net</h4>
+          <h4 class="font-weight-medium" style="color:#999">Average</h4>
         </v-flex>
         <v-flex xs4>
            <h1 class="font-weight-regular" style="color:#F7A072">
             {{ gross_avg }}
           </h1>
-          <h5 class="font-weight-regular">Gross</h5>
-          <h5 class="font-weight-regular">Average</h5>
+          <h4 class="font-weight-medium" style="color:#999">Gross</h4>
+          <h4 class="font-weight-medium" style="color:#999">Average</h4>
         </v-flex>
       </v-layout>
       <v-layout

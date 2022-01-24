@@ -16,6 +16,7 @@ import StrokePlayerPage from '@/components/Leaderboards/Stroke/PlayerPage'
 import PuttingLeaderboard from '@/components/Leaderboards/Putting/index'
 import PuttingPlayerPage from '@/components/Leaderboards/Putting/PlayerPage'
 import SkinsLeaderboard from '@/components/Leaderboards/Skins/index'
+import SkinsPlayerPage from '@/components/Leaderboards/Skins/PlayerPage'
 import TeamLeaderboard from '@/components/Leaderboards/Team/index'
 import TeamPage from '@/components/Leaderboards/Team/Page/index'
 import Course from '@/components/Course/index'
@@ -176,6 +177,13 @@ const router = new Router({
       path: '/tournament/:id/leaderboards/skins',
       name: "SkinsLeaderboard",
       component: SkinsLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/leaderboards/skins/:leaderboard_id',
+      name: "SkinsPlayerPage",
+      component: SkinsPlayerPage,
       props: { default: true },
       meta: { auth: true }
     },

@@ -14,7 +14,7 @@
         <h2 class="text-xs-center font-weight-medium mb-4">Leaderboard</h2>
       </v-flex>
     </v-layout>
-    <v-layout>
+    <v-layout mb-2 mt-5>
       <v-flex md="6" class="text-xs-right">
         <h2 class="font-weight-regular">Purse $
           <span class="font-weight-medium">{{ purse }}</span>

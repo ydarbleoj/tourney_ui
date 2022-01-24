@@ -3,7 +3,7 @@
     :headers="headers"
     :items="strokeLeaderboard"
     hide-actions
-    class=''
+    class='leaderboard-table'
     item-key="id"
   >
     <template slot="items" slot-scope="props">
@@ -11,17 +11,19 @@
         <td class="text-xs-center">
           {{ props.item.attributes.current_position }}</td>
         <td class="text-xs-left">
-          <span>
+          <h2>
             <v-icon v-if="movementUp(props.item.attributes)" color="green">
               mdi-arrow-up
             </v-icon>
             <v-icon v-if="movementDown(props.item.attributes)" color="red">
               mdi-arrow-down
             </v-icon>
-          </span>
-          {{
-            (props.item.attributes.movement == 0 || props.item.attributes.dnf) ? '' : props.item.attributes.movement
-          }}
+            <span class="font-weight-regular" style="color:#666">
+              {{
+                (props.item.attributes.movement == 0 || props.item.attributes.dnf) ? '' : props.item.attributes.movement
+              }}
+            </span>
+          </h2>
         </td>
         <td class="text-xs-left" style="font-size:16px;">
           {{ props.item.attributes.username }}
@@ -63,57 +65,63 @@ export default {
           align: 'left',
           sortable: false,
           value: 'pos',
+          width: '8%'
         },
         {
           text: '',
           align: 'left',
           sortable: false,
           value: 'pos',
+          width: '15%'
         },
         {
           text: 'Players',
           align: 'left',
           sortable: false,
           value: 'username',
+          width: '30%'
         },
         {
           text: 'Total',
           align: 'center',
           sortable: false,
           value: 'total_score',
-          width: '1%'
-        },
+          width: '12%'
+        },//62
         {
           text: 'R1',
           align: 'center',
           sortable: false,
           value: 'rnd1_score',
-          width: '1%'
+          width: '7%'
         },
         {
           text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd2_score',
-          width: '1%'
+          width: '7%'
         },
         {
           text: 'R3',
           align: 'center',
           sortable: false,
-          value: 'rnd3_score'
+          value: 'rnd3_score',
+          width: '7%'
         },
         {
-          text: 'Score',
-          align: 'right',
+          text: 'Strokes',
+          align: 'center',
           sortable: false,
-          value: 'net_total'
+          value: 'net_total',
+          width: '10%'
         },
         {
           text: '',
-          align: 'right',
+          align: 'center',
           sortable: false,
           value: 'pos',
+          width: '7%'
         },
       ],
     }
@@ -150,7 +158,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .stroke-percent {
   font-weight: normal;
   color: #2E2F2F;
@@ -174,11 +182,16 @@ export default {
 table.v-table thead th {
 }
 
-
+.leaderboard-table table {
+  table-layout: fixed;
+}
 table.v-table thead td:not(:nth-child(1)), table.v-table tbody td:not(:nth-child(1)), table.v-table thead th:not(:nth-child(1)), table.v-table tbody th:not(:nth-child(1)), table.v-table thead td:first-child, table.v-table tbody td:first-child, table.v-table thead th:first-child, table.v-table tbody th:first-child {
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-right: 3px;
-  padding-left: 3px;
+  padding-right: 0;
+  padding-left: 0;
+}
+table.v-table thead th {
+  white-space: normal
 }
 </style>

@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex xs3>
           <BackButton
-            :routeName="'PuttingLeaderboard'"
+            :routeName="'SkinsLeaderboard'"
             :routeParams="{ id: this.currentTournament.id }"
           />
         </v-flex>
@@ -27,7 +27,7 @@
 						</v-flex>
             <v-flex xs3 class="text-xs-center pr-5">
               <div class="place-wrap">
-                <h1 style="font-weight:300;font-size:60px;color:#f1f1f1">
+                <h1 style="font-weight:300;font-size:60px;color:#F8C977">
                   {{ getPosition() }}
                   <span>{{ getOrdinal() }}</span>
                 </h1>
@@ -36,11 +36,11 @@
 					</v-layout>
           <v-layout row align-end mt-3>
              <v-flex xs7 class="text-xs-left">
-              <h3 style="font-weight:400;">
-                Your 3 putt pot donations?
-              </h3>
-              <h1 class="font-weight-regular" style="font-size:40px;">
-                {{ total3Putts }} <span style="font-size:28px;">$</span>
+              <h2 style="font-weight:400;">
+                Your vast earnings:
+              </h2>
+							<h1 class="font-weight-regular" style="font-size:40px;">
+                {{ totalMoney }} <span style="font-size:28px;">$</span>
               </h1>
             </v-flex>
 						<v-flex xs5 class="text-xs-center">
@@ -52,7 +52,7 @@
 									mdi-arrow-down
 								</v-icon>
 								{{
-									( this.strokePlayer.movement == 0 || this.strokePlayer.dnf) ? '' : this.strokePlayer.movement
+									( this.skinsPlayer.movement == 0 || this.skinsPlayer.dnf) ? '' : this.skinsPlayer.movement
 								}}
 							</h1>
 						</v-flex>
@@ -100,31 +100,31 @@
 			style="background-color:#999;border-radius: 10px;"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="white--text pl-2 mb-2 font-weight-regular">3 Putts per Round Averages</h3>
+				<h3 class="white--text pl-2 mb-2 font-weight-regular">Percentage Won this Week</h3>
 			</v-flex>
 			<v-layout row wrap align-center>
-				<v-flex xs3 class="text-xs-center pl-3">
-					<h1 class="font-weight-regular" style="color:#FFCB47;font-size:70px;">
-						{{ threePuttAvg }}
+				<v-flex xs3 class="text-xs-right pl-3">
+					<h1 class="font-weight-regular" style="color:#A8C256;font-size:45px;">
+						{{ gnr }}%
 					</h1>
 				</v-flex>
 				<v-flex xs9>
-					<v-layout row wrap>
+					<v-layout row wrap ml-3>
 						<v-flex xs4>
 							<h1 class="font-weight-regular" style="color:white">
-								{{ threePuttAvg1 }}
+								{{ gnr1 }}%
 							</h1>
 							<h3 style="color:#444" class="font-weight-regular">Round 1</h3>
 						</v-flex>
 						<v-flex xs4>
 								<h1 class="font-weight-regular" style="color:white">
-								{{ threePuttAvg2 }}
+								{{ gnr2 }}%
 							</h1>
 							<h3 style="color:#444" class="font-weight-regular">Round 2</h3>
 						</v-flex>
 						<v-flex xs4>
 								<h1 class="font-weight-regular" style="color:white">
-								{{ threePuttAvg3 }}
+								{{ gnr3 }}%
 							</h1>
 							<h3 style="color:#444" class="font-weight-regular">Round 3</h3>
 						</v-flex>
@@ -138,32 +138,27 @@
 			class="text-xs-center pt-2 pb-4 mt-2 mb-5 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h2 class="pl-2 mb-2 font-weight-regular">Scrambling</h2>
+				<h3 class="pl-2 mb-2 font-weight-regular">Holes where magic happend:</h3>
 			</v-flex>
 			<v-layout row wrap align-center>
-				<v-flex xs3 class="text-xs-right pl-3">
-					<h1 class="font-weight-regular" style="color:#9FB8CE;font-size:45px;">
-						{{ scramble }}%
-					</h1>
-				</v-flex>
-				<v-flex xs9>
+				<v-flex xs12>
 					<v-layout row wrap ml-3>
 						<v-flex xs4>
-							<h1 class="font-weight-regular">
-								{{ scramble1 }}%
-							</h1>
+							<div v-for="(item, index) in round1Holes" :key="index">
+								{{ item }}
+							</div>
 							<h3 style="color:#444" class="font-weight-regular">Round 1</h3>
 						</v-flex>
 						<v-flex xs4>
-								<h1 class="font-weight-regular">
-								{{ scramble2 }}%
-							</h1>
+							<div v-for="(item, index) in round2Holes" :key="index">
+								{{ item }}
+							</div>
 							<h3 style="color:#444" class="font-weight-regular">Round 2</h3>
 						</v-flex>
 						<v-flex xs4>
-								<h1 class="font-weight-regular">
-								{{ scramble3 }}%
-							</h1>
+								<div v-for="(item, index) in round3Holes" :key="index">
+									{{ item }}
+								</div>
 							<h3 style="color:#444" class="font-weight-regular">Round 3</h3>
 						</v-flex>
 					</v-layout>
@@ -177,7 +172,7 @@ import { mapState } from 'vuex'
 import BackButton from '../../BackButton'
 
 export default {
-  name: "PuttingPlayerPage",
+  name: "SkinsPlayerPage",
   components: {
     BackButton
   },
@@ -186,15 +181,14 @@ export default {
       playerName: "",
       handicapIndex: 0,
       position: 1,
-      total3Putts: 0,
-			threePuttAvg: 0,
-			threePuttAvg1: 0,
-			threePuttAvg2: 0,
-			threePuttAvg3: 0,
-			scramble: 0,
-			scramble1: 0,
-			scramble2: 0,
-			scramble3: 0,
+			totalMoney: 0,
+			gnr: 0,
+			gnr1: 0,
+			gnr2: 0,
+			gnr3: 0,
+			round1Holes: [],
+			round2Holes: [],
+			round3Holes: [],
       avg1: 0,
       avg2: 0,
       avg3: 0
@@ -204,59 +198,58 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      strokePlayer: state => state.leaderboards.strokePlayer,
+      skinsPlayer: state => state.leaderboards.skinsPlayer,
     })
   },
 
   methods: {
-    getStatus () {
-      const status = this.strokePlayer.dnf ? "DNF" : "Active";
-      return status
-    },
     getOrdinal () {
-      let newString = this.position.toString().replace(/[0-9]/g, '');
-      return newString
+      // let newString = this.position.toString().replace(/[0-9]/g, '');
+      // return newString
+			return ""
     },
     getPosition () {
-      return parseInt(this.position)
+      return ""
     },
 		movementUp () {
-      if (this.strokePlayer.movement > 0) { return true }
+      if (this.skinsPlayer.movement > 0) { return true }
     },
     movementDown () {
-      if (this.strokePlayer.dnf) { return false }
-      if (this.strokePlayer.movement < 0) { return true }
+      if (this.skinsPlayer.dnf) { return false }
+      if (this.skinsPlayer.movement < 0) { return true }
     },
   },
 
   mounted () {
-    this.$store.dispatch('leaderboards/LOAD_PUTTING_PLAYER', {
-      tournId: this.currentTournament.id,
+		this.$store.dispatch('leaderboards/LOAD_SKINS_PLAYER', {
+			tournId: this.currentTournament.id,
       id: this.$route.params.leaderboard_id
     }).then(response => {
-      console.log("hi", this.strokePlayer)
-      this.playerName = this.strokePlayer.username
-      this.handicapIndex = this.strokePlayer.handicap
-      this.position = this.strokePlayer.current_position
-			this.threePuttAvg = this.strokePlayer.three_putt_average
-      this.threePuttAvg1 = this.strokePlayer.round1_3putt_average
-      this.threePuttAvg2 = this.strokePlayer.round2_3putt_average
-      this.threePuttAvg3 = this.strokePlayer.round3_3putt_average
-      this.scramble = this.strokePlayer.scrambling
-      this.scramble1 = this.strokePlayer.round1_scrambling
-      this.scramble2 = this.strokePlayer.round2_scrambling
-      this.scramble3 = this.strokePlayer.round3_scrambling
-      this.avg1 = this.strokePlayer.round1_putting_average
-      this.avg2 = this.strokePlayer.round2_putting_average
-      this.avg3 = this.strokePlayer.round3_putting_average
-      this.total3Putts = this.strokePlayer.total_3_putts
+      this.playerName = this.skinsPlayer.username
+      this.handicapIndex = this.skinsPlayer.handicap
+      this.position = this.skinsPlayer.current_position
+			this.totalMoney = this.skinsPlayer.total_money
+			this.gnr = this.skinsPlayer.percentage_won
+      this.gnr1 = this.skinsPlayer.round1_percentage_won
+      this.gnr2 = this.skinsPlayer.round2_percentage_won
+      this.gnr3 = this.skinsPlayer.round3_percentage_won
+      this.round1Holes = this.skinsPlayer.round1_holes_won
+      this.round2Holes = this.skinsPlayer.round2_holes_won
+      this.round3Holes = this.skinsPlayer.round3_holes_won
+      this.avg1 = this.skinsPlayer.round1_skins_average
+      this.avg2 = this.skinsPlayer.round2_skins_average
+      this.avg3 = this.skinsPlayer.round3_skins_average
+
     })
   }
 }
 </script>
 <style lang="scss" scoped>
 .bg {
-	 background-color: #FFCB47;
+	background-color: #A8C256;
+}
+.under-par {
+  color: red
 }
 .wrap-info {
   margin-top: 10px;

@@ -33,12 +33,13 @@
           style="">
            <hooper
             :height="auto"
+            :itemsToSlide="1"
             :itemsToShow="1.25"
             :centerMode="true"
             :transition="900"
            >
             <slide
-              v-for="(item, indx) in teamPlayers" :key="item.id" :idnex="indx">
+              v-for="(item, indx) in teamPlayers" :key="item.id" :index="indx">
               <player-agg :player="item.attributes" />
             </slide>
           </hooper>
@@ -62,7 +63,8 @@ export default {
 	},
   data () {
     return {
-      chartData: null
+      chartData: null,
+      auto: "auto"
     }
   },
   computed: {

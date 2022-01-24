@@ -1,7 +1,7 @@
 <template>
-  <v-card flat class="tournament-menu-card">
-    <v-card-title>
-      <h1 class="black--text font-weight-regular mr-1">
+  <v-card flat class="tournament-menu-cards">
+    <v-card-title pa-0 ma-0>
+      <h1 class="black--text font-weight-regular">
         Bandon
       </h1>
       <h3

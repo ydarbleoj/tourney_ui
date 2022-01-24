@@ -79,10 +79,10 @@ export default {
   background-color: #9FB8CE;
 }
 .putting {
-	background-color: #A8C256;
+	background-color: #FFCB47;
 }
 .skins {
-	background-color: #FFCB47;
+	background-color: #A8C256;
 }
 .team {
 	background-color: #ACA885;

@@ -11,11 +11,22 @@
         <v-flex xs6>
           <tournament-menu />
         </v-flex>
+        <v-flex xs3 mt-2>
+          <div
+            @click="toAdmin()"
+            v-if="$auth.user().role === 'admin'"
+            class="text-weight-regular text-xs-right pt-2 pr-3"
+          >
+            <v-icon>
+              mdi-dots-horizontal
+            </v-icon>
+          </div>
+        </v-flex>
       </v-layout>
       <v-layout row wrap>
         <leaderboards :current="currentTournament"  v-if="!loading" />
-        <!-- <rounds :current="currentTournament" v-if="!loading" />
-        <stats :current="currentTournament" v-if="!loading" /> -->
+        <rounds :current="currentTournament" v-if="!loading" />
+        <!-- <stats :current="currentTournament" v-if="!loading" /> -->
       </v-layout>
     </v-container>
   </main>
@@ -63,7 +74,16 @@ export default {
         data: {},
         redirect: '/login'
       })
-    }
+    },
+    toAdmin () {
+      this.$store.commit("setPageTransition");
+      this.$router.push({
+        name: 'TournamentAdmin',
+        params: {
+          id: this.currentTournament.id
+        }
+      })
+    },
   },
 
   mounted: function () {

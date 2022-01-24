@@ -36,7 +36,7 @@ export default {
   },
   watch: {
     current: function () {
-      this.$store.dispatch('LOAD_SKINS', { id: this.currentTournament.id, preview: false })
+      this.$store.dispatch('leaderboards/LOAD_SKINS', { id: this.currentTournament.id, preview: false })
         .then(response => {
           this.isloading = false
         })
@@ -44,11 +44,13 @@ export default {
   },
 
   created: function () {
-    this.$store.dispatch('LOAD_SKINS', { id: this.currentTournament.id, preview: false })
-      .then(response => {
-        this.skinsPurse = this.currentTournament.num_players * 30
-        this.isloading = false
-      })
+    this.$store.dispatch(
+      'leaderboards/LOAD_SKINS',
+      { id: this.currentTournament.id, preview: false }
+    ).then(response => {
+      this.skinsPurse = this.currentTournament.num_players * 30
+      this.isloading = false
+    })
   },
 }
 </script>
@@ -57,12 +59,10 @@ export default {
   border-radius: 0;
   top: 0;
   left: 0;
-  z-index: 1000 !important;
   width: 100vw;
-  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
   height: 100vh;
   overflow: scroll;
   color: #f1f1f1;
-  background-color: #FFCB47;
+  background-color: #A8C256;
 }
 </style>

@@ -71,6 +71,6 @@ export default {
   height: 100vh;
   width: 100vw;
   color: #f1f1f1;
-  background-color: #A8C256;
+  background-color: #FFCB47;
 }
 </style>

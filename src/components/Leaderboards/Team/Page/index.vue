@@ -2,14 +2,17 @@
   <v-card
     flat
     v-if="!isLoading"
-    style="background-color:#FFF;">
+    style="background-color:#FFF;height:100%;">
     <v-img
       :src="'/static/' + imageId + 'course.jpg'"
       height='40vh'
       class="course-header"
     >
       <v-container fill-height pa-0>
-        <BackButton />
+         <BackButton
+          :routeName="'TeamLeaderboard'"
+          :routeParams="{ id: this.currentTournament.id }"
+        />
       </v-container>
     </v-img>
     <v-card-text class="pa-0" style="background:transparent;">

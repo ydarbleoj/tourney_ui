@@ -10,15 +10,15 @@ const state = {
   teamPreview: [],
   strokeLeaderboard: [],
   puttingLeaderboard: [],
+  skinsLeaderboard: [],
   strokePlayer: {},
+  skinsPlayer: {},
   puttingPurse: 0
 }
 
 const plugins = [
   createPersistedState({
-    paths: [
-      'leaderboards.strokeLeaderboard', 'puttingLeaderboard'
-    ]
+    paths: []
   })
 ]
 
@@ -71,6 +71,24 @@ const actions = {
       commit('SET_PUTTING_PLAYER_PROFILE', { list: response.data })
     })
   },
+  LOAD_SKINS: function ({ commit, state }, { id }) {
+    let options = { tournament_id: id }
+    return axios.get(
+      '/api/v3/leaderboards/skins.json', { params: options }
+    ).then((response) => {
+      commit('SET_SKINS_LEADERBOARD', { list: response.data })
+    }, (err) => {
+      console.log(err)
+    })
+  },
+  LOAD_SKINS_PLAYER: function ({ commit, state }, { tournId, id }) {
+    let options = { tournament_id: tournId }
+    return axios.get(
+      `/api/v3/leaderboards/skins/${id}.json`, { params: options }
+    ).then((response) => {
+      commit('SET_SKINS_PLAYER_PROFILE', { list: response.data })
+    })
+  },
 }
 
 const mutations = {
@@ -104,6 +122,13 @@ const mutations = {
   },
   SET_PUTTING_PLAYER_PROFILE: (state, { list }) => {
     state.strokePlayer = list.data.attributes
+  },
+  SET_SKINS_LEADERBOARD: (state, { list }) => {
+    Vue.set(state, 'skinsLeaderboard', list.data)
+  },
+  SET_SKINS_PLAYER_PROFILE: (state, { list }) => {
+    console.log('hi skins', list)
+    state.skinsPlayer = list.data.attributes
   },
 }
 
