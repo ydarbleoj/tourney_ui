@@ -32,11 +32,10 @@
           flat
           style="">
            <hooper
-            :height="auto"
             :itemsToSlide="1"
-            :itemsToShow="1.25"
+            :itemsToShow="1.2"
             :centerMode="true"
-            :transition="900"
+            :transition="300"
            >
             <slide
               v-for="(item, indx) in teamPlayers" :key="item.id" :index="indx">
@@ -93,9 +92,12 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .team-text-color {
 	color: #ACA885;
+}
+.hooper {
+  height: auto;
 }
 .team-background-color {
   background-color: #ACA885;

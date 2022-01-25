@@ -4,25 +4,21 @@
 		class="border-card pa-3 ma-2 player-card">
 		<v-container fill-height pa-0>
 			<v-layout row align-center>
-				<v-flex xs7>
-					<v-layout row align-center>
-						<v-flex xs6>
-							<v-img src="/static/sand.jpg" height="80px" style="width:80px;border-radius:25px;"></v-img>
-						</v-flex>
-						<v-flex>
-							<h2 class="text-xs-left" style="font-weight:400;">
-								{{ player.username }}
-							</h2>
-							<h4 class="text-xs-left" style="font-weight:500">
-								Handicap {{ player.player_handicap }}
-							</h4>
-						</v-flex>
-					</v-layout>
+				<v-flex xs9>
+					<img src="/static/sand.jpg" height="80px" align="left"
+							 style="margin-right:10px;width:80px;border-radius:25px;" />
+					<h3 class="mt-2 text-xs-left wrap-info" style="font-weight:400;">
+						{{ player.username }}
+						<br>
+						<span class="text-xs-left" style="font-weight:500">
+							Handicap {{ player.player_handicap }}
+						</span>
+					</h3>
 				</v-flex>
 
-				<v-flex xs5 class="text-xs-right">
+				<v-flex xs3 class="text-xs-center">
 					<h1
-						class="white--text"
+						class="white--text font-weight-regular"
 						style="font-weight:400;font-size:65px;">
 						{{ player.adjusted_score }}
 					</h1>
@@ -30,9 +26,10 @@
 			</v-layout>
 		</v-container>
 		<v-layout row align-center>
-			<v-flex xs7 class="text-xs-left">
+			<v-flex xs7 class="text-xs-left pl-3">
 				<h1
-					style="color:#BDBDBD;font-weight:400;font-size:65px;letter-spacing:-8px;">
+					class="font-weight-light"
+					style="color:#666;font-size:65px;letter-spacing:-8px;">
 					{{ player.impact }}%
 				</h1>
 			</v-flex>
@@ -54,7 +51,7 @@
 					</div>
 					<div
 						v-bind:style="{width: barWidth(player.potential_total)}"
-						style="border-radius:8px;top:70%;background-color:#999;">
+						style="border-radius:8px;top:70%;background-color:#666;">
 						<span style="margin-left:-25px;font-size:16px;">
 							{{ player.potential_total }}
 						</span>
@@ -104,16 +101,16 @@ export default {
   background-color: #ACA885;
 }
 .player-card {
-	background-color: #F79256;;
+	background-color: #999;
 }
 .rounded-card {
-	background:linear-gradient(to right transparent 0%, white 10%, red 90%, red 100%);
+	/* background:linear-gradient(to right transparent 0%, white 10%, red 90%, red 100%); */
 }
 .border-card {
   border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 25px;
-  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
 }
+
 .bar-wrapper {
 	height: 100px;
 	position : relative;
@@ -125,5 +122,4 @@ export default {
   background-color: #aeaeae;
   display : inline-block;
 }
-/* #9FB8CE */
 </style>
