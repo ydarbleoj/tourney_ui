@@ -86,18 +86,18 @@ export default {
   },
 
   created: function () {
-    this.$store.dispatch(
-      'course/LOAD_COURSE_STATS',
-      {
-        tournId: this.currentTournament.id,
-        roundId: this.roundId,
-      }
-    ).then(response => {
-      let data = this.courseStats.included
-      this.overallData = Object.assign(this.filterType(data, 'round_agg'))
-      this.courseData = Object.assign(this.filterType(data, 'course_agg'))
-      this.loading = false
-    })
+    // this.$store.dispatch(
+    //   'course/LOAD_COURSE_STATS',
+    //   {
+    //     tournId: this.currentTournament.id,
+    //     roundId: this.roundId,
+    //   }
+    // ).then(response => {
+    //   let data = this.courseStats.included
+    //   this.overallData = Object.assign(this.filterType(data, 'round_agg'))
+    //   this.courseData = Object.assign(this.filterType(data, 'course_agg'))
+    //   this.loading = false
+    // })
   }
 }
 </script>

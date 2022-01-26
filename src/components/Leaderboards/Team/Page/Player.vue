@@ -26,7 +26,7 @@
 			</v-layout>
 		</v-container>
 		<v-layout row align-center>
-			<v-flex xs7 class="text-xs-left pl-3">
+			<v-flex xs7 class="text-xs-left pl-1">
 				<h1
 					class="font-weight-light"
 					style="color:#666;font-size:65px;letter-spacing:-8px;">

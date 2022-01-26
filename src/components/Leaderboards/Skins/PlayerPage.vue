@@ -36,11 +36,10 @@
 					</v-layout>
           <v-layout row align-end mt-3>
              <v-flex xs7 class="text-xs-left">
-              <h2 style="font-weight:400;">
-                Your vast earnings:
-              </h2>
+              <h2 class="font-weight-regular">Winnings:</h2>
 							<h1 class="font-weight-regular" style="font-size:40px;">
-                {{ totalMoney }} <span style="font-size:28px;">$</span>
+								<span style="font-size:28px;margin-right:-7px;color:#666;">$</span>
+                {{ totalMoney }}
               </h1>
             </v-flex>
 						<v-flex xs5 class="text-xs-center">
@@ -66,7 +65,7 @@
 			class="text-xs-center pt-2 pb-4 mt-3 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="pl-2 mb-2 font-weight-regular">Historical Averages</h3>
+				<h2 class="pl-2 mb-2 font-weight-regular">Historical Averages</h2>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs12>
@@ -93,6 +92,7 @@
 				</v-flex>
 			</v-layout>
     </v-layout>
+		<h2 class="font-weight-regular pl-4 ml-2 pb-2">This Week</h2>
 		<v-layout
 			row wrap
 			align-center
@@ -100,7 +100,7 @@
 			style="background-color:#999;border-radius: 10px;"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="white--text pl-2 mb-2 font-weight-regular">Percentage Won this Week</h3>
+				<h3 class="white--text pl-2 mb-2 font-weight-regular">Percentage Won</h3>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs3 class="text-xs-right pl-3">
@@ -261,8 +261,8 @@ export default {
   font-size: 15px;
 }
 .profile-image {
-  height: 75px;
-  width: 75px;
+  height: 100px;
+  width: 100px;
   border-radius: 25px;
   margin-right: 10px;
 }

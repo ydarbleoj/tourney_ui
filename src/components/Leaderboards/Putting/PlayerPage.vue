@@ -8,7 +8,7 @@
             :routeParams="{ id: this.currentTournament.id }"
           />
         </v-flex>
-        <v-flex xs6 class="text-xs-center white--text">
+        <v-flex xs6 class="text-xs-center">
           <h2 style="font-weight:300;">Player Profile</h2>
         </v-flex>
       </v-layout>
@@ -17,7 +17,7 @@
           <v-layout row align-center>
             <v-flex xs9>
               <img src="/static/sand.jpg" class="profile-image" align="left" />
-              <h3 class="wrap-info">
+              <h3 class="wrap-info" style="color:#333">
                 {{ this.playerName }}
                 <br>
                 <span class="info-span text-xs-left">
@@ -27,7 +27,7 @@
 						</v-flex>
             <v-flex xs3 class="text-xs-center pr-5">
               <div class="place-wrap">
-                <h1 style="font-weight:300;font-size:60px;color:#f1f1f1">
+                <h1 style="font-weight:300;font-size:60px;color:#333">
                   {{ getPosition() }}
                   <span>{{ getOrdinal() }}</span>
                 </h1>
@@ -35,12 +35,13 @@
             </v-flex>
 					</v-layout>
           <v-layout row align-end mt-3>
-             <v-flex xs7 class="text-xs-left">
-              <h3 style="font-weight:400;">
-                Your 3 putt pot donations?
-              </h3>
+             <v-flex xs7 class="text-xs-left pt-2">
+              <h2 style="font-weight:400;">
+                3 Putt Pot Donations:
+              </h2>
               <h1 class="font-weight-regular" style="font-size:40px;">
-                {{ total3Putts }} <span style="font-size:28px;">$</span>
+								<span style="font-size:28px;margin-right:-8px;color:#666;">$</span>
+                {{ total3Putts }}
               </h1>
             </v-flex>
 						<v-flex xs5 class="text-xs-center">
@@ -66,7 +67,7 @@
 			class="text-xs-center pt-2 pb-4 mt-3 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="pl-2 mb-2 font-weight-regular">Historical Averages</h3>
+				<h2 class="pl-2 mb-2 font-weight-regular">Historical Averages</h2>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs12>
@@ -96,37 +97,36 @@
 		<v-layout
 			row wrap
 			align-center
-			class="text-xs-center pt-2 pb-4 mt-2 mb-4 mr-3 ml-3"
-			style="background-color:#999;border-radius: 10px;"
+			class="border-card text-xs-center pt-2 pb-2 mt-2 mb-4 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="white--text pl-2 mb-2 font-weight-regular">3 Putts per Round Averages</h3>
+				<h2 class="pl-2 pt-2 font-weight-regular white--text">3 Putts a Round</h2>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs3 class="text-xs-center pl-3">
-					<h1 class="font-weight-regular" style="color:#FFCB47;font-size:70px;">
+					<h1 class="font-weight-regular" style="color:#74C9D7;font-size:50px;">
 						{{ threePuttAvg }}
 					</h1>
 				</v-flex>
 				<v-flex xs9>
 					<v-layout row wrap>
 						<v-flex xs4>
-							<h1 class="font-weight-regular" style="color:white">
+							<h1 class="font-weight-regular white--text">
 								{{ threePuttAvg1 }}
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Round 1</h3>
+							<h3 style="color:#999" class="font-weight-medium">Round 1</h3>
 						</v-flex>
 						<v-flex xs4>
-								<h1 class="font-weight-regular" style="color:white">
+								<h1 class="font-weight-regular white--text">
 								{{ threePuttAvg2 }}
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Round 2</h3>
+							<h3 style="color:#999" class="font-weight-medium">Round 2</h3>
 						</v-flex>
 						<v-flex xs4>
-								<h1 class="font-weight-regular" style="color:white">
+								<h1 class="font-weight-regular white--text">
 								{{ threePuttAvg3 }}
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Round 3</h3>
+							<h3 style="color:#999" class="font-weight-medium">Round 3</h3>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -138,7 +138,7 @@
 			class="text-xs-center pt-2 pb-4 mt-2 mb-5 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h2 class="pl-2 mb-2 font-weight-regular">Scrambling</h2>
+				<h2 class="pl-2 mb-3 font-weight-regular">This Week's Scrambling</h2>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs3 class="text-xs-right pl-3">
@@ -152,19 +152,19 @@
 							<h1 class="font-weight-regular">
 								{{ scramble1 }}%
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Round 1</h3>
+							<h3 style="color:#666" class="font-weight-regular">Round 1</h3>
 						</v-flex>
 						<v-flex xs4>
 								<h1 class="font-weight-regular">
 								{{ scramble2 }}%
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Round 2</h3>
+							<h3 style="color:#666" class="font-weight-regular">Round 2</h3>
 						</v-flex>
 						<v-flex xs4>
 								<h1 class="font-weight-regular">
 								{{ scramble3 }}%
 							</h1>
-							<h3 style="color:#444" class="font-weight-regular">Round 3</h3>
+							<h3 style="color:#666" class="font-weight-regular">Round 3</h3>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -268,8 +268,8 @@ export default {
   font-size: 15px;
 }
 .profile-image {
-  height: 75px;
-  width: 75px;
+  height: 100px;
+  width: 100px;
   border-radius: 25px;
   margin-right: 10px;
 }
@@ -282,4 +282,9 @@ export default {
   font-size: 35px;
   margin-top: 10px;
 }
+.border-card {
+	background-color: #666;
+	border-radius: 15px;
+}
+  // border: 3px solid #999;
 </style>

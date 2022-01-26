@@ -64,7 +64,7 @@
 			class="text-xs-center pt-2 pb-4 mt-3 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="pl-2 mb-2 font-weight-regular">Historical Averages</h3>
+				<h2 class="pl-2 mb-2 font-weight-regular">Historical Averages</h2>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs12>
@@ -91,6 +91,7 @@
 				</v-flex>
 			</v-layout>
     </v-layout>
+		<h2 class="font-weight-regular pl-4 ml-2 pb-3 pt-2">Weekly Averages</h2>
 		<v-layout
 			row wrap
 			align-center
@@ -98,7 +99,7 @@
 			style="background-color:#999;border-radius: 10px;"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h2 class="white--text pl-2 mb-2 font-weight-regular">Greens In Regulation</h2>
+				<h3 class="white--text pl-2 mb-2 font-weight-regular">Greens in Reg</h3>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs3 class="text-xs-right pl-3">
@@ -136,7 +137,7 @@
 			class="text-xs-center pt-2 pb-4 mt-2 mb-5 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
-				<h3 class="pl-2 mb-2 font-weight-regular">Some Averages This Week</h3>
+				<h3 class="pl-2 mb-2 font-weight-regular">Broken down by Par:</h3>
 			</v-flex>
 			<v-layout row wrap align-center>
 				<v-flex xs12>

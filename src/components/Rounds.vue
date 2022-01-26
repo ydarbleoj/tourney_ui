@@ -1,26 +1,23 @@
 <template>
-  <v-card width="100%" flat class="pa-4">
-    <h2 class="text-xs-left font-weight-regular" style="margin: 5% 0 5% 0;">Round Info</h2>
-    <v-toolbar flat color="transparent">
-      <template>
-        <v-tabs
-          v-model="tab"
-          centered
-          class="pb-4"
-        >
-          <v-tabs-slider color="#A8C256"></v-tabs-slider>
-          <v-tab
-            color="white"
-            v-for="i in items"
-            :key="i"
-            class="pl-2 pr-2"
-            @click="updateRound(i)"
-          >
-            round {{ i }}
-          </v-tab>
-        </v-tabs>
-      </template>
-    </v-toolbar>
+  <v-card width="100%" flat>
+     <v-layout row wrap mt-4>
+      <v-flex xs12>
+        <h2 class="font-weight-regular text-xs-left pl-4 ml-2 mb-3">Round Information</h2>
+      </v-flex>
+    </v-layout>
+    <hooper
+      :itemsToSlide="1"
+      :itemsToShow="1.1"
+      :centerMode="true"
+      :transition="300"
+      >
+        <slide
+          v-for="(item, indx) in roundComps" :key="item.id" :index="indx">
+          <course-button :course="item" />
+          <v-spacer class="mb-4"></v-spacer>
+          <scorecard-button :round="item" />
+        </slide>
+      </hooper>
     <v-tabs-items v-model="tab">
       <v-tab-item
         active-class="active-tab"
@@ -29,9 +26,6 @@
         transition="false"
         reverse-transition="false"
       >
-        <course-button :course="i" />
-        <v-spacer class="mb-4"></v-spacer>
-        <scorecard-button :round="i" />
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -41,13 +35,17 @@
 import CourseButton from '../components/Course/Button'
 import ScorecardButton from '../components/Scorecard/Button'
 import { mapState, mapMutations } from 'vuex'
+import { Hooper, Slide } from 'hooper'
+import 'hooper/dist/hooper.css';
 
 export default {
   name: 'Rounds',
   props: ['current'],
   components: {
     CourseButton,
+    Hooper,
     ScorecardButton,
+    Slide
   },
 
   data () {
@@ -85,29 +83,33 @@ export default {
     },
   },
 
-  watch: {
-    current: function () {
-      this.roundComps = []
-      this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
-        .then(response => {
-          this.isloading = false
-          this.roundComps = this.rounds
-           this.currentRoundNumber = this.currentRound['attributes']['round_number']
-        })
-    }
-  },
+  // watch: {
+  //   current: function () {
+  //     this.roundComps = []
+  //     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
+  //       .then(response => {
+  //         this.isloading = false
+  //         this.roundComps = this.rounds
+  //          this.currentRoundNumber = this.currentRound['attributes']['round_number']
+  //       })
+  //   }
+  // },
 
   created: function (current) {
-    this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
-      .then(response => {
-        this.isloading = true
-        this.roundComps = this.rounds
-        this.currentRoundNumber = this.currentRound['attributes']['round_number']
-      })
+    this.$store.dispatch(
+      'LOAD_ROUNDS', { id: this.current.id }
+    ).then(response => {
+      this.isloading = true
+      this.roundComps = this.rounds
+      this.currentRoundNumber = this.currentRound['attributes']['round_number']
+    })
   },
 }
 </script>
-<style lang="scss" scoped>
+<style>
+.hooper {
+  height: auto;
+}
 #round-container {
   width: 100%;
   bottom: 0;

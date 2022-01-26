@@ -6,7 +6,6 @@
     <v-img
       :src="'/static/' + imageId + 'course.jpg'"
       height='40vh'
-      class="course-header"
     >
       <v-container fill-height pa-0>
          <BackButton

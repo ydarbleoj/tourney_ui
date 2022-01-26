@@ -1,8 +1,13 @@
 <template>
-  <v-container id='leaderboard-container' class="pa-0" ma0>
+  <v-container id='leaderboard-container' style="min-height:30vh" class="pa-0" ma0>
+    <v-layout row wrap mt-4>
+      <v-flex xs12>
+        <h2 class="font-weight-regular text-xs-left pl-4 ml-2">Leaderboards</h2>
+      </v-flex>
+    </v-layout>
     <v-layout row>
       <v-flex xs12 ref="leaderboard" >
-        <v-container v-if="!isLoading" transition="slide-x-reverse-transition">
+        <v-container v-if="!isLoading" >
           <v-layout row>
             <v-flex xs6 ma-2>
               <v-layout column>

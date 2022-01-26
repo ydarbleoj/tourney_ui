@@ -110,7 +110,6 @@ const store = new Vuex.Store({
           console.log('first', response.data)
           commit('SET_ROUNDS', { list: response.data.rounds })
           commit('SET_SCORECARD_PREVIEWS', { list: response.data.scorecard_previews })
-          // commit('SET_USER_TEE_TIMES', { list: response.data.user_times } )
         }
       }, (err) => {
         console.log('error in rounds', err)

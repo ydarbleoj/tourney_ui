@@ -2,7 +2,7 @@
   <v-card
     @click="toLeaderboard"
     rounded
-		:class="bgColor"
+		:class="[bgColor, { 'opacity-click': clicked }]"
     class="lb-button pa-2"
   >
     <v-card-title class="pa-0 mb-2">
@@ -57,16 +57,20 @@ export default {
   data () {
     return {
       isloading: true,
+      clicked: false
     }
   },
   methods: {
     toLeaderboard () {
-      this.$router.push({
-        name: this.link,
-        params: {
-          id: this.current.id
-        }
-      })
+      this.clicked = true;
+      this.$nextTick(() => {
+        this.$router.push({
+          name: this.link,
+          params: {
+            id: this.current.id
+          }
+        })
+      });
     }
   },
 	created () {
@@ -87,9 +91,14 @@ export default {
 .team {
 	background-color: #ACA885;
 }
+.opacity-click {
+  opacity: calc(0.9);
+  margin: 2px 0 -2px 0;
+  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
 .lb-button {
   border-radius: 20px;
   transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
 </style>
