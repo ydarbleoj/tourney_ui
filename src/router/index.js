@@ -18,6 +18,8 @@ import PuttingPlayerPage from '@/components/Leaderboards/Putting/PlayerPage'
 import SkinsLeaderboard from '@/components/Leaderboards/Skins/index'
 import SkinsPlayerPage from '@/components/Leaderboards/Skins/PlayerPage'
 import TeamLeaderboard from '@/components/Leaderboards/Team/index'
+import MoneyList from '@/components/Stats/MoneyList/index'
+import MoneyPlayerPage from '@/components/Stats/MoneyList/PlayerPage'
 import TeamPage from '@/components/Leaderboards/Team/Page/index'
 import Course from '@/components/Course/index'
 import ResetPassword from '@/components/ResetPassword'
@@ -205,6 +207,20 @@ const router = new Router({
       path: '/tournament/:id/course/:course_id',
       name: "Course",
       component: Course,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/money_list',
+      name: "MoneyList",
+      component: MoneyList,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/money_list/:leaderboard_id',
+      name: "MoneyPlayerPage",
+      component: MoneyPlayerPage,
       props: { default: true },
       meta: { auth: true }
     },

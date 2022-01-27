@@ -1,15 +1,23 @@
 <template>
   <v-container class="pa-4" ref="summaryCardContainer">
-     <v-layout row wrap>
+     <v-layout row wrap justify-space-between>
       <v-flex xs12 sm12 lg12>
         <h2 class="text-xs-left font-weight-regular pl-0 pb-4">
           Summary
         </h2>
-
-        <div>
-          <course-button />
-
-        </div>
+      </v-flex>
+      <v-flex xs12 lg6>
+        <preview-button
+          :current="current"
+          :title="'Money List'"
+          :leaderboard="getMoneyPreview"
+          :link="'MoneyList'"
+          :position="'money_position'"
+          :total="'total_money'"
+        />
+      </v-flex>
+      <v-flex xs12 lg6 mt-5>
+        <course-button />
       </v-flex>
      </v-layout>
   </v-container>
@@ -17,21 +25,15 @@
 
 <script>
 import router from 'vue-router'
-import { mapState } from 'vuex'
-import MoneyPreview from './MoneyList/Preview'
-import MoneyPreviewHeader from './MoneyList/PreviewHeader'
-import MoneyList from './MoneyList/Full'
-import MoneyListHeader from './MoneyList/FullHeader'
+import { mapGetters } from 'vuex'
+import PreviewButton from '../Leaderboards/PreviewButton'
 import CourseButton from './Course/Button'
 
 export default {
   name: 'Stats',
   props: ['current'],
   components: {
-    MoneyPreview,
-    MoneyPreviewHeader,
-    MoneyList,
-    MoneyListHeader,
+    PreviewButton,
     CourseButton
   },
 
@@ -42,10 +44,13 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTournament'])
+    ...mapGetters({
+      getMoneyPreview: 'leaderboards/getMoneyPreview',
+    }),
   },
 
-  methods: {
+  mounted () {
+    console.log('this', this.getMoneyPreview);
   }
 
 }

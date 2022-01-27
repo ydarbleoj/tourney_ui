@@ -6,32 +6,39 @@
     class="lb-button pa-2"
   >
     <v-card-title class="pa-0 mb-2">
-      <h4 class="text-xs-left pl-2 font-weight-regular" >
+      <h4
+        class="text-xs-left pl-2 font-weight-regular"
+        style="color:#333;"
+      >
         {{ title }}
         <br>
-        <span>Leaderboard</span>
+        <span v-if="!isMoneyList">Leaderboard</span>
       </h4>
     </v-card-title>
     <div class="text-xs-right mb-1">
-      <h5 class="white--text font-weight-regular pr-1">Total</h5>
+      <h4 class="font-weight-regular pr-1">Total</h4>
     </div>
-    <v-divider color="white"></v-divider>
+    <v-divider :class="[isMoneyList ? 'money-divide' : 'reg-divide']"></v-divider>
     <v-card-text class="pa-0">
       <v-list
         dense
 				:class="bgColor"
-        class="white--text"
         v-for="(item, index) in leaderboard" :key="index"
       >
         <v-layout row class="pt-1 mb-2">
-          <v-flex xs1 class="text-xs-left">
+          <v-flex xs1 class="text-xs-left" style="color:#333;">
             {{ position == 'count' ? index + 1 : item.attributes[position] }}.
           </v-flex>
-          <v-flex class="text-xs-left pl-1">
-            {{ item.attributes.username }}
+          <v-flex class="text-xs-left pl-1 font-weight-regular">
+            <h4>
+              {{ item.attributes.username }}
+            </h4>
           </v-flex>
-          <v-flex class="text-xs-right pr-1" style="font-size:14px;">
-            {{ item.attributes[total] }}
+          <v-flex class="text-xs-right pr-1 font-weight-regular">
+            <h4>
+              <span v-if="isMoneyList" class="" style="font-size:14px;color:#9FB8CE;">$</span>
+              {{ item.attributes[total] }}
+            </h4>
           </v-flex>
         </v-layout>
       </v-list>
@@ -51,13 +58,14 @@ export default {
 	},
   computed: {
 		bgColor () {
-			return this.title.toLowerCase();
+			return this.title.toLowerCase().split(' ')[0];
 		}
 	},
   data () {
     return {
       isloading: true,
-      clicked: false
+      clicked: false,
+      isMoneyList: false
     }
   },
   methods: {
@@ -74,22 +82,41 @@ export default {
     }
   },
 	created () {
-    console.log('props', this.leaderboard)
+    if (this.link == 'MoneyList') {
+      this.isMoneyList = true
+    }
 	}
 }
 </script>
 <style scoped>
 .stroke {
   background-color: #9FB8CE;
+  color: #fff;
 }
 .putting {
 	background-color: #FFCB47;
+  color: #fff;
 }
 .skins {
 	background-color: #A8C256;
+  color: #fff;
 }
 .team {
 	background-color: #ACA885;
+  color: #fff;
+}
+.money {
+  background-color: #f1f1f1;
+  color: rgba(0, 0, 0, .93);
+}
+.reg-divide {
+  color: white;
+  background-color: #333;
+}
+.money-divide {
+  padding-top: 1px;
+  color: rgba(0, 0, 0, .93);
+  background-color: #9FB8CE;
 }
 .opacity-click {
   opacity: calc(0.9);

@@ -23,10 +23,10 @@
           </div>
         </v-flex>
       </v-layout>
-      <v-layout row wrap>
+      <v-layout row wrap mb-5>
         <leaderboards :current="currentTournament"  v-if="!loading" />
         <rounds :current="currentTournament" v-if="!loading" />
-        <!-- <stats :current="currentTournament" v-if="!loading" /> -->
+        <stats :current="currentTournament" v-if="!loading" />
       </v-layout>
     </v-container>
   </main>

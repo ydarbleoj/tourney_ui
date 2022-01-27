@@ -13,7 +13,10 @@ const state = {
   skinsLeaderboard: [],
   strokePlayer: {},
   skinsPlayer: {},
-  puttingPurse: 0
+  puttingPurse: 0,
+  moneyPreview: [],
+  moneyList: [],
+  moneyPlayer: {}
 }
 
 const plugins = [
@@ -89,28 +92,45 @@ const actions = {
       commit('SET_SKINS_PLAYER_PROFILE', { list: response.data })
     })
   },
+  LOAD_MONEY: function ({ commit, state }, { id }) {
+    let options = { tournament_id: id }
+    return axios.get(
+      '/api/v3/leaderboards/money_lists.json', { params: options }
+    ).then((response) => {
+      commit('SET_MONEY', { list: response.data })
+    }, (err) => {
+      console.log(err)
+    })
+  },
+  LOAD_MONEY_PLAYER: function ({ commit, state }, { tournId, id }) {
+    let options = { tournament_id: tournId }
+    return axios.get(
+      `/api/v3/leaderboards/money_lists/${id}.json`, { params: options }
+    ).then((response) => {
+      commit('SET_MONEY_PLAYER_PROFILE', { list: response.data })
+    })
+  },
 }
 
 const mutations = {
   SET_PREVIEW_LEADERBOARDS: (state, { list }) => {
-    let strokes = JSON.parse(list.stroke)
-    let putting = JSON.parse(list.putting)
-    let skins = JSON.parse(list.skins)
-    let team = JSON.parse(list.team)
+    const strokes = JSON.parse(list.stroke)
+    const putting = JSON.parse(list.putting)
+    const skins = JSON.parse(list.skins)
+    const team = JSON.parse(list.team)
+    const money = JSON.parse(list.money)
 
     Vue.set(state, 'strokePreview', keys(strokes))
     Vue.set(state, 'puttingPreview', keys(putting))
     Vue.set(state, 'skinsPreview', keys(skins))
     Vue.set(state, 'teamPreview', keys(team))
+    Vue.set(state, 'moneyPreview', keys(money))
   },
   SET_TEAM_LEADERBOARD: (state, { list }) => {
     state.teamLeaderboard = list.data
   },
   SET_STROKE_LEADERBOARD: (state, { list }) => {
     Vue.set(state, 'strokeLeaderboard', list.data)
-  },
-  SET_STROKE_PLAYER_PROFILE: (state, { list }) => {
-    state.strokePlayer = list.data.attributes
   },
   SET_PUTTING_LEADERBOARD: (state, { list }) => {
     const reducer = (acc, currentValue) => acc + currentValue;
@@ -120,15 +140,24 @@ const mutations = {
     Vue.set(state, 'puttingPurse', total)
     Vue.set(state, 'puttingLeaderboard', list.data)
   },
-  SET_PUTTING_PLAYER_PROFILE: (state, { list }) => {
-    state.strokePlayer = list.data.attributes
-  },
   SET_SKINS_LEADERBOARD: (state, { list }) => {
     Vue.set(state, 'skinsLeaderboard', list.data)
+  },
+  SET_MONEY: (state, { list }) => {
+    Vue.set(state, 'moneyList', list.data)
+  },
+  SET_STROKE_PLAYER_PROFILE: (state, { list }) => {
+    state.strokePlayer = list.data.attributes
+  },
+  SET_PUTTING_PLAYER_PROFILE: (state, { list }) => {
+    state.strokePlayer = list.data.attributes
   },
   SET_SKINS_PLAYER_PROFILE: (state, { list }) => {
     console.log('hi skins', list)
     state.skinsPlayer = list.data.attributes
+  },
+  SET_MONEY_PLAYER_PROFILE: (state, { list }) => {
+    state.moneyPlayer = list.data.attributes
   },
 }
 
@@ -144,6 +173,9 @@ const getters = {
   },
   getTeamPreview: state => {
     return state.teamPreview
+  },
+  getMoneyPreview: state => {
+    return state.moneyPreview
   }
 }
 
