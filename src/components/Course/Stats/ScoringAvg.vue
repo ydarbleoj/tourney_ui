@@ -7,37 +7,35 @@
       fluid
       class="font-weight-regular pa-4"
     >
-      <v-layout row wrap align-center>
-        <v-flex xs12>
-          <v-card flat class="white">
-            <v-layout>
-              <v-flex xs6>
-                <v-layout row wrap>
-                  <v-flex xs12 class="mb-2">
-                    <h4 class="text-xs-left mt-1 mb-2 font-weight-regular ">Scoring Avg</h4>
-                    <label class="score-label mr-2" v-bind:class="{ record : isNet }" @click="isNet = true">NET </label>
-                    <label class="score-label ml-2" v-bind:class="{ record : !isNet }" @click="isNet = false">GROSS</label>
-                  </v-flex>
-                  <v-flex xs12>
-                    <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.personalBest }}</h1>
-                    <h4 class=" mb-3 font-weight-regular">Personal</h4>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex xs6>
-                <v-layout row wrap align-center justify-center fill-height>
-                  <v-flex xs12>
-                    <h2 class="ma-0 font-weight-regular" style="color: #FFCB47;">{{ this.yearsField }}</h2>
-                    <h4 class=" font-weight-regular">This Year's Field</h4>
-                  </v-flex>
-                  <v-flex xs12>
-                    <h2 class="font-weight-regular ma-0" style="color:#A8C256">{{ this.courseOverall }}</h2>
-                    <h4 class=" font-weight-regular">Overall </h4>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-            </v-layout>
-          </v-card>
+      <v-layout row wrap justify-center
+        class="text-xs-center pt-2 pb-4"
+        style="background-color:#666;border-radius: 10px;">
+        <v-flex xs12 class="text-xs-left ml-2 mb-2">
+          <h2 class="white--text pl-2 mb-2 font-weight-regular">Scoring Average
+            <br>
+            <span class="font-weight-regular" style="font-size:15px;">
+              <label class="score-label mr-2" v-bind:class="{ record : isNet }" @click="isNet = true">NET </label>
+              <label class="score-label ml-2" v-bind:class="{ record : !isNet }" @click="isNet = false">GROSS</label>
+            </span>
+          </h2>
+        </v-flex>
+        <v-flex xs4 v-if="personalBest">
+          <h1 class="font-weight-regular white--text">
+            {{ personalBest }}
+          </h1>
+          <h3 class="font-weight-medium" style="color:#999">Personal</h3>
+        </v-flex>
+         <v-flex xs4>
+          <h1 class="font-weight-regular white--text">
+            {{ yearsField }}
+          </h1>
+          <h3 class="font-weight-medium" style="color:#999">This Week</h3>
+        </v-flex>
+         <v-flex xs4>
+          <h1 class="font-weight-regular white--text">
+            {{ courseOverall }}
+          </h1>
+          <h3 class="font-weight-medium" style="color:#999">Historically</h3>
         </v-flex>
       </v-layout>
     </v-container>
@@ -53,7 +51,7 @@ export default {
     return {
       isNet: true,
       loading: true,
-      personalBest: '',
+      personalBest: null,
       yearsField: '',
       courseOverall: '',
     }
@@ -97,6 +95,9 @@ export default {
 
 score-label.record {
   color: #F8C977;
+}
+.record {
+  color: #9FB8CE;
 }
 .pers-record {
   color: #ED6C6C;

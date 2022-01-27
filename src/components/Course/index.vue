@@ -1,8 +1,8 @@
 <template>
   <v-card
     flat
-    v-if="!isLoading"
     style="background-color:#FFF;height:100%;"
+    v-if="!loading"
   >
     <v-img
       :src="'/static/' + imageId + 'course.jpg'"
@@ -24,10 +24,7 @@
       <container />
       <tee-time />
 
-       <stats
-        :roundId="roundId"
-        v-if="!isLoading"
-      />
+      <stats :roundId="roundId" />
     </v-card-text>
   </v-card>
 </template>
@@ -52,10 +49,9 @@ export default {
   data () {
     return {
       show: false,
-      isLoading: true,
+      loading: true,
       imageId: 2,
       roundId: null
-
     }
   },
 
@@ -68,16 +64,16 @@ export default {
 
   methods: {},
 
-  created () {
-    const roundNumber = this.$route.params.roundNumber
+  mounted () {
+    const id = this.$route.params.course_id
 
     this.$store.dispatch('course/LOAD_COURSE', {
       id: this.currentTournament.id,
-      roundNumber: roundNumber
+      roundNumber: id
     }).then(response => {
       this.roundId = this.courseInfo.attributes.id
       this.imageId = this.courseInfo.attributes.new_course_id
-      this.isLoading = false
+      this.loading = false
     })
   }
 }

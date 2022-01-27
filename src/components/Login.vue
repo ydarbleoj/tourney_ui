@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     login () {
+
       let redirect = this.setRedirect()
       this.$auth.login({
         data: { auth: { email: this.data.auth.email.toLowerCase(), password: this.data.auth.password } },
@@ -82,7 +83,6 @@ export default {
       return 'redirect' in this.$route.query ? this.$route.query.redirect : '/profile'
     },
     toForgotPassword () {
-      console.log('akldfjl')
       this.$router.push({ name: 'ForgotPassword' })
     }
   },

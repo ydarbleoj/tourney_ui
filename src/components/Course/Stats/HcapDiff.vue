@@ -3,41 +3,16 @@
     loading...
   </v-card>
   <v-card flat v-else>
-    <v-container
-      fluid
-      class="font-weight-regular pa-4"
-    >
-      <v-layout row wrap align-center>
-        <v-flex xs12>
-          <v-card flat class="white">
-            <v-layout>
-              <v-flex xs12>
-                <v-layout row wrap>
-                  <v-flex xs7 class="mb-2">
-                    <h2 class="text-xs-left mt-1 mb-2 font-weight-regular">Hcap Differential</h2>
-                  </v-flex>
-                  <v-flex xs5>
-                    <h1 class="font-weight-regular" style="color:#9FB8CE">{{ this.personalBest }}</h1>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex xs12>
-                <v-layout row wrap align-center justify-center fill-height>
-                  <v-flex xs12>
-                    <h2 class="ma-0 font-weight-regular" style="color: #FFCB47;">{{ this.yearsField }}</h2>
-                    <h4 class=" font-weight-regular">This Year's Field</h4>
-                  </v-flex>
-                  <v-flex xs12>
-                    <h2 class="font-weight-regular ma-0" style="color:#A8C256">{{ this.courseOverall }}</h2>
-                    <h4 class="font-weight-regular">Overall </h4>
-                  </v-flex>
-                </v-layout>
-              </v-flex>
-            </v-layout>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-layout row wrap align-center>
+      <v-flex xs12 pa-3>
+        <h3 class="font-weight-regular">{{ easiestHole }}</h3>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap align-center>
+      <v-flex xs12 pa-3>
+        <h3 class="font-weight-regular">{{ hardestHole }}</h3>
+      </v-flex>
+    </v-layout>
   </v-card>
 </template>
 
@@ -48,11 +23,9 @@ export default {
   name: 'HcapDiff',
   data () {
     return {
-      isNet: true,
       loading: true,
-      personalBest: '',
-      yearsField: '',
-      courseOverall: '',
+      easiestHole: '',
+      hardestHole: ''
     }
   },
 
@@ -64,12 +37,15 @@ export default {
     })
   },
 
-  methods: {},
+  methods: {
+    determineYear () {
+
+    }
+  },
 
   created () {
-    this.yearsField = this.roundStats.hcap_diff
-    this.courseOverall = this.courseStats.hcap_diff
-    this.personalBest = this.userCourseStats.hcap_diff
+    this.easiestHole = this.roundStats.easiest_hole
+    this.hardestHole = this.roundStats.hardest_hole
     this.loading = false
   }
 }

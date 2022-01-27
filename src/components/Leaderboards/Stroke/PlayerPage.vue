@@ -226,7 +226,6 @@ export default {
       tournId: this.currentTournament.id,
       id: this.$route.params.leaderboard_id
     }).then(response => {
-      console.log("hi", this.strokePlayer)
       this.playerName = this.strokePlayer.username
       this.handicapIndex = this.strokePlayer.handicap
       this.position = this.strokePlayer.current_position

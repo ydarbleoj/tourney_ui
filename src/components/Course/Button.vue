@@ -54,13 +54,14 @@ export default {
   },
   methods: {
     coursePage () {
-      this.clicked = true;
+      const id = this.roundNumber
+
       this.$store.commit("setPageTransition");
       this.$router.push({
         name: 'Course',
         params: {
           id: this.currentTournament.id,
-          roundNumber: this.roundNumber
+          course_id: id
         }
       });
     }

@@ -78,7 +78,7 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/profile/:id',
+      path: '/profile',
       name: 'Profile',
       component: Profile,
       meta: { auth: true }
