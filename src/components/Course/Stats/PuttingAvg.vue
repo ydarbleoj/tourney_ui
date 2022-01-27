@@ -57,9 +57,6 @@ export default {
     return {
       isNet: true,
       loading: true,
-      userData: {},
-      courseData: {},
-      roundData: {},
       personalBest: '',
       yearsField: '',
       courseOverall: '',
@@ -67,34 +64,20 @@ export default {
   },
 
   computed: {
-     ...mapState({
+    ...mapState({
       courseStats: state => state.course.courseStats,
+      roundStats: state => state.course.roundStats,
       userCourseStats: state => state.course.userCourseStats
     })
   },
 
-  methods: {
-    filterType (data, type) {
-      let d = data.filter(el => el['type'] === type);
-      if (d === undefined || !d.length) return {};
-      return d[0]['attributes']
-    },
-    loadFields () {
-      let round = this.roundData
-      let course  = this.courseData
-      let net     = this.isNet
-      this.yearsField = round
-      this.courseOverall = course
-      this.personalBest = this.userCourseStats
-    },
-  },
+  methods: {},
 
-  mounted: function () {
-    let data = this.courseStats.included
-    this.roundData = Object.assign(this.filterType(data, 'round_agg'))
-    this.courseData = Object.assign(this.filterType(data, 'course_agg'))
+  mounted () {
+    this.yearsField = this.roundStats
+    this.courseOverall = this.courseStats
+    this.personalBest = this.userCourseStats
     this.loading = false
-    this.loadFields()
   }
 }
 </script>

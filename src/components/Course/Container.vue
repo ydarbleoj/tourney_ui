@@ -16,7 +16,7 @@
 					<v-flex xs12 class="text-xs-left">
 						<h2 class="mb-2 pt-2 font-weight-regular">{{ teeName }} Tees</h2>
 					</v-flex>
-					<v-flex xs3>
+					<v-flex xs3 class="text-xs-center">
 						<h1 style="color:#A8C256;">
 							{{ yardage }}
 						</h1>
@@ -72,10 +72,11 @@ export default {
     }),
   },
   mounted: function () {
-		const info = this.courseInfo.course_info
+		const attrs = this.courseInfo.attributes
+		const info = attrs.course_info
 
-		this.courseName = this.courseInfo.course_info.name
-		this.roundNumber = this.courseInfo.round_number
+		this.courseName = info.name
+		this.roundNumber = attrs.round_number
 		this.par = info.par
 		this.yardage = info.yardage
 		this.slope = info.slope

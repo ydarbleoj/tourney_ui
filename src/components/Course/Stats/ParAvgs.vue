@@ -52,9 +52,6 @@ export default {
   data () {
     return {
       loading: true,
-      userData: {},
-      courseData: {},
-      overallData: {},
       personalBest: '',
       yearsField: '',
       courseOverall: '',
@@ -62,34 +59,26 @@ export default {
   },
 
   computed: {
-     ...mapState({
+    ...mapState({
       courseStats: state => state.course.courseStats,
+      roundStats: state => state.course.roundStats,
       userCourseStats: state => state.course.userCourseStats
     })
   },
 
   methods: {
-    filterType (data, type) {
-      let d = data.filter(el => el['type'] === type);
-      if (d === undefined || !d.length) return {};
-      return d[0]['attributes']
-    },
     loadFields () {
-      let overall = this.overallData
-      let course  = this.courseData
+      let overall = this.roundStats
+      let course  = this.courseStats
       this.yearsField = overall['par' + this.pars + '_avg']
       this.courseOverall = course['par' + this.pars + '_avg']
       this.personalBest = this.userCourseStats['par' + this.pars + '_avg']
     },
   },
 
-  mounted: function () {
-    let data = this.courseStats.included
-    this.overallData = Object.assign(this.filterType(data, 'round_agg'))
-    this.courseData = Object.assign(this.filterType(data, 'course_agg'))
+  mounted () {
     this.loading = false
     this.loadFields()
-    console.log('pars', this.pars + '_avg')
   }
 }
 </script>

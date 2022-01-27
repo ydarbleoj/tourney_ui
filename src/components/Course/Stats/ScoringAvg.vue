@@ -53,9 +53,6 @@ export default {
     return {
       isNet: true,
       loading: true,
-      userData: {},
-      courseData: {},
-      overallData: {},
       personalBest: '',
       yearsField: '',
       courseOverall: '',
@@ -63,21 +60,17 @@ export default {
   },
 
   computed: {
-     ...mapState({
+    ...mapState({
       courseStats: state => state.course.courseStats,
+      roundStats: state => state.course.roundStats,
       userCourseStats: state => state.course.userCourseStats
     })
   },
 
   methods: {
-    filterType (data, type) {
-      let d = data.filter(el => el['type'] === type);
-      if (d === undefined || !d.length) return {};
-      return d[0]['attributes']
-    },
     toggleFields () {
-      let overall = this.overallData
-      let course  = this.courseData
+      let overall = this.roundStats
+      let course  = this.courseStats
       let net     = this.isNet
       this.yearsField = net ? overall['net_avg'] : overall['gross_avg']
       this.courseOverall = net ? course['net_avg'] : course['gross_avg']
@@ -91,11 +84,7 @@ export default {
     }
   },
 
-  mounted: function () {
-    let data = this.courseStats.included
-    console.log('data', data)
-    this.overallData = Object.assign(this.filterType(data, 'round_agg'))
-    this.courseData = Object.assign(this.filterType(data, 'course_agg'))
+  mounted () {
     this.loading = false
     this.toggleFields()
   }

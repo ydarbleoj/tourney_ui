@@ -22,6 +22,12 @@
       transition="fade-transition"
     >
       <container />
+      <tee-time />
+
+       <stats
+        :roundId="roundId"
+        v-if="!isLoading"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -30,20 +36,25 @@
 import { mapState } from 'vuex'
 import BackButton from '../BackButton'
 import Container from './Container'
+import TeeTime from './TeeTime'
+import Stats from './Stats/index'
 
 export default {
   name: 'index',
   props: ['course'],
   components: {
     BackButton,
-    Container
+    Container,
+    Stats,
+    TeeTime
   },
 
   data () {
     return {
       show: false,
       isLoading: true,
-      imageId: 2
+      imageId: 2,
+      roundId: null
 
     }
   },
@@ -51,30 +62,21 @@ export default {
   computed: {
     ...mapState({
       currentTournament: state => state.tournament.currentTournament,
-      currentRound: state => state.currentRound,
-
+      courseInfo: state => state.course.courseInfo
     })
   },
 
-  methods: {
-    // filterTeeTime (rndNum, list) {
-    //   let n = list.filter(el => el.attributes.round_number === rndNum)
-    //   if (n === undefined || !n.length) return '';
+  methods: {},
 
-    //   return n[0].attributes
-    // }
-  },
+  created () {
+    const roundNumber = this.$route.params.roundNumber
 
-  created: function () {
-    this.imageId = this.currentRound['attributes']['new_course_id']
-    const rndNum = this.currentRound['attributes']['round_number']
-
-    this.$store.dispatch(
-      'course/LOAD_COURSE', {
-        id: this.currentTournament.id,
-        roundNumber: rndNum
-      }
-    ).then(response => {
+    this.$store.dispatch('course/LOAD_COURSE', {
+      id: this.currentTournament.id,
+      roundNumber: roundNumber
+    }).then(response => {
+      this.roundId = this.courseInfo.attributes.id
+      this.imageId = this.courseInfo.attributes.new_course_id
       this.isLoading = false
     })
   }

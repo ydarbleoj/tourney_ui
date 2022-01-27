@@ -1,18 +1,19 @@
 <template>
-  <v-card class="pa-0" width="100%" flat>
-    <h2 class="font-weight-regular">
+  <v-card class="pl-4 pt-2 mt-5"  style="background-color:#A8C256;" width="100%" flat>
+    <h2 class="font-weight-regular mb-4 pt-3">
       Tee Times
     </h2>
-    <v-toolbar flat color="transparent">
+    <v-toolbar flat style="background-color:#A8C256;">
       <template>
         <v-tabs
+          style="background-color:#A8C256;"
           v-model="tab"
           centered
           class="pb-4"
         >
-          <v-tabs-slider color="#A8C256"></v-tabs-slider>
+          <v-tabs-slider style="background-color:#A8C256;" color="white"></v-tabs-slider>
           <v-tab
-            color="white"
+            style="background-color:#A8C256;"
             v-for="i in items"
             :key="i"
             class="pl-2 pr-2"
@@ -22,17 +23,17 @@
         </v-tabs>
       </template>
     </v-toolbar>
-      <v-tabs-items v-model="tab">
-        <v-tab-item
-          v-for="n in group"
-          :key="n['id']"
-          transition="false"
-          reverse-transition="false"
-        >
-          <TeeTimeGroup :group="n" />
-        </v-tab-item>
-      </v-tabs-items>
-     <v-divider class="mb-4" style="background-color:;"></v-divider>
+    <v-tabs-items v-model="tab" style="background-color:#A8C256;">
+      <v-tab-item
+        style="background-color:#A8C256;"
+        v-for="n in group"
+        :key="n['id']"
+        transition="false"
+        reverse-transition="false"
+      >
+        <TeeTimeGroup :group="n" />
+      </v-tab-item>
+    </v-tabs-items>
   </v-card>
 </template>
 <script>
@@ -57,7 +58,7 @@ export default {
 
   computed: {
     ...mapState({
-      courseTeeTimes: state => state.course.teeTimes
+      teeTimes: state => state.course.teeTimes
     })
   },
 
@@ -65,13 +66,15 @@ export default {
   },
 
   created () {
-    this.items = this.courseTeeTimes.map(t => t.attributes.time)
-    this.group = this.courseTeeTimes
+    this.items = this.teeTimes.map(t => t.attributes.time)
+    this.group = this.teeTimes
   }
 }
 </script>
-<style scoped>
-
+<style>
+div.theme--light.v-tabs__bar {
+  background-color: #A8C256;
+}
 </style>
 
 

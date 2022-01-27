@@ -39,7 +39,6 @@ export default {
   data () {
     return {
       rndId: this.course.id,
-      roundTime: '',
       courseName: '',
       roundNumber: 1,
       clicked: false,
@@ -54,12 +53,6 @@ export default {
     })
   },
   methods: {
-    filterTeeTime (rndNum, list) {
-      let n = list.filter(el => el.attributes.round_number === rndNum)
-      if (n === undefined || !n.length) return '';
-
-      return n[0].attributes
-    },
     coursePage () {
       this.clicked = true;
       this.$store.commit("setPageTransition");
@@ -67,24 +60,17 @@ export default {
         name: 'Course',
         params: {
           id: this.currentTournament.id,
-          course_id: this.courseId
+          roundNumber: this.roundNumber
         }
       });
     }
   },
 
-  created: function () {
-    this.courseId = this.course['attributes']['new_course_id']
-    let course = this.course['attributes']
-    let rndNum = course['round_number']
-    let times = this.userTeeTimes
-    let t = this.filterTeeTime(rndNum, times)
-
-    if (t === undefined) return false;
-
-    this.roundNumber = rndNum
-    this.courseName = course['name']
-    this.roundTime = t.tee_time
+  created () {
+    const c = this.course.attributes
+    this.courseId = c.new_course_id
+    this.roundNumber = c.round_number
+    this.courseName = c.name
   }
 }
 </script>

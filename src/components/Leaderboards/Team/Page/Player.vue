@@ -74,7 +74,6 @@ export default {
   },
 	methods: {
 		barWidth (score) {
-			console.log('here', `${((score / 18) * 100).toFixed(0)}%`)
 			return `${((score / 18) * 100).toFixed(0)}%`
 		},
 	},

@@ -1,17 +1,15 @@
 <template>
   <v-card flat>
-    <TeeTime v-if="!loading" />
-
     <v-container
       fluid
       pa-0
       class="font-weight-regular"
       style="height:inherit;"
     >
-      <h2 class="font-weight-regular pt-3">
+      <h2 class="font-weight-regular pt-3 pl-4">
         Course Statistics
       </h2>
-      <v-layout row wrap v-if="!loading">
+      <v-layout row wrap v-if="!isLoading">
         <v-flex xs12 style="">
           <HcapDiff />
           <v-divider style="background-color:;"></v-divider>
@@ -46,7 +44,6 @@ import LowestScoring from '../Stats/LowestScoring'
 import PuttingAvg from '../Stats/PuttingAvg'
 import HcapDiff from '../Stats/HcapDiff'
 import ParAvgs from '../Stats/ParAvgs'
-import TeeTime from '../TeeTime'
 
 export default {
   name: 'index',
@@ -56,48 +53,30 @@ export default {
     LowestScoring,
     ParAvgs,
     PuttingAvg,
-    ScoringAvg,
-    TeeTime
+    ScoringAvg
   },
 
   data () {
     return {
-      loading: true,
+      isLoading: true,
       userData: {},
       courseData: {},
-      overallData: {},
+      roundData: {},
       teeTimes: []
     }
   },
 
   computed: {
      ...mapState({
-      currentTournament: state => state.tournament.currentTournament,
-      courseStats: state => state.course.courseStats
+      currentTournament: state => state.tournament.currentTournament
     })
   },
 
   methods: {
-    filterType (data, type) {
-      let d = data.filter(el => el['type'] === type);
-      if (d === undefined || !d.length) return {};
-      return d[0]['attributes']
-    }
   },
 
   created: function () {
-    // this.$store.dispatch(
-    //   'course/LOAD_COURSE_STATS',
-    //   {
-    //     tournId: this.currentTournament.id,
-    //     roundId: this.roundId,
-    //   }
-    // ).then(response => {
-    //   let data = this.courseStats.included
-    //   this.overallData = Object.assign(this.filterType(data, 'round_agg'))
-    //   this.courseData = Object.assign(this.filterType(data, 'course_agg'))
-    //   this.loading = false
-    // })
+    this.isLoading = false
   }
 }
 </script>
