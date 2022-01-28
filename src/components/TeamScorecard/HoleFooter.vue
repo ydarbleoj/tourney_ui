@@ -18,8 +18,8 @@
         class="text-xs-center"
         @click="scorecardPage()"
       >
-        <h3 style="color:#74C9D7;text-decoration: underline;">
-          Team Scorecard
+        <h3 style="color:#333;text-decoration: underline;">
+          Scorecard
         </h3>
       </v-flex>
       <v-flex xs4 class="text-xs-right pr-2">
@@ -57,13 +57,14 @@ export default {
 
   methods: {
     scorecardPage () {
+      console.log("ksdjlf", this.$route.params)
       this.$store.commit("setPageTransition", "back");
       this.$router.push(
         {
           name: 'TeamScorecard',
           params: {
             id: this.getTournament.id,
-            team_id: this.scorecard_id
+            team_id: this.$route.params.id
           }
         }
       )
@@ -79,7 +80,7 @@ export default {
         {
           name: 'TeamScorecardHole',
           params: {
-            id: this.scorecard_id,
+            id: this.$route.params.id,
             number: next
           }
         }

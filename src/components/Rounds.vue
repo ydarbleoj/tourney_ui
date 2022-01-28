@@ -1,33 +1,43 @@
 <template>
   <v-card width="100%" flat>
-     <v-layout row wrap mt-4>
-      <v-flex xs12>
-        <h2 class="font-weight-regular text-xs-left pl-4 ml-2 mb-3">Round Information</h2>
+    <v-layout row wrap>
+      <v-flex xs12 lg6>
+        <v-layout row wrap mt-4>
+          <v-flex xs12>
+            <h2 class="font-weight-regular text-xs-left pl-4 ml-2 mb-3">Round Information</h2>
+          </v-flex>
+          <hooper
+            :itemsToSlide="1"
+            :itemsToShow="1.1"
+            :centerMode="true"
+            :transition="300"
+            >
+              <slide
+                v-for="(item, indx) in roundComps" :key="item.id" :index="indx">
+                <course-button :course="item" />
+              </slide>
+            </hooper>
+        </v-layout>
+      </v-flex>
+      <v-flex xs12 lg6>
+        <v-layout row wrap mt-4>
+          <v-flex xs12>
+            <h2 class="font-weight-regular text-xs-left pl-4 ml-2 mb-3">Scorecards</h2>
+          </v-flex>
+          <hooper
+            :itemsToSlide="1"
+            :itemsToShow="1.1"
+            :centerMode="true"
+            :transition="300"
+          >
+            <slide
+              v-for="(item, indx) in roundComps" :key="item.id" :index="indx">
+              <scorecard-button :round="item" />
+            </slide>
+          </hooper>
+        </v-layout>
       </v-flex>
     </v-layout>
-    <hooper
-      :itemsToSlide="1"
-      :itemsToShow="1.1"
-      :centerMode="true"
-      :transition="300"
-      >
-        <slide
-          v-for="(item, indx) in roundComps" :key="item.id" :index="indx">
-          <course-button :course="item" />
-          <v-spacer class="mb-4"></v-spacer>
-          <scorecard-button :round="item" />
-        </slide>
-      </hooper>
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        active-class="active-tab"
-        v-for="i in roundComps"
-        :key="i['id']"
-        transition="false"
-        reverse-transition="false"
-      >
-      </v-tab-item>
-    </v-tabs-items>
   </v-card>
 </template>
 

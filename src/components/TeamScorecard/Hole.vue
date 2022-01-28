@@ -1,10 +1,10 @@
 <template>
   <v-card flat class="hole-container">
-    <v-layout column>
+    <v-layout column mb-3>
       <v-flex xs12>
-        <h2 class="pl-4 pt-4">
+        <h1 class="pl-4 pt-4">
           Hole {{ holeNumber }}
-        </h2>
+        </h1>
       </v-flex>
       <v-flex xs6 class="pl-4 pb-2">
         <span class="pr-2">Par {{ par }}</span> <span> Hcap {{ handicap }}</span>
@@ -25,7 +25,6 @@
       <v-divider class="pa-4"></v-divider>
       <Player :card="this.teamCardThree" :holeNumber="holeNumber" v-if="cardPresent(this.teamCardThree)" />
 
-      <v-divider class="pa-4"></v-divider>
     </v-card-text>
     <v-card-actions v-if="isLoaded">
       <HoleFooter />
@@ -51,6 +50,8 @@ export default {
     return {
       isLoaded: false,
       holeNumber: this.$route.params.number,
+      par: 0,
+      handicap: 0
     }
   },
 
@@ -78,6 +79,7 @@ export default {
   },
 
   created () {
+    console.log('hole', this.teamCard)
     if (this.teamCard.length == 0) {
       this.$store.dispatch(
       'scorecards/LOAD_TEAM_SCORECARD',

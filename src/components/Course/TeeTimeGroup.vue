@@ -80,7 +80,7 @@ export default {
           {
               name: 'TeamScorecard',
           params: {
-              id: this.currentTournament.id,
+            id: this.currentTournament.id,
             team_id: this.group.id
           }
         }

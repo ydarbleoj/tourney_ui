@@ -101,7 +101,7 @@ export default {
     return {
       isLoaded: false,
       preview: true,
-       course_name: "Scorecard",
+      course_name: "Scorecard",
       total_net: 0,
       total_putts: 0,
       total_3putts: 0,

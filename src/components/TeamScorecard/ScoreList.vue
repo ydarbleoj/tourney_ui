@@ -9,34 +9,37 @@
           v-bind:key="userScore.number"
           @click="holePage(userScore.number)"
         >
-          <v-list-tile style="padding-top:5px;">
-            <v-list-tile-content >
+          <v-list-tile style="padding-top:10px;">
+            <v-list-tile-content style="width:5%;">
               <h3 class="ma-0 font-weight-regular">{{ userScore.number}}</h3>
             </v-list-tile-content>
-            <v-list-tile-content>
+            <v-list-tile-content style="width:30%;">
               <v-list-tile-title class="text-xs-center ma-0">
                 Par {{ multiplyPar(userScore.par) }}
               </v-list-tile-title>
               <v-list-tile-sub-title class="text-xs-center">
                 <span style="font-size:24px;padding-right:5px;color:#A8C256;">{{ userScore.net }}</span>
-             </v-list-tile-sub-title>
+              </v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-content>
+            <v-list-tile-content style="width:30%;">
               <v-list-tile-title class="text-xs-center" >Putts</v-list-tile-title>
               <v-list-tile-sub-title class="text-xs-center" style="font-size:24px;" v-bind:style="{color: puttColor(userScore.putts)}">{{ userScore.putts}}</v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-content>
-              <v-list-tile-sub-title class="text-xs-center handicap-color"><span>{{ userScore.handicap }}</span> hcap</v-list-tile-sub-title>
+            <v-list-tile-content  class="text-xs-center handicap-color" style="width:30%;">
+              <v-list-tile-sub-title >
+                <h3>
+                  {{ userScore.handicap }} handicap
+                </h3>
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-list-tile-content style="width:5%;" class="text-xs-right">
+              <v-list-tile-sub-title>
+                <v-icon color="#666">
+                  mdi-chevron-right
+                </v-icon>
+              </v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-card-text class="pa-0" v-if="type == userScore.number" >
-            <transition
-            name="fade"
-            >
-              <user-score :cardData="userScore" :scorecardId="card.id" @event="removeType" />
-            </transition>
-          </v-card-text>
-          <v-divider></v-divider>
         </v-card>
       </template>
     </v-list>
@@ -66,7 +69,6 @@ export default {
 
   methods: {
     holePage (number) {
-      console.log('log', this.card)
       this.$router.push(
         {
           name: 'TeamScorecardHole',
