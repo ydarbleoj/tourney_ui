@@ -32,16 +32,14 @@ const plugins = [
 ]
 
 const actions = {
-  LOAD_SCORECARD: function ({ commit, state }, { tournId, tournRoundId, teamId }) {
+  LOAD_SCORECARD: function ({ commit, state }, { tournId, scorecardId }) {
     let options = {
       tournament_id: tournId,
-      tournament_round_id: tournRoundId,
-      team_id: teamId
+      scorecard_id: scorecardId
     }
 
     return axios.get(
-      '/api/v2/rounds/scorecards.json',
-      { params: options}
+      '/api/v2/rounds/scorecards.json', { params: options}
     ).then((response) => {
       commit('SET_SCORECARD', { list: response.data })
     }, (err) => {

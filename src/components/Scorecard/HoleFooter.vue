@@ -18,9 +18,9 @@
         class="text-xs-center"
         @click="scorecardPage()"
       >
-        <h3 style="color:#74C9D7;text-decoration: underline;">
-          Back to Scorecard
-        </h3>
+        <h2 style="color:#333;text-decoration: underline;">
+          Scorecard
+        </h2>
       </v-flex>
       <v-flex xs4 class="text-xs-right pr-2">
         <span
@@ -44,6 +44,7 @@ export default {
   data () {
     return {
       holeNumber: this.$route.params.number,
+      scorecardId: this.$route.params.id,
       roundId: null
     }
   },
@@ -58,15 +59,13 @@ export default {
   methods: {
     scorecardPage () {
       this.$store.commit("setPageTransition", "back");
-      this.$router.push(
-        {
-          name: 'Scorecard',
-          params: {
-            id: this.getTournament.id,
-            scorecard_id: this.roundId
-          }
+      this.$router.push({
+        name: 'Scorecard',
+        params: {
+          id: this.getTournament.id,
+          scorecard_id: this.scorecardId
         }
-      )
+      })
     },
     goBack () {
       this.$store.commit("setPageTransition", "back");
@@ -75,15 +74,13 @@ export default {
     goNext () {
       const next = +this.holeNumber + 1
       this.$store.commit("setPageTransition");
-      this.$router.push(
-        {
-          name: 'ScorecardHole',
-          params: {
-            id: this.scorecard_id,
-            number: next
-          }
+      this.$router.push({
+        name: 'ScorecardHole',
+        params: {
+          id: this.scorecardId,
+          number: next
         }
-      )
+      })
     },
     isEighteen () {
       return this.holeNumber == 18 ? true : false;

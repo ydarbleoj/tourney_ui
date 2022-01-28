@@ -68,6 +68,7 @@ export default {
     return {
       isLoaded: false,
       course_name: "Scorecard",
+      scorecardId: null,
       course_par: 0,
       total_net: 0,
       total_putts: 0,
@@ -82,16 +83,15 @@ export default {
 
   methods: {
     scorecardPage () {
+      const id = this.scorecardId
       this.clicked = true
-      this.$router.push(
-          {
-              name: 'Scorecard',
-          params: {
-              id: this.currentTournament.id,
-            scorecard_id: this.roundId
-          }
+      this.$router.push({
+        name: 'Scorecard',
+        params: {
+          id: this.currentTournament.id,
+          scorecard_id: id
         }
-      )
+      })
     }
   },
 
@@ -103,6 +103,7 @@ export default {
       return
     }
     let scorecard = preview[0].attributes
+    this.scorecardId = scorecard.id
     this.course_name = scorecard.course_name
     this.total_net = scorecard.total_net
     this.total_putts = scorecard.total_putts

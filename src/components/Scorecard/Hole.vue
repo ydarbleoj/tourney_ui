@@ -37,7 +37,8 @@ export default {
       holeNumber: this.$route.params.number,
       par: '',
       handicap: '',
-      hideCard: false
+      hideCard: false,
+      scorecardId: this.$route.params.id
     }
   },
 
@@ -62,11 +63,9 @@ export default {
 
   created () {
     if (this.scorecard.length == 0) {
-      this.$store.dispatch(
-      'scorecards/LOAD_SCORECARD',
-      {
+      this.$store.dispatch('scorecards/LOAD_SCORECARD', {
         tournId: this.currentTournament.id,
-        tournRoundId: this.currentRound.id
+        scorecardId: this.scorecardId
       }).then(response => {
         this.handicap = this.holeInfo().handicap
         this.par      = this.holeInfo().par

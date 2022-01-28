@@ -146,9 +146,10 @@ export default {
     this.roundPar4 = round['par4_avg']
     this.roundPar5 = round['par5_avg']
 
-    this.playerPar3 = player.length == undefined ? null : player['par3_avg']
-    this.playerPar4 = player.length == undefined ? null : player['par4_avg']
-    this.playerPar5 = player.length == undefined ? null : player['par5_avg']
+    this.personalBest = player
+    this.playerPar3 = Object.keys(player).length == 0 ? null : player['par3_avg']
+    this.playerPar4 = Object.keys(player).length == 0 ? null : player['par4_avg']
+    this.playerPar5 = Object.keys(player).length == 0 ? null : player['par5_avg']
     this.loading = false
   }
 }

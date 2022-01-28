@@ -87,10 +87,9 @@ export default {
   methods: {},
 
   mounted () {
-    console.log("slakjfd", this.userCourseStats.length == undefined)
     this.yearsField = this.roundStats
     this.courseOverall = this.courseStats
-    this.personalBest = this.userCourseStats.length == undefined ? null : this.userCourseStats
+    this.personalBest = Object.keys(this.userCourseStats).length === 0 ? null : this.userCourseStats
   }
 }
 </script>

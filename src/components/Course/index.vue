@@ -23,7 +23,6 @@
     >
       <container />
       <tee-time />
-
       <stats :roundId="roundId" />
     </v-card-text>
   </v-card>

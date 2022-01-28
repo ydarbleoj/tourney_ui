@@ -14,7 +14,6 @@ const state = {
 
 const actions = {
   LOAD_COURSE: function ({ commit, state }, { id, roundNumber }) {
-    console.log('soite', roundNumber)
     let options = { round_number: roundNumber }
     return axios.get(
       `api/v3/tournaments/${id}/round/information.json`, { params: options }
@@ -33,11 +32,7 @@ const mutations = {
     Vue.set(state, 'teeTimes', keys(list.tee_times).data)
     Vue.set(state, 'courseStats', filterType(courseData, 'course_agg'))
     Vue.set(state, 'roundStats', filterType(courseData, 'round_agg'))
-
-    const userKeys = keys(list.user_data)
-    if (userKeys !== null) {
-      Vue.set(state, 'userCourseStats', userKeys)
-    }0
+    Vue.set(state, 'userCourseStats', list.user_data)
   },
 }
 const keys = ((object) => {

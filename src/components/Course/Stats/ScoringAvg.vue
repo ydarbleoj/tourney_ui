@@ -70,6 +70,7 @@ export default {
       let overall = this.roundStats
       let course  = this.courseStats
       let net     = this.isNet
+      console.log('so', this.userCourseStats)
       this.yearsField = net ? overall['net_avg'] : overall['gross_avg']
       this.courseOverall = net ? course['net_avg'] : course['gross_avg']
       this.personalBest = net ? this.userCourseStats.net_avg : this.userCourseStats.gross_avg
