@@ -1,36 +1,94 @@
 <template>
-  <v-card v-if="loading" class="white elevation-1" color="white">
-    no, you're loading...
-  </v-card>
-  <v-card flat v-else style="margin:auto">
-    <v-container fluid pa-0 class="font-weight-regular mt-2 mb-2" style="height:inherit;">
-      <h4 class="text-xs-left mt-2 mb-2 font-weight-regular ">Putting Avg</h4>
-      <v-layout row wrap align-center>
-        <v-flex xs12>
-          <v-card flat class="white">
-            <v-layout>
-              <v-flex xs6>
-                <v-flex xs12 >
-                  <h1 class="font-weight-regular" style="color:#9FB8CE">{{ userAvg }}</h1>
-                  <h4 class="font-weight-regular" style="color:#333;font-size:14px;">({{ userThreePutt }} <span class="font-weight-regular" style="font-size:12px;color:#F79256;">3p</span>)</h4>
-                  <h4 class=" mb-3 font-weight-regular">Personal</h4>
-                </v-flex>
+  <v-card flat>
+    <v-container
+      fluid
+      class="font-weight-regular pa-4"
+      style="background-color:#9FB8CE;"
+     >
+      <v-layout row wrap justify-center
+        class="text-xs-center pb-2"
+      >
+        <v-flex xs12 class="text-xs-left">
+          <h2 class="font-weight-regular">Putting Averages</h2>
+        </v-flex>
+        <v-layout row wrap align-center mt-3>
+          <v-flex xs3 class="text-xs-center">
+            <h1 class="font-weight-regular" style="color:#333;font-size:50px;">
+              {{ puttingAvg }}
+            </h1>
+          </v-flex>
+          <v-flex xs9>
+            <v-layout row wrap>
+              <v-flex xs4 class="font-weight-regular text-xs-center">
+                <h1 class="font-weight-regular white--text">
+                  {{ round1Avg }}
+                </h1>
+                <h4 class="font-weight-regular">
+                  Round 1
+                </h4>
               </v-flex>
-              <v-flex xs6>
-                <v-flex xs12>
-                  <h1 class="font-weight-regular ma-0" style="color:#A8C256;">
-                    {{ overallAvg }}
-                  </h1>
-                  <h4 class="font-weight-regular" style="color:#333;font-size:14px;">
-                    ({{ overallThreePutt }}
-                    <span class="font-weight-regular" style="font-size:12px;color:#F79256;">3p</span>)
-                  </h4>
-                  <h4 class=" font-weight-regular">Overall </h4>
-                </v-flex>
+              <v-flex xs4 class="font-weight-regular text-xs-center">
+                <h1 class="font-weight-regular white--text">
+                  {{ round2Avg }}
+                </h1>
+                <h4 class="font-weight-regular">
+                  Round 2
+                </h4>
+              </v-flex>
+              <v-flex xs4 class="font-weight-regular text-xs-center">
+                <h1 class="font-weight-regular white--text">
+                  {{ round3Avg }}
+                </h1>
+                <h4 class="font-weight-regular">
+                  Round 3
+                </h4>
               </v-flex>
             </v-layout>
-          </v-card>
+          </v-flex>
+        </v-layout>
+      </v-layout>
+
+      <v-layout row wrap justify-center
+        class="text-xs-center pb-2 mt-3"
+      >
+        <v-flex xs12 class="text-xs-left">
+          <h2 class="font-weight-regular">3 Putts</h2>
         </v-flex>
+        <v-layout row wrap align-center>
+          <v-flex xs3 class="text-xs-center">
+            <h1 class="font-weight-regular" style="color:#666;font-size:50px;">
+              {{ threePuttingAvg }}
+            </h1>
+          </v-flex>
+          <v-flex xs9>
+            <v-layout row wrap>
+              <v-flex xs4 class="font-weight-regular text-xs-center">
+                <h1 class="font-weight-regular" style="color:#666">
+                  {{ round1ThreeAvg }}
+                </h1>
+                <h4 class="font-weight-regular">
+                  Round 1
+                </h4>
+              </v-flex>
+              <v-flex xs4 class="font-weight-regular text-xs-center">
+                <h1 class="font-weight-regular" style="color:#666">
+                  {{ round2ThreeAvg }}
+                </h1>
+                <h4 class="font-weight-regular">
+                  Round 2
+                </h4>
+              </v-flex>
+              <v-flex xs4 class="font-weight-regular text-xs-center">
+                <h1 class="font-weight-regular" style="color:#666">
+                  {{ round3ThreeAvg }}
+                </h1>
+                <h4 class="font-weight-regular">
+                  Round 3
+                </h4>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+        </v-layout>
       </v-layout>
     </v-container>
   </v-card>
@@ -43,40 +101,39 @@ export default {
   name: 'PuttingAvg',
   data () {
     return {
-      isNet: true,
-      loading: true,
-      userAvg: "",
-      userThreePutt: "",
-      overallAvg: "",
-      overallThreePutt: ""
+      puttingAvg: 0,
+			round1Avg: 0,
+			round2Avg: 0,
+			round3Avg: 0,
+      threePuttingAvg: 0,
+			round1ThreeAvg: 0,
+			round2ThreeAvg: 0,
+			round3ThreeAvg: 0,
     }
   },
 
   computed: {
-     ...mapState({
-      overallSummary: state => state.overallSummary.courseSummary,
-      userSummary: state => state.overallSummary.userSummary
+    ...mapState({
+      tournamentSummary: state => state.overallSummary.tournamentSummary
     })
   },
 
-  methods: {
-  },
+  methods: {},
 
-  mounted: function () {
-    if (this.userSummary['avgs']) {
-      this.userAvg          = this.userSummary['avgs'][0]['putts_avg']
-      this.userThreePutt    = this.userSummary['avgs'][0]['three_putts_avg']
-    }
-    if (this.overallSummary["avgs"]) {
-      this.overallAvg       = parseFloat(this.overallSummary['avgs'][0]['putts_avg']).toFixed(2)
-      this.overallThreePutt = this.overallSummary['avgs'][0]['three_putts_avg']
-    }
+  mounted () {
+    this.puttingAvg = this.tournamentSummary.attributes.putting_avg
+		this.round1Avg = this.tournamentSummary.attributes.round1_putting_avg
+		this.round2Avg = this.tournamentSummary.attributes.round2_putting_avg
+		this.round3Avg = this.tournamentSummary.attributes.round3_putting_avg
 
-    this.loading = false
+    this.threePuttingAvg = this.tournamentSummary.attributes.three_putting_avg
+		this.round1ThreeAvg = this.tournamentSummary.attributes.round1_3putting_avg
+		this.round2ThreeAvg = this.tournamentSummary.attributes.round2_3putting_avg
+		this.round3ThreeAvg = this.tournamentSummary.attributes.round3_3putting_avg
   }
 }
 </script>
-<style>
+<style scoped>
 .scoring--stats {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 1s ease, box-shadow 1s ease;
@@ -92,11 +149,17 @@ score-label.record {
   color: #999;
   font-size: 18px;
 }
-  p.hide {
-    display: none;
-  }
+p.hide {
+  display: none;
+}
 
-  .name-list {
-    color: #9ad3de;
-  }
+.name-list {
+  color: #9ad3de;
+}
+
+.border-card {
+	border-radius: 20px;
+  border: 2px solid #999;
+  transition: all 0ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
 </style>

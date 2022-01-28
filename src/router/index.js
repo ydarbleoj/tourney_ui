@@ -257,7 +257,7 @@ const router = new Router({
       name: "Summary",
       component: Summary,
       props: { default: true },
-      meta: { auth: true, transitionName: 'pageTransition' }
+      meta: { auth: true }
     },
   ]
 })

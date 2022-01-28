@@ -1,5 +1,5 @@
 <template>
-  <v-card class="summary-card" @click="summaryPage">
+  <v-card flat class="summary-card" @click="summaryPage">
     <v-img
       :src="'/static/summary.jpg'"
       height='200px'
@@ -7,12 +7,12 @@
     >
       <v-container fill-height>
         <v-layout>
-          <v-flex xs6 class="pa-0">
+          <v-flex xs12 class="pa-0">
             <div style='height:100%;'>
               <v-layout align-end row style="width:100%;height:inherit;">
-                <v-flex xs12 class="white--text ma-2">
+                <v-flex xs12 class="white--text ma-1">
                   <h2 class="white--text font-weight-regular text-xs-left">
-                    Stats
+                    The Week's Stats
                   </h2>
                 </v-flex>
               </v-layout>
@@ -50,16 +50,14 @@ export default {
     }
   },
 
-  created: function () {
+  created () {
   }
 }
 </script>
-<style scoped>
+<style>
 .summary-card {
-  position: relative;
   border-radius: 20px;
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
   background-color: #FBFCFD;
-  z-index: 1;
 }
 </style>

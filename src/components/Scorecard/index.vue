@@ -9,7 +9,10 @@
       <v-container class="pa-4">
         <v-layout row wrap align-center justify-center>
           <v-flex xs5>
-            <BackButton />
+            <BackButton
+              :routeName="'Tournament'"
+              :routeParams="{ id: this.currentTournament.id }"
+            />
             <v-card class="text-xs-center grey darken-3" flat >
               <h3 class="mb-0 white--text font-weight-regular">{{ course_name }}</h3>
               <v-container pa-0>

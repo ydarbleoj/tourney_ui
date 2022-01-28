@@ -8,86 +8,53 @@
     >
       <v-container class="pa-4">
         <v-layout row wrap align-center justify-center>
-          <v-flex xs5>
-            <v-btn
-              absolute
-              class="ma-2 back-button"
-              style="top:0;left:0;"
-              outline
-              color="white"
-              depressed
-              small
-              fab
-              @click.native="backButton"
-            >
-              <v-icon color="white">
-                mdi-chevron-left
-              </v-icon>
-            </v-btn>
-            <v-card class="text-xs-center grey darken-3" flat >
-              <h3 class="mb-0 white--text font-weight-regular">{{ course_name }}</h3>
-              <v-container pa-0>
-                <v-layout row wrap>
-                  <v-flex xs5>
-                    <div>
-                      <h1 class="font-weight-regular ma-0" style="color:#A8C256">{{ total_net }}
-                      </h1>
-                    </div>
-                    <label class="scorecard-label">NET</label>
-                  </v-flex>
-                  <v-flex xs1>
-                    <div><h1 class="grey--text">/</h1></div>
-                  </v-flex>
-                  <v-flex xs5>
-                    <div><h1 class="grey--text ma-0 font-weight-regular" >{{ total_score }}</h1></div>
-                    <label class='scorecard-label'>GROSS</label>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card>
+          <v-flex xs3>
+            <BackButton
+              :routeName="'Course'"
+              :routeParams="{
+                id: this.currentTournament.id,
+                course_id: this.teamCard.new_course_id
+              }"
+            />
           </v-flex>
-          <v-flex xs2>
-            <v-card flex class="text-xs-center grey darken-3" flat height="100%">
-              <v-container class="pa-0">
-                <v-layout row wrap flex>
-                  <v-flex xs12>
-                    <label class='scorecard-label'>OUT</label>
-                    <div class="grey--text">
-                      <span style="color:#A8C256">{{ out_net }}</span>
-                      /
-                      <span class="grey--text">{{ out_gross }}</span>
-                    </div>
-                    <label class="scorecard-label label-tight">{{ out_putts }} / <span class="pers-record">{{ out_3putts }} </span></label>
-                  </v-flex>
-                  <v-flex xs12>
-                    <label class='scorecard-label'>IN</label>
-                    <div class="grey--text">
-                      <span style="color:#A8C256">{{ in_net }}</span>
-                      /
-                      <span class="grey--text">{{ in_gross }}</span>
-                    </div>
-                    <label class="scorecard-label label-tight">{{ in_putts }} / <span class="pers-record">{{ in_3putts }}</span></label>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card>
+        </v-layout>
+        <v-layout row wrap>
+          <v-flex xs6 mt-4>
+            <h2 class="white--text font-weight-regular">{{ course_name }}</h2>
+            <h3 class="font-weight-regular white--text"><span style="color:#999;">Par</span> {{ course_par }}</h3>
           </v-flex>
-          <v-flex xs5>
-            <v-card class="text-xs-center grey darken-3" flat>
-              <h3 class="mb-0 pt-2 white--text">Par {{ course_par }}</h3>
-              <v-container class="pa-0 pl-3">
-                <v-layout row wrap>
-                  <v-flex xs5>
-                    <div><h1 style="color:#A8C256" class="ma-0 font-weight-regular">{{ total_putts }}</h1></div>
-                    <label class="scorecard-label">PUTTS</label>
-                  </v-flex>
-                  <v-flex xs5>
-                    <div><h1 class="pers-record ma-0 font-weight-regular" > {{ total_3putts }}</h1></div>
-                    <label class='scorecard-label font-weight-regular'>3 PUTTS</label>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card>
+          <v-flex xs6 class="text-xs-center">
+            <v-layout row wrap>
+              <v-flex xs5>
+                <h1 class="font-weight-regular ma-0" style="color:#A8C256">{{ total_net }}</h1>
+                <label class="scorecard-label">NET</label>
+              </v-flex>
+              <v-flex xs2>
+                <h1 class="grey--text">/</h1>
+              </v-flex>
+              <v-flex xs5>
+                <h1 class="grey--text ma-0 font-weight-regular" >{{ total_score }}</h1>
+                <label class='scorecard-label'>GROSS</label>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap flex mt-4>
+              <v-flex xs6>
+                <div class="grey--text">
+                  <span style="color:#A8C256">{{ out_net }}</span>
+                  /
+                  <span class="grey--text">{{ out_gross }}</span>
+                </div>
+                <label class='scorecard-label'>OUT</label>
+              </v-flex>
+              <v-flex xs6>
+                <div class="grey--text">
+                  <span style="color:#A8C256">{{ in_net }}</span>
+                  /
+                  <span class="grey--text">{{ in_gross }}</span>
+                </div>
+                <label class='scorecard-label'>IN</label>
+              </v-flex>
+            </v-layout>
           </v-flex>
         </v-layout>
       </v-container>
@@ -173,29 +140,13 @@ export default {
       this.in_putts = card.in_putts
       this.in_3putts = card.in_3putts
     },
-    backButton () {
-      console.log('curre', this.currentTournament)
-      this.$store.commit("setPageTransition", "back");
-      this.$router.push(
-        {
-          name: 'Course',
-          params: {
-            id: this.currentTournament.id,
-            course_id: this.teamCard.new_course_id
-          }
-        }
-      )
-    }
   },
 
   created: function () {
-    this.$store.dispatch(
-      'scorecards/LOAD_TEAM_SCORECARD',
-      {
-        tournId: this.$route.params.id,
-        team_id: this.$route.params.team_id
-      }
-    ).then(response => {
+    this.$store.dispatch('scorecards/LOAD_TEAM_SCORECARD', {
+      tournId: this.$route.params.id,
+      team_id: this.$route.params.team_id
+    }).then(response => {
       this.loadHeaderInfo()
       this.isLoaded = true
     })
@@ -211,8 +162,7 @@ export default {
 }
 label.scorecard-label {
   color: white;
-  font-size: 10px;
-
+  font-size: 12px;
 }
 
 /* .scorecard-card {
