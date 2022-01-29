@@ -5,6 +5,7 @@
 				src="/static/sand.jpg"
 				class="profile-image bx-shadow"
 				align="left"
+				@click="editPic()"
 			/>
 			<h1 class="wrap-info">
 				{{ this.name }}
@@ -31,6 +32,12 @@ export default {
     }
   },
 
+	methods: {
+		editPic() {
+			this.$emit('showOverlay')
+		}
+	},
+
 	mounted() {
 		this.klass = this.classType
 	}
@@ -56,6 +63,6 @@ export default {
   font-size: 20px;
 }
 .bx-shadow {
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
 </style>

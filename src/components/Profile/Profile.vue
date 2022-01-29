@@ -7,6 +7,7 @@
             :name="$auth.user().username"
             :subtext="$auth.user().home"
             :classType="'player-profile'"
+            @editPic="showOverlay"
           />
         </v-flex>
       </v-layout>
@@ -100,6 +101,12 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+      hi
+    </v-dialog>
   </v-card>
 </template>
 
@@ -114,6 +121,7 @@ export default {
   },
   data () {
     return {
+      dialog: false,
       userId: this.$auth.user().id,
       isLoaded: false,
       hcap_diff: 0,
@@ -139,6 +147,9 @@ export default {
   },
 
   methods: {
+    showOverlay () {
+      this.dialog = true;
+    },
     fetch() {
       this.$auth.fetch({
         success() {
@@ -201,6 +212,6 @@ export default {
 </script>
 <style>
 .bx-shadow {
-  box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
 }
 </style>
