@@ -93,18 +93,6 @@ export default {
     },
   },
 
-  // watch: {
-  //   current: function () {
-  //     this.roundComps = []
-  //     this.$store.dispatch('LOAD_ROUNDS', { id: this.current.id })
-  //       .then(response => {
-  //         this.isloading = false
-  //         this.roundComps = this.rounds
-  //          this.currentRoundNumber = this.currentRound['attributes']['round_number']
-  //       })
-  //   }
-  // },
-
   created: function (current) {
     this.$store.dispatch(
       'LOAD_ROUNDS', { id: this.current.id }

@@ -26,6 +26,8 @@ import ResetPassword from '@/components/ResetPassword'
 import ForgotPassword from '@/components/ForgotPassword'
 import Profile from '@/components/Profile/Profile'
 import ProfileEdit from '@/components/Profile/Edit'
+import ProfileScorecards from '@/components/Profile/Scorecards'
+import ProfileScorecard from '@/components/Profile/Scorecard/index'
 import Scorecard from '@/components/Scorecard/index'
 import ScorecardHole from '@/components/Scorecard/Hole'
 import TeamScorecard from '@/components/TeamScorecard/index'
@@ -91,6 +93,18 @@ const router = new Router({
       component: ProfileEdit,
       props: { default: true },
       meta: { auth: true },
+    },
+    {
+      path: '/profile/scorecards',
+      name: 'ProfileScorecards',
+      component: ProfileScorecards,
+      meta: { auth: true }
+    },
+    {
+      path: '/profile/scorecard/:id',
+      name: "ProfileScorecard",
+      component: ProfileScorecard,
+      meta: { auth: true }
     },
     {
       path: '/tournaments_dashboard',

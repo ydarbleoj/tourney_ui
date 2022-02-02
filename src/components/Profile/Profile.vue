@@ -74,6 +74,7 @@
         row wrap align-center
         class="bx-shadow pa-3 mb-4"
         style="border-radius:25px;"
+         @click="toScorecards()"
       >
          <v-flex xs6>
           <h1 class="font-weight-medium" style="color:#F8C977">Scorecards</h1>
@@ -148,12 +149,9 @@ export default {
         }
       });
     },
-    logout () {
-      this.$auth.logout({
-        params: {},
-        data: {},
-        redirect: '/login'
-      })
+    toScorecards() {
+      this.$store.commit("setPageTransition");
+      this.$router.push({ name: 'ProfileScorecards' })
     },
     toBandon() {
       this.$store.commit("setPageTransition");

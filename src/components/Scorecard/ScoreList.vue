@@ -53,7 +53,15 @@ import UserScore from './UserScore'
 
 export default {
   name: 'ScoreList',
-  props: ['card'],
+  props: {
+    card: {
+      type: Object
+    },
+    disableLink: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     UserScore
   },
@@ -64,11 +72,14 @@ export default {
       type: '',
       thisComponent: '',
       holeNumber: 1,
+      Hole: false
     }
   },
 
   methods: {
     holePage (number) {
+      if (this.disableLink) return;
+
       this.$router.push(
         {
           name: 'ScorecardHole',
