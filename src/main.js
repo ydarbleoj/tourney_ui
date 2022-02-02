@@ -31,10 +31,7 @@ import {
   VTabs,
   VImg,
 } from 'vuetify'
-import VueFileAgent from 'vue-file-agent';
-import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 
-Vue.use(VueFileAgent);
 import { Touch, Ripple } from 'vuetify/lib/directives'
 import '@mdi/font/css/materialdesignicons.css'
 import './stylus/main.styl'

@@ -7,7 +7,6 @@
             :name="$auth.user().username"
             :subtext="$auth.user().home"
             :classType="'player-profile'"
-            @editPic="showOverlay"
           />
         </v-flex>
       </v-layout>
@@ -101,12 +100,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-dialog
-      v-model="dialog"
-      width="500"
-    >
-      hi
-    </v-dialog>
   </v-card>
 </template>
 
@@ -116,9 +109,7 @@ import ImageContainer from './ImageContainer'
 
 export default {
   name: 'Profile',
-  components: {
-    ImageContainer
-  },
+  components: { ImageContainer },
   data () {
     return {
       dialog: false,
@@ -147,9 +138,6 @@ export default {
   },
 
   methods: {
-    showOverlay () {
-      this.dialog = true;
-    },
     fetch() {
       this.$auth.fetch({
         success() {
@@ -187,7 +175,6 @@ export default {
     },
     loadProfileData () {
       if (this.profileData !== null) {
-        console.log("this", this.userProfile)
         this.hcap_diff = this.profileData.attributes.hcap_diff
         this.net_avg = this.profileData.attributes.net_avg
         this.gross_avg = this.profileData.attributes.gross_avg

@@ -20,6 +20,17 @@ const actions = {
       console.log('profile data')
     })
   },
+  UPDATE_IMAGE: function ({ commit, state}, { image }) {
+    console.log('hi', image)
+    let options = { image: image }
+    return axios.post(
+      '/presigned_url', { direct_upload: options }
+    ).then((resposne) => {
+      return true
+    }, (err) => {
+      console.log('profile update error', err)
+    })
+  }
 }
 
 const mutations = {

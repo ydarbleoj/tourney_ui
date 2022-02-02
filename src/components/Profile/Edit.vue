@@ -38,7 +38,7 @@
           required
         ></v-text-field>
       </form>
-      <v-card flat class="pb-3 pl-0" v-if="$auth.user().role === 'admin'">
+      <v-card flat class="pb-3 pl-0">
         <v-card-title class="pa-0 text-xs-center">
           <h3 class="font-weight-medium">Change Password</h3>
           <v-spacer></v-spacer>
@@ -148,7 +148,14 @@ export default {
         password: this.password,
         password_confirmation: this.password_confirmation
       }
-    }
+    },
+    logout () {
+      this.$auth.logout({
+        params: {},
+        data: {},
+        redirect: '/login'
+      })
+    },
   },
 
   computed: {
