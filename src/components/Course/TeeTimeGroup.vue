@@ -76,15 +76,13 @@ export default {
     scorecardPage () {
       this.clicked = true
       this.$store.commit("setPageTransition");
-      this.$router.push(
-          {
-              name: 'TeamScorecard',
-          params: {
-            id: this.currentTournament.id,
-            team_id: this.group.id
-          }
+      this.$router.push({
+        name: 'TeamScorecard',
+        params: {
+          id: this.currentTournament.id,
+          team_id: this.group.id
         }
-      )
+      })
     },
   },
 

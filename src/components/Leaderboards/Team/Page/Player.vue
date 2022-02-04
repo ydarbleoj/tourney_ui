@@ -10,7 +10,7 @@
 					<h3 class="mt-2 text-xs-left wrap-info" style="font-weight:400;">
 						{{ player.username }}
 						<br>
-						<span class="text-xs-left" style="font-weight:500">
+						<span class="text-xs-left font-weight-regular" style="font-size:16px;">
 							Handicap {{ player.player_handicap }}
 						</span>
 					</h3>

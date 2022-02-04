@@ -13,7 +13,7 @@
               :routeName="'Course'"
               :routeParams="{
                 id: this.currentTournament.id,
-                course_id: this.teamCard.new_course_id
+                course_id: this.currentRound.round_number
               }"
             />
           </v-flex>
