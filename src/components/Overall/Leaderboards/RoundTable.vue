@@ -16,12 +16,11 @@
           <v-spacer></v-spacer>
           <span style="color:#666;">Earnings: $ {{ props.item.attributes.total_money }}</span>
         </td>
-        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.last_three }}</td>
-        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.top_6 }}</td>
-        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.third_place }}</td>
-        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.second_place }}</td>
+        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.average }}</td>
+        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.round1 }}</td>
+        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.round2 }}</td>
+        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.round3 }}</td>
         <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.total_wins }}</td>
-        <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.average_finish }}</td>
         <td class="text-xs-center">
           <v-icon color="#999">
             mdi-chevron-right
@@ -33,7 +32,7 @@
 </template>
 <script>
 export default {
-	name: 'Table',
+	name: 'RoundTable',
   props: {
 		leaderboardArray: Array,
 		linkTo: String
@@ -47,7 +46,7 @@ export default {
           align: 'left',
           sortable: false,
           value: 'pos',
-          width: '5%'
+          width: '8%'
         },
         {
           text: 'Players',
@@ -57,42 +56,35 @@ export default {
           width: '30%'
         },
         {
-          text: 'Last 3',
-          align: 'center',
-          sortable: false,
-          value: 'total_score',
-          width: '7%'
-        },//62
-        {
-          text: 'Top 6',
+          text: 'Avg',
           align: 'center',
           sortable: false,
           value: 'rnd1_score',
           width: '7%'
         },
         {
-          text: '3rd',
+          text: 'R1',
           align: 'center',
           sortable: false,
           value: 'rnd2_score',
           width: '7%'
         },
         {
-          text: '2nd',
+          text: 'R2',
           align: 'center',
           sortable: false,
           value: 'rnd3_score',
           width: '7%'
         },
         {
-          text: '1st',
+          text: 'R3',
           align: 'center',
           sortable: false,
           value: 'net_total',
           width: '7%'
         },
         {
-          text: 'Average',
+          text: 'Total',
           align: 'center',
           sortable: false,
           value: 'net_total',
@@ -126,6 +118,7 @@ export default {
   },
 
   mounted: function () {
+    console.log('this', this.leaderboardArray)
   }
 }
 </script>

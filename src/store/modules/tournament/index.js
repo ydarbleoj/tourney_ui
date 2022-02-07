@@ -40,7 +40,6 @@ const actions = {
 
 const mutations = {
   SET_TOURNAMENT_LIST: (state, { list }) => {
-    console.log(';ist', list.tournament)
     Vue.set(state, 'tournaments', JSON.parse(list.tournament).data)
   },
   CURRENT_TOURNAMENT: (state, { list }) => {

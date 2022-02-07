@@ -1,20 +1,20 @@
 <template>
-  <stroke-page
+  <team-page
     v-if="!isLoading"
-    :leaderboard="getStrokeLeaderboard"
+    :leaderboard="getTeamLeaderboard"
     :money="objectPurse"
-    :link="'StrokeOverallPlayer'"
-    :title="'Stroke'"
+    :link="'TeamOverallPlayer'"
+    :title="'Team'"
   />
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-import StrokePage from './Page'
+import TeamPage from './Page'
 
 export default {
-	name: 'StrokeOverallLeaderboard',
+	name: 'TeamOverallLeaderboard',
   components: {
-   StrokePage
+    TeamPage
   },
   data () {
     return {
@@ -26,8 +26,8 @@ export default {
 
   computed: {
      ...mapGetters({
-      getStrokeLeaderboard: 'leaderboards/overall/getStrokeLeaderboard',
-      strokePurse: 'leaderboards/overall/getStrokePurse'
+      getTeamLeaderboard: 'leaderboards/overall/getTeamLeaderboard',
+      teamPurse: 'leaderboards/overall/getTeamPurse'
      })
   },
   methods: {
@@ -35,9 +35,9 @@ export default {
 
   mounted: function () {
     this.$store.dispatch(
-      'leaderboards/overall/LOAD_STROKE_LEADERBOARD'
+      'leaderboards/overall/LOAD_TEAMS'
     ).then(response => {
-      this.objectPurse = this.strokePurse
+      this.objectPurse = this.teamPurse
       this.isLoading = false
     })
   }

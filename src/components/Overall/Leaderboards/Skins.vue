@@ -1,20 +1,20 @@
 <template>
-  <stroke-page
+  <skins-page
     v-if="!isLoading"
-    :leaderboard="getStrokeLeaderboard"
+    :leaderboard="getSkinsLeaderboard"
     :money="objectPurse"
-    :link="'StrokeOverallPlayer'"
-    :title="'Stroke'"
+    :link="'SkinsOverallPlayer'"
+    :title="'Skins'"
   />
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-import StrokePage from './Page'
+import SkinsPage from './Page'
 
 export default {
-	name: 'StrokeOverallLeaderboard',
+	name: 'SkinsOverallLeaderboard',
   components: {
-   StrokePage
+    SkinsPage
   },
   data () {
     return {
@@ -26,18 +26,19 @@ export default {
 
   computed: {
      ...mapGetters({
-      getStrokeLeaderboard: 'leaderboards/overall/getStrokeLeaderboard',
-      strokePurse: 'leaderboards/overall/getStrokePurse'
+      getSkinsLeaderboard: 'leaderboards/overall/getSkinsLeaderboard',
+      getSkinsPurse: 'leaderboards/overall/getSkinsPurse'
      })
   },
   methods: {
   },
 
-  mounted: function () {
+  mounted () {
     this.$store.dispatch(
-      'leaderboards/overall/LOAD_STROKE_LEADERBOARD'
+      'leaderboards/overall/LOAD_SKINS'
     ).then(response => {
-      this.objectPurse = this.strokePurse
+      console.log('sdhf', this.getSkinsPurse)
+      this.objectPurse = this.getSkinsPurse
       this.isLoading = false
     })
   }

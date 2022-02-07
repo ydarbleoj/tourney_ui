@@ -1,7 +1,6 @@
 <template>
   <leaderboards />
 </template>
-
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import Leaderboards from './Leaderboards/index'

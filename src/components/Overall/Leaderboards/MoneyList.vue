@@ -1,20 +1,20 @@
 <template>
-  <stroke-page
+  <money-list
     v-if="!isLoading"
-    :leaderboard="getStrokeLeaderboard"
+    :leaderboard="getMoneyList"
     :money="objectPurse"
-    :link="'StrokeOverallPlayer'"
-    :title="'Stroke'"
+    :link="'MoneyListOverallPlayer'"
+    :title="'Money List'"
   />
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-import StrokePage from './Page'
+import MoneyList from './Page'
 
 export default {
-	name: 'StrokeOverallLeaderboard',
+	name: 'OverallMoneyList',
   components: {
-   StrokePage
+    MoneyList
   },
   data () {
     return {
@@ -26,18 +26,19 @@ export default {
 
   computed: {
      ...mapGetters({
-      getStrokeLeaderboard: 'leaderboards/overall/getStrokeLeaderboard',
-      strokePurse: 'leaderboards/overall/getStrokePurse'
+      getMoneyList: 'leaderboards/overall/getMoneyList',
+      getOverallPurse: 'leaderboards/overall/getOverallPurse'
      })
   },
   methods: {
   },
 
-  mounted: function () {
+  mounted () {
     this.$store.dispatch(
-      'leaderboards/overall/LOAD_STROKE_LEADERBOARD'
+      'leaderboards/overall/LOAD_MONEY'
     ).then(response => {
-      this.objectPurse = this.strokePurse
+      console.log('sdhf', this.getOverallPurse)
+      this.objectPurse = this.getOverallPurse
       this.isLoading = false
     })
   }

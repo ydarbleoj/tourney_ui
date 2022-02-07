@@ -2,7 +2,7 @@
   <putting-page
     v-if="!isLoading"
     :leaderboard="getPuttingLeaderboard"
-    :purse="objectPurse"
+    :money="objectPurse"
     :link="'PuttingOverallPlayer'"
     :title="'Putting'"
   />

@@ -4,10 +4,12 @@
 		:class="bgColor"
    >
     <v-card-title class="pa-0 pt-2 pl-2">
-      <Header :purse="purse" :name="title" />
+      <Header :purse="money" :name="title" />
     </v-card-title>
     <v-card-text class="pa-0">
-			<Table :leaderboardArray="leaderboard" :linkTo="link" />
+      <RoundTable :leaderboardArray="leaderboard" :linkTo="link" v-if="tableRound" />
+      <MoneyTable :leaderboardArray="leaderboard" :linkTo="link" v-else-if="tableMoney" />
+			<Table :leaderboardArray="leaderboard" :linkTo="link" v-else />
     </v-card-text>
   </v-card>
 </template>
@@ -15,23 +17,29 @@
 import { mapState, mapGetters } from 'vuex'
 import Header from './Header'
 import Table from './Table'
+import RoundTable from './RoundTable'
+import MoneyTable from './MoneyTable'
 
 export default {
 	name: 'Page',
   props: {
 		leaderboard: Array,
 		title: String,
-    purse: String,
+    money: String,
 		link: String
 	},
 
   components: {
     Header,
+    MoneyTable,
+    RoundTable,
 		Table
   },
   data () {
     return {
       isLoading: true,
+      tableRound: false,
+      tableMoney: false
     }
   },
 	computed: {
@@ -42,7 +50,13 @@ export default {
   methods: {
   },
 
-  mounted: function () {
+  mounted() {
+    if (this.title == 'Skins' || this.title == 'Team') {
+      this.tableRound = true
+    }
+     if (this.title == 'Money List') {
+      this.tableMoney = true
+    }
   }
 }
 </script>

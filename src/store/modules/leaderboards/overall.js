@@ -8,6 +8,7 @@ const state = {
   puttingPreview: [],
   skinsPreview: [],
   teamPreview: [],
+  teamLeaderboard: [],
   strokeLeaderboard: [],
   puttingLeaderboard: [],
   skinsLeaderboard: [],
@@ -15,6 +16,9 @@ const state = {
   skinsPlayer: {},
   strokePurse: 0,
   puttingPurse: 0,
+  skinsPurse: 0,
+  teamPurse: 0,
+  overallPurse: 0,
   moneyPreview: [],
   moneyList: [],
   moneyPlayer: {}
@@ -72,6 +76,7 @@ const actions = {
     return axios.get(
       '/api/v3/overall/skins.json'
     ).then((response) => {
+      console.log('res', response)
       commit('SET_SKINS_LEADERBOARD', { list: response.data })
     }, (err) => {
       console.log(err)
@@ -84,10 +89,18 @@ const actions = {
       commit('SET_SKINS_PLAYER_PROFILE', { list: response.data })
     })
   },
-  LOAD_MONEY: function ({ commit, state }, { id }) {
-    let options = { tournament_id: id }
+  LOAD_TEAMS: function ({ commit, state }) {
     return axios.get(
-      '/api/v3/overall/money_lists.json', { params: options }
+      '/api/v3/overall/teams.json'
+    ).then((response) => {
+      commit('SET_TEAMS_LEADERBOARD', { list: response.data })
+    }, (err) => {
+      console.log(err)
+    })
+  },
+  LOAD_MONEY: function ({ commit, state }) {
+    return axios.get(
+      '/api/v3/overall/money_lists.json'
     ).then((response) => {
       commit('SET_MONEY', { list: response.data })
     }, (err) => {
@@ -106,6 +119,7 @@ const actions = {
 
 const mutations = {
   SET_PREVIEW_LEADERBOARDS: (state, { list }) => {
+
     const strokes = JSON.parse(list.stroke)
     const putting = JSON.parse(list.putting)
     const skins = JSON.parse(list.skins)
@@ -117,9 +131,6 @@ const mutations = {
     Vue.set(state, 'skinsPreview', keys(skins))
     Vue.set(state, 'teamPreview', keys(team))
     Vue.set(state, 'moneyPreview', keys(money))
-  },
-  SET_TEAM_LEADERBOARD: (state, { list }) => {
-    state.teamLeaderboard = list.data
   },
   SET_STROKE_LEADERBOARD: (state, { list }) => {
     const strokes = JSON.parse(list.users)
@@ -133,10 +144,19 @@ const mutations = {
     Vue.set(state, 'puttingLeaderboard', keys(putting))
   },
   SET_SKINS_LEADERBOARD: (state, { list }) => {
-    Vue.set(state, 'skinsLeaderboard', list.data)
+    const users = JSON.parse(list.users)
+    Vue.set(state, 'skinsPurse', list.purse)
+    Vue.set(state, 'skinsLeaderboard', keys(users))
+  },
+  SET_TEAMS_LEADERBOARD: (state, { list }) => {
+    const users = JSON.parse(list.users)
+    Vue.set(state, 'teamPurse', list.purse)
+    Vue.set(state, 'teamLeaderboard', keys(users))
   },
   SET_MONEY: (state, { list }) => {
-    Vue.set(state, 'moneyList', list.data)
+    const users = JSON.parse(list.users)
+    Vue.set(state, 'overallPurse', list.purse)
+    Vue.set(state, 'moneyList', keys(users))
   },
   SET_STROKE_PLAYER_PROFILE: (state, { list }) => {
     state.strokePlayer = list.data.attributes
@@ -175,11 +195,29 @@ const getters = {
   getPuttingLeaderboard: state => {
     return state.puttingLeaderboard
   },
+  getSkinsLeaderboard: state => {
+    return state.skinsLeaderboard
+  },
+  getTeamLeaderboard: state => {
+    return state.teamLeaderboard
+  },
+  getMoneyList: state => {
+    return state.moneyList
+  },
   getStrokePurse: state => {
     return state.strokePurse
   },
   getPuttingPurse: state => {
     return state.puttingPurse
+  },
+  getSkinsPurse: state => {
+    return state.skinsPurse
+  },
+  getTeamPurse: state => {
+    return state.teamPurse
+  },
+  getOverallPurse: state => {
+    return state.overallPurse
   }
 }
 

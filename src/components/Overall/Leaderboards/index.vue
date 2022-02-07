@@ -45,11 +45,23 @@
                   :current="fauxCurrent"
                   :title="'Team Overall'"
                   :leaderboard="getTeamPreview"
-                  :link="'TeamPlayersOverallLeaderboard'"
+                  :link="'TeamOverallLeaderboard'"
                   :position="'team_position'"
                   :total="'total_team_wins'"
                 />
               </v-layout>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap mt-4>
+            <v-flex xs12>
+              <preview-button
+                :current="fauxCurrent"
+                :title="'Money List'"
+                :leaderboard="getMoneyPreview"
+                :link="'OverallMoneyList'"
+                :position="'money_position'"
+                :total="'total_money'"
+              />
             </v-flex>
           </v-layout>
         </v-container>
@@ -87,7 +99,8 @@ export default {
       getStrokePreview: 'leaderboards/overall/getStrokePreview',
       getPuttingPreview: 'leaderboards/overall/getPuttingPreview',
       getSkinsPreview: 'leaderboards/overall/getSkinsPreview',
-      getTeamPreview: 'leaderboards/overall/getTeamPreview'
+      getTeamPreview: 'leaderboards/overall/getTeamPreview',
+      getMoneyPreview: 'leaderboards/overall/getMoneyPreview',
     })
   },
 

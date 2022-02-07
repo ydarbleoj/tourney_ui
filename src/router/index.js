@@ -26,6 +26,9 @@ import TeamPage from '@/components/Leaderboards/Team/Page/index'
 import TournamentOverall from '@/components/Overall/index'
 import StrokeOverallLeaderboard from '@/components/Overall/Leaderboards/Stroke'
 import PuttingOverallLeaderboard from '@/components/Overall/Leaderboards/Putting'
+import SkinsOverallLeaderboard from '@/components/Overall/Leaderboards/Skins'
+import TeamOverallLeaderboard from '@/components/Overall/Leaderboards/Team'
+import OverallMoneyList from '@/components/Overall/Leaderboards/MoneyList'
 import Course from '@/components/Course/index'
 import ResetPassword from '@/components/ResetPassword'
 import ForgotPassword from '@/components/ForgotPassword'
@@ -273,6 +276,24 @@ const router = new Router({
       path: '/tournament/overall/putting_leaderboard',
       name: "PuttingOverallLeaderboard",
       component: PuttingOverallLeaderboard,
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/overall/skins_leaderboard',
+      name: "SkinsOverallLeaderboard",
+      component: SkinsOverallLeaderboard,
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/overall/team_leaderboard',
+      name: "TeamOverallLeaderboard",
+      component: TeamOverallLeaderboard,
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/overall/money_list',
+      name: "OverallMoneyList",
+      component: OverallMoneyList,
       meta: { auth: true }
     },
     {

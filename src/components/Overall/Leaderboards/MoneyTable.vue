@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="moneyList"
+    :items="leaderboardArray"
     hide-actions
     class='leaderboard-table'
     item-key="id"
@@ -9,11 +9,11 @@
     <template slot="items" slot-scope="props">
       <tr @click="toPlayerPage(props.item.attributes.id)" style="background-color:#f1f1f1">
         <td class="text-xs-center">
-          {{ props.item.attributes.money_position }}</td>
+          {{ props.item.attributes.position }}</td>
         <td class="text-xs-left" style="font-size:16px;">
           {{ props.item.attributes.username }}
           <v-spacer></v-spacer>
-          <span class="grey--text">Handicap {{ props.item.attributes.handicap }}</span>
+          <span style="color:#666;">3 putts -$ {{ props.item.attributes.three_putt_pot }}</span>
         </td>
         <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.total_skins }}</td>
         <td class="text-xs-center" style="font-size:16px;">{{ props.item.attributes.total_team }}</td>
@@ -34,13 +34,11 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'Table',
-  computed: {
-    ...mapState({
-      currentTournament: state => state.tournament.currentTournament,
-      moneyList: state => state.leaderboards.moneyList
-    }),
-  },
+  name: 'MoneyTable',
+  props: {
+		leaderboardArray: Array,
+		linkTo: String
+	},
 
   data () {
     return {
@@ -122,14 +120,13 @@ export default {
       document.documentElement.style.setProperty('--headerHeight', height)
     },
     toPlayerPage (id) {
-      this.$store.commit("setPageTransition");
-      this.$router.push({
-        name: 'MoneyPlayerPage',
-        params: {
-          tournId: this.currentTournament.id,
-          leaderboard_id: id
-        }
-      })
+      // this.$store.commit("setPageTransition");
+       // this.$router.push({
+      //   name: this.linkTo,
+      //   params: {
+      //     user_id: id
+      //   }
+      // })
     },
   },
   mounted () {
