@@ -18,9 +18,14 @@ import PuttingPlayerPage from '@/components/Leaderboards/Putting/PlayerPage'
 import SkinsLeaderboard from '@/components/Leaderboards/Skins/index'
 import SkinsPlayerPage from '@/components/Leaderboards/Skins/PlayerPage'
 import TeamLeaderboard from '@/components/Leaderboards/Team/index'
+import TeamPlayersLeaderboard from '@/components/Leaderboards/Team/Players/index'
+import PlayersTeamPage from '@/components/Leaderboards/Team/Players/Page'
 import MoneyList from '@/components/Stats/MoneyList/index'
 import MoneyPlayerPage from '@/components/Stats/MoneyList/PlayerPage'
 import TeamPage from '@/components/Leaderboards/Team/Page/index'
+import TournamentOverall from '@/components/Overall/index'
+import StrokeOverallLeaderboard from '@/components/Overall/Leaderboards/Stroke'
+import PuttingOverallLeaderboard from '@/components/Overall/Leaderboards/Putting'
 import Course from '@/components/Course/index'
 import ResetPassword from '@/components/ResetPassword'
 import ForgotPassword from '@/components/ForgotPassword'
@@ -211,6 +216,20 @@ const router = new Router({
       meta: { auth: true }
     },
     {
+      path: '/tournament/:id/leaderboards/team/players',
+      name: "TeamPlayersLeaderboard",
+      component: TeamPlayersLeaderboard,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/:id/leaderboards/team/players/:leaderboard_id',
+      name: "PlayersTeamPage",
+      component: PlayersTeamPage,
+      props: { default: true },
+      meta: { auth: true }
+    },
+    {
       path: '/tournament/:id/leaderboards/team/:team_id',
       name: "TeamPage",
       component: TeamPage,
@@ -236,6 +255,24 @@ const router = new Router({
       name: "MoneyPlayerPage",
       component: MoneyPlayerPage,
       props: { default: true },
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/overall',
+      name: "TournamentOverall",
+      component: TournamentOverall,
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/overall/stroke_leaderboard',
+      name: "StrokeOverallLeaderboard",
+      component: StrokeOverallLeaderboard,
+      meta: { auth: true }
+    },
+    {
+      path: '/tournament/overall/putting_leaderboard',
+      name: "PuttingOverallLeaderboard",
+      component: PuttingOverallLeaderboard,
       meta: { auth: true }
     },
     {

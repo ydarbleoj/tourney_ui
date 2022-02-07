@@ -12,42 +12,42 @@
             <v-flex xs6 ma-2>
               <v-layout column>
                 <preview-button
-                  :current="current"
-                  :title="'Stroke'"
+                  :current="fauxCurrent"
+                  :title="'Stroke Overall'"
                   :leaderboard="getStrokePreview"
-                  :link="'StrokeLeaderboard'"
+                  :link="'StrokeOverallLeaderboard'"
                   :position="'stroke_position'"
-                  :total="'total_score'"
+                  :total="'total_stroke_wins'"
                 />
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
                 <preview-button
-                  :current="current"
-                  :title="'Skins'"
+                  :current="fauxCurrent"
+                  :title="'Skins Overall'"
                   :leaderboard="getSkinsPreview"
-                  :link="'SkinsLeaderboard'"
-                  :position="'count'"
-                  :total="'skins_total'"
+                  :link="'SkinsOverallLeaderboard'"
+                  :position="'skins_position'"
+                  :total="'total_skins'"
                 />
               </v-layout>
             </v-flex>
             <v-flex xs6 ma-2>
               <v-layout column>
                 <preview-button
-                  :current="current"
-                  :title="'Putting'"
+                  :current="fauxCurrent"
+                  :title="'Putting Overall'"
                   :leaderboard="getPuttingPreview"
-                  :link="'PuttingLeaderboard'"
+                  :link="'PuttingOverallLeaderboard'"
                   :position="'putting_position'"
-                  :total="'total_putts'"
+                  :total="'total_putting_wins'"
                 />
                 <v-divider class="mt-2 mb-2" style="opacity:0;"></v-divider>
                 <preview-button
-                  :current="current"
-                  :title="'Team'"
+                  :current="fauxCurrent"
+                  :title="'Team Overall'"
                   :leaderboard="getTeamPreview"
-                  :link="'TeamPlayersLeaderboard'"
+                  :link="'TeamPlayersOverallLeaderboard'"
                   :position="'team_position'"
-                  :total="'team_wins_total'"
+                  :total="'total_team_wins'"
                 />
               </v-layout>
             </v-flex>
@@ -59,21 +59,20 @@
 </template>
 
 <script>
-import PreviewButton from '../components/Leaderboards/PreviewButton'
-import Team from '../components/Leaderboards/Team/index'
+import PreviewButton from '../../Leaderboards/PreviewButton'
 import router from 'vue-router'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'Leaderboards',
+  name: 'OverallLeaderboards',
   props: ['current'],
   components: {
-    PreviewButton,
-    Team
+    PreviewButton
   },
 
   data (){
     return {
+      fauxCurrent: {},
       swipeDirection: 'None',
       isPreview: true,
       isLoading: true,
@@ -83,15 +82,12 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      currentTournament: state => state.tournament.currentTournament,
-      leaderboardsPreview: state => state.leaderboards.leaderboardsPreview
-    }),
+    ...mapState({}),
     ...mapGetters({
-      getStrokePreview: 'leaderboards/getStrokePreview',
-      getPuttingPreview: 'leaderboards/getPuttingPreview',
-      getSkinsPreview: 'leaderboards/getSkinsPreview',
-      getTeamPreview: 'leaderboards/getTeamPreview'
+      getStrokePreview: 'leaderboards/overall/getStrokePreview',
+      getPuttingPreview: 'leaderboards/overall/getPuttingPreview',
+      getSkinsPreview: 'leaderboards/overall/getSkinsPreview',
+      getTeamPreview: 'leaderboards/overall/getTeamPreview'
     })
   },
 
@@ -99,10 +95,10 @@ export default {
 
   created () {
     this.$store.dispatch(
-      'leaderboards/LOAD_PREVIEW_LEADERBOARD',
-      { id: this.current.id }
+      'leaderboards/overall/LOAD_PREVIEW_LEADERBOARD'
     ).then(() => {
       this.isLoading = false
+      this.fauxCurrent = { id: 1 }
     })
   }
 }

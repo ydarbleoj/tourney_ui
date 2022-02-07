@@ -9,6 +9,8 @@ const state = {
   teamStats: {},
   teamImages: [],
   teamScorecard: [],
+  teamPlayersList: [],
+  playerTeamPage: {}
 }
 
 const plugins = [
@@ -19,12 +21,38 @@ const plugins = [
       'leaderboards.team.teamPlayers',
       'leaderboards.team.teamData',
       'leaderboards.team.teamImages',
-      'leaderboards.team.teamScorecards'
+      'leaderboards.team.teamScorecards',
+      'leaderboards.team.teamPlayerList'
     ]
   })
 ]
 
 const actions = {
+  LOAD_TEAM_PLAYERS_LEADERBOARD: function({ commit, state }, { id }) {
+		let options = { tournament_id: id }
+
+		return axios.get(
+      'api/v3/leaderboards/team/players.json', { params: options }
+    ).then((res) => {
+      commit("SET_TEAM_PLAYER_LEADERBOARD", { list: res.data })
+    }, (err) => {
+      console.log('error loading team page', err)
+    })
+  },
+  LOAD_PLAYER_TEAM_PAGE: function({ commit, state }, { id, leaderboard_id }) {
+		let options = {
+      tournament_id: id,
+      id: leaderboard_id
+    }
+
+		return axios.get(
+      `api/v3/leaderboards/team/players/${id}.json`, { params: options }
+    ).then((res) => {
+      commit("SET_PLAYER_TEAM_PAGE", { list: res.data })
+    }, (err) => {
+      console.log('error loading team page', err)
+    })
+  },
   LOAD_TEAM_LEADERBOARD: function({ commit, state }, { tournamentId, roundNum }) {
 		let options = { tournament_id: tournamentId, round_number: roundNum }
 
@@ -52,6 +80,12 @@ const actions = {
 const mutations = {
   SET_TEAM_LEADERBOARD: (state, { list }) => {
     state.teamLeaderboard = list.data
+  },
+  SET_TEAM_PLAYER_LEADERBOARD: (state, { list }) => {
+    state.teamPlayersList = list.data
+  },
+  SET_PLAYER_TEAM_PAGE: (state, { list }) => {
+    Vue.set(state, 'playerTeamPage', list.data)
   },
   SET_TEAM_PAGE: (state, { list }) => {
     // Consider moving these to the getters

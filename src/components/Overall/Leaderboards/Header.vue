@@ -4,13 +4,13 @@
       <v-flex md="4">
         <BackButton
           :routeName="'Tournament'"
-          :routeParams="{ id: this.currentTournament.id }"
+          :routeParams="{ id: 'overall' }"
         />
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex class="pt-4 pb-2">
-        <h1 class="text-xs-left font-weight-regular"> {{ year }} {{ name }}</h1>
+        <h1 class="text-xs-left font-weight-regular">Overall {{ name }}</h1>
         <h1 class="text-xs-left font-weight-medium mb-4">Leaderboard</h1>
       </v-flex>
     </v-layout>
@@ -25,7 +25,7 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-import BackButton from '../BackButton'
+import BackButton from '../../BackButton'
 
 export default {
   name: 'Header',
@@ -40,14 +40,6 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState({
-      currentTournament: state => state.tournament.currentTournament
-    }),
-  },
-
-  mounted: function () {
-    this.year = this.currentTournament.year
-  }
+  computed: {},
 }
 </script>

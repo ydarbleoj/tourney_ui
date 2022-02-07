@@ -29,10 +29,18 @@ const actions = {
   UPDATE_CURRENT_TOURNAMENT: function ({ commit }, payload) {
     return commit('RESET_CURRENT_TOURNAMENT', { list: payload })
   },
+  LOAD_OVERALL: function ({ commit }) {
+    return axios.get('/api/v3/overall.json').then((response) => {
+      commit('SET_TOURNAMENT_LIST', { list: response.data })
+    }, (err) => {
+      console.log('Overall load error')
+    })
+  }
 }
 
 const mutations = {
   SET_TOURNAMENT_LIST: (state, { list }) => {
+    console.log(';ist', list.tournament)
     Vue.set(state, 'tournaments', JSON.parse(list.tournament).data)
   },
   CURRENT_TOURNAMENT: (state, { list }) => {
@@ -41,10 +49,12 @@ const mutations = {
     Vue.set(state, 'currentRoundInfo', tourn.attributes.round_info)
   },
   RESET_CURRENT_TOURNAMENT: (state, { list }) => {
-    console.log('store', list)
     Vue.set(state, 'currentTournament', list.attributes)
     // Vue.set(state, 'currentRoundInfo', list.attributes.round_info)
   },
+  SET_OVERALL: (state, { list }) => {
+
+  }
 }
 
 const getters = {

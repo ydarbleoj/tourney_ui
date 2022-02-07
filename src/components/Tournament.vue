@@ -9,7 +9,7 @@
           />
         </v-flex>
         <v-flex xs6>
-          <tournament-menu />
+          <tournament-menu @overallPage="renderOverall" />
         </v-flex>
         <v-flex xs3 mt-2>
           <div
@@ -23,7 +23,10 @@
           </div>
         </v-flex>
       </v-layout>
-      <v-layout row wrap mb-5>
+      <v-layout row wrap mb-5 v-if="overall">
+        <overall-index v-if="!loading" />
+      </v-layout>
+      <v-layout row wrap mb-5 v-else>
         <leaderboards :current="currentTournament"  v-if="!loading" />
         <rounds :current="currentTournament" v-if="!loading" />
         <stats :current="currentTournament" v-if="!loading" />
@@ -39,6 +42,7 @@ import Leaderboards from '../components/Leaderboards'
 import Rounds from '../components/Rounds'
 import Stats from '../components/Stats/index'
 import TournamentMenu from '../components/TournamentMenu'
+import OverallIndex from './Overall/index'
 import BackButton from './BackButton'
 
 export default {
@@ -47,6 +51,7 @@ export default {
     BackButton,
     Handicap,
     Leaderboards,
+    OverallIndex,
     Rounds,
     Stats,
     TournamentMenu
@@ -64,7 +69,8 @@ export default {
       drawer: true,
       items: [],
       loading: true,
-      userAdmin: false
+      userAdmin: false,
+      overall: false
     }
   },
   methods: {
@@ -74,6 +80,11 @@ export default {
         data: {},
         redirect: '/login'
       })
+    },
+    renderOverall (value) {
+      console.log('here', value)
+      this.overall = value
+      console.log("below", this.overall)
     },
     toAdmin () {
       this.$store.commit("setPageTransition");
@@ -87,6 +98,10 @@ export default {
   },
 
   mounted: function () {
+    if (this.$route.params.id === "overall") {
+      this.overall = true
+    }
+
     if (typeof this.currentTournament != "undefined") {
       this.loading = false
     }

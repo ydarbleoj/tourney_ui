@@ -2,7 +2,6 @@ import axios from 'axios'
 import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 import team from './team'
-import overall from './overall'
 
 const state = {
   strokePreview: [],
@@ -14,6 +13,7 @@ const state = {
   skinsLeaderboard: [],
   strokePlayer: {},
   skinsPlayer: {},
+  strokePurse: 0,
   puttingPurse: 0,
   moneyPreview: [],
   moneyList: [],
@@ -27,68 +27,59 @@ const plugins = [
 ]
 
 const actions = {
-  LOAD_PREVIEW_LEADERBOARD: function ({ commit, state }, { id }) {
-    let options = { tournament_id: id }
-
+  LOAD_PREVIEW_LEADERBOARD: function ({ commit, state }) {
     return axios.get(
-      '/api/v3/leaderboards/previews.json',
-      { params: options }
+      '/api/v3/overall/previews.json'
     ).then((res) => {
       commit('SET_PREVIEW_LEADERBOARDS', { list: res.data })
     }, (err) =>{
       console.log('error preview leaderboard', err)
     })
   },
-  LOAD_STROKE_LEADERBOARD: function ({ commit, state }, { id }) {
-    let options = { tournament_id: id }
+  LOAD_STROKE_LEADERBOARD: function ({ commit, state }) {
     return axios.get(
-      '/api/v3/leaderboards/strokes.json', { params: options }
+      '/api/v3/overall/strokes.json'
     ).then((response) => {
       commit('SET_STROKE_LEADERBOARD', { list: response.data })
     }, (err) => {
       console.log(err)
     })
   },
-  LOAD_STROKE_PLAYER: function ({ commit, state }, { tournId, id }) {
-    let options = { tournament_id: tournId }
+  LOAD_STROKE_PLAYER: function ({ commit, state }, { id }) {
     return axios.get(
-      `/api/v3/leaderboards/strokes/${id}.json`, { params: options }
+      `/api/v3/overall/strokes/${id}.json`
     ).then((response) => {
       commit('SET_STROKE_PLAYER_PROFILE', { list: response.data })
     })
   },
-  LOAD_PUTTING_LEADERBOARD: function ({ commit, state }, { id }) {
-    let options = { tournament_id: id }
+  LOAD_PUTTING_LEADERBOARD: function ({ commit, state }) {
     return axios.get(
-      '/api/v3/leaderboards/putting.json', { params: options }
+      '/api/v3/overall/putting.json'
     ).then((response) => {
       commit('SET_PUTTING_LEADERBOARD', { list: response.data })
     }, (err) => {
       console.log(err)
     })
   },
-  LOAD_PUTTING_PLAYER: function ({ commit, state }, { tournId, id }) {
-    let options = { tournament_id: tournId }
+  LOAD_PUTTING_PLAYER: function ({ commit, state }, { id }) {
     return axios.get(
-      `/api/v3/leaderboards/putting/${id}.json`, { params: options }
+      `/api/v3/overall/putting/${id}.json`
     ).then((response) => {
       commit('SET_PUTTING_PLAYER_PROFILE', { list: response.data })
     })
   },
-  LOAD_SKINS: function ({ commit, state }, { id }) {
-    let options = { tournament_id: id }
+  LOAD_SKINS: function ({ commit, state }) {
     return axios.get(
-      '/api/v3/leaderboards/skins.json', { params: options }
+      '/api/v3/overall/skins.json'
     ).then((response) => {
       commit('SET_SKINS_LEADERBOARD', { list: response.data })
     }, (err) => {
       console.log(err)
     })
   },
-  LOAD_SKINS_PLAYER: function ({ commit, state }, { tournId, id }) {
-    let options = { tournament_id: tournId }
+  LOAD_SKINS_PLAYER: function ({ commit, state }, { id }) {
     return axios.get(
-      `/api/v3/leaderboards/skins/${id}.json`, { params: options }
+      `/api/v3/overall/skins/${id}.json`
     ).then((response) => {
       commit('SET_SKINS_PLAYER_PROFILE', { list: response.data })
     })
@@ -96,7 +87,7 @@ const actions = {
   LOAD_MONEY: function ({ commit, state }, { id }) {
     let options = { tournament_id: id }
     return axios.get(
-      '/api/v3/leaderboards/money_lists.json', { params: options }
+      '/api/v3/overall/money_lists.json', { params: options }
     ).then((response) => {
       commit('SET_MONEY', { list: response.data })
     }, (err) => {
@@ -106,7 +97,7 @@ const actions = {
   LOAD_MONEY_PLAYER: function ({ commit, state }, { tournId, id }) {
     let options = { tournament_id: tournId }
     return axios.get(
-      `/api/v3/leaderboards/money_lists/${id}.json`, { params: options }
+      `/api/v3/overall/money_lists/${id}.json`, { params: options }
     ).then((response) => {
       commit('SET_MONEY_PLAYER_PROFILE', { list: response.data })
     })
@@ -131,15 +122,15 @@ const mutations = {
     state.teamLeaderboard = list.data
   },
   SET_STROKE_LEADERBOARD: (state, { list }) => {
-    Vue.set(state, 'strokeLeaderboard', list.data)
+    const strokes = JSON.parse(list.users)
+    const purse = list.purse
+    Vue.set(state, 'strokeLeaderboard', keys(strokes))
+    Vue.set(state, 'strokePurse', purse)
   },
   SET_PUTTING_LEADERBOARD: (state, { list }) => {
-    const reducer = (acc, currentValue) => acc + currentValue;
-    const threePutts = list.data.map(el => el.attributes.total_3_putts)
-    const total = (threePutts.length == 0) ? 0 : threePutts.reduce(reducer)
-
-    Vue.set(state, 'puttingPurse', total)
-    Vue.set(state, 'puttingLeaderboard', list.data)
+    const putting = JSON.parse(list.users)
+    Vue.set(state, 'puttingPurse', list.purse)
+    Vue.set(state, 'puttingLeaderboard', keys(putting))
   },
   SET_SKINS_LEADERBOARD: (state, { list }) => {
     Vue.set(state, 'skinsLeaderboard', list.data)
@@ -177,6 +168,18 @@ const getters = {
   },
   getMoneyPreview: state => {
     return state.moneyPreview
+  },
+  getStrokeLeaderboard: state => {
+    return state.strokeLeaderboard
+  },
+  getPuttingLeaderboard: state => {
+    return state.puttingLeaderboard
+  },
+  getStrokePurse: state => {
+    return state.strokePurse
+  },
+  getPuttingPurse: state => {
+    return state.puttingPurse
   }
 }
 
@@ -188,7 +191,6 @@ export default {
   namespaced: true,
   actions,
   getters,
-  modules: { team, overall },
   mutations,
   plugins,
   state

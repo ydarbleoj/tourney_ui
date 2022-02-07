@@ -39,6 +39,18 @@
               {{ item.attributes.year }}
             </h1>
           </v-card>
+          <v-card
+            class="flex xs12 pt-3 pb-3 pr-5 text-xs-right"
+            @click="toOverall()"
+            flat
+          >
+            <h1
+              style="font-size:28px;"
+              class="font-weight-regular"
+            >
+              Overall
+            </h1>
+          </v-card>
         <v-card-text>
           <v-card
             class="flex xs12 pt-4 text-xs-center"
@@ -72,7 +84,6 @@ export default {
     }),
     ...mapGetters({
       getTournament: 'tournament/getTournament'
-      // getTournaments: state => state.tournament.getTournaments
     })
   },
 
@@ -98,6 +109,25 @@ export default {
       let tourns = this.tournaments.slice().reverse()
       this.items = tourns
     },
+    toOverall () {
+      this.loading = true
+      this.$store.dispatch(
+        'leaderboards/overall/LOAD_PREVIEW_LEADERBOARD'
+      ).then(response => {
+        this.loading = false
+        this.open = false
+        this.displayYear = "Overall"
+        this.$router.push(
+          {
+            name: "Tournament",
+            params: {
+              id: "overall"
+            }
+          }
+        )
+        this.$emit("overallPage", true)
+      })
+    },
     updateTournament (item) {
       let itemId = item.id
       this.loading = true
@@ -119,7 +149,11 @@ export default {
   },
 
   mounted: function () {
-    this.displayYear = this.currentTournament.year
+    if (this.$route.params.id === "overall") {
+      this.displayYear = "Overall"
+    } else {
+      this.displayYear = this.currentTournament.year
+    }
     this.updateItemsList()
   }
 }
