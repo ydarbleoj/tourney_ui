@@ -77,19 +77,6 @@ export default {
   methods: {
     accept () {
       this.btnLoading = true
-      this.$store.dispatch('invitations/ACCEPT_INVITATION',
-        { tournId: this.tournId, id: this.invitation.id, handicap: this.tournHandicap })
-        .then((response) => {
-          if (response) {
-            this.updateMessage = 'Success'
-            this.$router.push('/profile')
-          } else {
-            this.updateMessage = 'Failed'
-            this.handicap = 20
-          }
-          setTimeout(() => this.updateMessage = 'Accept Invitation', 3000)
-          this.btnLoading = false
-        })
     },
     factoredHcap () {
       let nn = this.handicap
@@ -118,12 +105,6 @@ export default {
     } else {
       this.tournId = tok.split(':')[0]
       this.token = tok.split(':')[1]
-      this.$store.dispatch('invitations/SET_INVITATION', { tournId: this.tournId, token: this.token })
-        .then((response) => {
-          if (this.accepted === true) {
-            this.$router.push('/profile')
-          }
-        })
     }
   },
   watch: {

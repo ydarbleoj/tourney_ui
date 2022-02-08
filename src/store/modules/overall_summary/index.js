@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Vue from 'vue'
-import createPersistedState from 'vuex-persistedstate'
 
 const state = {
   tournamentSummary: {},

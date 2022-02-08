@@ -32,7 +32,7 @@ const plugins = [
 ]
 
 const actions = {
-  LOAD_SCORECARD: function ({ commit, state }, { tournId, scorecardId }) {
+  LOAD_SCORECARD: function ({ commit, _ }, { tournId, scorecardId }) {
     let options = {
       tournament_id: tournId,
       scorecard_id: scorecardId
@@ -46,7 +46,7 @@ const actions = {
       console.log(err)
     })
   },
-  LOAD_TEAM_SCORECARD: function ({ commit, state }, { tournId, team_id }) {
+  LOAD_TEAM_SCORECARD: function ({ commit, _ }, { tournId, team_id }) {
     let options = {
       tournament_id: tournId
     }
@@ -60,21 +60,21 @@ const actions = {
       console.log(err)
     })
   },
-  LOAD_USER_SCORES: function ({ commit, state }, { scorecardId }) {
+  LOAD_USER_SCORES: function ({ commit, _ }, { scorecardId }) {
     axios.get('/scorecards/' + scorecardId + '/user_scores.json').then((response) => {
       commit('SET_SCORE_LIST', { list: response.data })
     }, (err) => {
       console.log('set score', err)
     })
   },
-  LOAD_USER_SCORE: function ({ commit, state }, { scorecard_id, score_id }) {
+  LOAD_USER_SCORE: function ({ commit, _ }, { scorecard_id, score_id }) {
     axios.get('/scorecards/' + scorecard_id + '/user_scores/' + score_id + '.json').then((response) => {
       commit('SET_SCORE', { list: response.data })
     }, (err) => {
       console.log('set score', err)
     })
   },
-  CREATE_USER_SCORE: function ({ commit, state }, { scorecardId, scores }) {
+  CREATE_USER_SCORE: function ({ commit, _ }, { scorecardId, scores }) {
     let options = { scorecard_id: scorecardId, user_score: scores}
     return axios.post('/api/v2/user_scores.json', options)
       .then((response) => {
@@ -88,7 +88,7 @@ const actions = {
         console.log('send score error', err)
     })
   },
-  UPDATE_USER_SCORE: function ({ commit, state }, { scorecardId, scoreId, scores }) {
+  UPDATE_USER_SCORE: function ({ commit, _ }, { scorecardId, scoreId, scores }) {
     let options = { scorecard_id: scorecardId, user_score_id: scoreId, user_score: scores }
     return axios.put('/api/v2/user_scores/' + scoreId + '.json', options).then((response) => {
       if (response.status === 200) {

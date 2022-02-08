@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { pitch } from 'file-loader'
 import Vue from 'vue'
-import createPersistedState from 'vuex-persistedstate'
 
 const state = {
   courseStats: [],

@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import admin from './modules/admin'
 import course from './modules/course'
-import invitations from './modules/invitations'
 import leaderboards from './modules/leaderboards'
 import overallSummary from './modules/overall_summary'
 import profile from './modules/profile'
@@ -273,7 +272,6 @@ const store = new Vuex.Store({
   modules: {
     admin,
     course,
-    invitations,
     leaderboards,
     overallSummary,
     profile,

@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="pt-2" @click="">
+  <v-card flat class="pt-2">
     <h3 class="font-weight-regular">Add Round Info</h3>
     <v-container>
       <v-layout row wrap justify-space-between>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import AddCourse from '../Create/AddCourse'
 
 export default {
@@ -71,7 +71,6 @@ export default {
   },
 
   created: function () {
-    console.log('current', this.currentTournament)
     this.listInfo = this.currentTournament.round_info
   },
 

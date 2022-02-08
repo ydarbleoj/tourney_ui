@@ -1,6 +1,4 @@
 import axios from 'axios'
-import Vue from 'vue'
-import createPersistedState from 'vuex-persistedstate'
 
 const state = {
   invToken: '',
@@ -11,7 +9,7 @@ const state = {
 }
 
 const actions = {
-  SET_INVITATION: function ({ commit, state }, { tournId, token }) {
+  SET_INVITATION: function ({ commit, _ }, { tournId, token }) {
     let options = { tournament_id: tournId, token: token }
     return axios.get('/api/v2/tournaments/admin/invitations/accept.json', { params: options })
       .then((response) => {
