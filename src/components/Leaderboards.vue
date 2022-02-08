@@ -45,7 +45,7 @@
                   :current="current"
                   :title="'Team'"
                   :leaderboard="getTeamPreview"
-                  :link="'TeamPlayersLeaderboard'"
+                  :link="'TeamLeaderboard'"
                   :position="'team_position'"
                   :total="'team_wins_total'"
                 />

@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="mb-5">
+  <v-card flat class=" mb-5 pb-5">
     <v-container class="bg">
       <v-layout row>
         <v-flex xs3>
@@ -81,7 +81,7 @@ export default {
       items: [],
       loading: true,
       userAdmin: false,
-      purse: "360",
+      purse: 0,
       player: '',
     }
   },
@@ -99,7 +99,7 @@ export default {
   },
 
   mounted () {
-    console.log(this.currentTournament)
+    this.purse = this.currentTournament.num_players * 90
   }
 
 }

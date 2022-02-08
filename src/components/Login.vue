@@ -62,7 +62,7 @@ export default {
 
       let redirect = this.setRedirect()
       this.$auth.login({
-        data: { auth: { email: this.data.auth.email.toLowerCase(), password: this.data.auth.password } },
+        data: { auth: { email: this.data.auth.email.toLowerCase(), password: this.data.auth.password.toLowerCase() } },
         redirect: redirect,
         fetchUser: true,
         rememberMe: true,

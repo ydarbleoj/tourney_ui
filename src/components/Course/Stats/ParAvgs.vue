@@ -138,13 +138,13 @@ export default {
     const course = this.courseStats
     const player = this.userCourseStats
 
-    this.fieldPar3 = course['par3_avg']
-    this.fieldPar4 = course['par4_avg']
-    this.fieldPar5 = course['par5_avg']
+    this.fieldPar3 = round['par3_avg']
+    this.fieldPar4 = round['par4_avg']
+    this.fieldPar5 = round['par5_avg']
 
-    this.roundPar3 = round['par3_avg']
-    this.roundPar4 = round['par4_avg']
-    this.roundPar5 = round['par5_avg']
+    this.roundPar3 = course['par3_avg']
+    this.roundPar4 = course['par4_avg']
+    this.roundPar5 = course['par5_avg']
 
     this.personalBest = player
     this.playerPar3 = Object.keys(player).length == 0 ? null : player['par3_avg']

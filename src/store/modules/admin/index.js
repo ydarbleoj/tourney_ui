@@ -1,8 +1,10 @@
 import axios from 'axios'
+import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 
 const state = {
   tournamentPlayers: [],
+  invited: [],
   adminPlayerPage: {},
   services: [],
   playerServices: {}
@@ -52,7 +54,6 @@ const actions = {
     })
   },
   LOAD_PLAYER_SERVICES: function ({ commit, state }, { tournId, id }) {
-    console.log("load player", id)
     return axios.get(
       `/api/v3/tournaments/${tournId}/admin/service_monitors/${id}.json`
     ).then((response) => {
@@ -63,8 +64,10 @@ const actions = {
 
 const mutations = {
   SET_ADMIN_PLAYERS: (state, { list }) => {
+    console.log('kajdhf', list)
     const users = JSON.parse(list.users)
-    state.tournamentPlayers = users.data
+    const invited = JSON.parse(list.invited)
+    Vue.set(state, 'tournamentPlayers', [...keys(users), ...keys(invited)])
   },
   SET_ADMIN_PLAYER_PROFILE: (state, { list }) => {
     state.adminPlayerPage = list.data.attributes
@@ -80,6 +83,10 @@ const mutations = {
     state.playerServices = list.data.attributes
   },
 }
+
+const keys = ((object) => {
+  return Object.keys(object).length == 0 ? [] : object.data
+})
 
 const getters = {
 

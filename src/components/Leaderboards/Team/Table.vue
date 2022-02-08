@@ -142,7 +142,7 @@ export default {
   },
 
   created () {
-
+    console.log('tema', this.teamLeaderboard)
   }
 
 }

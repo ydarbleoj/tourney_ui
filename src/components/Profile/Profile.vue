@@ -182,7 +182,8 @@ export default {
         'UPDATE_HANDICAP',
         { tournId: this.currentTournament.id, leaderboardId: this.$auth.user().id, handicap: this.hcap }
       ).then((res) => {
-        console.log('event', this.handicapMessage)
+
+        console.log('event', res)
       })
     },
     fetch() {

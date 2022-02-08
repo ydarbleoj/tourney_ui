@@ -15,7 +15,7 @@
           <v-spacer></v-spacer>
           <span class="grey--text" v-if="props.item.attributes.pending">pending</span>
         </td>
-        <td class="text-xs-center" @click="playerPage(props.item.id)">
+        <td class="text-xs-center" @click="playerPage(props.item)">
           <v-icon color="#F8C977">edit</v-icon>
         </td>
       </tr>
@@ -76,7 +76,9 @@ export default {
   },
 
   methods: {
-    playerPage (id) {
+    playerPage (item) {
+      if (item.attributes.pending) return;
+      const id = item.id
       this.$store.commit("setPageTransition");
       this.$router.push({
         name: 'AdminPlayerPage',

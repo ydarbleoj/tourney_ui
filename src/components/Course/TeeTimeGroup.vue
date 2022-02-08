@@ -1,5 +1,5 @@
 <template>
-  <v-card flat style="background-color:#A8C256;" tile class="pa-0 pb-4">
+  <v-card v-if="displayGroup" flat style="background-color:#A8C256;" tile class="pa-0 pb-4">
     <v-layout row align-center mt-3>
       <v-flex xs6 v-if="playerOneName">
         <h3 class="font-weight-regular">{{ playerOneName }}</h3>
@@ -68,7 +68,8 @@ export default {
       playerTwoHandicap: 0,
       playerThreeHandicap: 0,
       playerFourHandicap: 0,
-      clicked: false
+      clicked: false,
+      displayGroup: false
     }
   },
 
@@ -90,6 +91,9 @@ export default {
     const group = this.group.attributes
     const players = group.players
 
+    if (players.length == 0) return;
+
+    this.displayGroup = true
     this.playerOneName = players[0]['username']
     this.playerOneHandicap = players[0]['handicap']
     this.playerTwoName = players[1]['username']

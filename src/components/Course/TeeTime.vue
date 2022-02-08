@@ -52,7 +52,7 @@ export default {
       tab: 0,
       items: [],
       group: [],
-      currentTime: null
+      currentTime: null,
     }
   },
 
