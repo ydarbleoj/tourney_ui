@@ -50,8 +50,12 @@ export default {
 
   methods: {
     updateHandicap: function (event) {
-      this.$store.dispatch('UPDATE_HANDICAP', { tournId: this.current.id, leaderboardId: this.current.leaderboard_id, handicap: this.hcap })
-    console.log('event', event)
+      this.$store.dispatch(
+        'UPDATE_HANDICAP',
+        { tournId: this.current.id, leaderboardId: this.current.leaderboard_id, handicap: this.hcap }
+      ).then((res) => {
+        console.log('event', event)
+      })
     }
   },
 

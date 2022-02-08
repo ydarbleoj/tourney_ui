@@ -5,7 +5,8 @@ import createPersistedState from 'vuex-persistedstate'
 const state = {
   tournaments: [],
   currentTournament: [],
-  currentRoundInfo: []
+  currentRoundInfo: [],
+  renderHandicap: true
 }
 
 const plugins = [
@@ -44,6 +45,7 @@ const mutations = {
   },
   CURRENT_TOURNAMENT: (state, { list }) => {
     let tourn = JSON.parse(list.tournament).data.pop()
+    Vue.set(state, 'renderHandicap', list.handicap)
     Vue.set(state, 'currentTournament', tourn.attributes)
     Vue.set(state, 'currentRoundInfo', tourn.attributes.round_info)
   },

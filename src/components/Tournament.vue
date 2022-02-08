@@ -98,6 +98,7 @@ export default {
   },
 
   mounted: function () {
+    console.log('this', this.renderHandicap)
     if (this.$route.params.id === "overall") {
       this.overall = true
     }

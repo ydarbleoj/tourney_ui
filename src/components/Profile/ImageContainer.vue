@@ -11,7 +11,6 @@
 						<v-icon
 							color="#666"
 						>
-							<!-- @click="$refs.FileInput.click()" -->
 							mdi-upload
 						</v-icon>
 					</div>

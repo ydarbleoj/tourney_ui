@@ -96,11 +96,14 @@ const store = new Vuex.Store({
       })
     },
     UPDATE_HANDICAP: function ({ commit, state }, { tournId, leaderboardId, handicap }) {
-      let options = { handicap: handicap }
-      axios.put('/tournaments/' + tournId + '/leaderboards/' + leaderboardId + '.json', { params: options }).then((response) => {
+      let options = { tournament_id: tournId, handicap: handicap }
+      axios.put(
+        `/api/v3/leaderboards/handicap/${leaderboardId}.json`, options
+      ).then((response) => {
         commit('SET_HANDICAP', { list: response.data })
       }, (err) => {
-        commit('SET_HANDICAP', { list: response.data })
+        console.log('store', err)
+        commit('SET_HANDICAP', { err })
       })
     },
     LOAD_ROUNDS: function ({ commit, state }, { id }) {
@@ -213,7 +216,6 @@ const store = new Vuex.Store({
       Vue.set(state, 'scorecardPreviews', JSON.parse(list).data)
     },
     SET_USER_TEE_TIMES: (state, { list }) => {
-      console.log('ksjdf', list)
       state.userTeeTimes = JSON.parse(list).data
     },
     SET_CURRENT_ROUND: (state, { list }) => {

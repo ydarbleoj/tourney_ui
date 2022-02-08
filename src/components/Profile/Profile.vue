@@ -101,6 +101,40 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-dialog v-model="dialog" :class="[dialog == false ? 'hide-dialog' : 'display-dialog']">
+      <v-card>
+        <v-layout row>
+          <v-flex xs12>
+            <h2 class="font-weight-regular pa-3 mb-1">
+              It's game time! Bandon {{ this.currentTournament.year }}
+            </h2>
+            <h3 class="font-weight-regular pa-3">
+              To get started, please enter your current handicap.
+            </h3>
+            <h3 class="font-weight-regular pa-3">
+              If you don't have one, consider your average and then subtract 3.
+            </h3>
+            <h3 class="font-weight-regular pa-3">
+              Your handicap for this year will be 90% of what you enter here.
+            </h3>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs12 pa-4>
+            <v-text-field
+              name="handicap"
+              label="Handicap"
+              v-model="hcap"
+              placeholder="max 36.2"
+            >
+            </v-text-field>
+            <v-card-actions>
+              <v-btn class="mt-3" style="border-radius:15px;width:100px;" color="orange" @click="updateHandicap">Save</v-btn>
+            </v-card-actions>
+          </v-flex>
+        </v-layout>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -113,6 +147,8 @@ export default {
   components: { ImageContainer },
   data () {
     return {
+      hcap: '',
+      show: false,
       dialog: false,
       userId: this.$auth.user().id,
       isLoaded: false,
@@ -131,7 +167,9 @@ export default {
     ...mapState({
       profileData: state => state.profile.profileData,
       userProfile: state => state.profile.userProfile,
-      currentTournament: state => state.tournament.currentTournament
+      currentTournament: state => state.tournament.currentTournament,
+      handicapMessage: state => state.tournament.handicapMessage,
+      renderHandicap: state => state.tournament.renderHandicap
     }),
     ...mapGetters({
       getTournament: 'tournament/getTournament'
@@ -139,6 +177,14 @@ export default {
   },
 
   methods: {
+    updateHandicap: function (event) {
+      this.$store.dispatch(
+        'UPDATE_HANDICAP',
+        { tournId: this.currentTournament.id, leaderboardId: this.$auth.user().id, handicap: this.hcap }
+      ).then((res) => {
+        console.log('event', this.handicapMessage)
+      })
+    },
     fetch() {
       this.$auth.fetch({
         success() {
@@ -150,10 +196,19 @@ export default {
       });
     },
     toScorecards() {
+      if (this.renderHandicap) {
+        this.dialog = true
+        return
+      }
       this.$store.commit("setPageTransition");
       this.$router.push({ name: 'ProfileScorecards' })
     },
     toBandon() {
+      if (this.renderHandicap) {
+        this.dialog = true
+        return
+      }
+
       this.$store.commit("setPageTransition");
       this.$router.push({
         name: 'Tournament',
@@ -163,6 +218,11 @@ export default {
       })
     },
     toSettings() {
+      if (this.renderHandicap) {
+        this.dialog = true
+        return
+      }
+
       this.$store.commit("setPageTransition");
       this.$router.push({
         name: 'ProfileEdit',
@@ -188,6 +248,7 @@ export default {
         this.loadProfileData()
         this.$store.dispatch('tournament/LOAD_TOURNAMENT_LIST')
           .then(response => {
+            this.dialog = this.renderHandicap
             this.isLoaded = true
           })
       }
@@ -198,5 +259,14 @@ export default {
 <style>
 .bx-shadow {
   box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.hide-dialog {
+	display: none;
+}
+.display-dialog {
+	width:100vw;
+	height:100vh;
+	top:0;
+	left:0;
 }
 </style>
