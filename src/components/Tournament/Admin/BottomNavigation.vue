@@ -24,7 +24,7 @@
       color="#FF9D72"
       dark
       value="tee-times"
-      @click="goToPage('TournamentAdminTeeTimes')"
+      @click="goToPage('AdminTeeTimePage')"
     >
       <span>Tee Times</span>
       <v-icon>access_time</v-icon>

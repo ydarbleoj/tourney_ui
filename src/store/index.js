@@ -223,8 +223,13 @@ const store = new Vuex.Store({
       Vue.set(state, 'currentRound', list)
     },
     SET_ADMIN_TEE_TIME: (state, { list }) => {
-      state.adminTeeTimes = JSON.parse(list.times).data
-      Vue.set(state, 'awaitingTees', JSON.parse(list.awaiting).data)
+      const times = JSON.parse(list.times)
+      const awaiting = JSON.parse(list.awaiting)
+      const setTimes = Object.keys(times).length == 0 ? [] : times.data
+      const setAwaiting = Object.keys(awaiting).length == 0 ? [] : awaiting.data
+      console.log(setTimes)
+      Vue.set(state, 'adminTeeTimes', setTimes)
+      Vue.set(state, 'awaitingTees', setAwaiting)
     },
     ADD_USER_TEE_TIME: (state, { user, index, group }) => {
       state.awaitingTees.splice(index, 1)
@@ -271,7 +276,6 @@ const store = new Vuex.Store({
     getRenderHandicap: state => {
       return state.renderHandicap
     }
-
 
   },
   modules: {

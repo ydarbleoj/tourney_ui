@@ -1,23 +1,39 @@
 <template>
-  <v-card flat class="pa-0">
-    <v-card-title class="pt-1 pl-3">
-      <h2 class="text-xs-left" style="color:#FF9D72;width:100%;">Set Teams</h2>
-      <v-spacer></v-spacer>
-      <h3 class="font-weight-regular">{{ adminTeeTimes[0].attributes.course_name }}</h3>
-    </v-card-title>
-
+  <v-card flat class="pa-0 pb-4">
+     <v-container class="bg">
+      <v-layout row pb-5>
+				<v-flex xs3>
+          <BackButton
+            :routeName="'TournamentAdmin'"
+            :routeParams="{ id: this.currentTournament.id }"
+          />
+        </v-flex>
+        <v-flex xs6 class="text-xs-center white--text">
+          <h2 style="font-weight:500;">Team Tee-Times</h2>
+        </v-flex>
+        <v-flex xs3>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <h2 class="text-xs-left" style="color:whitewidth:100%;">Set Teams</h2>
+          <v-spacer></v-spacer>
+          <h3 class="font-weight-regular">{{ title }}</h3>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-card-text v-if="!loading" class="pa-0" style="overflow-y:auto;">
-      <v-container fluid class="pa-0">
+      <v-container fluid class="pa-0" style="height:100%;">
         <v-layout row fill-height>
           <v-flex xs6 class="ma-0">
             <v-card flat tile>
               <v-list two-line>
-                <template v-for="groups in adminTeeTimes">
-                  <label class="pl-2"> {{ groups.attributes.group }}</label>
+                <div v-for="groups in adminTeeTimes" :key="groups.id">
+                  <label class="pl-2">Group {{ groups.attributes.group }}</label>
                   <v-divider></v-divider>
-                  <group :teeGroup="groups" :parentData="awaitingTees" @event="addToAwaiting"/>
+                  <group :teeGroup="groups" :parentData="awaitingTees" @event="addToAwaiting" />
                   <v-divider></v-divider>
-                </template>
+                </div>
               </v-list>
             </v-card>
           </v-flex>
@@ -33,11 +49,11 @@
                 >
                   <v-list-tile slot="activator">
                     <v-list-tile-content>
-                      <v-list-tile-title style="font-size: 12px;" v-if="item.first_name">
-                         {{ item.first_name }} {{ item.last_name }}
+                      <v-list-tile-title style="font-size: 12px;" v-if="item.attributes.username">
+                         {{ item.attributes.username }}
                       </v-list-tile-title>
-                      <v-list-tile-title style="font-size: 12px;"v-else>
-                        {{ item.attributes.first_name }} {{ item.attributes.last_name }}
+                      <v-list-tile-title style="font-size: 12px;" v-else>
+                        {{ item.attributes.first_name }} {{ item.username }}
                       </v-list-tile-title>
                       <span class="grey--text" style="font-size:14px;">
                         Hcap {{ setHandicap(item) }}
@@ -61,7 +77,7 @@
         fixed
         :active.sync="roundNumber"
         :value="true"
-        style="background-color:#FF9D72;margin-bottom:8vh;"
+        style="background-color:#FF9D72;bottom:0;"
       >
         <v-btn flat value="1" style="color:#fff; opacity:0.7;">
           <h3>Round 1</h3>
@@ -73,7 +89,6 @@
           <h3>Round 3</h3>
         </v-btn>
       </v-bottom-nav>
-
     </v-card-actions>
   </v-card>
 </template>
@@ -81,11 +96,13 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import Group from './Group'
+import BackButton from '../../../BackButton'
 
 export default {
   name: 'index',
   props: ['current', 'teeGroup'],
   components: {
+    BackButton,
     Group
   },
 
@@ -97,6 +114,7 @@ export default {
       roundNumber: 1,
       roundId: null,
       active: null,
+      title: "Bandon"
     }
   },
 
@@ -107,7 +125,6 @@ export default {
       adminTeeTimes: state => state.adminTeeTimes,
       awaitingTees: state => state.awaitingTees
     }),
-      // 'teeTime', 'adminTeeTimes', 'currentRound', 'awaitingTees', 'currentTournament', 'currentCourse'
     ...mapGetters([
       'adminTeeTimeGetter'
     ]),
@@ -135,11 +152,11 @@ export default {
       this.$store.commit('ADD_USER_TEE_TIME', { user: user, index: index, group: i })
     },
     roundFilter (rounds, num) {
-      console.log('round', rounds)
-      console.log('num', num)
       let r = rounds.filter(el => el.roundNumber == num)
-      console.log('roundfilter', r)
       this.roundId = r[0].roundId
+    },
+    updateTitle (group) {
+
     },
     loadTeeTimes () {
       this.$store.dispatch(
@@ -157,7 +174,6 @@ export default {
   watch: {
     roundNumber () {
       let num = this.roundNumber
-      console.log('this.round', this.roundNumber)
       let rounds = this.currentTournament.round_info
       this.roundFilter(rounds, num)
       this.loadTeeTimes()
@@ -165,16 +181,17 @@ export default {
   },
 
   created: function (current) {
-    console.log('awating', this.awaitingTees)
     let rounds = this.currentTournament.round_info
-    console.log('rounds', rounds)
     this.roundFilter(rounds, 1)
     this.loadTeeTimes()
   }
 }
 </script>
 <style>
-  p.hide {
-    display: none;
-  }
+.bg {
+  background-color: #FF9D72;
+}
+p.hide {
+  display: none;
+}
 </style>

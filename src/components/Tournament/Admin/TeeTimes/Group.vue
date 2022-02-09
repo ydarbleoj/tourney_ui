@@ -3,14 +3,18 @@
     <v-flex xs12>
       <v-card flat tile class="pa-0">
         <v-list>
-          <v-list-tile fill-height v-for="(item, index) in teeGroup.attributes.players" v-bind:key="item.user_id" @click="removeElement(item, index)">
+          <v-list-tile
+              fill-height
+              v-for="(item, index) in teeGroup.attributes.players"
+              :key="item.user_id" @click="removeElement(item, index)"
+            >
             <v-layout row align-center>
               <v-flex xs10>
-                <v-list-tile-title v-if="item.first_name">
-                  {{ item.first_name }} {{ item.last_name }}
+                <v-list-tile-title v-if="item.username">
+                  {{ item.username }}
                 </v-list-tile-title>
                 <v-list-tile-title v-else>
-                  {{ item.attributes.first_name }} {{ item.attributes.last_name }}
+                  {{ item.attributes.username }}
                 </v-list-tile-title>
                 <span class="grey--text" style="font-size:14px;">
                   Hcap {{ (item.attributes == undefined) ? item.handicap : item.attributes.handicap }}

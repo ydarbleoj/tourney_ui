@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Tournament from '@/components/Tournament'
 import TournamentAdmin from '@/components/Tournament/Admin/index'
 import AdminPlayerPage from '@/components/Tournament/Admin/Player/index'
+import AdminTeeTimePage from '@/components/Tournament/Admin/TeeTimes/index'
 import AdminServicePage from '@/components/Tournament/Admin/Services/index'
 import PlayerServicePage from '@/components/Tournament/Admin/Services/PlayerPage'
 import PlayerScorecards from '@/components/Tournament/Admin/PlayerScorecards'
@@ -138,6 +139,13 @@ const router = new Router({
       path: '/tournament/:id/admin',
       name: 'TournamentAdmin',
       component: TournamentAdmin,
+      props: { default: true },
+      meta: { auth: { role: 'admin', redirect: { name: 'admin'}, }}
+    },
+    {
+      path: '/tournament/:id/admin/tee_times',
+      name: 'AdminTeeTimePage',
+      component: AdminTeeTimePage,
       props: { default: true },
       meta: { auth: { role: 'admin', redirect: { name: 'admin'}, }}
     },
