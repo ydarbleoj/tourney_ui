@@ -172,7 +172,8 @@ export default {
       renderHandicap: state => state.tournament.renderHandicap
     }),
     ...mapGetters({
-      getTournament: 'tournament/getTournament'
+      getTournament: 'tournament/getTournament',
+      getRenderHandicap: 'getRenderHandicap'
     })
   },
 
@@ -182,8 +183,7 @@ export default {
         'UPDATE_HANDICAP',
         { tournId: this.currentTournament.id, leaderboardId: this.$auth.user().id, handicap: this.hcap }
       ).then((res) => {
-
-        console.log('event', res)
+        this.dialog = false
       })
     },
     fetch() {
@@ -197,7 +197,7 @@ export default {
       });
     },
     toScorecards() {
-      if (this.renderHandicap) {
+      if (this.getRenderHandicap) {
         this.dialog = true
         return
       }
@@ -205,7 +205,8 @@ export default {
       this.$router.push({ name: 'ProfileScorecards' })
     },
     toBandon() {
-      if (this.renderHandicap) {
+      console.log('hhh', this.getRenderHandicap)
+      if (this.getRenderHandicap) {
         this.dialog = true
         return
       }
@@ -219,7 +220,7 @@ export default {
       })
     },
     toSettings() {
-      if (this.renderHandicap) {
+      if (this.getRenderHandicap) {
         this.dialog = true
         return
       }

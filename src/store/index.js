@@ -205,7 +205,9 @@ const store = new Vuex.Store({
       state.invited.splice(index, 1)
     },
     SET_HANDICAP: (state, { list }) => {
-      state.handicapMessage = list
+      const msg = list.message == "Success" ? false : true
+      state.handicapMessage = list.message
+      Vue.set(state, 'renderHandicap', msg)
     },
     SET_ROUNDS: (state, { list }) => {
       Vue.set(state, 'currentRound', JSON.parse(list).data[0])
@@ -265,6 +267,9 @@ const store = new Vuex.Store({
     },
     adminMessageGetter: state => {
       return state.adminMessage
+    },
+    getRenderHandicap: state => {
+      return state.renderHandicap
     }
 
 
