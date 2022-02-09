@@ -155,9 +155,6 @@ export default {
       let r = rounds.filter(el => el.roundNumber == num)
       this.roundId = r[0].roundId
     },
-    updateTitle (group) {
-
-    },
     loadTeeTimes () {
       this.$store.dispatch(
         'LOAD_ADMIN_TEE_TIME',
@@ -166,6 +163,7 @@ export default {
           roundId: this.roundId
         }
       ).then(response => {
+        this.title = this.adminTeeTimes[0].attributes.course_name
         this.loading = false
       })
     }
