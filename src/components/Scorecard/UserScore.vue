@@ -84,7 +84,7 @@ export default {
       disableButton: false,
       count: 0,
       shotList: [
-        [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Birdie 2' }, {value: 3, name: 'Par 3'}, {value: 4, name: 'Bogey 4'}, {value: 5, name: 'Double 5'}, {value: 6, name: 'Triple 6'}, {value: 7, name: 'Quad 7'}, {value: 8, name: 'Other 8'}],
+        [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Birdie 2' }, {value: 3, name: 'Par 3'}, {value: 4, name: 'Bogey 4'}, {value: 5, name: 'Double 5'}, {value: 6, name: 'Triple 6'}],
         [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Eagle 2'}, {value: 3, name: 'Birdie 3'}, {value: 4, name:  'Par 4'}, {value: 5, name: 'Bogey 5'}, {value: 6, name: 'Double 6'}, {value: 7, name: 'Triple 7'}, {value: 8, name: 'Quad 8'}],
         [{value: 0, name: 'Did Not Play'}, {value: 1, name: 'In One 1'}, {value: 2, name: 'Albetrose 2'}, {value: 3, name: 'Eagle 3'}, {value: 4, name: 'Birdie 4'}, {value: 5, name: 'Par 5'}, {value: 6, name: 'Bogey 6'}, {value: 7, name: 'Double 7'}, {value: 8, name: 'Triple 8'},{value: 9, name: 'Quad 9'}, {value: 10, name: 'Other 10'}]
       ],
