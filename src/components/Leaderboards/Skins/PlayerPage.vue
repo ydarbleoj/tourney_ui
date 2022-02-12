@@ -135,7 +135,7 @@
     <v-layout
 			row wrap
 			align-center
-			class="text-xs-center pt-2 pb-4 mt-2 mb-5 mr-3 ml-3"
+			class="text-xs-center pt-2 pb-5 mt-2 mb-5 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
 				<h3 class="pl-2 mb-2 font-weight-regular">Holes where magic happend:</h3>

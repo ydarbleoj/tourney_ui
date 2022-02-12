@@ -135,7 +135,7 @@
     <v-layout
 			row wrap
 			align-center
-			class="text-xs-center pt-2 pb-4 mt-2 mb-5 mr-3 ml-3"
+			class="text-xs-center pt-2 pb-5 mt-2 mb-5 mr-3 ml-3"
 		>
 			<v-flex xs12 class="text-xs-left ml-2">
 				<h2 class="pl-2 mb-3 font-weight-regular">This Week's Scrambling</h2>

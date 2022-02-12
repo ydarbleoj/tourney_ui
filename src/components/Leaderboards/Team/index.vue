@@ -14,6 +14,7 @@
       style="background-color:#ACA885;margin-bottom:56px;"
     >
       <v-btn
+        fixed
         flat
         value="1"
         style="color:#fff;"
