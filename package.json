@@ -18,7 +18,7 @@
     "@websanova/vue-auth": "^2.20.4-beta",
     "body-parser": "^1.19.0",
     "chart.js": "^3.5.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "hooper": "^0.3.4",
     "hopper": "^0.2.0",
     "js-cookie": "^2.2.1",
