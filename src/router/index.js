@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { usePageTransitionStore } from '@/store/pageTransition';
-import HomeView from '../views/HomeView.vue'
 import ScorecardHole from "../components/scorecards/Hole.vue"
 
 const checkForUser = (to, from, next) => {
@@ -15,15 +14,6 @@ const checkForUser = (to, from, next) => {
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: "/",
-      name: "home",
-      component: HomeView,
-      beforeEnter: (to, from, next) => {
-        checkForUser(to, from, next)
-      },
-      redirect: { name: "login" }
-    },
     {
       path: "/login",
       name: "login",
