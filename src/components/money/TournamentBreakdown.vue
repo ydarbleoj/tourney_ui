@@ -131,18 +131,18 @@ export default {
     };
   },
   mounted() {
-    const breakdown = this.moneyBreakdown;
-    console.log(breakdown);
-    if (!breakdown) return;
+    // const breakdown = this.moneyBreakdown;
+    // console.log(breakdown);
+    // if (!breakdown) return;
 
-    this.total = breakdown.total;
-    this.remaining = breakdown.remaining;
-    this.putting = breakdown.putting;
-    this.tourney = breakdown.tourney;
-    this.skins = breakdown.skins;
-    this.team = breakdown.team;
-    this.yourShare = breakdown.your_share;
-    this.yourContributions = breakdown.your_contributions;
+    // this.total = breakdown.total;
+    // this.remaining = breakdown.remaining;
+    // this.putting = breakdown.putting;
+    // this.tourney = breakdown.tourney;
+    // this.skins = breakdown.skins;
+    // this.team = breakdown.team;
+    // this.yourShare = breakdown.your_share;
+    // this.yourContributions = breakdown.your_contributions;
   },
 };
 </script>
