@@ -41,7 +41,7 @@ import { useTournamentStore } from "@/store/tournament";
 import Leaderboards from './Leaderboards.vue'
 import MudderCupPreview from '../components/muddercup/LeaderboardPreview.vue'
 import CourseLeaderboardPreview from './courses/CourseLeaderboardPreview.vue';
-import MoneyBreakdown from "../components/Money/TournamentBreakdown.vue"
+import MoneyBreakdown from "../components/money/TournamentBreakdown.vue"
 
 export default {
   name: 'Tournament',
