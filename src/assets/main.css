@@ -1,0 +1,95 @@
+@import './base.css';
+
+.v-application {
+  background-color: #f7f7f7;
+}
+#app {
+  font-family: 'Nanum Myeongjo', serif;
+  font-weight: normal;
+  background-color: #f7f7f7;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+.stroke-bg {
+  background-color: #9FB8CE;
+}
+.putting-bg {
+  background-color: #FFCB47;
+  background-color: #F9A875;
+}
+.alt-putting-bg {
+  background-color: #f8c977;
+  background-color: #f7a072;
+}
+.skins-bg {
+  background-color: #A8C256;
+}
+.money-bg {
+  background-color: #aea9a9;
+}
+.default-bg {
+  background-color: #f7f7f7;
+}
+.neutral-bg {
+  background-color: #aea9a9;
+}
+.stroke-color {
+  color: #9FB8CE
+}
+.putting-color {
+  color: #FFCB47;
+}
+.alt-putting-color {
+  color: #f7a072;
+}
+.bandon-orange-color {
+  color: #cf8018;
+}
+.bandon-orange-bg {
+  background-color: #cf8018;
+}
+.bandon-dark-bg {
+  background-color: #434949;
+}
+.bandon-dark-color {
+  color: #434949;
+}
+.money-bg {
+  background-color: #c4c1c1;
+}
+.money-color {
+  color: #c4c1c1;
+}
+.skins-color {
+  color: #A8C256;
+}
+.default-color {
+  color: #f7f7f7;
+}
+.neutral-gray {
+  color: #aea9a9;
+}
+.less-neutral-gray {
+  color: #666;
+}
+
+.underline-text {
+  text-decoration: none;
+  background-image: linear-gradient(to right, #666, #666);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.5px; /* Adjust the thickness of the underline */
+  padding-bottom: 3px; /* Adjust the distance between text and underline */
+}
